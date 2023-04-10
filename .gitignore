@@ -60,6 +60,7 @@ crashlytics-build.properties
 
 # Unity generated
 UserSettings/
+Library/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
