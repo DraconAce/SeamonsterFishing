@@ -31,7 +31,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Drive"",
                     ""type"": ""Value"",
                     ""id"": ""6ab8bf37-dbbd-4e4b-8f88-7f63a803e64d"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -251,7 +251,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""872699ca-8783-41b0-a491-e9667476777b"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -471,7 +471,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Pull"",
                     ""type"": ""Value"",
                     ""id"": ""64bfe8ff-a3c6-49f7-9023-02cf7e91f25c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -1136,6 +1136,319 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Baiting"",
+            ""id"": ""e6c6a283-f19d-4a1c-b055-d9c2357c6c54"",
+            ""actions"": [
+                {
+                    ""name"": ""Change_View_Left"",
+                    ""type"": ""Value"",
+                    ""id"": ""15ef7542-b28e-4091-8e44-bab5f119d326"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Change_View_Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""4412819a-18c0-439a-a29b-0338b32ede82"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Change_View_Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8c8a0bc-b0a6-4443-b9cc-c90fa51ebd53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Change_View_Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1000545-a204-4f42-b593-16e354a0d149"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""36e7085b-96d1-408b-86da-f1383bffb7a4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Defend"",
+                    ""type"": ""Button"",
+                    ""id"": ""dfd4120a-2e4e-498f-8a1a-ac9dbd2d1c5e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Charge_Flashlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""35772487-039b-4bd6-b191-cb05dce869f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8ccba506-7ce3-46b6-a9b0-0321dd657b6e"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20065c12-c975-48c2-91ea-5f6d624603d0"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07880e0e-3aaa-4733-9f48-9d61fbf6fb64"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse;Touch"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6e680d7-d756-4744-84e7-7acb50ee3b49"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edf65287-7dae-43e4-ba3d-f023c0a42ded"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b5e20aa-93ad-473f-b25a-5e9a5cdcfee6"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge_Flashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""479dcdaa-bb8d-4cfd-a06d-d20a0e987ac7"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge_Flashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad505106-ac4e-4c3e-bad5-72c85512bea0"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left_Keyboard"",
+                    ""id"": ""ca73b071-fe1b-4f0c-a1a5-d01a331e0840"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f22cb44a-e8ba-4f8b-8e55-5a38c154f0a9"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""830ece17-8a36-4d05-beed-64ebab9b1928"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right_Keyboard"",
+                    ""id"": ""80efaea1-d258-4e2f-bbf5-5a08d5c92dd0"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""eb214265-182f-4fc0-9b29-854c39fc45b6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ac7105d8-c474-472e-af45-59c33383664e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc125b5b-0563-4634-be9e-3a37dad9e196"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Down_Keyboard"",
+                    ""id"": ""b2ae2d46-2db1-45ac-b9d4-955a8f49ece1"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""7b9192a8-4470-4940-b588-426c55975b87"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b45a6b1f-6438-4722-b6cb-87d912136809"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea159a03-649c-48e8-9aba-c7c3568772a1"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up_Keyboard"",
+                    ""id"": ""0cc42b78-5557-4bd1-9193-c2d8533d0218"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5b6dafb3-3e56-49ce-9491-8585365f2ab7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""dccd401e-ed00-43f6-8272-e4cef344c2b8"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1229,6 +1542,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Baiting
+        m_Baiting = asset.FindActionMap("Baiting", throwIfNotFound: true);
+        m_Baiting_Change_View_Left = m_Baiting.FindAction("Change_View_Left", throwIfNotFound: true);
+        m_Baiting_Change_View_Right = m_Baiting.FindAction("Change_View_Right", throwIfNotFound: true);
+        m_Baiting_Change_View_Down = m_Baiting.FindAction("Change_View_Down", throwIfNotFound: true);
+        m_Baiting_Change_View_Up = m_Baiting.FindAction("Change_View_Up", throwIfNotFound: true);
+        m_Baiting_Look = m_Baiting.FindAction("Look", throwIfNotFound: true);
+        m_Baiting_Defend = m_Baiting.FindAction("Defend", throwIfNotFound: true);
+        m_Baiting_Charge_Flashlight = m_Baiting.FindAction("Charge_Flashlight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1598,6 +1920,100 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Baiting
+    private readonly InputActionMap m_Baiting;
+    private List<IBaitingActions> m_BaitingActionsCallbackInterfaces = new List<IBaitingActions>();
+    private readonly InputAction m_Baiting_Change_View_Left;
+    private readonly InputAction m_Baiting_Change_View_Right;
+    private readonly InputAction m_Baiting_Change_View_Down;
+    private readonly InputAction m_Baiting_Change_View_Up;
+    private readonly InputAction m_Baiting_Look;
+    private readonly InputAction m_Baiting_Defend;
+    private readonly InputAction m_Baiting_Charge_Flashlight;
+    public struct BaitingActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public BaitingActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Change_View_Left => m_Wrapper.m_Baiting_Change_View_Left;
+        public InputAction @Change_View_Right => m_Wrapper.m_Baiting_Change_View_Right;
+        public InputAction @Change_View_Down => m_Wrapper.m_Baiting_Change_View_Down;
+        public InputAction @Change_View_Up => m_Wrapper.m_Baiting_Change_View_Up;
+        public InputAction @Look => m_Wrapper.m_Baiting_Look;
+        public InputAction @Defend => m_Wrapper.m_Baiting_Defend;
+        public InputAction @Charge_Flashlight => m_Wrapper.m_Baiting_Charge_Flashlight;
+        public InputActionMap Get() { return m_Wrapper.m_Baiting; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BaitingActions set) { return set.Get(); }
+        public void AddCallbacks(IBaitingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BaitingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BaitingActionsCallbackInterfaces.Add(instance);
+            @Change_View_Left.started += instance.OnChange_View_Left;
+            @Change_View_Left.performed += instance.OnChange_View_Left;
+            @Change_View_Left.canceled += instance.OnChange_View_Left;
+            @Change_View_Right.started += instance.OnChange_View_Right;
+            @Change_View_Right.performed += instance.OnChange_View_Right;
+            @Change_View_Right.canceled += instance.OnChange_View_Right;
+            @Change_View_Down.started += instance.OnChange_View_Down;
+            @Change_View_Down.performed += instance.OnChange_View_Down;
+            @Change_View_Down.canceled += instance.OnChange_View_Down;
+            @Change_View_Up.started += instance.OnChange_View_Up;
+            @Change_View_Up.performed += instance.OnChange_View_Up;
+            @Change_View_Up.canceled += instance.OnChange_View_Up;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @Defend.started += instance.OnDefend;
+            @Defend.performed += instance.OnDefend;
+            @Defend.canceled += instance.OnDefend;
+            @Charge_Flashlight.started += instance.OnCharge_Flashlight;
+            @Charge_Flashlight.performed += instance.OnCharge_Flashlight;
+            @Charge_Flashlight.canceled += instance.OnCharge_Flashlight;
+        }
+
+        private void UnregisterCallbacks(IBaitingActions instance)
+        {
+            @Change_View_Left.started -= instance.OnChange_View_Left;
+            @Change_View_Left.performed -= instance.OnChange_View_Left;
+            @Change_View_Left.canceled -= instance.OnChange_View_Left;
+            @Change_View_Right.started -= instance.OnChange_View_Right;
+            @Change_View_Right.performed -= instance.OnChange_View_Right;
+            @Change_View_Right.canceled -= instance.OnChange_View_Right;
+            @Change_View_Down.started -= instance.OnChange_View_Down;
+            @Change_View_Down.performed -= instance.OnChange_View_Down;
+            @Change_View_Down.canceled -= instance.OnChange_View_Down;
+            @Change_View_Up.started -= instance.OnChange_View_Up;
+            @Change_View_Up.performed -= instance.OnChange_View_Up;
+            @Change_View_Up.canceled -= instance.OnChange_View_Up;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @Defend.started -= instance.OnDefend;
+            @Defend.performed -= instance.OnDefend;
+            @Defend.canceled -= instance.OnDefend;
+            @Charge_Flashlight.started -= instance.OnCharge_Flashlight;
+            @Charge_Flashlight.performed -= instance.OnCharge_Flashlight;
+            @Charge_Flashlight.canceled -= instance.OnCharge_Flashlight;
+        }
+
+        public void RemoveCallbacks(IBaitingActions instance)
+        {
+            if (m_Wrapper.m_BaitingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBaitingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BaitingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BaitingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BaitingActions @Baiting => new BaitingActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1674,5 +2090,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IBaitingActions
+    {
+        void OnChange_View_Left(InputAction.CallbackContext context);
+        void OnChange_View_Right(InputAction.CallbackContext context);
+        void OnChange_View_Down(InputAction.CallbackContext context);
+        void OnChange_View_Up(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnDefend(InputAction.CallbackContext context);
+        void OnCharge_Flashlight(InputAction.CallbackContext context);
     }
 }

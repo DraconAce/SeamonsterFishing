@@ -54,7 +54,7 @@ public class DriveStation : MonoBehaviour, IManualUpdateSubscriber
 
     public void ManualUpdate() => MoveBoat();
 
-    #region Move
+    #region Driving and Rotation
     private void MoveBoat()
     {
         var driveDirection = driveAction.ReadValue<Vector2>().x;
@@ -124,15 +124,12 @@ public class DriveStation : MonoBehaviour, IManualUpdateSubscriber
         return newBoatPosWorld;
     }
     #endregion
-    
-    /*
-     * variable for last direction (sign)
-     *
-     * on sign change trigger tween for rotation and lock movement (rotate 180 around local y)
-     * store tween to interrupt if sign changes again
-     *
-     * on tween finished enable movement
-     *
-     * 
-     */
+
+    private void OnDestroy()
+    {
+        rotationTween?.Kill();
+
+        if (updateManager == null) return;
+        updateManager.UnsubscribeFromManualUpdate(this);
+    }
 }
