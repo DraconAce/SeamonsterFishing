@@ -63,13 +63,13 @@ public class UpdateManager : Singleton<UpdateManager>
         listToAddTo.Add(subscriber);
     }
     
-    public void UnsubscribeToManualUpdate(IManualUpdateSubscriber subscriber) 
+    public void UnsubscribeFromManualUpdate(IManualUpdateSubscriber subscriber) 
         => RemoveSubscriberFromList(subscriber, manualUpdateSubscribers);
 
-    public void UnsubscribeToManualFixedUpdate(IManualUpdateSubscriber subscriber)
+    public void UnsubscribeFromManualFixedUpdate(IManualUpdateSubscriber subscriber)
         => RemoveSubscriberFromList(subscriber, manualFixedUpdateSubscribers);
 
-    public void UnsubscribeToManualLateUpdate(IManualUpdateSubscriber subscriber)
+    public void UnsubscribeFromManualLateUpdate(IManualUpdateSubscriber subscriber)
         => RemoveSubscriberFromList(subscriber, manualLateUpdateSubscribers);
     
     private void RemoveSubscriberFromList(IManualUpdateSubscriber subscriber, List<IManualUpdateSubscriber> listToRemoveFrom) 

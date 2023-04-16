@@ -7,6 +7,8 @@ public interface IInputEventSubscriber
     public bool SubscribedToPerformed { get; }
     public bool SubscribedToCanceled { get; }
 
+    public string[] ActionsToSubscribeTo { get; }
+    
     public void InputStarted(InputAction.CallbackContext callContext){}
     public void InputPerformed(InputAction.CallbackContext callContext){}
     public void InputCanceled(InputAction.CallbackContext callContext){}

@@ -9,7 +9,7 @@ public class InputManager : Singleton<InputManager>
     {
         public IInputEventSubscriber EventSubscriber;
         
-        public string Action;
+        public string[] ActionsToSubscribeTo;
     }
 
     public PlayerInput playerInput { get; private set; }
@@ -48,23 +48,30 @@ public class InputManager : Singleton<InputManager>
             subscriber.InputCanceled(callbackContext);
     }
 
-    public void SubscribeToAction(SubscriberSettings subscriberSettings)
+    public void SubscribeToActions(SubscriberSettings subscriberSettings)
     {
-        if (inputActionAndSubscribers.TryGetValue(subscriberSettings.Action, out var subscriberList))
+        foreach(var action in subscriberSettings.ActionsToSubscribeTo)
         {
-            subscriberList.Add(subscriberSettings.EventSubscriber);
-            return;
+            if (inputActionAndSubscribers.TryGetValue(action, out var subscriberList))
+            {
+                subscriberList.Add(subscriberSettings.EventSubscriber);
+                continue;
+            }
+
+            inputActionAndSubscribers.Add(action,
+                new() { subscriberSettings.EventSubscriber });
         }
-        
-        inputActionAndSubscribers.Add(subscriberSettings.Action, 
-            new(){ subscriberSettings.EventSubscriber });
     }
 
-    public void UnsubscribeFromAction(SubscriberSettings subscriberSettings)
+    public void UnsubscribeFromActions(SubscriberSettings subscriberSettings)
     {
-        if(!inputActionAndSubscribers.TryGetValue(subscriberSettings.Action, out var subscriberList)) return;
+        foreach(var action in subscriberSettings.ActionsToSubscribeTo)
+        {
+            if (!inputActionAndSubscribers.TryGetValue(action, out var subscriberList))
+                continue;
 
-        subscriberList.Remove(subscriberSettings.EventSubscriber);
+            subscriberList.Remove(subscriberSettings.EventSubscriber);
+        }
     }
 
     private void OnDestroy() => playerInput.onActionTriggered -= OnActionTriggered;
