@@ -167,12 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewLeftRightPivot: {fileID: 7344333748671687044}
-  viewUpDownPivot: {fileID: 1439667051941123238}
   actionsToSubscribeTo:
   - Change_View_Left
   - Change_View_Right
-  - Change_View_Down
-  - Change_View_Up
   rotationDuration: 2
   rotationEase: 2
 --- !u!1 &3304849413879038861

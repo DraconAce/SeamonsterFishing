@@ -6,14 +6,11 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 {
     private enum RotationDirection
     {
-        Left,
-        Right,
-        Down,
-        Up
+        Left = -1,
+        Right = 1
     }
     
     [SerializeField] private Transform viewLeftRightPivot;
-    [SerializeField] private Transform viewUpDownPivot;
     [SerializeField] private string[] actionsToSubscribeTo = {"Change_View_Left", "Change_View_Right"};
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
     
@@ -26,17 +23,13 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
     private const float rightRotation = 90;
     private const float leftRotation = -90;
-    private const float downRotation = 90;
-    private const float upRotation = 0;
 
     private InputManager inputManager;
     private InputManager.SubscriberSettings inputSubscriberSettings;
 
     private Vector3 lastTargetRotation;
-    private Tween leftRightTween; 
-    private Tween upDownTween;
-
-    private bool isLookingDown;
+    private Tween leftRightTween;
+    private int lookDirection;
 
     private void Start()
     {
@@ -59,53 +52,25 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
     private RotationDirection GetRequestedViewDirection(string actionName)
     {
-        if (actionName.Contains(RotationDirection.Left.ToString()))
-            return RotationDirection.Left;
-        if (actionName.Contains(RotationDirection.Right.ToString()))
-            return RotationDirection.Right;
-        if (actionName.Contains(RotationDirection.Down.ToString()))
-            return RotationDirection.Down;
-
-        return RotationDirection.Up;
+        return actionName.Contains(RotationDirection.Left.ToString()) ? RotationDirection.Left : RotationDirection.Right;
     }
 
     private void RotateView(RotationDirection direction)
     {
-        if (direction is RotationDirection.Down or RotationDirection.Up)
-        {
-            if (IsLookingInTargetUpDownDirection(direction)) return;
-
-            var lookDown = direction == RotationDirection.Down;
-            LookUpDownTween(lookDown);
-            
-            return;
-        }
-        
-        LookUpDownTween(false);
+        if (!PlayerCanTurn(direction)) return;
 
         var rotateToLeft = direction == RotationDirection.Left;
         HandleLeftRightRotation(rotateToLeft);
     }
 
-    private bool IsLookingInTargetUpDownDirection(RotationDirection direction)
+    private bool PlayerCanTurn(RotationDirection direction)
     {
-        if (direction == RotationDirection.Down)
-            return isLookingDown;
+        var nextLookDirection = lookDirection + (int)direction;
 
-        return !isLookingDown;
-    }
+        if (Mathf.Abs(nextLookDirection) > 1) return false;
 
-    private void LookUpDownTween(bool lookDown)
-    {
-        upDownTween?.Kill();
-
-        var targetAngle = lookDown ? downRotation : upRotation;
-        var targetRotation = new Vector3(targetAngle, 0, 0);
-
-        upDownTween = viewUpDownPivot.DOLocalRotate(targetRotation, rotationDuration)
-            .SetEase(rotationEase);
-
-        isLookingDown = lookDown;
+        lookDirection = nextLookDirection;
+        return true;
     }
 
     private void HandleLeftRightRotation(bool rotateToLeft)
@@ -136,7 +101,6 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
     private void OnDestroy()
     {
-        upDownTween?.Kill();
         leftRightTween?.Kill();
         
         if (inputManager == null) return;
