@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 public class InputManager : Singleton<InputManager>
 {
     public struct SubscriberSettings
@@ -12,15 +12,30 @@ public class InputManager : Singleton<InputManager>
         public string[] ActionsToSubscribeTo;
     }
 
+    [Serializable]
+    private class GameStateInputMap : ListDictProxy<GameState, string>
+    {
+        [SerializeField] private GameState state;
+        public override GameState Key => state;
+
+        [SerializeField] private string stateInputMap;
+        public override string Value => stateInputMap;
+    }
+
+    [SerializeField] private List<GameStateInputMap> inputMapsList;
+
     public PlayerInput playerInput { get; private set; }
 
+    private GameStateManager gameStateManager;
+    private Dictionary<GameState, string> inputMapsLookup = new();
     private readonly Dictionary<string, List<IInputEventSubscriber>> inputActionAndSubscribers = new();
 
-    private void Start()
+    private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        
         playerInput.onActionTriggered += OnActionTriggered;
+
+        CreateInputMapsLookup();
     }
 
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
@@ -28,6 +43,24 @@ public class InputManager : Singleton<InputManager>
         if (!inputActionAndSubscribers.TryGetValue(callbackContext.action.name, out var subscriberList)) return;
         
         NotifySubscribers(subscriberList, callbackContext);
+    }
+
+    private void CreateInputMapsLookup() 
+        => inputMapsLookup = ListDictProxy<GameState, string>.CreateDictionaryFromList(new List<ListDictProxy<GameState, string>>(inputMapsList));
+
+    private void Start()
+    {
+        gameStateManager = GameStateManager.instance;
+
+        gameStateManager.GameStateChangedEvent += ChangeToInputMapOfState;
+    }
+
+    private void ChangeToInputMapOfState(GameState state)
+    {
+        if (!inputMapsLookup.TryGetValue(state, out var mapName))
+            return;
+
+        playerInput.SwitchCurrentActionMap(mapName);
     }
 
     private void NotifySubscribers(List<IInputEventSubscriber> subscriberList, InputAction.CallbackContext callbackContext)
@@ -74,5 +107,11 @@ public class InputManager : Singleton<InputManager>
         }
     }
 
-    private void OnDestroy() => playerInput.onActionTriggered -= OnActionTriggered;
+    private void OnDestroy()
+    {
+        playerInput.onActionTriggered -= OnActionTriggered;
+
+        if (gameStateManager == null) return;
+        gameStateManager.GameStateChangedEvent -= ChangeToInputMapOfState;
+    }
 }
