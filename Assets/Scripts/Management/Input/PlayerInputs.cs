@@ -24,14 +24,14 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     ""name"": ""SeamonsterFishing_Inputs"",
     ""maps"": [
         {
-            ""name"": ""Player_FightOverview"",
+            ""name"": ""Fight_Overview"",
             ""id"": ""5ff94b8b-1c81-46ad-bdfb-fa14f962b0a4"",
             ""actions"": [
                 {
                     ""name"": ""Drive"",
                     ""type"": ""Value"",
                     ""id"": ""6ab8bf37-dbbd-4e4b-8f88-7f63a803e64d"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -248,15 +248,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             ""id"": ""262e6df7-9d58-4ede-8fc5-fc55962da184"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""872699ca-8783-41b0-a491-e9667476777b"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Aim"",
                     ""type"": ""Value"",
                     ""id"": ""d26a88b9-42a2-4a9a-8327-2cbc5c6ae6d0"",
@@ -282,119 +273,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Return"",
+                    ""type"": ""Button"",
+                    ""id"": ""811c7da7-7e1d-4827-94aa-15313a357878"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""a4b349a4-6078-41db-85bf-b70ac614f318"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""cf65e5db-6b9f-4263-bacc-b39457f2ebb0"",
-                    ""path"": ""Dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""3de0943c-43c3-48b9-9ad7-5a99cd285067"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""f5bed3aa-67f5-4839-84ce-4e928bc74a11"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""9d16be27-1da2-4b14-a2ac-88ea0cf8e493"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""bfef7a84-dc34-4a52-9e41-113addc2d585"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""02755e8e-1744-437f-8672-91bc55c985a8"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""9132957f-67ae-444a-bc51-7666b53cabc5"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""09052424-460f-4896-9828-6a0f1132aa8d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""d119052b-cfe5-43e2-b410-d460438d9db1"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""865e91dc-41f1-4f62-9dfc-173aeca77fc9"",
@@ -460,6 +350,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""443349f5-ff23-4620-a4b5-378d235be1a9"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f7fe809-e62a-4991-90c3-4f1389517874"",
+                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5a14650-9201-4a35-9f3d-e334e180d31b"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -471,7 +394,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Pull"",
                     ""type"": ""Value"",
                     ""id"": ""64bfe8ff-a3c6-49f7-9023-02cf7e91f25c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -484,6 +407,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Return"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6f72770-165b-47c0-96a7-1b5cc8306def"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -616,6 +548,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse;Touch"",
                     ""action"": ""Reel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7830c036-6610-4bc5-be7c-9eb7b3e6e01d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5987cf1d-b60e-45c4-bd5a-b9c2417c40ca"",
+                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80ae2e6d-9a17-4b9f-9adf-62ac117191a6"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1136,6 +1101,319 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Baiting"",
+            ""id"": ""e6c6a283-f19d-4a1c-b055-d9c2357c6c54"",
+            ""actions"": [
+                {
+                    ""name"": ""Change_View_Left"",
+                    ""type"": ""Value"",
+                    ""id"": ""15ef7542-b28e-4091-8e44-bab5f119d326"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Change_View_Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""4412819a-18c0-439a-a29b-0338b32ede82"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Change_View_Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8c8a0bc-b0a6-4443-b9cc-c90fa51ebd53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Change_View_Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1000545-a204-4f42-b593-16e354a0d149"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""36e7085b-96d1-408b-86da-f1383bffb7a4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Defend"",
+                    ""type"": ""Button"",
+                    ""id"": ""dfd4120a-2e4e-498f-8a1a-ac9dbd2d1c5e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Charge_Flashlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""35772487-039b-4bd6-b191-cb05dce869f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8ccba506-7ce3-46b6-a9b0-0321dd657b6e"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20065c12-c975-48c2-91ea-5f6d624603d0"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07880e0e-3aaa-4733-9f48-9d61fbf6fb64"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse;Touch"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6e680d7-d756-4744-84e7-7acb50ee3b49"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edf65287-7dae-43e4-ba3d-f023c0a42ded"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b5e20aa-93ad-473f-b25a-5e9a5cdcfee6"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge_Flashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""479dcdaa-bb8d-4cfd-a06d-d20a0e987ac7"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge_Flashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad505106-ac4e-4c3e-bad5-72c85512bea0"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left_Keyboard"",
+                    ""id"": ""ca73b071-fe1b-4f0c-a1a5-d01a331e0840"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f22cb44a-e8ba-4f8b-8e55-5a38c154f0a9"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""830ece17-8a36-4d05-beed-64ebab9b1928"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right_Keyboard"",
+                    ""id"": ""80efaea1-d258-4e2f-bbf5-5a08d5c92dd0"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""eb214265-182f-4fc0-9b29-854c39fc45b6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ac7105d8-c474-472e-af45-59c33383664e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc125b5b-0563-4634-be9e-3a37dad9e196"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Down_Keyboard"",
+                    ""id"": ""b2ae2d46-2db1-45ac-b9d4-955a8f49ece1"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""7b9192a8-4470-4940-b588-426c55975b87"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b45a6b1f-6438-4722-b6cb-87d912136809"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea159a03-649c-48e8-9aba-c7c3568772a1"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up_Keyboard"",
+                    ""id"": ""0cc42b78-5557-4bd1-9193-c2d8533d0218"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5b6dafb3-3e56-49ce-9491-8585365f2ab7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""dccd401e-ed00-43f6-8272-e4cef344c2b8"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Change_View_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1201,22 +1479,23 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player_FightOverview
-        m_Player_FightOverview = asset.FindActionMap("Player_FightOverview", throwIfNotFound: true);
-        m_Player_FightOverview_Drive = m_Player_FightOverview.FindAction("Drive", throwIfNotFound: true);
-        m_Player_FightOverview_Station_Cannon = m_Player_FightOverview.FindAction("Station_Cannon", throwIfNotFound: true);
-        m_Player_FightOverview_Station_Reeling = m_Player_FightOverview.FindAction("Station_Reeling", throwIfNotFound: true);
-        m_Player_FightOverview_ActivateSpot = m_Player_FightOverview.FindAction("ActivateSpot", throwIfNotFound: true);
+        // Fight_Overview
+        m_Fight_Overview = asset.FindActionMap("Fight_Overview", throwIfNotFound: true);
+        m_Fight_Overview_Drive = m_Fight_Overview.FindAction("Drive", throwIfNotFound: true);
+        m_Fight_Overview_Station_Cannon = m_Fight_Overview.FindAction("Station_Cannon", throwIfNotFound: true);
+        m_Fight_Overview_Station_Reeling = m_Fight_Overview.FindAction("Station_Reeling", throwIfNotFound: true);
+        m_Fight_Overview_ActivateSpot = m_Fight_Overview.FindAction("ActivateSpot", throwIfNotFound: true);
         // Fight_Cannon
         m_Fight_Cannon = asset.FindActionMap("Fight_Cannon", throwIfNotFound: true);
-        m_Fight_Cannon_Move = m_Fight_Cannon.FindAction("Move", throwIfNotFound: true);
         m_Fight_Cannon_Aim = m_Fight_Cannon.FindAction("Aim", throwIfNotFound: true);
         m_Fight_Cannon_Fire = m_Fight_Cannon.FindAction("Fire", throwIfNotFound: true);
         m_Fight_Cannon_Reload = m_Fight_Cannon.FindAction("Reload", throwIfNotFound: true);
+        m_Fight_Cannon_Return = m_Fight_Cannon.FindAction("Return", throwIfNotFound: true);
         // Fight_Reeling
         m_Fight_Reeling = asset.FindActionMap("Fight_Reeling", throwIfNotFound: true);
         m_Fight_Reeling_Pull = m_Fight_Reeling.FindAction("Pull", throwIfNotFound: true);
         m_Fight_Reeling_Reel = m_Fight_Reeling.FindAction("Reel", throwIfNotFound: true);
+        m_Fight_Reeling_Return = m_Fight_Reeling.FindAction("Return", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1229,6 +1508,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Baiting
+        m_Baiting = asset.FindActionMap("Baiting", throwIfNotFound: true);
+        m_Baiting_Change_View_Left = m_Baiting.FindAction("Change_View_Left", throwIfNotFound: true);
+        m_Baiting_Change_View_Right = m_Baiting.FindAction("Change_View_Right", throwIfNotFound: true);
+        m_Baiting_Change_View_Down = m_Baiting.FindAction("Change_View_Down", throwIfNotFound: true);
+        m_Baiting_Change_View_Up = m_Baiting.FindAction("Change_View_Up", throwIfNotFound: true);
+        m_Baiting_Look = m_Baiting.FindAction("Look", throwIfNotFound: true);
+        m_Baiting_Defend = m_Baiting.FindAction("Defend", throwIfNotFound: true);
+        m_Baiting_Charge_Flashlight = m_Baiting.FindAction("Charge_Flashlight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1287,30 +1575,30 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player_FightOverview
-    private readonly InputActionMap m_Player_FightOverview;
-    private List<IPlayer_FightOverviewActions> m_Player_FightOverviewActionsCallbackInterfaces = new List<IPlayer_FightOverviewActions>();
-    private readonly InputAction m_Player_FightOverview_Drive;
-    private readonly InputAction m_Player_FightOverview_Station_Cannon;
-    private readonly InputAction m_Player_FightOverview_Station_Reeling;
-    private readonly InputAction m_Player_FightOverview_ActivateSpot;
-    public struct Player_FightOverviewActions
+    // Fight_Overview
+    private readonly InputActionMap m_Fight_Overview;
+    private List<IFight_OverviewActions> m_Fight_OverviewActionsCallbackInterfaces = new List<IFight_OverviewActions>();
+    private readonly InputAction m_Fight_Overview_Drive;
+    private readonly InputAction m_Fight_Overview_Station_Cannon;
+    private readonly InputAction m_Fight_Overview_Station_Reeling;
+    private readonly InputAction m_Fight_Overview_ActivateSpot;
+    public struct Fight_OverviewActions
     {
         private @PlayerInputs m_Wrapper;
-        public Player_FightOverviewActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Drive => m_Wrapper.m_Player_FightOverview_Drive;
-        public InputAction @Station_Cannon => m_Wrapper.m_Player_FightOverview_Station_Cannon;
-        public InputAction @Station_Reeling => m_Wrapper.m_Player_FightOverview_Station_Reeling;
-        public InputAction @ActivateSpot => m_Wrapper.m_Player_FightOverview_ActivateSpot;
-        public InputActionMap Get() { return m_Wrapper.m_Player_FightOverview; }
+        public Fight_OverviewActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Drive => m_Wrapper.m_Fight_Overview_Drive;
+        public InputAction @Station_Cannon => m_Wrapper.m_Fight_Overview_Station_Cannon;
+        public InputAction @Station_Reeling => m_Wrapper.m_Fight_Overview_Station_Reeling;
+        public InputAction @ActivateSpot => m_Wrapper.m_Fight_Overview_ActivateSpot;
+        public InputActionMap Get() { return m_Wrapper.m_Fight_Overview; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(Player_FightOverviewActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayer_FightOverviewActions instance)
+        public static implicit operator InputActionMap(Fight_OverviewActions set) { return set.Get(); }
+        public void AddCallbacks(IFight_OverviewActions instance)
         {
-            if (instance == null || m_Wrapper.m_Player_FightOverviewActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_Player_FightOverviewActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_Fight_OverviewActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Fight_OverviewActionsCallbackInterfaces.Add(instance);
             @Drive.started += instance.OnDrive;
             @Drive.performed += instance.OnDrive;
             @Drive.canceled += instance.OnDrive;
@@ -1325,7 +1613,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ActivateSpot.canceled += instance.OnActivateSpot;
         }
 
-        private void UnregisterCallbacks(IPlayer_FightOverviewActions instance)
+        private void UnregisterCallbacks(IFight_OverviewActions instance)
         {
             @Drive.started -= instance.OnDrive;
             @Drive.performed -= instance.OnDrive;
@@ -1341,37 +1629,37 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ActivateSpot.canceled -= instance.OnActivateSpot;
         }
 
-        public void RemoveCallbacks(IPlayer_FightOverviewActions instance)
+        public void RemoveCallbacks(IFight_OverviewActions instance)
         {
-            if (m_Wrapper.m_Player_FightOverviewActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Fight_OverviewActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayer_FightOverviewActions instance)
+        public void SetCallbacks(IFight_OverviewActions instance)
         {
-            foreach (var item in m_Wrapper.m_Player_FightOverviewActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Fight_OverviewActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_Player_FightOverviewActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Fight_OverviewActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public Player_FightOverviewActions @Player_FightOverview => new Player_FightOverviewActions(this);
+    public Fight_OverviewActions @Fight_Overview => new Fight_OverviewActions(this);
 
     // Fight_Cannon
     private readonly InputActionMap m_Fight_Cannon;
     private List<IFight_CannonActions> m_Fight_CannonActionsCallbackInterfaces = new List<IFight_CannonActions>();
-    private readonly InputAction m_Fight_Cannon_Move;
     private readonly InputAction m_Fight_Cannon_Aim;
     private readonly InputAction m_Fight_Cannon_Fire;
     private readonly InputAction m_Fight_Cannon_Reload;
+    private readonly InputAction m_Fight_Cannon_Return;
     public struct Fight_CannonActions
     {
         private @PlayerInputs m_Wrapper;
         public Fight_CannonActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Fight_Cannon_Move;
         public InputAction @Aim => m_Wrapper.m_Fight_Cannon_Aim;
         public InputAction @Fire => m_Wrapper.m_Fight_Cannon_Fire;
         public InputAction @Reload => m_Wrapper.m_Fight_Cannon_Reload;
+        public InputAction @Return => m_Wrapper.m_Fight_Cannon_Return;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Cannon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1381,9 +1669,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_Fight_CannonActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_Fight_CannonActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
@@ -1393,13 +1678,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Return.started += instance.OnReturn;
+            @Return.performed += instance.OnReturn;
+            @Return.canceled += instance.OnReturn;
         }
 
         private void UnregisterCallbacks(IFight_CannonActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
@@ -1409,6 +1694,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Return.started -= instance.OnReturn;
+            @Return.performed -= instance.OnReturn;
+            @Return.canceled -= instance.OnReturn;
         }
 
         public void RemoveCallbacks(IFight_CannonActions instance)
@@ -1432,12 +1720,14 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<IFight_ReelingActions> m_Fight_ReelingActionsCallbackInterfaces = new List<IFight_ReelingActions>();
     private readonly InputAction m_Fight_Reeling_Pull;
     private readonly InputAction m_Fight_Reeling_Reel;
+    private readonly InputAction m_Fight_Reeling_Return;
     public struct Fight_ReelingActions
     {
         private @PlayerInputs m_Wrapper;
         public Fight_ReelingActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pull => m_Wrapper.m_Fight_Reeling_Pull;
         public InputAction @Reel => m_Wrapper.m_Fight_Reeling_Reel;
+        public InputAction @Return => m_Wrapper.m_Fight_Reeling_Return;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Reeling; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1453,6 +1743,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reel.started += instance.OnReel;
             @Reel.performed += instance.OnReel;
             @Reel.canceled += instance.OnReel;
+            @Return.started += instance.OnReturn;
+            @Return.performed += instance.OnReturn;
+            @Return.canceled += instance.OnReturn;
         }
 
         private void UnregisterCallbacks(IFight_ReelingActions instance)
@@ -1463,6 +1756,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reel.started -= instance.OnReel;
             @Reel.performed -= instance.OnReel;
             @Reel.canceled -= instance.OnReel;
+            @Return.started -= instance.OnReturn;
+            @Return.performed -= instance.OnReturn;
+            @Return.canceled -= instance.OnReturn;
         }
 
         public void RemoveCallbacks(IFight_ReelingActions instance)
@@ -1598,6 +1894,100 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Baiting
+    private readonly InputActionMap m_Baiting;
+    private List<IBaitingActions> m_BaitingActionsCallbackInterfaces = new List<IBaitingActions>();
+    private readonly InputAction m_Baiting_Change_View_Left;
+    private readonly InputAction m_Baiting_Change_View_Right;
+    private readonly InputAction m_Baiting_Change_View_Down;
+    private readonly InputAction m_Baiting_Change_View_Up;
+    private readonly InputAction m_Baiting_Look;
+    private readonly InputAction m_Baiting_Defend;
+    private readonly InputAction m_Baiting_Charge_Flashlight;
+    public struct BaitingActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public BaitingActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Change_View_Left => m_Wrapper.m_Baiting_Change_View_Left;
+        public InputAction @Change_View_Right => m_Wrapper.m_Baiting_Change_View_Right;
+        public InputAction @Change_View_Down => m_Wrapper.m_Baiting_Change_View_Down;
+        public InputAction @Change_View_Up => m_Wrapper.m_Baiting_Change_View_Up;
+        public InputAction @Look => m_Wrapper.m_Baiting_Look;
+        public InputAction @Defend => m_Wrapper.m_Baiting_Defend;
+        public InputAction @Charge_Flashlight => m_Wrapper.m_Baiting_Charge_Flashlight;
+        public InputActionMap Get() { return m_Wrapper.m_Baiting; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BaitingActions set) { return set.Get(); }
+        public void AddCallbacks(IBaitingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BaitingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BaitingActionsCallbackInterfaces.Add(instance);
+            @Change_View_Left.started += instance.OnChange_View_Left;
+            @Change_View_Left.performed += instance.OnChange_View_Left;
+            @Change_View_Left.canceled += instance.OnChange_View_Left;
+            @Change_View_Right.started += instance.OnChange_View_Right;
+            @Change_View_Right.performed += instance.OnChange_View_Right;
+            @Change_View_Right.canceled += instance.OnChange_View_Right;
+            @Change_View_Down.started += instance.OnChange_View_Down;
+            @Change_View_Down.performed += instance.OnChange_View_Down;
+            @Change_View_Down.canceled += instance.OnChange_View_Down;
+            @Change_View_Up.started += instance.OnChange_View_Up;
+            @Change_View_Up.performed += instance.OnChange_View_Up;
+            @Change_View_Up.canceled += instance.OnChange_View_Up;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @Defend.started += instance.OnDefend;
+            @Defend.performed += instance.OnDefend;
+            @Defend.canceled += instance.OnDefend;
+            @Charge_Flashlight.started += instance.OnCharge_Flashlight;
+            @Charge_Flashlight.performed += instance.OnCharge_Flashlight;
+            @Charge_Flashlight.canceled += instance.OnCharge_Flashlight;
+        }
+
+        private void UnregisterCallbacks(IBaitingActions instance)
+        {
+            @Change_View_Left.started -= instance.OnChange_View_Left;
+            @Change_View_Left.performed -= instance.OnChange_View_Left;
+            @Change_View_Left.canceled -= instance.OnChange_View_Left;
+            @Change_View_Right.started -= instance.OnChange_View_Right;
+            @Change_View_Right.performed -= instance.OnChange_View_Right;
+            @Change_View_Right.canceled -= instance.OnChange_View_Right;
+            @Change_View_Down.started -= instance.OnChange_View_Down;
+            @Change_View_Down.performed -= instance.OnChange_View_Down;
+            @Change_View_Down.canceled -= instance.OnChange_View_Down;
+            @Change_View_Up.started -= instance.OnChange_View_Up;
+            @Change_View_Up.performed -= instance.OnChange_View_Up;
+            @Change_View_Up.canceled -= instance.OnChange_View_Up;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @Defend.started -= instance.OnDefend;
+            @Defend.performed -= instance.OnDefend;
+            @Defend.canceled -= instance.OnDefend;
+            @Charge_Flashlight.started -= instance.OnCharge_Flashlight;
+            @Charge_Flashlight.performed -= instance.OnCharge_Flashlight;
+            @Charge_Flashlight.canceled -= instance.OnCharge_Flashlight;
+        }
+
+        public void RemoveCallbacks(IBaitingActions instance)
+        {
+            if (m_Wrapper.m_BaitingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBaitingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BaitingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BaitingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BaitingActions @Baiting => new BaitingActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1643,7 +2033,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_XRSchemeIndex];
         }
     }
-    public interface IPlayer_FightOverviewActions
+    public interface IFight_OverviewActions
     {
         void OnDrive(InputAction.CallbackContext context);
         void OnStation_Cannon(InputAction.CallbackContext context);
@@ -1652,15 +2042,16 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     }
     public interface IFight_CannonActions
     {
-        void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnReturn(InputAction.CallbackContext context);
     }
     public interface IFight_ReelingActions
     {
         void OnPull(InputAction.CallbackContext context);
         void OnReel(InputAction.CallbackContext context);
+        void OnReturn(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1674,5 +2065,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IBaitingActions
+    {
+        void OnChange_View_Left(InputAction.CallbackContext context);
+        void OnChange_View_Right(InputAction.CallbackContext context);
+        void OnChange_View_Down(InputAction.CallbackContext context);
+        void OnChange_View_Up(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnDefend(InputAction.CallbackContext context);
+        void OnCharge_Flashlight(InputAction.CallbackContext context);
     }
 }

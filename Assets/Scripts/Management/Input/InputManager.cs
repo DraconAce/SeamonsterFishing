@@ -1,26 +1,41 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 public class InputManager : Singleton<InputManager>
 {
     public struct SubscriberSettings
     {
         public IInputEventSubscriber EventSubscriber;
         
-        public string Action;
+        public string[] ActionsToSubscribeTo;
     }
+
+    [Serializable]
+    private class GameStateInputMap : ListDictProxy<GameState, string>
+    {
+        [SerializeField] private GameState state;
+        public override GameState Key => state;
+
+        [SerializeField] private string stateInputMap;
+        public override string Value => stateInputMap;
+    }
+
+    [SerializeField] private List<GameStateInputMap> inputMapsList;
 
     public PlayerInput playerInput { get; private set; }
 
+    private GameStateManager gameStateManager;
+    private Dictionary<GameState, string> inputMapsLookup = new();
     private readonly Dictionary<string, List<IInputEventSubscriber>> inputActionAndSubscribers = new();
 
-    private void Start()
+    private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        
         playerInput.onActionTriggered += OnActionTriggered;
+
+        CreateInputMapsLookup();
     }
 
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
@@ -28,6 +43,24 @@ public class InputManager : Singleton<InputManager>
         if (!inputActionAndSubscribers.TryGetValue(callbackContext.action.name, out var subscriberList)) return;
         
         NotifySubscribers(subscriberList, callbackContext);
+    }
+
+    private void CreateInputMapsLookup() 
+        => inputMapsLookup = ListDictProxy<GameState, string>.CreateDictionaryFromList(new List<ListDictProxy<GameState, string>>(inputMapsList));
+
+    private void Start()
+    {
+        gameStateManager = GameStateManager.instance;
+
+        gameStateManager.GameStateChangedEvent += ChangeToInputMapOfState;
+    }
+
+    private void ChangeToInputMapOfState(GameState state)
+    {
+        if (!inputMapsLookup.TryGetValue(state, out var mapName))
+            return;
+
+        playerInput.SwitchCurrentActionMap(mapName);
     }
 
     private void NotifySubscribers(List<IInputEventSubscriber> subscriberList, InputAction.CallbackContext callbackContext)
@@ -48,24 +81,37 @@ public class InputManager : Singleton<InputManager>
             subscriber.InputCanceled(callbackContext);
     }
 
-    public void SubscribeToAction(SubscriberSettings subscriberSettings)
+    public void SubscribeToActions(SubscriberSettings subscriberSettings)
     {
-        if (inputActionAndSubscribers.TryGetValue(subscriberSettings.Action, out var subscriberList))
+        foreach(var action in subscriberSettings.ActionsToSubscribeTo)
         {
-            subscriberList.Add(subscriberSettings.EventSubscriber);
-            return;
+            if (inputActionAndSubscribers.TryGetValue(action, out var subscriberList))
+            {
+                subscriberList.Add(subscriberSettings.EventSubscriber);
+                continue;
+            }
+
+            inputActionAndSubscribers.Add(action,
+                new() { subscriberSettings.EventSubscriber });
         }
-        
-        inputActionAndSubscribers.Add(subscriberSettings.Action, 
-            new(){ subscriberSettings.EventSubscriber });
     }
 
-    public void UnsubscribeFromAction(SubscriberSettings subscriberSettings)
+    public void UnsubscribeFromActions(SubscriberSettings subscriberSettings)
     {
-        if(!inputActionAndSubscribers.TryGetValue(subscriberSettings.Action, out var subscriberList)) return;
+        foreach(var action in subscriberSettings.ActionsToSubscribeTo)
+        {
+            if (!inputActionAndSubscribers.TryGetValue(action, out var subscriberList))
+                continue;
 
-        subscriberList.Remove(subscriberSettings.EventSubscriber);
+            subscriberList.Remove(subscriberSettings.EventSubscriber);
+        }
     }
 
-    private void OnDestroy() => playerInput.onActionTriggered -= OnActionTriggered;
+    private void OnDestroy()
+    {
+        playerInput.onActionTriggered -= OnActionTriggered;
+
+        if (gameStateManager == null) return;
+        gameStateManager.GameStateChangedEvent -= ChangeToInputMapOfState;
+    }
 }

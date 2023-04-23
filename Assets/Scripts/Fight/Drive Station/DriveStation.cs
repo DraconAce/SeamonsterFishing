@@ -1,138 +1,82 @@
-using System;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-public class DriveStation : MonoBehaviour, IManualUpdateSubscriber
+[RequireComponent(typeof(DriveStation_Moving), typeof(DriveStation_Rotating))]
+
+public class DriveStation : AbstractStation, IManualUpdateSubscriber
 {
-    [Serializable]
-    public struct MovementLimit
-    {
-        public float MinLimit;
-        public float MaxLimit;
-    }
-    
     [SerializeField] private Transform boatTransform;
-    [SerializeField] private float driveSpeed = 5.0f;
-    [SerializeField] private MovementLimit driveLimit;
-    [SerializeField] private bool forwardIsRight = true;
-    [SerializeField] private float localRightRotation;
-    private float localLeftRotation;
+    public Transform BoatTransform => boatTransform;
 
-    [SerializeField] private Ease rotationEase = Ease.InSine;
-    [SerializeField] private float rotationDuration = 3;
-    
-    private UpdateManager updateManager;
+    private InputAction driveAction;
 
-    private InputAction driveAction; //TODO: Reassign on game state change 
-    private PlayerInputs customPlayerInputs;
-    private Vector3 boatForwardDirection;
-    private Transform boatParent;
+    private DriveStation_Moving movingController;
+    private DriveStation_Rotating rotatingController;
 
-    private bool drivingLocked;
-    private float lastDrivingDirection = 1;
-    private Tween rotationTween;
-
-    private void Start()
+    protected override void GameStateMatches()
     {
-        customPlayerInputs = new();
-        driveAction = customPlayerInputs.Player_FightOverview.Drive;
+        base.GameStateMatches();
+        UpdateManager.SubscribeToManualUpdate(this);
+    }
+
+    protected override void GameStateDoesNotMatch()
+    {
+        base.GameStateDoesNotMatch();
+        UpdateManager.UnsubscribeFromManualUpdate(this);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        SetupDrivingControllers();
+        
+        GetAndEnableDriveAction();
+
+        UpdateManager.SubscribeToManualUpdate(this);
+
+        rotatingController.CalculateLeftRotation();
+    }
+
+    private void SetupDrivingControllers()
+    {
+        TryGetComponent(out movingController);
+        TryGetComponent(out rotatingController);
+
+        movingController.SetupController(this);
+        rotatingController.SetupController(this);
+    }
+
+    private void GetAndEnableDriveAction()
+    {
+        driveAction = CustomPlayerInputs.Fight_Overview.Drive;
         driveAction.Enable();
-        
-        updateManager = UpdateManager.instance;
-        updateManager.SubscribeToManualUpdate(this);
-
-        boatForwardDirection = boatTransform.forward.normalized;
-        
-        boatParent = boatTransform.parent;
-        
-        CalculateLeftRotation();
     }
 
-    private void CalculateLeftRotation() => localLeftRotation = localRightRotation - 180.0f;
-
-    public void ManualUpdate() => MoveBoat();
-
-    #region Move
-    private void MoveBoat()
+    public void ManualUpdate()
     {
-        var driveDirection = driveAction.ReadValue<Vector2>().x;
-        
-        if(BoatIsNotMoving(driveDirection)) return;
-
-        if (DriveDirectionHasChanged(Mathf.Sign(driveDirection)))
-        {
-            StartRotationToChangeDirection(driveDirection);
-            return;
-        }
-        
-        if (drivingLocked) return;
-
-        var boatPosition = boatTransform.position;
-        var newBoatPosition = boatPosition + CalculateMoveAmount(driveDirection);
-
-        newBoatPosition = ClampToMovementLimits(newBoatPosition);
-        boatTransform.position = newBoatPosition;
+        if (GameStateManager.CurrentGameState != StationGameState) return;
+        MoveAndRotateBoat();
     }
-    
-    private bool BoatIsNotMoving (float newDirection) => Mathf.Approximately(0, newDirection);
 
-    private bool DriveDirectionHasChanged(float newDirection) => newDirection != lastDrivingDirection;
-
-    private void StartRotationToChangeDirection(float newDirection)
+    private void MoveAndRotateBoat()
     {
-        drivingLocked = true;
+        var moveDirection = driveAction.ReadValue<Vector2>().x;
         
-        rotationTween?.Kill();
+        if(movingController.BoatIsNotMoving(moveDirection)) return;
 
-        var targetRotation = GetTargetRotation(newDirection);
+        var hasDirectionChanged = rotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
 
-        rotationTween = boatTransform.DOLocalRotate(targetRotation, rotationDuration)
-            .SetEase(rotationEase)
-            .OnComplete(() => drivingLocked = false);
-
-        lastDrivingDirection = newDirection;
-    }
-
-    private Vector3 GetTargetRotation(float newDirection)
-    {
-        var targetRotation = boatTransform.localEulerAngles;
-
-        if (forwardIsRight)
-            targetRotation.y = newDirection < 0 ? localLeftRotation : localRightRotation;
-        else
-            targetRotation.y = newDirection < 0 ? localRightRotation : localLeftRotation;
-
-        return targetRotation;
-    }
-
-    private Vector3 CalculateMoveAmount(float driveDirection) 
-        => boatForwardDirection * (driveSpeed * driveDirection * Time.deltaTime);
-
-    private Vector3 ClampToMovementLimits(Vector3 newBoatPosWorld)
-    {
-        var newBoatPosLocal = boatParent.InverseTransformPoint(newBoatPosWorld);
-
-        if (newBoatPosLocal.z < driveLimit.MinLimit)
-            newBoatPosLocal.z = driveLimit.MinLimit;
-        else if(newBoatPosLocal.z > driveLimit.MaxLimit)
-            newBoatPosLocal.z = driveLimit.MaxLimit;
-
-        newBoatPosWorld = boatParent.TransformPoint(newBoatPosLocal);
+        if (hasDirectionChanged || rotatingController.MovingLocked) return;
         
-        return newBoatPosWorld;
+        movingController.MoveBoat(moveDirection);
     }
-    #endregion
-    
-    /*
-     * variable for last direction (sign)
-     *
-     * on sign change trigger tween for rotation and lock movement (rotate 180 around local y)
-     * store tween to interrupt if sign changes again
-     *
-     * on tween finished enable movement
-     *
-     * 
-     */
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        if (UpdateManager == null) return;
+        UpdateManager.UnsubscribeFromManualUpdate(this);
+    }
 }
