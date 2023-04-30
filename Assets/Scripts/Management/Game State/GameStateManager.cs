@@ -4,6 +4,8 @@ using UnityEngine;
 public class GameStateManager : Singleton<GameStateManager>
 {
     [SerializeField] private GameState currentGameState = GameState.FightOverview;
+    
+    public bool BlockGameStateChange { get; set; }
 
     public GameState CurrentGameState
     {
@@ -21,7 +23,7 @@ public class GameStateManager : Singleton<GameStateManager>
 
     public void ChangeGameState(GameState newGameState)
     {
-        if (newGameState == CurrentGameState) return;
+        if (newGameState == CurrentGameState || BlockGameStateChange) return;
 
         CurrentGameState = newGameState;
         GameStateChangedEvent?.Invoke(newGameState);

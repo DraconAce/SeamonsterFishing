@@ -13,6 +13,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     private DriveStation_Moving movingController;
     private DriveStation_Rotating rotatingController;
 
+    public float LastDriveDirection { get; set; } = 1;
+
     protected override void GameStateMatches()
     {
         base.GameStateMatches();
