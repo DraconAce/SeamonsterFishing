@@ -11,7 +11,7 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
     protected virtual void Start()
     {
         monsterStateManager = MonsterStateManager.instance;
-        monsterBehaviourProvider = MonsterBehaviourProvider.instance;
+        monsterBehaviourProvider = GetComponentInParent<MonsterBehaviourProvider>();
     }
 
     public virtual void StartBehaviour()
