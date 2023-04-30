@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DriveStation_Moving : StationController
+public class DriveStation_Moving : AbstractStationController
 {
     [SerializeField] private float driveSpeed = 5.0f;
     [SerializeField] private MinMaxLimit moveLimit;

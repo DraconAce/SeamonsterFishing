@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class CannonStation_Shooting : StationController, IInputEventSubscriber
+public class CannonStation_Shooting : AbstractStationController, IInputEventSubscriber
 {
     [SerializeField] private float reloadTime = 5f;
     [SerializeField] private float shootDelay = 3f;
@@ -102,7 +102,8 @@ public class CannonStation_Shooting : StationController, IInputEventSubscriber
     private void ScheduleShoot()
     {
         var cannonBallOb = cannonBallPool.RequestInstance(barrelOpening.transform.position, barrelOpening);
-        
+
+        cannonBallOb.Ob.transform.localScale = Vector3.one;
         cannonBallOb.TryGetCachedComponent(out currentCannonBall);
         
         shootDelayTween = DOVirtual.DelayedCall(shootDelay, Shoot, false);

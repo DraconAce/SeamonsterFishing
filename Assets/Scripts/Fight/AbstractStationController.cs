@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StationController : MonoBehaviour
+public abstract class AbstractStationController : MonoBehaviour
 {
     protected AbstractStation ControllerStation { get; private set; }
 
