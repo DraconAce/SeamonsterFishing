@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class MonsterBehaviourProvider : Singleton<MonsterBehaviourProvider>, IManualUpdateSubscriber
+public class MonsterBehaviourProvider : IManualUpdateSubscriber
 {
     protected MonsterStateManager monsterStateManager;
 
