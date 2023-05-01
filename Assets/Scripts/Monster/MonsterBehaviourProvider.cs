@@ -1,33 +1,22 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
-public class MonsterBehaviourProvider : IManualUpdateSubscriber
+public class MonsterBehaviourProvider : MonoBehaviour
 {
-    protected MonsterStateManager monsterStateManager;
-
+    private Coroutine updateBehaviourRoutine;
+    
     protected AbstractMonsterBehaviour activeBehaviour;
 
-    private UpdateManager updateManager;
+    protected virtual void Start() => updateBehaviourRoutine = StartCoroutine(UpdateBehaviour());
 
-    protected virtual void Start()
+    protected virtual IEnumerator UpdateBehaviour()
     {
-        monsterStateManager = MonsterStateManager.instance;
-        updateManager = UpdateManager.instance;
-        
-        updateManager.SubscribeToManualLateUpdate(this);
+        yield break;
     }
-
-    public void ManualLateUpdate() => UpdateBehaviour();
-
-    protected virtual void UpdateBehaviour(){}
 
     public bool IsBehaviourActive(AbstractMonsterBehaviour behaviourToCheck) 
         => activeBehaviour == behaviourToCheck;
 
-    protected virtual void OnDestroy()
-    {
-        if(updateManager == null) return;
-        
-        updateManager.UnsubscribeFromManualLateUpdate(this);
-    }
+    protected virtual void OnDestroy() => StopCoroutine(updateBehaviourRoutine);
 }

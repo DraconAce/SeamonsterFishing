@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
-public class DeathHandler : MonoBehaviour
+public class WinDeathHandler : MonoBehaviour
 {
     [SerializeField] private string sceneToReloadOnRestart;
     [SerializeField] private GameState stateAfterReload = GameState.FightOverview;
+    
+    [Header("Events")]
     [SerializeField] private UnityEvent playerIsDeadEvent;
+    [SerializeField] private UnityEvent playerWonEvent;
     
     private GameStateManager gameStateManager;
 
@@ -27,10 +31,18 @@ public class DeathHandler : MonoBehaviour
 
     private void OnGameStateChanged(GameState newGameState)
     {
+        if (newGameState == GameState.Won)
+            OnRunEnded(playerWonEvent);
+        
         if (newGameState != GameState.Dead) return;
 
+        OnRunEnded(playerIsDeadEvent);
+    }
+
+    private void OnRunEnded(UnityEvent eventToTrigger)
+    {
         Time.timeScale = 0;
-        playerIsDeadEvent?.Invoke();
+        eventToTrigger?.Invoke();
     }
 
     public void RestartRun() => SceneManager.LoadScene(sceneToReloadOnRestart);

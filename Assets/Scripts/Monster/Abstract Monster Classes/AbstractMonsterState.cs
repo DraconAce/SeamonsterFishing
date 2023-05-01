@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-public class MonsterStateManager : Singleton<MonsterStateManager>
+public abstract class AbstractMonsterState : MonoBehaviour
 {
     private MonsterState currentState;
     public MonsterState CurrentState
