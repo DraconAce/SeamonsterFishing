@@ -9,13 +9,13 @@ public class MonsterStateManager : Singleton<MonsterStateManager>
         set => CheckStateChangeRequest(value);
     }
 
-    private Action MonsterStateChangedEvent;
+    public event Action<MonsterState> MonsterStateChangedEvent;
 
     private void CheckStateChangeRequest(MonsterState requestedChange)
     {
         if (requestedChange == currentState) return;
         
         currentState = requestedChange;
-        MonsterStateChangedEvent?.Invoke();
+        MonsterStateChangedEvent?.Invoke(currentState);
     }
 }
