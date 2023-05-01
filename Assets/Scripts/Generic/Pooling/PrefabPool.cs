@@ -99,6 +99,13 @@ public class PrefabPool : MonoBehaviour
     public void ReturnInstance(PoolObjectContainer container)
     {
         TryParentObject(container.Ob.transform, poolParent);
+
+        if (container.TryGetCachedComponents<IPoolObject>(out var poolObjects))
+        {
+            foreach(var poolObject in poolObjects)
+                poolObject.OnReturnInstance();
+        }
+        
         container.Ob.SetActive(false);
         poolQueue.Enqueue(container);
     }
