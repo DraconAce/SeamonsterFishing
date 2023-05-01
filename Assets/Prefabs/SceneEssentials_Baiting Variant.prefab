@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_DefaultActionMap
       value: e6c6a283-f19d-4a1c-b055-d9c2357c6c54
       objectReference: {fileID: 0}
+    - target: {fileID: 7248937567292723654, guid: f54835b787767774aa735d91f2361471, type: 3}
+      propertyPath: sceneToReloadOnRestart
+      value: BaitingScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7636459376872908525, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_RootOrder
       value: 0
