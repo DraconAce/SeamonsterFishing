@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &82494299625383874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2683594260386237730}
+  - component: {fileID: 4346745888058518136}
+  m_Layer: 0
+  m_Name: Scene Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2683594260386237730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82494299625383874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7636459376872908525}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4346745888058518136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82494299625383874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 741ae2152e544e99a89847e423c80ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenesList:
+  - {fileID: 11400000, guid: 840442d7181476747abb1c99fbf5ab5d, type: 2}
+  - {fileID: 11400000, guid: 591ffd9ef58010a41ac7b6cd2a2ed557, type: 2}
 --- !u!1 &373549468104455402
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +186,7 @@ Transform:
   - {fileID: 3536400306987202515}
   - {fileID: 8080181059156581670}
   - {fileID: 8368323699474295737}
+  - {fileID: 2683594260386237730}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1322,6 +1370,8 @@ MonoBehaviour:
     stateInputMap: Baiting
   - state: 4
     stateInputMap: Navigation
+  - state: 8
+    stateInputMap: UI
 --- !u!114 &8428814468877849716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,6 +1602,8 @@ MonoBehaviour:
     state: 2
   - actionName: Return
     state: 0
+  - actionName: ToggleMenu
+    state: 8
 --- !u!1 &8221371181883746402
 GameObject:
   m_ObjectHideFlags: 0

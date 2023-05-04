@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameStateChanger : Singleton<GameStateChanger>, IInputEventSubscriber
+public class InputGameStateChangeRequestor : Singleton<InputGameStateChangeRequestor>, IInputEventSubscriber
 {
     [Serializable]
     private class GameStateInputActionMap : ListDictProxy<string, GameState>

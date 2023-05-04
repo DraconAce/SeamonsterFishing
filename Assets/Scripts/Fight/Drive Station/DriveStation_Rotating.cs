@@ -21,7 +21,7 @@ public class DriveStation_Rotating : AbstractStationController
     [SerializeField] private Axis cannonBarrelRotationAxis = Axis.XAXIS;
     [SerializeField] private Transform cannonBaseTransform;
     [SerializeField] private Transform cannonBarrelPivot;
-    [SerializeField] private Ease cannonAnimationEase = Ease.InCubic;
+    [SerializeField] private Ease cannonAnimationEase = Ease.InCubic; 
     
     [Header("Animation")]
     [SerializeField] private float rotationDuration = 3;

@@ -16,7 +16,7 @@ public class GameStateManager : Singleton<GameStateManager>
     public override void OnCreated()
     {
         base.OnCreated();
-        GameStateChanger.instance.Activation();
+        InputGameStateChangeRequestor.instance.Activation();
     }
 
     public event Action<GameState> GameStateChangedEvent;

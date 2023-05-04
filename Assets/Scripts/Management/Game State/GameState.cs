@@ -12,5 +12,7 @@ public enum GameState
     
     None,
     
-    Won
+    Won,
+    
+    Menu
 }
