@@ -33,6 +33,15 @@ public class SceneController : Singleton<SceneController>
         
         TrySwitchToScene(sceneName);
     }
+    
+    public void SwitchToScene(LevelRepresentation levelRep)
+    {
+        var sceneName = levelRep.SceneName;
+        
+        gameStateManager.ChangeGameState(levelRep.InitialLevelGameState);
+        
+        TrySwitchToScene(sceneName);
+    }
 
     private void TrySwitchToScene(string scene)
     {

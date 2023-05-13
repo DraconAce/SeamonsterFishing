@@ -1,4 +1,5 @@
 using System;
+using System.Xml;
 using UnityEngine;
 
 public class GameStateManager : Singleton<GameStateManager>
@@ -6,6 +7,7 @@ public class GameStateManager : Singleton<GameStateManager>
     [SerializeField] private GameState currentGameState = GameState.FightOverview;
     
     public bool BlockGameStateChange { get; set; }
+    public GameState PreviousGameState { get; private set; }
 
     public GameState CurrentGameState
     {
@@ -16,6 +18,9 @@ public class GameStateManager : Singleton<GameStateManager>
     public override void OnCreated()
     {
         base.OnCreated();
+
+        PreviousGameState = currentGameState;
+        
         InputGameStateChangeRequestor.instance.Activation();
     }
 
@@ -25,7 +30,11 @@ public class GameStateManager : Singleton<GameStateManager>
     {
         if (newGameState == CurrentGameState || BlockGameStateChange) return;
 
+        PreviousGameState = CurrentGameState;
         CurrentGameState = newGameState;
+        
         GameStateChangedEvent?.Invoke(newGameState);
     }
+
+    public void ChangeToPreviousGameState() => ChangeGameState(PreviousGameState);
 }

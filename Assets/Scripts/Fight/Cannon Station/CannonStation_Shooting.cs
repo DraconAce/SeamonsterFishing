@@ -38,8 +38,6 @@ public class CannonStation_Shooting : AbstractStationController, IInputEventSubs
 
     public string[] ActionsToSubscribeTo { get; } = { shootActionName, reloadActionName };
 
-    private InputManager.SubscriberSettings subscriberSettings;
-
     private void Start()
     {
         SubscribeToInputManager();
@@ -53,7 +51,7 @@ public class CannonStation_Shooting : AbstractStationController, IInputEventSubs
 
         ControllerStation.StationGameStateDoesNotMatchEvent += OnGameStateDoesNotMatchCannonStation;
     }
-    
+
     private void OnGameStateDoesNotMatchCannonStation()
     {
         reloadingTween?.Kill();
@@ -68,8 +66,7 @@ public class CannonStation_Shooting : AbstractStationController, IInputEventSubs
     {
         inputManager = InputManager.instance;
         
-        subscriberSettings = new() { ActionsToSubscribeTo = ActionsToSubscribeTo, EventSubscriber = this };
-        inputManager.SubscribeToActions(subscriberSettings);
+        inputManager.SubscribeToActions(this);
     }
 
     private void PrepareCannonBallPool() 
@@ -122,7 +119,7 @@ public class CannonStation_Shooting : AbstractStationController, IInputEventSubs
         shootIsScheduled = false;
         isLoaded = false;
     }
-    
+
     private void TryToReload()
     {
         if (isLoaded || isReloading) return;
@@ -147,6 +144,8 @@ public class CannonStation_Shooting : AbstractStationController, IInputEventSubs
             ControllerStation.StationGameStateDoesNotMatchEvent -= OnGameStateDoesNotMatchCannonStation;
 
         if (inputManager == null) return;
-        inputManager.UnsubscribeFromActions(subscriberSettings);
+        UnsubscribeOnDestroy();
     }
+
+    public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
 }

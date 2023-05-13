@@ -12,6 +12,4 @@ public class MainMenu : MonoBehaviour
     public void LoadBaitingScene() => SwitchToScene(Level.Baiting);
     
     public void SwitchToScene(Level levelIdentifier) => sceneController.SwitchToScene(levelIdentifier);
-
-    public void QuitGame() => Application.Quit();
 }
