@@ -5,13 +5,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : Singleton<InputManager>
 {
-    public struct SubscriberSettings
-    {
-        public IInputEventSubscriber EventSubscriber;
-        
-        public string[] ActionsToSubscribeTo;
-    }
-
     [Serializable]
     private class GameStateInputMap : ListDictProxy<GameState, string>
     {
@@ -22,13 +15,24 @@ public class InputManager : Singleton<InputManager>
         public override string Value => stateInputMap;
     }
 
+    private class ActionEvent
+    {
+        public event Action<InputAction.CallbackContext> StartedAction;
+        public event Action<InputAction.CallbackContext> PerformedAction;
+        public event Action<InputAction.CallbackContext> CanceledAction;
+
+        public void InvokeStarted(InputAction.CallbackContext context) => StartedAction?.Invoke(context);
+        public void InvokePerformed(InputAction.CallbackContext context) => PerformedAction?.Invoke(context);
+        public void InvokeCanceled(InputAction.CallbackContext context) => CanceledAction?.Invoke(context);
+    }
+
     [SerializeField] private List<GameStateInputMap> inputMapsList;
 
     public PlayerInput playerInput { get; private set; }
 
     private GameStateManager gameStateManager;
     private Dictionary<GameState, string> inputMapsLookup = new();
-    private readonly Dictionary<string, List<IInputEventSubscriber>> inputActionAndSubscribers = new();
+    private readonly Dictionary<string, ActionEvent> inputActionAndActionEvents = new();
 
     private void Awake()
     {
@@ -40,9 +44,19 @@ public class InputManager : Singleton<InputManager>
 
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
     {
-        if (!inputActionAndSubscribers.TryGetValue(callbackContext.action.name, out var subscriberList)) return;
-        
-        NotifySubscribers(subscriberList, callbackContext);
+        if (!inputActionAndActionEvents.TryGetValue(callbackContext.action.name, out var actionEvent)) return;
+
+        NotifySubscribers(callbackContext, actionEvent);
+    }
+
+    private void NotifySubscribers(InputAction.CallbackContext callbackContext, ActionEvent triggeredActionEvent)
+    {
+        if (callbackContext.started)
+            triggeredActionEvent.InvokeStarted(callbackContext);
+        if (callbackContext.performed)
+            triggeredActionEvent.InvokePerformed(callbackContext);
+        if (callbackContext.canceled)
+            triggeredActionEvent.InvokeCanceled(callbackContext);
     }
 
     private void CreateInputMapsLookup() 
@@ -63,48 +77,54 @@ public class InputManager : Singleton<InputManager>
         playerInput.SwitchCurrentActionMap(mapName);
     }
 
-    private void NotifySubscribers(List<IInputEventSubscriber> subscriberList, InputAction.CallbackContext callbackContext)
+    public void SubscribeToActions(IInputEventSubscriber subscriber)
     {
-        foreach (var subscriber in subscriberList) 
-            TriggerSubscriberContextFunction(callbackContext, subscriber);
-    }
-
-    private void TriggerSubscriberContextFunction(InputAction.CallbackContext callbackContext, IInputEventSubscriber subscriber)
-    {
-        if (!subscriber.SubscriberCanReceiveUpdate()) return;
-        
-        if (callbackContext.started && subscriber.SubscribedToStarted)
-            subscriber.InputStarted(callbackContext);
-        if (callbackContext.performed && subscriber.SubscribedToPerformed)
-            subscriber.InputPerformed(callbackContext);
-        if (callbackContext.canceled && subscriber.SubscribedToCanceled)
-            subscriber.InputCanceled(callbackContext);
-    }
-
-    public void SubscribeToActions(SubscriberSettings subscriberSettings)
-    {
-        foreach(var action in subscriberSettings.ActionsToSubscribeTo)
+        foreach(var action in subscriber.ActionsToSubscribeTo)
         {
-            if (inputActionAndSubscribers.TryGetValue(action, out var subscriberList))
+            if (inputActionAndActionEvents.TryGetValue(action, out var actionEvent))
             {
-                subscriberList.Add(subscriberSettings.EventSubscriber);
+                AddSubscriberToSuitableEvents(subscriber, actionEvent);
+
                 continue;
             }
 
-            inputActionAndSubscribers.Add(action,
-                new() { subscriberSettings.EventSubscriber });
+            var newActionEvent = new ActionEvent();
+            
+            AddSubscriberToSuitableEvents(subscriber, newActionEvent);
+            
+            inputActionAndActionEvents.Add(action, newActionEvent);
         }
     }
 
-    public void UnsubscribeFromActions(SubscriberSettings subscriberSettings)
+    private void AddSubscriberToSuitableEvents(IInputEventSubscriber subscriber, ActionEvent actionEvent)
     {
-        foreach(var action in subscriberSettings.ActionsToSubscribeTo)
+        if (subscriber.SubscribedToStarted)
+            actionEvent.StartedAction += subscriber.InputStarted;
+        if (subscriber.SubscribedToPerformed)
+            actionEvent.PerformedAction += subscriber.InputPerformed;
+        if (subscriber.SubscribedToStarted)
+            actionEvent.CanceledAction += subscriber.InputCanceled;
+    }
+
+    public void UnsubscribeFromActions(IInputEventSubscriber subscriber)
+    {
+        foreach(var action in subscriber.ActionsToSubscribeTo)
         {
-            if (!inputActionAndSubscribers.TryGetValue(action, out var subscriberList))
+            if (!inputActionAndActionEvents.TryGetValue(action, out var actionEvent))
                 continue;
 
-            subscriberList.Remove(subscriberSettings.EventSubscriber);
+            RemoveSubscriberFromSuitableEvents(subscriber, actionEvent);
         }
+    }
+    
+    private void RemoveSubscriberFromSuitableEvents(IInputEventSubscriber subscriber, ActionEvent actionEvent)
+    {
+        if (subscriber.SubscribedToStarted)
+            actionEvent.StartedAction -= subscriber.InputStarted;
+        if (subscriber.SubscribedToPerformed)
+            actionEvent.PerformedAction -= subscriber.InputPerformed;
+        if (subscriber.SubscribedToStarted)
+            actionEvent.CanceledAction -= subscriber.InputCanceled;
     }
 
     private void OnDestroy()

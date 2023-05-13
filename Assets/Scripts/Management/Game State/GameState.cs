@@ -10,5 +10,10 @@ public enum GameState
     
     Dead,
     
-    None
+    None,
+    
+    Won,
+    
+    PauseMenu,
+    MainMenu
 }

@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public struct MinMaxLimit
 {
     public float MinLimit;
     public float MaxLimit;
+
+    public float GetRandomBetweenLimits() => Random.Range(MinLimit, MaxLimit);
 }
 
 [Serializable]
