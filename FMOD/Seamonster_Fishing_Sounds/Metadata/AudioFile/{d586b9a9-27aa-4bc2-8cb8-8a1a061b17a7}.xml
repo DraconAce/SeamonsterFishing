@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d586b9a9-27aa-4bc2-8cb8-8a1a061b17a7}">
+		<property name="assetPath">
+			<value>Monster/SoundscapeFiveTimesMonsterGrumblingFarAwayPlusBubbleAmbiance_507441__eli_emmett__monster-sound.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>93.601687499999997</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
+		</relationship>
+	</object>
+</objects>

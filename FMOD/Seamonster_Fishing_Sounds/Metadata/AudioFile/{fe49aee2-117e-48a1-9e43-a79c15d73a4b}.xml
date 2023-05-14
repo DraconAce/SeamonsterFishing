@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{fe49aee2-117e-48a1-9e43-a79c15d73a4b}">
+		<property name="assetPath">
+			<value>Monster/PossibleJumpScareNoise_324563__univ_lyon3__saly_margaux_2015_2016_creature_scream.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>3.1313151927437644</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
+		</relationship>
+	</object>
+</objects>
