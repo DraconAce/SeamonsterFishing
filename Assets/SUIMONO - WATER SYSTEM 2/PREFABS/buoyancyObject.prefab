@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyToParent: 1
   engageBuoyancy: 1
-  activationRange: 5000
+  activationRange: 75
   inheritForce: 0
   keepAtSurface: 0
   buoyancyOffset: 0
