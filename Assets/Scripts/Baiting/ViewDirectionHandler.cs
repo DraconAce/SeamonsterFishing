@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 {
@@ -13,32 +14,38 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private Transform viewLeftRightPivot;
     [SerializeField] private string[] actionsToSubscribeTo = {"Change_View_Left", "Change_View_Right"};
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
-    
-    [SerializeField] private float rotationDuration;
+
+    [SerializeField] private float MaxRotationDurationToNextView = 8;
+
     [SerializeField] private Ease rotationEase;
-    
+    [SerializeField] private bool useAnimationCurve;
+    [SerializeField] private AnimationCurve rotationCurve;
+
     public bool SubscribedToStarted => false;
+
     public bool SubscribedToPerformed => true;
+
     public bool SubscribedToCanceled => false;
 
     private const float rightRotation = 90;
+
     private const float leftRotation = -90;
 
     private InputManager inputManager;
-    private InputManager.SubscriberSettings inputSubscriberSettings;
 
     private Vector3 lastTargetRotation;
+
     private Tween leftRightTween;
+
     private int lookDirection;
+
+    private const float MaxViewRotation = 180.0f;
 
     private void Start()
     {
         inputManager = InputManager.instance;
 
-        inputSubscriberSettings = new InputManager.SubscriberSettings
-            { ActionsToSubscribeTo = ActionsToSubscribeTo, EventSubscriber = this };
-        
-        inputManager.SubscribeToActions(inputSubscriberSettings);
+        inputManager.SubscribeToActions(this);
     }
 
     public void InputPerformed(InputAction.CallbackContext callContext) 
@@ -81,9 +88,30 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
         leftRightTween?.Kill();
 
-        leftRightTween = viewLeftRightPivot.DORotate(targetRotation, rotationDuration, RotateMode.FastBeyond360)
+        AnimateViewChangeRotation(targetRotation);
+    }
+
+    private void AnimateViewChangeRotation(Vector3 targetRotation)
+    {
+        void OnCompleteAction() => lastTargetRotation = Vector3.zero;
+
+        var diffToTargetRot = Quaternion.Angle(viewLeftRightPivot.rotation, Quaternion.Euler(targetRotation));
+        var diffPercentage = 1f / MaxViewRotation * diffToTargetRot;
+
+        var totalRotDuration = MaxRotationDurationToNextView * 2 * diffPercentage;
+
+        if (useAnimationCurve)
+        {
+            leftRightTween = viewLeftRightPivot.DORotate(targetRotation, totalRotDuration)
+                .SetEase(rotationCurve)
+                .OnComplete(OnCompleteAction);
+
+            return;
+        }
+
+        leftRightTween = viewLeftRightPivot.DORotate(targetRotation, totalRotDuration)
             .SetEase(rotationEase)
-            .OnComplete(() => lastTargetRotation = Vector3.zero);
+            .OnComplete(OnCompleteAction);
     }
 
     private Vector3 CalculateTargetRotation(float rotationAngle)
@@ -105,6 +133,8 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
         
         if (inputManager == null) return;
         
-        inputManager.UnsubscribeFromActions(inputSubscriberSettings);
+        UnsubscribeOnDestroy();
     }
+
+    public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
 }

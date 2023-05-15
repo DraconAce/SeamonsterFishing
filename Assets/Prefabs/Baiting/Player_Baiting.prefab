@@ -170,8 +170,60 @@ MonoBehaviour:
   actionsToSubscribeTo:
   - Change_View_Left
   - Change_View_Right
-  rotationDuration: 2
-  rotationEase: 2
+  MaxRotationDurationToNextView: 8
+  rotationEase: 27
+  useAnimationCurve: 1
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00000013504177
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.70276654
+    - serializedVersion: 3
+      time: 0.06865326
+      value: 0.047540702
+      inSlope: 1.2286768
+      outSlope: 1.2286768
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2622524
+    - serializedVersion: 3
+      time: 0.37373456
+      value: 0.56079227
+      inSlope: 2.221339
+      outSlope: 2.221339
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16045173
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.74824
+      value: 1.0198724
+      inSlope: -0.028784929
+      outSlope: -0.028784929
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5945973
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3304849413879038861
 GameObject:
   m_ObjectHideFlags: 0

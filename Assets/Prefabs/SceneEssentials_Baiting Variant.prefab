@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 4346745888058518136, guid: f54835b787767774aa735d91f2361471, type: 3}
+      propertyPath: scenesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346745888058518136, guid: f54835b787767774aa735d91f2361471, type: 3}
+      propertyPath: scenesList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: a0381609d1338bc4da9fe7a1b306feed, type: 2}
     - target: {fileID: 4675371349717063978, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: currentGameState
       value: 3
@@ -123,5 +131,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2958922513392504870, guid: f54835b787767774aa735d91f2361471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4103929457094597207}
   m_SourcePrefab: {fileID: 100100000, guid: f54835b787767774aa735d91f2361471, type: 3}
+--- !u!1 &2057822627557166971 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2958922513392504870, guid: f54835b787767774aa735d91f2361471, type: 3}
+  m_PrefabInstance: {fileID: 3863787900066127709}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4103929457094597207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057822627557166971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab00a14ace35229489189437f4636a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showScreenMask: 0
+  doTransition: 0
+  cancelTransition: 0
+  useUnderSurfaceView: 0
+  distanceFog: 1
+  useRadialDistance: 1
+  heightFog: 0
+  height: 1
+  heightDensity: 2
+  startDistance: 0
+  fogStart: 0
+  fogEnd: 20
+  refractAmt: 0.005
+  refractSpd: 1.5
+  refractScale: 0.5
+  lightFactor: 1
+  underwaterColor: {r: 0, g: 0, b: 0, a: 0}
+  dropsTime: 2
+  wipeTime: 1
+  transitionStrength: 1
+  iterations: 2
+  blurSpread: 1
+  darkRange: 40
+  heightDepth: 1
+  hFac: 0
+  distortTex: {fileID: 0}
+  mask2Tex: {fileID: 0}
+  fogShader: {fileID: 0}
+  fogMaterial: {fileID: 0}
