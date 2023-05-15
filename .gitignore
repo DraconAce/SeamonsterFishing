@@ -102,10 +102,10 @@ Assets/Plugins/Sirenix/Assemblies/Editor/GeneratedOdinEditors.dll
 # FMOD #
 # ==== #
 fmod.log
-/FMOD/solos_sounds/**.user
-/FMOD/solos_sounds/**.unsaved
-/FMOD/solos_sounds/**.cache
-/FMOD/solos_sounds/**.restore
+/FMOD/Seamonster_Fishing_Sounds/**.user
+/FMOD/Seamonster_Fishing_Sounds/**.unsaved
+/FMOD/Seamonster_Fishing_Sounds/**.cache
+/FMOD/Seamonster_Fishing_Sounds/**.restore
 
 # Never ignore DLLs in the FMOD subfolder.
 !/[Aa]ssets/Plugins/FMOD/**/lib/*
