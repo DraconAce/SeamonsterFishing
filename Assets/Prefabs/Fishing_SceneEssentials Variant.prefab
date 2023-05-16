@@ -149,6 +149,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2958922513392504870, guid: f54835b787767774aa735d91f2361471, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8677178774858494481}
+    - targetCorrespondingSourceObject: {fileID: 2958922513392504870, guid: f54835b787767774aa735d91f2361471, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1007087554307860646}
   m_SourcePrefab: {fileID: 100100000, guid: f54835b787767774aa735d91f2361471, type: 3}
 --- !u!1 &5818778506724011697 stripped
 GameObject:
@@ -196,3 +199,17 @@ MonoBehaviour:
   mask2Tex: {fileID: 0}
   fogShader: {fileID: 0}
   fogMaterial: {fileID: 0}
+--- !u!114 &1007087554307860646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818778506724011697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 512
