@@ -13,7 +13,7 @@ public class DriveStation_Moving : AbstractStationController
     
     protected override void OnControllerSetup()
     {
-        boatTransform = driveStation.BoatTransform;
+        boatTransform = driveStation.PlayerTransform;
         
         boatForwardDirection = boatTransform.forward.normalized;
         

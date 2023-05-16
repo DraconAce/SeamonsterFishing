@@ -60,14 +60,14 @@ public class CannonStation_Aiming : AbstractStationController, IManualUpdateSubs
     private void CalculateNewAimRotation()
     {
         var aimInput = aimAction.ReadValue<Vector2>();
-        aimInput *= driveStation.LastDriveDirection;
+        aimInput *= driveStation.InfluencedDrivingDirection;
 
         targetAimAngle += InputBasedRotationProvider.CalculateRotationBasedOnInput(aimInput, aimSpeed);
     }
-
+    
     private Quaternion ClampAimRotation()
     {
-        var directionAdjustmentFactor = new Vector3(driveStation.LastDriveDirection, 1, 1);
+        var directionAdjustmentFactor = new Vector3(driveStation.InfluencedDrivingDirection, 1, 1);
         var clampedQuaternion = InputBasedRotationProvider.ClampGivenRotationToLimits(aimLimit, targetAimAngle, Vector3.zero, directionAdjustmentFactor);
 
         targetAimAngle = clampedQuaternion.eulerAngles;
@@ -83,13 +83,9 @@ public class CannonStation_Aiming : AbstractStationController, IManualUpdateSubs
             cannonStation.StationGameStateDoesNotMatchEvent -= OnGameStateDoesNotMatchCannonStation;
         }
         
+        aimAction.Disable();
+        
         if (updateManager == null) return;
         updateManager.UnsubscribeFromManualUpdate(this);
     }
-    
-    /*
-     * modify aimlimit values based on driving direction
-     *
-     * aimLimit.x * direction
-     */
 }

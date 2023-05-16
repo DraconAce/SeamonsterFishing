@@ -7,16 +7,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace DigitalRuby.RainMaker
 {
     public class BaseRainScript : MonoBehaviour
     {
-        [Tooltip("Camera the rain should hover over, defaults to main camera")]
-        public Camera Camera;
+        private CameraSingleton cameraSingleton;
+        protected Camera OutputCamera => cameraSingleton.OutputCamera;
+        protected CinemachineVirtualCamera MainVirtualCamera => cameraSingleton.MainPlayerCamera;
 
         [Tooltip("Whether rain should follow the camera. If false, rain must be moved manually and will not follow the camera.")]
         public bool FollowCamera = true;
@@ -87,9 +89,9 @@ namespace DigitalRuby.RainMaker
                 WindZone.gameObject.SetActive(true);
                 if (FollowCamera)
                 {
-                    WindZone.transform.position = Camera.transform.position;
+                    WindZone.transform.position = MainVirtualCamera.transform.position;
                 }
-                if (!Camera.orthographic)
+                if (!cameraSingleton.OutputCamera.orthographic)
                 {
                     WindZone.transform.Translate(0.0f, WindZone.radius, 0.0f);
                 }
@@ -97,7 +99,7 @@ namespace DigitalRuby.RainMaker
                 {
                     WindZone.windMain = UnityEngine.Random.Range(WindSpeedRange.x, WindSpeedRange.y);
                     WindZone.windTurbulence = UnityEngine.Random.Range(WindSpeedRange.x, WindSpeedRange.y);
-                    if (Camera.orthographic)
+                    if (cameraSingleton.OutputCamera.orthographic)
                     {
                         int val = UnityEngine.Random.Range(0, 2);
                         WindZone.transform.rotation = Quaternion.Euler(0.0f, (val == 0 ? 90.0f : -90.0f), 0.0f);
@@ -224,10 +226,7 @@ namespace DigitalRuby.RainMaker
 
 #endif
 
-            if (Camera == null)
-            {
-                Camera = Camera.main;
-            }
+            cameraSingleton = CameraSingleton.instance;
 
             audioSourceRainLight = new LoopingAudioSource(this, RainSoundLight, RainSoundAudioMixer);
             audioSourceRainMedium = new LoopingAudioSource(this, RainSoundMedium, RainSoundAudioMixer);
