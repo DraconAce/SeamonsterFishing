@@ -12,5 +12,8 @@ public enum GameState
     
     None,
     
-    Won
+    Won,
+    
+    PauseMenu,
+    MainMenu
 }

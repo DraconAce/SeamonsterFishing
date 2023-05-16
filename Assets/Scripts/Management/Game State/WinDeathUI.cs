@@ -1,41 +1,40 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
-public class WinDeathHandler : MonoBehaviour
+public class WinDeathUI : AbstractMenu
 {
-    [SerializeField] private string sceneToReloadOnRestart;
-    [SerializeField] private GameState stateAfterReload = GameState.FightOverview;
-    
     [Header("Events")]
     [SerializeField] private UnityEvent playerIsDeadEvent;
     [SerializeField] private UnityEvent playerWonEvent;
     
     private GameStateManager gameStateManager;
 
-    private void Start()
+    protected override bool UseInputActions => false;
+
+    protected override void Start()
     {
+        base.Start();
+
         gameStateManager = GameStateManager.instance;
         
-        SetInitialGameState();
+        SetInitialTimeScale();
 
         gameStateManager.GameStateChangedEvent += OnGameStateChanged;
     }
 
-    private void SetInitialGameState()
-    {
-        Time.timeScale = 1;
-        gameStateManager.ChangeGameState(stateAfterReload);
-    }
+    private void SetInitialTimeScale() => Time.timeScale = 1;
 
     private void OnGameStateChanged(GameState newGameState)
     {
         if (newGameState == GameState.Won)
+        {
+            OpenMenu();
             OnRunEnded(playerWonEvent);
+        }
         
         if (newGameState != GameState.Dead) return;
 
+        OpenMenu();
         OnRunEnded(playerIsDeadEvent);
     }
 
@@ -45,5 +44,12 @@ public class WinDeathHandler : MonoBehaviour
         eventToTrigger?.Invoke();
     }
 
-    public void RestartRun() => SceneManager.LoadScene(sceneToReloadOnRestart);
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        if (gameStateManager == null) return;
+        
+        gameStateManager.GameStateChangedEvent -= OnGameStateChanged;
+    }
 }

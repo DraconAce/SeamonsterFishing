@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameStateChanger : Singleton<GameStateChanger>, IInputEventSubscriber
+public class InputGameStateChangeRequestor : Singleton<InputGameStateChangeRequestor>, IInputEventSubscriber
 {
     [Serializable]
     private class GameStateInputActionMap : ListDictProxy<string, GameState>
@@ -25,23 +25,24 @@ public class GameStateChanger : Singleton<GameStateChanger>, IInputEventSubscrib
     private InputManager inputManager;
 
     #region Update and Input Manager Variables
-    public bool SubscribedToStarted => false;
-    public bool SubscribedToPerformed => true;
+    public bool SubscribedToStarted => true;
+    public bool SubscribedToPerformed => false;
     public bool SubscribedToCanceled => false;
     public string[] ActionsToSubscribeTo => gameStateChangingActions;
 
-    private InputManager.SubscriberSettings inputSubscriberSettings;
     #endregion
 
-    private void Start()
+    private void Start() => gameStateManager = GameStateManager.instance;
+
+    public override void OnCreated()
     {
-        gameStateManager = GameStateManager.instance;
-        inputManager = InputManager.instance;
-        
+        base.OnCreated();
+
         CreateGameStateInputActionLookup();
-        CreateInputSubscribeSettings();
+        CreateActionsToSubscribeToArray();
         
-        inputManager.SubscribeToActions(inputSubscriberSettings);
+        inputManager = InputManager.instance;
+        inputManager.SubscribeToActions(this);
     }
 
     private void CreateGameStateInputActionLookup()
@@ -51,14 +52,9 @@ public class GameStateChanger : Singleton<GameStateChanger>, IInputEventSubscrib
                 new List<ListDictProxy<string, GameState>>(gameStateInputMapsList));
     }
 
-    private void CreateInputSubscribeSettings()
-    {
-        gameStateChangingActions = gameStateInputActionMapLookup.Keys.ToArray();
+    private void CreateActionsToSubscribeToArray() => gameStateChangingActions = gameStateInputActionMapLookup.Keys.ToArray();
 
-        inputSubscriberSettings = new(){ ActionsToSubscribeTo = this.ActionsToSubscribeTo, EventSubscriber = this};
-    }
-
-    public void InputPerformed(InputAction.CallbackContext callContext) => RequestGameStateChangeBasedOnInput(callContext);
+    public void InputStarted(InputAction.CallbackContext callContext) => RequestGameStateChangeBasedOnInput(callContext);
 
     private void RequestGameStateChangeBasedOnInput(InputAction.CallbackContext callContext)
     {
@@ -79,6 +75,8 @@ public class GameStateChanger : Singleton<GameStateChanger>, IInputEventSubscrib
     {
         if (inputManager == null) return;
         
-        inputManager.UnsubscribeFromActions(inputSubscriberSettings);
+        UnsubscribeOnDestroy();
     }
+
+    public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
 }
