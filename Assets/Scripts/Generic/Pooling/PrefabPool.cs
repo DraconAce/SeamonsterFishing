@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -162,7 +163,7 @@ public class PoolObjectContainer
         var searchedType = typeof(T);
         matchingComponents = new();
 
-        if (!fullyQueriedTypesList.Contains(typeof(T)))
+        if (!fullyQueriedTypesList.Contains(searchedType))
         {
             matchingComponents.AddRange(Ob.GetComponents<T>());
          
@@ -172,7 +173,17 @@ public class PoolObjectContainer
 
         if (!components.TryGetValue(searchedType, out var componentsList)) return false;
 
-        matchingComponents = componentsList as List<T>;
+        CopyComponentsToGenericList(matchingComponents, componentsList);
+        
         return true;
+    }
+
+    private void CopyComponentsToGenericList<T> (List<T> targetList, List<Object> listToCopyFrom) where T : class
+    {
+        foreach(var ob in listToCopyFrom)
+        {
+            if(ob is T comp)
+                targetList.Add(comp);
+        }
     }
 }

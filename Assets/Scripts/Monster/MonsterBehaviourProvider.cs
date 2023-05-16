@@ -18,5 +18,9 @@ public class MonsterBehaviourProvider : MonoBehaviour
     public bool IsBehaviourActive(AbstractMonsterBehaviour behaviourToCheck) 
         => activeBehaviour == behaviourToCheck;
 
-    protected virtual void OnDestroy() => StopCoroutine(updateBehaviourRoutine);
+    protected virtual void OnDestroy()
+    {
+        if (updateBehaviourRoutine == null) return;
+        StopCoroutine(updateBehaviourRoutine);
+    }
 }

@@ -70,7 +70,7 @@ namespace DigitalRuby.RainMaker
             }
             if (FollowCamera)
             {
-                p.transform.position = new Vector3(Camera.transform.position.x, visibleBounds.max.y + yOffset, p.transform.position.z);
+                p.transform.position = new Vector3(MainVirtualCamera.transform.position.x, visibleBounds.max.y + yOffset, p.transform.position.z);
             }
             else
             {
@@ -192,9 +192,9 @@ namespace DigitalRuby.RainMaker
         {
             base.Update();
 
-            cameraMultiplier = (Camera.orthographicSize * 0.25f);
-            visibleBounds.min = Camera.main.ViewportToWorldPoint(Vector3.zero);
-            visibleBounds.max = Camera.main.ViewportToWorldPoint(Vector3.one);
+            cameraMultiplier = (OutputCamera.orthographicSize * 0.25f);
+            visibleBounds.min = OutputCamera.ViewportToWorldPoint(Vector3.zero);
+            visibleBounds.max = OutputCamera.ViewportToWorldPoint(Vector3.one);
             visibleWorldWidth = visibleBounds.size.x;
             yOffset = (visibleBounds.max.y - visibleBounds.min.y) * RainHeightMultiplier;
 

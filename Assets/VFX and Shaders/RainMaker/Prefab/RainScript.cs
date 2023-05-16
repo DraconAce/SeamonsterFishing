@@ -28,14 +28,14 @@ namespace DigitalRuby.RainMaker
                 {
                     var s = RainFallParticleSystem.shape;
                     s.shapeType = ParticleSystemShapeType.ConeVolume;
-                    RainFallParticleSystem.transform.position = Camera.transform.position;
+                    RainFallParticleSystem.transform.position = MainVirtualCamera.transform.position;
                     RainFallParticleSystem.transform.Translate(0.0f, RainHeight, RainForwardOffset);
-                    RainFallParticleSystem.transform.rotation = Quaternion.Euler(0.0f, Camera.transform.rotation.eulerAngles.y, 0.0f);
+                    RainFallParticleSystem.transform.rotation = Quaternion.Euler(0.0f, MainVirtualCamera.transform.rotation.eulerAngles.y, 0.0f);
                     if (RainMistParticleSystem != null)
                     {
                         var s2 = RainMistParticleSystem.shape;
                         s2.shapeType = ParticleSystemShapeType.Hemisphere;
-                        Vector3 pos = Camera.transform.position;
+                        Vector3 pos = MainVirtualCamera.transform.position;
                         pos.y += RainMistHeight;
                         RainMistParticleSystem.transform.position = pos;
                     }
