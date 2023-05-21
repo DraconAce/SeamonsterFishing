@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-public class CannonStation_Aiming : AbstractStationController, IManualUpdateSubscriber
+public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscriber
 {
     [FormerlySerializedAs("cannonBarrel")] [SerializeField] private Transform cannonBarrelMovementPivot;
     [SerializeField] private RotationLimit aimLimit;
@@ -19,6 +19,8 @@ public class CannonStation_Aiming : AbstractStationController, IManualUpdateSubs
 
     protected override void OnControllerSetup()
     {
+        base.OnControllerSetup();
+        
         updateManager = cannonStation.UpdateManager;
         
         GetAndEnableAimAction();
@@ -39,15 +41,12 @@ public class CannonStation_Aiming : AbstractStationController, IManualUpdateSubs
         if(cannonStation.GameStateMatchesStationGameState())
             updateManager.SubscribeToManualUpdate(this);
 
-        cannonStation.StationGameStateMatchesEvent += OnGameStateMatchesCannonStation;
-        cannonStation.StationGameStateDoesNotMatchEvent += OnGameStateDoesNotMatchCannonStation;
-
         driveStation = StationManager.instance.GetStationOfGameState(GameState.FightOverview) as DriveStation;
     }
 
-    private void OnGameStateMatchesCannonStation() => updateManager.SubscribeToManualUpdate(this);
+    protected override void OnGameStateMatchesCannonStation() => updateManager.SubscribeToManualUpdate(this);
     
-    private void OnGameStateDoesNotMatchCannonStation() => updateManager.UnsubscribeFromManualUpdate(this);
+    protected override void OnGameStateDoesNotMatchCannonStation() => updateManager.UnsubscribeFromManualUpdate(this);
     
     public void ManualUpdate() => AimCannon();
 
@@ -75,13 +74,9 @@ public class CannonStation_Aiming : AbstractStationController, IManualUpdateSubs
         return clampedQuaternion;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
-        if (cannonStation != null)
-        {
-            cannonStation.StationGameStateMatchesEvent -= OnGameStateMatchesCannonStation;
-            cannonStation.StationGameStateDoesNotMatchEvent -= OnGameStateDoesNotMatchCannonStation;
-        }
+        base.OnDestroy();
         
         aimAction.Disable();
         

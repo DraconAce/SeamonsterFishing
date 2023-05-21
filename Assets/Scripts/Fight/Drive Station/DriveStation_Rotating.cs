@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class DriveStation_Rotating : AbstractStationController
+public class DriveStation_Rotating : AbstractStationSegment
 {
     [Header("Boat Rotation")]
     [SerializeField] private bool forwardIsRight = true;
@@ -146,5 +146,10 @@ public class DriveStation_Rotating : AbstractStationController
     private float DetermineTargetBarrelRotation(float newDirection) => newDirection >= 0 ? forwardCannonBarrelRotation : backwardsCannonBarrelRotation;
     #endregion
     
-    private void OnDestroy() => rotationSequence?.Kill();
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        rotationSequence?.Kill();
+    }
 }

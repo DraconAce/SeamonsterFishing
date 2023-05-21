@@ -20,7 +20,15 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     public float LastDriveDirection { get; set; }
     public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
 
-    private void Awake() => LastDriveDirection = initialDrivingDirection;
+    private void Awake()
+    {
+        LastDriveDirection = initialDrivingDirection;
+        
+        PlayerTransform = PlayerSingleton.instance.PlayerTransform;
+
+        TryGetComponent(out movingController);
+        TryGetComponent(out rotatingController);
+    }
 
     protected override void GameStateMatches()
     {
@@ -37,24 +45,12 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     protected override void Start()
     {
         base.Start();
-        PlayerTransform = PlayerSingleton.instance.PlayerTransform;
-
-        SetupDrivingControllers();
 
         GetAndEnableDriveAction();
 
         UpdateManager.SubscribeToManualUpdate(this);
 
         rotatingController.CalculateLeftRotation();
-    }
-
-    private void SetupDrivingControllers()
-    {
-        TryGetComponent(out movingController);
-        TryGetComponent(out rotatingController);
-
-        movingController.SetupController(this);
-        rotatingController.SetupController(this);
     }
 
     private void GetAndEnableDriveAction()
@@ -85,6 +81,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     protected override void OnDestroy()
     {
         base.OnDestroy();
+        
+        driveAction.Disable();
 
         if (UpdateManager == null) return;
         UpdateManager.UnsubscribeFromManualUpdate(this);

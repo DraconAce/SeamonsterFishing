@@ -1,11 +1,14 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 {
     [SerializeField] private string[] actionsToSubscribeTo = { "ActivateSpot" };
     [SerializeField] private float coolDownTimer = 10;
+    [SerializeField] private UnityEvent onFlashReady;
 
     [Header("Flash On")] 
     [SerializeField] private float targetOnIntensity;
@@ -17,7 +20,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private TweenSettings flashOffSettings;
     
 
-    private bool flashIsReady = true;
+    public bool FlashIsReady { get; private set; }= true;
     private Sequence flashSequence;
     
     private Light spotLight;
@@ -37,7 +40,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 
     private void CheckIfFlashReadyAndActivate()
     {
-        if (!flashIsReady) return;
+        if (!FlashIsReady) return;
         
         flashSequence?.Kill();
         ActivateFlash();
@@ -45,7 +48,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 
     private void ActivateFlash()
     {
-        flashIsReady = false;
+        FlashIsReady = false;
         flashSequence = DOTween.Sequence();
 
         flashSequence.Append(FlashTween(targetOnIntensity, flashOnSettings));
@@ -54,7 +57,11 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         flashSequence.Append(FlashTween(targetOffIntensity, flashOffSettings));
         flashSequence.AppendInterval(coolDownTimer);
 
-        flashSequence.OnComplete(() => flashIsReady = true);
+        flashSequence.OnComplete(() =>
+        {
+            FlashIsReady = true;
+            onFlashReady?.Invoke();
+        });
     }
 
     private Tween FlashTween(float targetIntensity, TweenSettings targetSettings)
