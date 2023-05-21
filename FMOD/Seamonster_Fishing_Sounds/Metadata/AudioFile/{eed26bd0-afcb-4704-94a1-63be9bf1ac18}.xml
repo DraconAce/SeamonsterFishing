@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{eed26bd0-afcb-4704-94a1-63be9bf1ac18}">
 		<property name="assetPath">
-			<value>Special SFX/UnderwaterBones_191018__yuval__keyboard-keys-underwater.wav</value>
+			<value>Baiting/Special SFX/UnderwaterBones_191018__yuval__keyboard-keys-underwater.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

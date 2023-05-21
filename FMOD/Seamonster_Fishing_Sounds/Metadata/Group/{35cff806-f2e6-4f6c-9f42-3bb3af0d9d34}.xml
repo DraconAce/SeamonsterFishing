@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{35cff806-f2e6-4f6c-9f42-3bb3af0d9d34}">
+		<property name="name">
+			<value>Boat Reeling</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{c36dd27e-077a-4ff5-a080-2a96b8ef1c9c}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{b1a7dfbf-9a7f-4304-b337-08a245a8741a}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{f1e45ae9-952a-445f-9554-53ac40d2a222}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{c36dd27e-077a-4ff5-a080-2a96b8ef1c9c}">
+		<relationship name="effects">
+			<destination>{9a0adf36-1e28-4966-bfc7-18239ce0d228}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{b1a7dfbf-9a7f-4304-b337-08a245a8741a}" />
+	<object class="MixerBusFader" id="{9a0adf36-1e28-4966-bfc7-18239ce0d228}" />
+</objects>

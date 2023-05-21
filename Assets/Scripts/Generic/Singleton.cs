@@ -35,7 +35,7 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         if(instance != null)
         {
             if (callCreated) Created(instance);
-            if (!instance.AddedToDontDestroy) AddObToDontDestroy(instance);
+            if (instance.AddToDontDestroy) AddObToDontDestroy(instance);
 
             return instance;
         }
@@ -61,8 +61,6 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         ob.transform.parent = null;
         
         DontDestroyOnLoad(ob);
-
-        instance.AddedToDontDestroy = true;
     }
     
     private static void AddObToDontDestroy(T instance, GameObject ob)
@@ -70,12 +68,17 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         ob.transform.parent = null;
         
         DontDestroyOnLoad(ob);
-
-        instance.AddedToDontDestroy = true;
     }
 
     //Function callers use to activate the instance before working with its values
     public void Activation() { }
 
     private static void Created(SingletonMonoBehaviour single) => single.OnCreated();
+
+    protected virtual void OnDestroy()
+    {
+        if (AddToDontDestroy || instance == null) return;
+
+        _instance = null;
+    }
 }

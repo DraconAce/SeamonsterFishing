@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{71dac703-4ca7-4325-a637-b24405235bbc}">
 		<property name="assetPath">
-			<value>Ambiance/DeepVibe_392698__screamstudio__moving-low-frequencies.wav</value>
+			<value>Baiting/Ambiance/DeepVibe_392698__screamstudio__moving-low-frequencies.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

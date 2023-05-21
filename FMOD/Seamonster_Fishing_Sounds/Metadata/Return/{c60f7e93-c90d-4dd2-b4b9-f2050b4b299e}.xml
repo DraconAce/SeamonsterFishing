@@ -5,7 +5,7 @@
 			<value>2</value>
 		</property>
 		<property name="name">
-			<value>Reverb Return</value>
+			<value>Reverb</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{d4edeea4-de95-43a2-bde7-636b4ba1bfb7}</destination>
@@ -14,14 +14,26 @@
 			<destination>{604524e2-0fd5-4dcb-bd3a-09329a17a5e2}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{3aee5e8d-fc44-48de-aad5-5a49ad7be123}</destination>
+			<destination>{f1e45ae9-952a-445f-9554-53ac40d2a222}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{d4edeea4-de95-43a2-bde7-636b4ba1bfb7}">
 		<relationship name="effects">
+			<destination>{f21942b0-1a44-43ae-a4db-a9d529e54588}</destination>
 			<destination>{06b1a7f2-4b5e-4046-8a0a-780003f38a21}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{604524e2-0fd5-4dcb-bd3a-09329a17a5e2}" />
+	<object class="SFXReverbEffect" id="{f21942b0-1a44-43ae-a4db-a9d529e54588}">
+		<property name="bypass">
+			<value>true</value>
+		</property>
+		<property name="wetLevel">
+			<value>0</value>
+		</property>
+		<property name="dryLevel">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{06b1a7f2-4b5e-4046-8a0a-780003f38a21}" />
 </objects>

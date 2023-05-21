@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class DriveStation_Rotating : AbstractStationController
+public class DriveStation_Rotating : AbstractStationSegment
 {
     [Header("Boat Rotation")]
     [SerializeField] private bool forwardIsRight = true;
@@ -59,7 +59,7 @@ public class DriveStation_Rotating : AbstractStationController
 
     private DriveStation driveStation => (DriveStation)ControllerStation;
 
-    protected override void OnControllerSetup() => boatTransform = driveStation.BoatTransform;
+    protected override void OnControllerSetup() => boatTransform = driveStation.PlayerTransform;
 
     public void CalculateLeftRotation() => localLeftRotation = localRightRotation - 180.0f;
 
@@ -83,19 +83,7 @@ public class DriveStation_Rotating : AbstractStationController
 
         driveStation.LastDriveDirection = newDirection;
     }
-    
-    private Vector3 GetTargetRotation(float newDirection)
-    {
-        var targetRotation = boatTransform.localEulerAngles;
 
-        if (forwardIsRight)
-            targetRotation.y = newDirection < 0 ? localLeftRotation : localRightRotation;
-        else
-            targetRotation.y = newDirection < 0 ? localRightRotation : localLeftRotation;
-
-        return targetRotation;
-    }
-    
     private void CreateAndPlayRotationSequence(float newDirection)
     {
         rotationSequence?.Kill();
@@ -122,9 +110,21 @@ public class DriveStation_Rotating : AbstractStationController
             .SetEase(rotationEase);
     }
 
+    private Vector3 GetTargetRotation(float newDirection)
+    {
+        var targetRotation = boatTransform.localEulerAngles;
+
+        if (forwardIsRight)
+            targetRotation.y = newDirection < 0 ? localLeftRotation : localRightRotation;
+        else
+            targetRotation.y = newDirection < 0 ? localRightRotation : localLeftRotation;
+
+        return targetRotation;
+    }
+
     private Tween CreateCannonBaseMoveTween(float newDirection)
     {
-        var targetCoord = newDirection * initialCannonBaseCoordinate;
+        var targetCoord = newDirection * initialCannonBaseCoordinate * driveStation.InitialDrivingDirection;
 
         var targetPosition = cannonBaseTransform.localPosition;
         targetPosition[(int)cannonBaseMovementAxis] = targetCoord;
@@ -136,7 +136,7 @@ public class DriveStation_Rotating : AbstractStationController
     private Tween CreateCannonBarrelRotationTween(float newDirection)
     {
         var targetLocalBarrelRot = Vector3.zero;
-        targetLocalBarrelRot[(int)cannonBarrelRotationAxis] = DetermineTargetBarrelRotation(newDirection);
+        targetLocalBarrelRot[(int)cannonBarrelRotationAxis] = DetermineTargetBarrelRotation(newDirection * driveStation.InitialDrivingDirection);
 
         return cannonBarrelPivot
             .DOLocalRotate(targetLocalBarrelRot, rotationDuration)
@@ -146,5 +146,10 @@ public class DriveStation_Rotating : AbstractStationController
     private float DetermineTargetBarrelRotation(float newDirection) => newDirection >= 0 ? forwardCannonBarrelRotation : backwardsCannonBarrelRotation;
     #endregion
     
-    private void OnDestroy() => rotationSequence?.Kill();
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        rotationSequence?.Kill();
+    }
 }

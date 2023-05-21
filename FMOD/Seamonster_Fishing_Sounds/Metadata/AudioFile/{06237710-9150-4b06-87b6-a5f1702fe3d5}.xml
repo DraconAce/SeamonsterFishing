@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{06237710-9150-4b06-87b6-a5f1702fe3d5}">
 		<property name="assetPath">
-			<value>Special SFX/YouGotScaredSound_57674__sound-master__effect_1.wav</value>
+			<value>Baiting/Special SFX/YouGotScaredSound_57674__sound-master__effect_1.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

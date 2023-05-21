@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{3e147eed-1de3-4998-9f2b-f81252858345}">
 		<property name="assetPath">
-			<value>Special SFX/DiverBreathing_73533__chipfork71__diver-breath01.wav</value>
+			<value>Baiting/Special SFX/DiverBreathing_73533__chipfork71__diver-breath01.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

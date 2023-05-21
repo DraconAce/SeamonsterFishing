@@ -126,8 +126,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8428814468877849716, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_DefaultActionMap
-      value: e6c6a283-f19d-4a1c-b055-d9c2357c6c54
+      value: Baiting
       objectReference: {fileID: 0}
+    - target: {fileID: 8901253175265882786, guid: f54835b787767774aa735d91f2361471, type: 3}
+      propertyPath: reloadScene
+      value: 
+      objectReference: {fileID: 11400000, guid: a0381609d1338bc4da9fe7a1b306feed, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

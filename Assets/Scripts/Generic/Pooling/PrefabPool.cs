@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public class PrefabPool : MonoBehaviour
 {
@@ -42,6 +40,8 @@ public class PrefabPool : MonoBehaviour
 
     public PoolObjectContainer RequestInstance(Transform parent = null)
     {
+        parent ??= poolParent;
+        
         if (poolQueue.TryDequeue(out var newObjectContainer))
         {
             var dequeuedObject = newObjectContainer.Ob;
@@ -61,7 +61,7 @@ public class PrefabPool : MonoBehaviour
         var newOb = Instantiate(poolingObject);
         
         var container = new PoolObjectContainer(this, newOb);
-        TryCallInstantiationFunction(container);
+        TryInitializePoolObject(container);
 
         TryParentObject(container.Ob.transform, parent);
         
@@ -76,12 +76,16 @@ public class PrefabPool : MonoBehaviour
             obTrans.parent = parent;
     }
 
-    private void TryCallInstantiationFunction(PoolObjectContainer container)
+    private void TryInitializePoolObject(PoolObjectContainer container)
     {
         if(!container.TryGetCachedComponents(out List<IPoolObject> poolObjects)) return;
         
         foreach(var poolOb in poolObjects)
-            poolOb.OnInstantiation(container);
+        {
+            poolOb.OnInitialisation(container);
+            
+            poolOb.ResetInstance();
+        }
     }
 
     private void TrySetupPoolObject(PoolObjectContainer newContainer)
@@ -108,71 +112,5 @@ public class PrefabPool : MonoBehaviour
         
         container.Ob.SetActive(false);
         poolQueue.Enqueue(container);
-    }
-}
-
-public class PoolObjectContainer
-{
-    public PoolObjectContainer(PrefabPool sourcePool, GameObject ob)
-    {
-        SourcePool = sourcePool;
-        Ob = ob;
-    }
-
-    public PrefabPool SourcePool { get; }
-
-    public GameObject Ob { get; }
-
-
-    private Dictionary<Type, List<Object>> components = new();
-
-    private List<Type> fullyQueriedTypesList = new();
-
-    public bool TryGetCachedComponent<T>(out T component) where T : class
-    {
-        var type = typeof(T);
-        component = null;
-
-        if (components.TryGetValue(type, out var typeComponents))
-        {
-            var firstItemInList = typeComponents[0];
-            if (firstItemInList is T comp) component = comp;
-        }
-        else
-        {
-            if(Ob.TryGetComponent(out component))
-            {
-                var componentAsObject = component as Object;
-
-                if (!components.ContainsKey(type))
-                    components.Add(type, new() { componentAsObject });
-                else
-                {
-                    var currentListOfType = components[type];
-                    currentListOfType.Add(componentAsObject);
-                }
-            }
-        }
-
-        return component != null;
-    }
-
-    public bool TryGetCachedComponents<T>(out List<T> matchingComponents) where T : class
-    {
-        var searchedType = typeof(T);
-        matchingComponents = new();
-
-        if (!fullyQueriedTypesList.Contains(typeof(T)))
-        {
-            matchingComponents.AddRange(Ob.GetComponents<T>());
-         
-            fullyQueriedTypesList.Add(searchedType);
-            return matchingComponents.Count > 0;
-        }
-
-        if (!components.TryGetValue(searchedType, out var componentsList)) return false;
-
-        matchingComponents = componentsList as List<T>;
-        return true;
     }
 }

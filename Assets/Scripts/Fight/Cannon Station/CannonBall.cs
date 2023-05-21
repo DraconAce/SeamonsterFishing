@@ -4,8 +4,11 @@ using UnityEngine.Events;
 
 public class CannonBall : MonoBehaviour, IPoolObject
 {
+    [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private UnityEvent onCannonBallHit;
-    
+
+    private GameObject explosionPoolParent;
+    private PrefabPool explosionPool;
     private Rigidbody rigidbody;
 
     public PoolObjectContainer ContainerOfObject { get; set; }
@@ -13,7 +16,18 @@ public class CannonBall : MonoBehaviour, IPoolObject
     private const string monsterTag = "monster";
     private const string weakPointTag = "weakPoint";
 
-    private void Start() => TryGetComponent(out rigidbody);
+    private void Awake() => TryGetComponent(out rigidbody);
+
+    private void Start() => CreateExplosionFXPool();
+
+    private void CreateExplosionFXPool()
+    {
+        explosionPoolParent = new GameObject();
+        
+        explosionPool =
+            PrefabPoolFactory.instance.RequestNewPool(explosionPoolParent, explosionPrefab,
+                explosionPoolParent.transform);
+    }
 
     public void ApplyForceToCannonBall(Vector3 forceDirection)
     {
@@ -33,7 +47,14 @@ public class CannonBall : MonoBehaviour, IPoolObject
         ((IPoolObject)this).ReturnInstanceToPool();
     }
 
-    private void CannonBallHit() => onCannonBallHit?.Invoke();
+    private void CannonBallHit()
+    {
+        onCannonBallHit?.Invoke();
+        
+        InstantiateExplosion();
+    }
+
+    private void InstantiateExplosion() => explosionPool.RequestInstance(transform.position);
 
     private void OnTriggerExit(Collider other)
     {

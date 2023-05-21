@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{ca82c703-807c-4132-aae9-57c4c16e848e}">
 		<property name="assetPath">
-			<value>Special SFX/SomethingHitTheCage_400793__deleted_user_7709760__underwater-impact.wav</value>
+			<value>Baiting/Special SFX/SomethingHitTheCage_400793__deleted_user_7709760__underwater-impact.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>192</value>
