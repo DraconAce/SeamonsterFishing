@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985206358eaf4ffda7fcd3970777c93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  driveSpeed: 20
+  driveSpeed: 7
   moveLimit:
     MinLimit: -7.5
     MaxLimit: 7.5

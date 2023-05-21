@@ -654,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 839211481042843478}
   - component: {fileID: 6723675715315346052}
-  - component: {fileID: 8701123652340389908}
+  - component: {fileID: 5569820998094556146}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -670,7 +670,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4555381185898123889}
   m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: -1.15, z: -0}
+  m_LocalPosition: {x: 0, y: -4.5, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -689,10 +689,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 50
-  m_SpotAngle: 90
-  m_InnerSpotAngle: 21
+  m_Intensity: 0.0001
+  m_Range: 80
+  m_SpotAngle: 130
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -739,7 +739,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &8701123652340389908
+--- !u!114 &5569820998094556146
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -748,43 +748,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 4555381185898123889}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85622f211127c0f4f9ac9d5b0de2025b, type: 3}
+  m_Script: {fileID: 11500000, guid: dba74fd02fa54f549a6479161767ec30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashEndTime: 0.6
-  intensityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 549.2319
-      outSlope: 549.2319
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.09704867
-      value: 53.302223
-      inSlope: -293.7184
-      outSlope: -293.7184
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.097658955
-      outWeight: 0.029852029
-    - serializedVersion: 3
-      time: 0.6
-      value: 0
-      inSlope: -1.3349905
-      outSlope: -1.3349905
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.31444383
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  actionsToSubscribeTo:
+  - ActivateSpot
+  coolDownTimer: 10
+  targetOnIntensity: 150
+  stayOnDuration: 0.3
+  flashOnSettings:
+    Duration: 0.15
+    TweenEase: 2
+    OnStartAction:
+      m_PersistentCalls:
+        m_Calls: []
+    OnCompleteAction:
+      m_PersistentCalls:
+        m_Calls: []
+  targetOffIntensity: 0.0001
+  flashOffSettings:
+    Duration: 1.5
+    TweenEase: 9
+    OnStartAction:
+      m_PersistentCalls:
+        m_Calls: []
+    OnCompleteAction:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &4563754126205798449
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,53 +859,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5756041914440383841
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6832948171507685203}
-  - component: {fileID: 1401260884763846350}
-  m_Layer: 0
-  m_Name: FlashActivator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6832948171507685203
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5756041914440383841}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.15, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8680940885367030487}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1401260884763846350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5756041914440383841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5026f39367916d748851df9e4f1f9514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightOne: {fileID: 6528029063835252113}
-  lightTwo: {fileID: 4555381185898123889}
-  activateLights: 1
 --- !u!1 &6528029063835252113
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +869,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1778680079146277947}
   - component: {fileID: 394138654273156719}
-  - component: {fileID: 7572033250981893826}
   m_Layer: 0
   m_Name: LampFlash
   m_TagString: Untagged
@@ -1011,52 +953,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &7572033250981893826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6528029063835252113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85622f211127c0f4f9ac9d5b0de2025b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashEndTime: 0.6
-  intensityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 549.2319
-      outSlope: 549.2319
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.09704867
-      value: 53.302223
-      inSlope: -293.7184
-      outSlope: -293.7184
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.097658955
-      outWeight: 0.029852029
-    - serializedVersion: 3
-      time: 0.6
-      value: 0
-      inSlope: -1.3349905
-      outSlope: -1.3349905
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.31444383
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &7156421888201114548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,9 +1607,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6138757853740380928, guid: f12003ed92f730a419978999fbae4757, type: 3}
       insertIndex: -1
       addedObject: {fileID: 839211481042843478}
-    - targetCorrespondingSourceObject: {fileID: 6138757853740380928, guid: f12003ed92f730a419978999fbae4757, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6832948171507685203}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f12003ed92f730a419978999fbae4757, type: 3}
 --- !u!4 &7172836027534036280 stripped
