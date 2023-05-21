@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,13 +6,21 @@ using UnityEngine.InputSystem;
 
 public class DriveStation : AbstractStation, IManualUpdateSubscriber
 {
-    [SerializeField] private Transform boatTransform;
-    public Transform BoatTransform => boatTransform;
+    [SerializeField] private float initialDrivingDirection = -1;
+
+    public float InitialDrivingDirection => initialDrivingDirection;
+
+    public Transform PlayerTransform { get; private set; }
 
     private InputAction driveAction;
 
     private DriveStation_Moving movingController;
     private DriveStation_Rotating rotatingController;
+
+    public float LastDriveDirection { get; set; }
+    public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
+
+    private void Awake() => LastDriveDirection = initialDrivingDirection;
 
     protected override void GameStateMatches()
     {
@@ -28,9 +37,10 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     protected override void Start()
     {
         base.Start();
+        PlayerTransform = PlayerSingleton.instance.PlayerTransform;
 
         SetupDrivingControllers();
-        
+
         GetAndEnableDriveAction();
 
         UpdateManager.SubscribeToManualUpdate(this);

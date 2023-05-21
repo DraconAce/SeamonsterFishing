@@ -1,16 +1,16 @@
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 public interface IInputEventSubscriber
 {
-    public bool SubscribedToStarted { get; }
-    public bool SubscribedToPerformed { get; }
-    public bool SubscribedToCanceled { get; }
+    public bool SubscribedToStarted => true;
+    public bool SubscribedToPerformed => true;
+    public bool SubscribedToCanceled => false;
 
     public string[] ActionsToSubscribeTo { get; }
+
+    public void UnsubscribeOnDestroy();
     
     public void InputStarted(InputAction.CallbackContext callContext){}
     public void InputPerformed(InputAction.CallbackContext callContext){}
     public void InputCanceled(InputAction.CallbackContext callContext){}
-    public bool SubscriberCanReceiveUpdate() => true;
 }
