@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{ad77677f-a563-459b-9025-66ff5e73b536}">
 		<property name="assetPath">
-			<value>Monster/DeepGrowlMediumNear_341173__cylon8472__deep-sea-monster.flac</value>
+			<value>Baiting/Monster/DeepGrowlMediumNear_341173__cylon8472__deep-sea-monster.flac</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

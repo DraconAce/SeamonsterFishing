@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{4fbb8dc6-9dc7-47f7-b2eb-050379ac158b}">
 		<property name="assetPath">
-			<value>Flash/FlashReload_450951__kyles__snowmobile-wont-start-false-starts-lawnmower-pull-cord.wav</value>
+			<value>Baiting/Flash/FlashReload_450951__kyles__snowmobile-wont-start-false-starts-lawnmower-pull-cord.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

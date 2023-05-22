@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{64e1fc56-e4a9-4ca0-b027-a72a81b7c01d}">
 		<property name="assetPath">
-			<value>Monster/MonsterScreamingFarAway_322364__svarvarn__swiss-chocolate-sea-monster.wav</value>
+			<value>Baiting/Monster/MonsterScreamingFarAway_322364__svarvarn__swiss-chocolate-sea-monster.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

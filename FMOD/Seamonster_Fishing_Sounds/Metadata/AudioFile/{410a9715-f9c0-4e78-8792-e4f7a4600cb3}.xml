@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{410a9715-f9c0-4e78-8792-e4f7a4600cb3}">
 		<property name="assetPath">
-			<value>Monster/MonsterCreepingCloseWithWeirdShksshksshks_370167__shealcudahy__underwater-creature.wav</value>
+			<value>Baiting/Monster/MonsterCreepingCloseWithWeirdShksshksshks_370167__shealcudahy__underwater-creature.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

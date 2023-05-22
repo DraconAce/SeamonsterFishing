@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{592d287a-175b-4c0f-b652-e71232ede581}">
 		<property name="assetPath">
-			<value>Flash/FlashSFX_414931__panxozerok__flashlight-2.wav</value>
+			<value>Baiting/Flash/FlashSFX_414931__panxozerok__flashlight-2.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>96</value>

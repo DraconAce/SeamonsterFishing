@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{9bfe0ba5-a3fd-4a49-8553-8cf0e532c534}">
 		<property name="assetPath">
-			<value>Monster/ThreeTimesMonsterCreepingFarAway_435683__itsthatroboguy__underwater-crab-like-monster-growl.wav</value>
+			<value>Baiting/Monster/ThreeTimesMonsterCreepingFarAway_435683__itsthatroboguy__underwater-crab-like-monster-growl.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

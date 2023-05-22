@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{fe49aee2-117e-48a1-9e43-a79c15d73a4b}">
 		<property name="assetPath">
-			<value>Monster/PossibleJumpScareNoise_324563__univ_lyon3__saly_margaux_2015_2016_creature_scream.wav</value>
+			<value>Baiting/Monster/PossibleJumpScareNoise_324563__univ_lyon3__saly_margaux_2015_2016_creature_scream.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{424b03a1-a5a2-483f-9bb0-32ec1ead0b00}">
 		<property name="assetPath">
-			<value>Monster/LongJumpscare_111714__jmorrisoncafe330__kraken_surfacing.wav</value>
+			<value>Baiting/Monster/LongJumpscare_111714__jmorrisoncafe330__kraken_surfacing.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
