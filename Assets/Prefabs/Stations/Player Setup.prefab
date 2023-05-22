@@ -565,15 +565,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3527437097880685390}
-  m_LocalRotation: {x: -0.09123589, y: -0.6996762, z: -0.09083492, w: 0.7027647}
-  m_LocalPosition: {x: 37.06, y: -2.35, z: -0.02}
+  m_LocalRotation: {x: -0.044859447, y: -0.704172, z: -0.044255517, w: 0.7072276}
+  m_LocalPosition: {x: 37.06, y: -1.24, z: -0.02}
   m_LocalScale: {x: 1, y: 1.0130956, z: 0.98196256}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7713335240940860934}
   m_Father: {fileID: 290194287925910205}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -14.794, y: -89.748, z: 0}
+  m_LocalEulerAnglesHint: {x: -7.226, y: -89.754, z: 0.034}
 --- !u!114 &2763929532264121873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,6 +754,9 @@ MonoBehaviour:
   actionsToSubscribeTo:
   - ActivateSpot
   coolDownTimer: 10
+  onFlashReady:
+    m_PersistentCalls:
+      m_Calls: []
   targetOnIntensity: 150
   stayOnDuration: 0.3
   flashOnSettings:

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class AbstractMonsterBehaviour : MonoBehaviour
@@ -9,8 +10,25 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
 
     private AbstractMonsterState monsterState;
     private MonsterBehaviourProvider monsterBehaviourProvider;
+
+    private Coroutine behaviourImplRoutine;
+    private Coroutine BehaviourRoutine;
+    private Coroutine InterruptRoutine;
+
+    private bool behaviourIsPlaying;
+    protected bool interruptBehaviourRoutine;
     
-    public Coroutine BehaviourRoutine { get; protected set; }
+    public bool BehaviourIsDone { get; private set; }
+    public bool InterruptIsDone { get; private set; } = true;
+
+    public WaitUntil WaitForInterruptDone { get; private set; }
+    public WaitUntil WaitForCompletionOrInterruption { get; private set; }
+
+    private void Awake()
+    {
+        WaitForCompletionOrInterruption = new(() => interruptBehaviourRoutine || BehaviourIsDone);
+        WaitForInterruptDone = new(() => InterruptIsDone);
+    }
 
     protected virtual void Start()
     {
@@ -20,13 +38,32 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
         monsterState.MonsterStateChangedEvent += OnMonsterStateChanged;
     }
 
-    public virtual void StartBehaviour()
+    public void TriggerBehaviour()
     {
         if (monsterBehaviourProvider.IsBehaviourActive(this)) return;
         
-        if (!ChangeMonsterStateOnStartBehaviour) return;
+        BehaviourRoutine = StartCoroutine(StartBehaviourRoutine());
 
+        if (!ChangeMonsterStateOnStartBehaviour) return;
+        
         monsterState.CurrentState = MonsterStateOnBehaviourStart;
+    }
+
+    private IEnumerator StartBehaviourRoutine()
+    {
+        behaviourImplRoutine = StartCoroutine(StartBehaviourImpl());
+        behaviourIsPlaying = true;
+
+        yield return WaitForCompletionOrInterruption;
+
+        yield return null;
+        ResetAfterBehaviourCompleted();
+    }
+
+    protected virtual IEnumerator StartBehaviourImpl()
+    {
+        BehaviourIsDone = true;
+        yield break;
     }
 
     private void OnMonsterStateChanged(MonsterState newState)
@@ -36,16 +73,38 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
         InterruptBehaviour();
     }
 
-    protected virtual void InterruptBehaviour()
+    public void InterruptBehaviour()
     {
-        if (BehaviourRoutine == null) return;
-        
-        StopCoroutine(BehaviourRoutine);
+        if (!behaviourIsPlaying) return;
+
+        InterruptIsDone = false;
+        interruptBehaviourRoutine = true;
+
+        if(behaviourImplRoutine != null)
+            StopCoroutine(behaviourImplRoutine);
+
+        InterruptRoutine = StartCoroutine(StartInterruptedRoutineImpl());
     }
+
+    protected virtual IEnumerator StartInterruptedRoutineImpl()
+    {
+        InterruptIsDone = true;
+
+        yield return null;
+        yield return null;
+
+        interruptBehaviourRoutine = false;
+    }
+
+    private void ResetAfterBehaviourCompleted() => (BehaviourIsDone, interruptBehaviourRoutine, behaviourIsPlaying) = (false, false, false);
 
     protected virtual void OnDestroy()
     {
-        if (BehaviourRoutine == null) return;
-        StopCoroutine(BehaviourRoutine);
+        if (BehaviourRoutine != null)
+            StopCoroutine(BehaviourRoutine);
+
+        if (InterruptRoutine == null) return;
+        
+        StopCoroutine(InterruptRoutine);
     }
 }

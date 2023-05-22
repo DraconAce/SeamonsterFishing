@@ -6,8 +6,8 @@ public class MonsterAttackBehaviour : AbstractMonsterBehaviour
 {
     //Todo: Function to chose next attack
 
-    private WaitForSeconds waitBetweenMidRangeAttacks = new(5);
-    private Coroutine currentAttack;
+    private AbstractMonsterAttack currentAttack;
+    private readonly WaitForSeconds waitBetweenMidRangeAttacks = new(5);
 
     private readonly Dictionary<MonsterAttackType, List<AbstractMonsterAttack>> monsterAttacks = new();
     
@@ -38,12 +38,12 @@ public class MonsterAttackBehaviour : AbstractMonsterBehaviour
             monsterAttacks.Add(attack.AttackType, new(){ attack });
         }
     }
-
-    public override void StartBehaviour()
+    
+    protected override IEnumerator StartBehaviourImpl()
     {
-        base.StartBehaviour();
-
-        BehaviourRoutine = StartCoroutine(AttackRoutine());
+        yield return StartCoroutine(AttackRoutine());
+        
+        yield return base.StartBehaviourImpl();
     }
 
     private IEnumerator AttackRoutine()
@@ -68,8 +68,10 @@ public class MonsterAttackBehaviour : AbstractMonsterBehaviour
 
         yield return null;
 
-        currentAttack = randomAttack.BehaviourRoutine;
-        yield return currentAttack;
+        currentAttack = randomAttack;
+        
+        currentAttack.TriggerBehaviour();
+        yield return randomAttack.WaitForCompletionOrInterruption;
     }
 
     private AbstractMonsterAttack GetAndStartRandomAttackOfType(MonsterAttackType attackType)
@@ -79,27 +81,23 @@ public class MonsterAttackBehaviour : AbstractMonsterBehaviour
         var randomAttackIndex = Random.Range(0, attacksOfRequestedType.Count);
 
         var randomAttack = attacksOfRequestedType[randomAttackIndex];
-        randomAttack.StartBehaviour();
 
         return randomAttack;
     }
 
-    protected override void InterruptBehaviour()
+    protected override IEnumerator StartInterruptedRoutineImpl()
     {
-        base.InterruptBehaviour();
-
-        StopCurrentAttack();
+        yield return StopCurrentAttack();
+        
+        yield return base.StartInterruptedRoutineImpl();
     }
 
-    private void StopCurrentAttack()
+    private IEnumerator StopCurrentAttack()
     {
-        if (currentAttack == null) return;
-        StopCoroutine(currentAttack);
-    }
+        if (currentAttack == null)
+            yield break;
 
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        StopCurrentAttack();
+        currentAttack.InterruptBehaviour();
+        yield return currentAttack.WaitForInterruptDone;
     }
 }

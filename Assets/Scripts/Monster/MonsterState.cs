@@ -12,9 +12,8 @@ public enum MonsterState
     Stunned,
     Fleeing,
     PreparingAttack,
-    Hit,
     Cooldown,
-    
+
     //Baiting
     Approaching
 }
