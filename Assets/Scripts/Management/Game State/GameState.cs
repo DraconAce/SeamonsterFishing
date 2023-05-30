@@ -6,5 +6,14 @@ public enum GameState
     
     Baiting,
     
-    Navigation
+    Navigation,
+    
+    Dead,
+    
+    None,
+    
+    Won,
+    
+    PauseMenu,
+    MainMenu
 }

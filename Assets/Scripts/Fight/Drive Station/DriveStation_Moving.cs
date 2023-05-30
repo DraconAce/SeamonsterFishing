@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DriveStation_Moving : StationController
+public class DriveStation_Moving : AbstractStationSegment
 {
     [SerializeField] private float driveSpeed = 5.0f;
     [SerializeField] private MinMaxLimit moveLimit;
@@ -13,7 +13,9 @@ public class DriveStation_Moving : StationController
     
     protected override void OnControllerSetup()
     {
-        boatTransform = driveStation.BoatTransform;
+        base.OnControllerSetup();
+        
+        boatTransform = driveStation.PlayerTransform;
         
         boatForwardDirection = boatTransform.forward.normalized;
         

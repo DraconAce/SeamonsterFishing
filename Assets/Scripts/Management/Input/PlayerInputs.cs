@@ -62,6 +62,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""538f0136-1483-44e2-a4d5-d138d1b227a5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,7 +187,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dc13737a-2a34-4e3f-906d-96031914f205"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -200,7 +209,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""eeb7c1b6-6c1f-4b91-af84-7e83e760c60f"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -222,7 +231,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b6866227-0784-4758-850f-62d635819bb4"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -238,6 +247,50 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ActivateSpot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b935cd8-daed-4dc7-bfb1-0a3cba9f8f42"",
+                    ""path"": ""<SwitchProControllerHID>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateSpot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f002172d-0c31-4965-8ba8-be0409db0bc5"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35d676e4-c8a5-49d6-a389-d8530e10a759"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1251de76-92c4-4298-9d51-3200a561a264"",
+                    ""path"": ""<SwitchProControllerHID>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -282,6 +335,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""bdcd8a7a-84d2-4618-97b0-82533fc0eb19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -310,7 +372,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b63bde75-7c1e-4797-b5aa-22d8ae3b995d"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -331,8 +393,19 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""6448b929-6fd6-4bf4-8c81-ce3d4bce9f82"",
+                    ""path"": ""<SwitchProControllerHID>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ebc6fce7-8fc6-40d9-afba-25c182d5a50d"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -354,7 +427,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""443349f5-ff23-4620-a4b5-378d235be1a9"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -381,6 +454,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a24af12-bf91-44c6-9ae5-92164e33458b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e605983-9b92-48fb-a58e-570702b141e5"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2b07988-26de-4456-a861-35b740928e84"",
+                    ""path"": ""<SwitchProControllerHID>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -412,6 +518,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Return"",
                     ""type"": ""Button"",
                     ""id"": ""c6f72770-165b-47c0-96a7-1b5cc8306def"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ace789d-2b81-4101-9a09-72c22a04acde"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -583,6 +698,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Return"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6712aaed-e361-4d27-9e4a-3d05d7cbf25b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2bdbce1-fb2c-44c4-a06a-d1909a453e23"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""acfe4594-4f12-4c72-874b-9be0a7f32eae"",
+                    ""path"": ""<SwitchProControllerHID>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -676,6 +824,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""5da961c9-4f24-4c28-b51e-7685769a5a21"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ea488cd-3cfb-488a-9994-9e25c1facd49"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1099,6 +1256,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89a3bebd-8e69-4c66-a9a4-be310641a952"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5508cadf-644c-45bc-b9a4-83554ba28484"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49af2c4f-be65-42b3-b76a-4e8b81d4960f"",
+                    ""path"": ""<SwitchProControllerHID>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1164,6 +1354,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Charge_Flashlight"",
                     ""type"": ""Button"",
                     ""id"": ""35772487-039b-4bd6-b191-cb05dce869f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ad64934-8dde-493d-bdf8-919a4b7312ba"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1412,6 +1611,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Change_View_Up"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84f392e0-a539-4ca3-acfb-67ff1df851d2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c218cb23-2d98-409c-ad05-0b91a402c39f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3777be7-5a8d-4cc6-af6f-88aae0efe9f4"",
+                    ""path"": ""<SwitchProControllerHID>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1485,17 +1717,20 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Fight_Overview_Station_Cannon = m_Fight_Overview.FindAction("Station_Cannon", throwIfNotFound: true);
         m_Fight_Overview_Station_Reeling = m_Fight_Overview.FindAction("Station_Reeling", throwIfNotFound: true);
         m_Fight_Overview_ActivateSpot = m_Fight_Overview.FindAction("ActivateSpot", throwIfNotFound: true);
+        m_Fight_Overview_ToggleMenu = m_Fight_Overview.FindAction("ToggleMenu", throwIfNotFound: true);
         // Fight_Cannon
         m_Fight_Cannon = asset.FindActionMap("Fight_Cannon", throwIfNotFound: true);
         m_Fight_Cannon_Aim = m_Fight_Cannon.FindAction("Aim", throwIfNotFound: true);
         m_Fight_Cannon_Fire = m_Fight_Cannon.FindAction("Fire", throwIfNotFound: true);
         m_Fight_Cannon_Reload = m_Fight_Cannon.FindAction("Reload", throwIfNotFound: true);
         m_Fight_Cannon_Return = m_Fight_Cannon.FindAction("Return", throwIfNotFound: true);
+        m_Fight_Cannon_ToggleMenu = m_Fight_Cannon.FindAction("ToggleMenu", throwIfNotFound: true);
         // Fight_Reeling
         m_Fight_Reeling = asset.FindActionMap("Fight_Reeling", throwIfNotFound: true);
         m_Fight_Reeling_Pull = m_Fight_Reeling.FindAction("Pull", throwIfNotFound: true);
         m_Fight_Reeling_Reel = m_Fight_Reeling.FindAction("Reel", throwIfNotFound: true);
         m_Fight_Reeling_Return = m_Fight_Reeling.FindAction("Return", throwIfNotFound: true);
+        m_Fight_Reeling_ToggleMenu = m_Fight_Reeling.FindAction("ToggleMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1508,6 +1743,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_ToggleMenu = m_UI.FindAction("ToggleMenu", throwIfNotFound: true);
         // Baiting
         m_Baiting = asset.FindActionMap("Baiting", throwIfNotFound: true);
         m_Baiting_Change_View_Left = m_Baiting.FindAction("Change_View_Left", throwIfNotFound: true);
@@ -1517,6 +1753,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Baiting_Look = m_Baiting.FindAction("Look", throwIfNotFound: true);
         m_Baiting_Defend = m_Baiting.FindAction("Defend", throwIfNotFound: true);
         m_Baiting_Charge_Flashlight = m_Baiting.FindAction("Charge_Flashlight", throwIfNotFound: true);
+        m_Baiting_ToggleMenu = m_Baiting.FindAction("ToggleMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1582,6 +1819,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Fight_Overview_Station_Cannon;
     private readonly InputAction m_Fight_Overview_Station_Reeling;
     private readonly InputAction m_Fight_Overview_ActivateSpot;
+    private readonly InputAction m_Fight_Overview_ToggleMenu;
     public struct Fight_OverviewActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1590,6 +1828,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Station_Cannon => m_Wrapper.m_Fight_Overview_Station_Cannon;
         public InputAction @Station_Reeling => m_Wrapper.m_Fight_Overview_Station_Reeling;
         public InputAction @ActivateSpot => m_Wrapper.m_Fight_Overview_ActivateSpot;
+        public InputAction @ToggleMenu => m_Wrapper.m_Fight_Overview_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Overview; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1611,6 +1850,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ActivateSpot.started += instance.OnActivateSpot;
             @ActivateSpot.performed += instance.OnActivateSpot;
             @ActivateSpot.canceled += instance.OnActivateSpot;
+            @ToggleMenu.started += instance.OnToggleMenu;
+            @ToggleMenu.performed += instance.OnToggleMenu;
+            @ToggleMenu.canceled += instance.OnToggleMenu;
         }
 
         private void UnregisterCallbacks(IFight_OverviewActions instance)
@@ -1627,6 +1869,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ActivateSpot.started -= instance.OnActivateSpot;
             @ActivateSpot.performed -= instance.OnActivateSpot;
             @ActivateSpot.canceled -= instance.OnActivateSpot;
+            @ToggleMenu.started -= instance.OnToggleMenu;
+            @ToggleMenu.performed -= instance.OnToggleMenu;
+            @ToggleMenu.canceled -= instance.OnToggleMenu;
         }
 
         public void RemoveCallbacks(IFight_OverviewActions instance)
@@ -1652,6 +1897,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Fight_Cannon_Fire;
     private readonly InputAction m_Fight_Cannon_Reload;
     private readonly InputAction m_Fight_Cannon_Return;
+    private readonly InputAction m_Fight_Cannon_ToggleMenu;
     public struct Fight_CannonActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1660,6 +1906,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Fight_Cannon_Fire;
         public InputAction @Reload => m_Wrapper.m_Fight_Cannon_Reload;
         public InputAction @Return => m_Wrapper.m_Fight_Cannon_Return;
+        public InputAction @ToggleMenu => m_Wrapper.m_Fight_Cannon_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Cannon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1681,6 +1928,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Return.started += instance.OnReturn;
             @Return.performed += instance.OnReturn;
             @Return.canceled += instance.OnReturn;
+            @ToggleMenu.started += instance.OnToggleMenu;
+            @ToggleMenu.performed += instance.OnToggleMenu;
+            @ToggleMenu.canceled += instance.OnToggleMenu;
         }
 
         private void UnregisterCallbacks(IFight_CannonActions instance)
@@ -1697,6 +1947,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Return.started -= instance.OnReturn;
             @Return.performed -= instance.OnReturn;
             @Return.canceled -= instance.OnReturn;
+            @ToggleMenu.started -= instance.OnToggleMenu;
+            @ToggleMenu.performed -= instance.OnToggleMenu;
+            @ToggleMenu.canceled -= instance.OnToggleMenu;
         }
 
         public void RemoveCallbacks(IFight_CannonActions instance)
@@ -1721,6 +1974,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Fight_Reeling_Pull;
     private readonly InputAction m_Fight_Reeling_Reel;
     private readonly InputAction m_Fight_Reeling_Return;
+    private readonly InputAction m_Fight_Reeling_ToggleMenu;
     public struct Fight_ReelingActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1728,6 +1982,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Pull => m_Wrapper.m_Fight_Reeling_Pull;
         public InputAction @Reel => m_Wrapper.m_Fight_Reeling_Reel;
         public InputAction @Return => m_Wrapper.m_Fight_Reeling_Return;
+        public InputAction @ToggleMenu => m_Wrapper.m_Fight_Reeling_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Reeling; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1746,6 +2001,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Return.started += instance.OnReturn;
             @Return.performed += instance.OnReturn;
             @Return.canceled += instance.OnReturn;
+            @ToggleMenu.started += instance.OnToggleMenu;
+            @ToggleMenu.performed += instance.OnToggleMenu;
+            @ToggleMenu.canceled += instance.OnToggleMenu;
         }
 
         private void UnregisterCallbacks(IFight_ReelingActions instance)
@@ -1759,6 +2017,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Return.started -= instance.OnReturn;
             @Return.performed -= instance.OnReturn;
             @Return.canceled -= instance.OnReturn;
+            @ToggleMenu.started -= instance.OnToggleMenu;
+            @ToggleMenu.performed -= instance.OnToggleMenu;
+            @ToggleMenu.canceled -= instance.OnToggleMenu;
         }
 
         public void RemoveCallbacks(IFight_ReelingActions instance)
@@ -1790,6 +2051,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_ToggleMenu;
     public struct UIActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1804,6 +2066,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @ToggleMenu => m_Wrapper.m_UI_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1843,6 +2106,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @ToggleMenu.started += instance.OnToggleMenu;
+            @ToggleMenu.performed += instance.OnToggleMenu;
+            @ToggleMenu.canceled += instance.OnToggleMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1877,6 +2143,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @ToggleMenu.started -= instance.OnToggleMenu;
+            @ToggleMenu.performed -= instance.OnToggleMenu;
+            @ToggleMenu.canceled -= instance.OnToggleMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1905,6 +2174,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Baiting_Look;
     private readonly InputAction m_Baiting_Defend;
     private readonly InputAction m_Baiting_Charge_Flashlight;
+    private readonly InputAction m_Baiting_ToggleMenu;
     public struct BaitingActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1916,6 +2186,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Baiting_Look;
         public InputAction @Defend => m_Wrapper.m_Baiting_Defend;
         public InputAction @Charge_Flashlight => m_Wrapper.m_Baiting_Charge_Flashlight;
+        public InputAction @ToggleMenu => m_Wrapper.m_Baiting_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Baiting; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1946,6 +2217,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Charge_Flashlight.started += instance.OnCharge_Flashlight;
             @Charge_Flashlight.performed += instance.OnCharge_Flashlight;
             @Charge_Flashlight.canceled += instance.OnCharge_Flashlight;
+            @ToggleMenu.started += instance.OnToggleMenu;
+            @ToggleMenu.performed += instance.OnToggleMenu;
+            @ToggleMenu.canceled += instance.OnToggleMenu;
         }
 
         private void UnregisterCallbacks(IBaitingActions instance)
@@ -1971,6 +2245,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Charge_Flashlight.started -= instance.OnCharge_Flashlight;
             @Charge_Flashlight.performed -= instance.OnCharge_Flashlight;
             @Charge_Flashlight.canceled -= instance.OnCharge_Flashlight;
+            @ToggleMenu.started -= instance.OnToggleMenu;
+            @ToggleMenu.performed -= instance.OnToggleMenu;
+            @ToggleMenu.canceled -= instance.OnToggleMenu;
         }
 
         public void RemoveCallbacks(IBaitingActions instance)
@@ -2039,6 +2316,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnStation_Cannon(InputAction.CallbackContext context);
         void OnStation_Reeling(InputAction.CallbackContext context);
         void OnActivateSpot(InputAction.CallbackContext context);
+        void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IFight_CannonActions
     {
@@ -2046,12 +2324,14 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
+        void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IFight_ReelingActions
     {
         void OnPull(InputAction.CallbackContext context);
         void OnReel(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
+        void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -2065,6 +2345,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IBaitingActions
     {
@@ -2075,5 +2356,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnDefend(InputAction.CallbackContext context);
         void OnCharge_Flashlight(InputAction.CallbackContext context);
+        void OnToggleMenu(InputAction.CallbackContext context);
     }
 }

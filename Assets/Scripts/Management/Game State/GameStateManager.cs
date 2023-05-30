@@ -1,9 +1,13 @@
 using System;
+using System.Xml;
 using UnityEngine;
 
 public class GameStateManager : Singleton<GameStateManager>
 {
     [SerializeField] private GameState currentGameState = GameState.FightOverview;
+    
+    public bool BlockGameStateChange { get; set; }
+    public GameState PreviousGameState { get; private set; }
 
     public GameState CurrentGameState
     {
@@ -14,16 +18,23 @@ public class GameStateManager : Singleton<GameStateManager>
     public override void OnCreated()
     {
         base.OnCreated();
-        GameStateChanger.instance.Activation();
+
+        PreviousGameState = currentGameState;
+        
+        InputGameStateChangeRequestor.instance.Activation();
     }
 
     public event Action<GameState> GameStateChangedEvent;
 
     public void ChangeGameState(GameState newGameState)
     {
-        if (newGameState == CurrentGameState) return;
+        if (newGameState == CurrentGameState || BlockGameStateChange) return;
 
+        PreviousGameState = CurrentGameState;
         CurrentGameState = newGameState;
+        
         GameStateChangedEvent?.Invoke(newGameState);
     }
+
+    public void ChangeToPreviousGameState() => ChangeGameState(PreviousGameState);
 }

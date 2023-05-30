@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class CannonStation_Shooting : StationController, IInputEventSubscriber
+public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscriber
 {
-    [SerializeField] private float reloadTime = 5f;
     [SerializeField] private float shootDelay = 3f;
     [SerializeField] private float fireForce = 1000f;
     [SerializeField] private Transform barrelOpening;
+    [SerializeField] private CannonStation_Reload reloadSegment;
     
     [Header("Pooling")]
     [SerializeField] private Transform cannonBallParent;
@@ -17,29 +17,24 @@ public class CannonStation_Shooting : StationController, IInputEventSubscriber
     
     [Header("Events")]
     [SerializeField] private UnityEvent onCannonShoot;
-    
-    private bool isLoaded = true;
-    private bool isReloading;
-    private bool shootIsScheduled;
+
+
+    public bool ShootIsScheduled { get; private set; }
 
     private Tween shootDelayTween;
-    private Tween reloadingTween;
 
     private PrefabPool cannonBallPool;
     private CannonBall currentCannonBall;
     private InputManager inputManager;
 
     private const string shootActionName = "Fire";
-    private const string reloadActionName = "Reload";
 
     public bool SubscribedToStarted => false;
     public bool SubscribedToPerformed => true;
     public bool SubscribedToCanceled => false;
 
-    public string[] ActionsToSubscribeTo { get; } = { shootActionName, reloadActionName };
-
-    private InputManager.SubscriberSettings subscriberSettings;
-
+    public string[] ActionsToSubscribeTo { get; } = { shootActionName };
+    
     private void Start()
     {
         SubscribeToInputManager();
@@ -47,47 +42,30 @@ public class CannonStation_Shooting : StationController, IInputEventSubscriber
         PrepareCannonBallPool();
     }
 
-    protected override void OnControllerSetup()
-    {
-        base.OnControllerSetup();
-
-        ControllerStation.StationGameStateDoesNotMatchEvent += OnGameStateDoesNotMatchCannonStation;
-    }
-    
-    private void OnGameStateDoesNotMatchCannonStation()
-    {
-        reloadingTween?.Kill();
-        isReloading = false;
-
-        if (shootIsScheduled || !isLoaded || currentCannonBall == null) return;
-        
-        cannonBallPool.ReturnInstance(currentCannonBall.ContainerOfObject);
-    }
-
     private void SubscribeToInputManager()
     {
         inputManager = InputManager.instance;
         
-        subscriberSettings = new() { ActionsToSubscribeTo = ActionsToSubscribeTo, EventSubscriber = this };
-        inputManager.SubscribeToActions(subscriberSettings);
+        inputManager.SubscribeToActions(this);
     }
 
     private void PrepareCannonBallPool() 
         => cannonBallPool = PrefabPoolFactory.instance.RequestNewPool(gameObject, cannonBallPrefab, cannonBallParent);
 
+    protected override void OnGameStateDoesNotMatchCannonStation()
+    {
+        if (ShootIsScheduled || currentCannonBall == null) return;
+        
+        cannonBallPool.ReturnInstance(currentCannonBall.ContainerOfObject);
+    }
+
     public void InputPerformed(InputAction.CallbackContext callContext)
     {
         var performedActionName = callContext.action.name;
-
-        switch (performedActionName)
-        {
-            case shootActionName:
-                TryToShoot();
-                break;
-            case reloadActionName:
-                TryToReload();
-                break;
-        }
+        
+        if (performedActionName != shootActionName) return;
+        
+        TryToShoot();
     }
 
     private void TryToShoot()
@@ -97,16 +75,19 @@ public class CannonStation_Shooting : StationController, IInputEventSubscriber
         ScheduleShoot();
     }
 
-    private bool CannonCanShoot() => isLoaded && !isReloading && !shootIsScheduled;
+    private bool CannonCanShoot() => reloadSegment.CannonIsPrepared && !ShootIsScheduled;
 
     private void ScheduleShoot()
     {
         var cannonBallOb = cannonBallPool.RequestInstance(barrelOpening.transform.position, barrelOpening);
-        
+
+        cannonBallOb.Ob.transform.localScale = Vector3.one;
         cannonBallOb.TryGetCachedComponent(out currentCannonBall);
         
         shootDelayTween = DOVirtual.DelayedCall(shootDelay, Shoot, false);
-        shootIsScheduled = true;
+        ShootIsScheduled = true;
+        
+        InvokeSegmentStateChangedEvent();
     }
 
     private void Shoot()
@@ -118,34 +99,23 @@ public class CannonStation_Shooting : StationController, IInputEventSubscriber
         
         onCannonShoot?.Invoke();
         
-        shootIsScheduled = false;
-        isLoaded = false;
-    }
-    
-    private void TryToReload()
-    {
-        if (isLoaded || isReloading) return;
+        ShootIsScheduled = false;
+        reloadSegment.IsLoaded = false;
 
-        isReloading = true;
-
-        reloadingTween = DOVirtual.DelayedCall(reloadTime, Reload, false);
+        currentCannonBall = null;
+        
+        InvokeSegmentStateChangedEvent();
     }
 
-    private void Reload()
+    protected override void OnDestroy()
     {
-        isLoaded = true;
-        isReloading = false;
-    }
-
-    private void OnDestroy()
-    {
+        base.OnDestroy();
+        
         shootDelayTween?.Kill();
-        reloadingTween?.Kill();
-
-        if (ControllerStation != null)
-            ControllerStation.StationGameStateDoesNotMatchEvent -= OnGameStateDoesNotMatchCannonStation;
 
         if (inputManager == null) return;
-        inputManager.UnsubscribeFromActions(subscriberSettings);
+        UnsubscribeOnDestroy();
     }
+
+    public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
 }

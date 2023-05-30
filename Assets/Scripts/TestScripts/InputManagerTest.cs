@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,15 +22,16 @@ public class InputManagerTest : MonoBehaviour, IInputEventSubscriber
     {
         inputManager = InputManager.instance;
         
-        inputManager.SubscribeToActions(
-            new InputManager.SubscriberSettings{ ActionsToSubscribeTo = ActionsToSubscribeTo, EventSubscriber = this });
+        inputManager.SubscribeToActions(this);
     }
-
-    public bool SubscriberCanReceiveUpdate() => true;
 
     public void InputStarted(InputAction.CallbackContext callContext) => Debug.Log("Input Started");
 
     public void InputCanceled(InputAction.CallbackContext callContext) => Debug.Log("Input Canceled");
 
     public void InputPerformed(InputAction.CallbackContext callContext) => Debug.Log("Input Performed");
+
+    private void OnDestroy() => UnsubscribeOnDestroy();
+
+    public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
 }

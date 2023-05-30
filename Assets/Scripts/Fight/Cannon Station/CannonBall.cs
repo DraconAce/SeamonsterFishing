@@ -4,16 +4,36 @@ using UnityEngine.Events;
 
 public class CannonBall : MonoBehaviour, IPoolObject
 {
+    [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private UnityEvent onCannonBallHit;
-    
+
+    private GameObject explosionPoolParent;
+    private PrefabPool explosionPool;
     private Rigidbody rigidbody;
+    private FightMonsterSingleton monsterSingleton;
 
     public PoolObjectContainer ContainerOfObject { get; set; }
 
     private const string monsterTag = "monster";
     private const string weakPointTag = "weakPoint";
 
-    private void Start() => TryGetComponent(out rigidbody);
+    private void Awake() => TryGetComponent(out rigidbody);
+
+    private void Start()
+    {
+        monsterSingleton = FightMonsterSingleton.instance;
+        
+        CreateExplosionFXPool();
+    }
+
+    private void CreateExplosionFXPool()
+    {
+        explosionPoolParent = new GameObject();
+        
+        explosionPool =
+            PrefabPoolFactory.instance.RequestNewPool(explosionPoolParent, explosionPrefab,
+                explosionPoolParent.transform);
+    }
 
     public void ApplyForceToCannonBall(Vector3 forceDirection)
     {
@@ -26,14 +46,36 @@ public class CannonBall : MonoBehaviour, IPoolObject
     {
         var collidedGameOb = other.gameObject;
 
-        if (!collidedGameOb.CompareTag(monsterTag) 
-            && !collidedGameOb.CompareTag(weakPointTag)) return;
-        
+        if (collidedGameOb.CompareTag(monsterTag))
+        {
+            CannonBallRecordedValidHit();
+            
+            monsterSingleton.CannonBallMissed();
+        }
+        else if (collidedGameOb.CompareTag(weakPointTag))
+        {
+            CannonBallRecordedValidHit();
+            
+            monsterSingleton.WeakPointWasHit();
+        }
+        else
+            monsterSingleton.CannonBallMissed();
+    }
+
+    private void CannonBallRecordedValidHit()
+    {
         CannonBallHit();
         ((IPoolObject)this).ReturnInstanceToPool();
     }
 
-    private void CannonBallHit() => onCannonBallHit?.Invoke();
+    private void CannonBallHit()
+    {
+        onCannonBallHit?.Invoke();
+        
+        InstantiateExplosion();
+    }
+
+    private void InstantiateExplosion() => explosionPool.RequestInstance(transform.position);
 
     private void OnTriggerExit(Collider other)
     {
@@ -42,6 +84,8 @@ public class CannonBall : MonoBehaviour, IPoolObject
         if (!collidedGameOb.CompareTag("water")) return;
         
         ((IPoolObject)this).ReturnInstanceToPool();
+        
+        monsterSingleton.CannonBallMissed();
     }
 
     public void ResetInstance() => MakeSureRigidbodyIsNotInMovement();
