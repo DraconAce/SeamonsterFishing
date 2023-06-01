@@ -1,11 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber
+public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSecondProvider
 {
     [SerializeField] private float meterPerSecond = 0.1f;
     [SerializeField] private TextMeshProUGUI depthText;
     [SerializeField] private Transform waterSurface;
+    public float MovePerSecond => meterPerSecond;
 
     private UpdateManager updateManager;
     private float timer;
