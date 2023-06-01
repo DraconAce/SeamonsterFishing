@@ -20,7 +20,7 @@ public class SceneController : Singleton<SceneController>
 
     private void CreateScenesDictionary()
     {
-        foreach(var level in scenesList)
+        foreach(var level in scenesList) 
             scenesDictionary.Add(level.LevelIdentifier, level);
     }
 
