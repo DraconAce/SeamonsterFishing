@@ -7,6 +7,12 @@ using UnityEngine;
 
 public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonMonoBehaviour
 {
+    [RuntimeInitializeOnLoadMethod]
+    static void RunOnApplicationStart()
+    {
+        _instance = null;
+    }
+    
     //instance of the singleton
     private static T _instance;
     public static T instance
@@ -35,7 +41,9 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         if(instance != null)
         {
             if (callCreated) Created(instance);
-            if (instance.AddToDontDestroy) AddObToDontDestroy(instance);
+            
+            if (instance.AddToDontDestroy) 
+                AddObToDontDestroy(instance);
 
             return instance;
         }
@@ -49,7 +57,9 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         //add the Singleton as component to the gameobject
         var singletonComponent = containerGameObject.AddComponent<T>();
         
-        AddObToDontDestroy(singletonComponent, containerGameObject);
+        if (singletonComponent.AddToDontDestroy) 
+            AddObToDontDestroy(containerGameObject);
+        
         Created(singletonComponent);
 
         return singletonComponent;
@@ -63,7 +73,7 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         DontDestroyOnLoad(ob);
     }
     
-    private static void AddObToDontDestroy(T instance, GameObject ob)
+    private static void AddObToDontDestroy(GameObject ob)
     {
         ob.transform.parent = null;
         
@@ -77,8 +87,8 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
 
     protected virtual void OnDestroy()
     {
-        if (AddToDontDestroy || instance == null) return;
-
+        if (AddToDontDestroy) return;
+        
         _instance = null;
     }
 }
