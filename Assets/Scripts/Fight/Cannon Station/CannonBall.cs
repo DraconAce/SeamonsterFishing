@@ -20,9 +20,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
 
 
     public FMODUnity.EventReference oceanHit;
-
     public FMODUnity.EventReference regularHit;
-
     public FMODUnity.EventReference weakpointHit;
 
     private void Awake() => TryGetComponent(out rigidbody);
@@ -53,7 +51,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
     private void OnCollisionEnter(Collision other)
     {
         var collidedGameOb = other.gameObject;
-        Debug.Log("collidedGameOb:" + collidedGameOb);
+
         if (collidedGameOb.CompareTag(monsterTag))
         {
             CannonBallRecordedValidHit();
@@ -82,7 +80,6 @@ public class CannonBall : MonoBehaviour, IPoolObject
             {
                 //play sound Hit Ocean
                 FMODUnity.RuntimeManager.PlayOneShot(oceanHit);
-                Debug.Log("playing ocean sound");
             }
         }
     }
