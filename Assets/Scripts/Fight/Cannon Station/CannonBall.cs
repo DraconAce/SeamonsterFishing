@@ -17,6 +17,13 @@ public class CannonBall : MonoBehaviour, IPoolObject
     private const string monsterTag = "monster";
     private const string weakPointTag = "weakPoint";
 
+    [FMODUnity.EventRef]
+    public string oceanHit = "";
+    [FMODUnity.EventRef]
+    public string regularHit = "";
+    [FMODUnity.EventRef]
+    public string weakpointHit = "";
+
     private void Awake() => TryGetComponent(out rigidbody);
 
     private void Start()
@@ -49,17 +56,27 @@ public class CannonBall : MonoBehaviour, IPoolObject
         if (collidedGameOb.CompareTag(monsterTag))
         {
             CannonBallRecordedValidHit();
-            
+
             monsterSingleton.CannonBallMissed();
+
+            //play sound Hit No Weakpoint
+            FMODUnity.RuntimeManager.PlayOneShot(regularHit);
         }
         else if (collidedGameOb.CompareTag(weakPointTag))
         {
             CannonBallRecordedValidHit();
-            
+
             monsterSingleton.WeakPointWasHit();
+
+            //play sound Hit Weakpoint
+            FMODUnity.RuntimeManager.PlayOneShot(weakpointHit);
         }
         else
+        {
             monsterSingleton.CannonBallMissed();
+            //play sound Hit Ocean
+            FMODUnity.RuntimeManager.PlayOneShot(oceanHit);
+        }
     }
 
     private void CannonBallRecordedValidHit()

@@ -150,3 +150,6 @@ MonoBehaviour:
   onCannonBallHit:
     m_PersistentCalls:
       m_Calls: []
+  oceanHit: event:/Monster/Hit Ocean
+  regularHit: event:/Monster/Hit No Weakpoint
+  weakpointHit: event:/Monster/Hit Weakpoint

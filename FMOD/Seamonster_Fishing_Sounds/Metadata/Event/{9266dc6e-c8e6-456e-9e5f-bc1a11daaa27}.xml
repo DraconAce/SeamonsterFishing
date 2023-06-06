@@ -31,6 +31,9 @@
 		<relationship name="parameters">
 			<destination>{c283dcf2-4b91-4474-ad2d-8373661ef279}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{31684f9c-e2d3-4348-af23-c1dff4081c0e}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{351c2aaa-56b7-4c2f-bbf9-61d87656b17b}">
 		<relationship name="masterBus">
@@ -115,6 +118,9 @@
 	<object class="MixerBusFader" id="{d877ddfd-5ba9-47df-98fb-dd67fe0429c4}" />
 	<object class="MixerBusFader" id="{284aa4c5-787f-4c12-933d-3ae544520be6}" />
 	<object class="SpatialiserEffect" id="{15e698f2-d3e8-48ac-b0d1-540fcdd55572}">
+		<property name="distanceRolloffType">
+			<value>4</value>
+		</property>
 		<property name="minimumDistance">
 			<value>2</value>
 		</property>
