@@ -18,12 +18,12 @@ public class CannonBall : MonoBehaviour, IPoolObject
     private const string weakPointTag = "weakPoint";
     private const string waterTag = "water";
 
-    [FMODUnity.EventRef]
-    public string oceanHit = "";
-    [FMODUnity.EventRef]
-    public string regularHit = "";
-    [FMODUnity.EventRef]
-    public string weakpointHit = "";
+
+    public FMODUnity.EventReference oceanHit;
+
+    public FMODUnity.EventReference regularHit;
+
+    public FMODUnity.EventReference weakpointHit;
 
     private void Awake() => TryGetComponent(out rigidbody);
 
