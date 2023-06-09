@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 {
@@ -26,7 +27,9 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     private Light spotLight;
     private InputManager inputManager;
     private FightMonsterSingleton monsterSingleton;
-    
+
+    public EventReference flashSound;
+
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
     
     private void Start()
@@ -62,9 +65,20 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         
         flashSequence.Append(FlashTween(targetOffIntensity, flashOffSettings));
         flashSequence.AppendInterval(coolDownTimer);
+        //create Instance of the flash sound for this activation
+        FMOD.Studio.EventInstance flashSoundInstance = FMODUnity.RuntimeManager.CreateInstance(flashSound);
+        //TODO create Instance of the sound to signal that flash is reloaded
+
+        //start playing flash sound
+        flashSoundInstance.start();
 
         flashSequence.OnComplete(() =>
         {
+            //stop playing flash sound onComplete
+            flashSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            flashSoundInstance.release();
+            //TODO play sound to signal that flash is reloaded
+
             FlashIsReady = true;
             onFlashReady?.Invoke();
         });

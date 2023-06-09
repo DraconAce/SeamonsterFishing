@@ -778,6 +778,13 @@ MonoBehaviour:
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
+  flashSound:
+    Guid:
+      Data1: 40835706
+      Data2: 1094370352
+      Data3: -595660374
+      Data4: -583484237
+    Path: event:/Boat/Boat Attack/Flash Shot
 --- !u!1 &4563754126205798449
 GameObject:
   m_ObjectHideFlags: 0
