@@ -785,6 +785,13 @@ MonoBehaviour:
       Data3: -595660374
       Data4: -583484237
     Path: event:/Boat/Boat Attack/Flash Shot
+  reloadFlashSound:
+    Guid:
+      Data1: 1370910866
+      Data2: 1087553066
+      Data3: -193909599
+      Data4: 134709205
+    Path: event:/Boat/Boat Attack/Flash Reload
 --- !u!1 &4563754126205798449
 GameObject:
   m_ObjectHideFlags: 0

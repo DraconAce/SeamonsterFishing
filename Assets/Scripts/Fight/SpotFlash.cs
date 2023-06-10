@@ -29,6 +29,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     private FightMonsterSingleton monsterSingleton;
 
     public EventReference flashSound;
+    public EventReference reloadFlashSound;
 
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
     
@@ -65,10 +66,11 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         
         flashSequence.Append(FlashTween(targetOffIntensity, flashOffSettings));
         flashSequence.AppendInterval(coolDownTimer);
+        
         //create Instance of the flash sound for this activation
         FMOD.Studio.EventInstance flashSoundInstance = FMODUnity.RuntimeManager.CreateInstance(flashSound);
-        //TODO create Instance of the sound to signal that flash is reloaded
-
+        //create Instance of the sound to signal that flash is reloaded
+        FMOD.Studio.EventInstance reloadFlashSoundInstance = FMODUnity.RuntimeManager.CreateInstance(reloadFlashSound);
         //start playing flash sound
         flashSoundInstance.start();
 
@@ -77,7 +79,9 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
             //stop playing flash sound onComplete
             flashSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             flashSoundInstance.release();
-            //TODO play sound to signal that flash is reloaded
+            //play sound to signal that flash is reloaded
+            reloadFlashSoundInstance.start();
+            reloadFlashSoundInstance.release();
 
             FlashIsReady = true;
             onFlashReady?.Invoke();
