@@ -186,6 +186,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  CannonShotSound:
+    Guid:
+      Data1: 2001503019
+      Data2: 1250839242
+      Data3: -1810267003
+      Data4: 1053672847
+    Path: event:/Boat/Boat Attack/Cannon Shot
+  CannonFuseSound:
+    Guid:
+      Data1: 1624909188
+      Data2: 1142549771
+      Data3: -2119086941
+      Data4: 1354624290
+    Path: event:/Boat/Boat Attack/Cannon Fuse
 --- !u!114 &6565113176275434114
 MonoBehaviour:
   m_ObjectHideFlags: 0
