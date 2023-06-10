@@ -3,13 +3,17 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class AbstractMonsterBehaviour : MonoBehaviour
+public abstract class AbstractMonsterBehaviour : MonoBehaviour, IDecisionRuntimeRep, IMonsterBehaviourDecisionState
 {
+    [SerializeField] private int priority;
+    [SerializeField] private AbstractBehaviourTreeNode nodeToRep;
+    
     public virtual bool ChangeMonsterStateOnStartBehaviour => false;
     public virtual MonsterState MonsterStateOnBehaviourStart => MonsterState.None;
 
     private AbstractMonsterState monsterState;
-    private MonsterBehaviourProvider monsterBehaviourProvider;
+    private BehaviourNotifier behaviourNotifier;
+    private MonsterKI monsterKi;
 
     private Coroutine behaviourImplRoutine;
     private Coroutine BehaviourRoutine;
@@ -20,9 +24,12 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
     
     public bool BehaviourIsDone { get; private set; }
     public bool InterruptIsDone { get; private set; } = true;
+    public int Priority => priority;
 
     public WaitUntil WaitForInterruptDone { get; private set; }
     public WaitUntil WaitForCompletionOrInterruption { get; private set; }
+    public AbstractBehaviourTreeNode NodeToRepresent => nodeToRep;
+
 
     private void Awake()
     {
@@ -32,15 +39,18 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
 
     protected virtual void Start()
     {
+        behaviourNotifier = BehaviourNotifier.instance as BehaviourNotifier;
+        behaviourNotifier.RegisterBehaviour(this);
+        
         monsterState = GetComponentInParent<AbstractMonsterState>();
-        monsterBehaviourProvider = GetComponentInParent<MonsterBehaviourProvider>();
+        monsterKi = MonsterKI.instance;
 
         monsterState.MonsterStateChangedEvent += OnMonsterStateChanged;
     }
 
     public void TriggerBehaviour()
     {
-        if (monsterBehaviourProvider.IsBehaviourActive(this)) return;
+        if (monsterKi.IsBehaviourActive(nodeToRep.BehaviourID)) return;
         
         BehaviourRoutine = StartCoroutine(StartBehaviourRoutine());
 
@@ -98,6 +108,7 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
 
     private void ResetAfterBehaviourCompleted() => (BehaviourIsDone, interruptBehaviourRoutine, behaviourIsPlaying) = (false, false, false);
 
+
     protected virtual void OnDestroy()
     {
         if (BehaviourRoutine != null)
@@ -107,4 +118,8 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour
         
         StopCoroutine(InterruptRoutine);
     }
+
+    public virtual bool CanBeExecuted() => true;
+    
+    public void Execute() => TriggerBehaviour();
 }
