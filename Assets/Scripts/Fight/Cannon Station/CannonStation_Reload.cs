@@ -22,6 +22,9 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
 
     public string[] ActionsToSubscribeTo { get; } = { reloadActionName };
     
+    public FMODUnity.EventReference reloadCannonSound;
+    private FMOD.Studio.EventInstance reloadCannonSoundInstance;
+
     private void Start() => SubscribeToInputManager();
 
     protected override void OnGameStateDoesNotMatchCannonStation()
@@ -52,6 +55,11 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
 
         IsReloading = true;
 
+        //create instance of sound
+        reloadCannonSoundInstance = FMODUnity.RuntimeManager.CreateInstance(reloadCannonSound);
+        //play sound
+        reloadCannonSoundInstance.start();
+
         reloadingTween = DOVirtual.DelayedCall(reloadTime, Reload, false);
         
         InvokeSegmentStateChangedEvent();
@@ -62,6 +70,11 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         IsLoaded = true;
         IsReloading = false;
         
+        //stop sound
+        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        //release sound
+        reloadCannonSoundInstance.release();
+
         InvokeSegmentStateChangedEvent();
     }
     
