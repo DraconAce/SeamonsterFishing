@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(MonsterSpawner_PositionGenerator))]
+
 public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] private MinMaxLimit timeBetweenSpawningChecks = new (){MinLimit = 3.0f, MaxLimit = 10.0f};
