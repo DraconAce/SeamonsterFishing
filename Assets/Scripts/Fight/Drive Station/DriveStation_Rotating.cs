@@ -97,6 +97,7 @@ public class DriveStation_Rotating : AbstractStationSegment
         {
             MovingLocked = false;
             driveStation.GameStateManager.BlockGameStateChange = false;
+            driveStation.TurnRotationComplete(); //to stop the turning-sound
         });
 
         rotationSequence.Play();

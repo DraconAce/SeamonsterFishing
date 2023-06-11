@@ -22,6 +22,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
     public FMODUnity.EventReference MoveBoatSound;
     private FMOD.Studio.EventInstance MoveBoatSoundInstance;
+    public FMODUnity.EventReference TurnBoatSound;
+    private FMOD.Studio.EventInstance TurnBoatSoundInstance;
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         TryGetComponent(out rotatingController);
 
         MoveBoatSoundInstance = FMODUnity.RuntimeManager.CreateInstance(MoveBoatSound);
+        TurnBoatSoundInstance = FMODUnity.RuntimeManager.CreateInstance(TurnBoatSound);
     }
 
     protected override void GameStateMatches()
@@ -82,8 +85,14 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
         var hasDirectionChanged = rotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
 
-        if (hasDirectionChanged || rotatingController.MovingLocked) return;
-        
+        if (hasDirectionChanged || rotatingController.MovingLocked) 
+        {
+            //Turn Boat Sound should play
+            FMOD.Studio.PLAYBACK_STATE turnPlaybackState;
+            TurnBoatSoundInstance.getPlaybackState(out turnPlaybackState);
+            if (turnPlaybackState == FMOD.Studio.PLAYBACK_STATE.STOPPED) TurnBoatSoundInstance.start();
+            return;
+        } 
         //Boat is Moving Sound should play
         FMOD.Studio.PLAYBACK_STATE playbackState;
         MoveBoatSoundInstance.getPlaybackState(out playbackState);
@@ -92,11 +101,17 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         movingController.MoveBoat(moveDirection);
     }
 
+    public void TurnRotationComplete() 
+    {
+        TurnBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
     protected override void OnDestroy()
     {
         base.OnDestroy();
         
         MoveBoatSoundInstance.release();
+        TurnBoatSoundInstance.release();
 
         driveAction.Disable();
 
