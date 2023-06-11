@@ -25,14 +25,12 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     
     private Light spotLight;
     private InputManager inputManager;
-    private FightMonsterSingleton monsterSingleton;
     
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
     
-    private void Start()
+    protected virtual void Start()
     {
         inputManager = InputManager.instance;
-        monsterSingleton = FightMonsterSingleton.instance;
         
         inputManager.SubscribeToActions(this);
         TryGetComponent(out spotLight);
@@ -46,10 +44,12 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         
         flashSequence?.Kill();
         
-        monsterSingleton.FlashWasUsed();
+        FlashActivatedImpl();
         
         ActivateFlash();
     }
+    
+    protected virtual void FlashActivatedImpl(){}
 
     private void ActivateFlash()
     {

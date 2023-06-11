@@ -64,7 +64,7 @@ Transform:
   - {fileID: 8790332009883055501}
   - {fileID: 2448552087716204052}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5027989189502045905
 MonoBehaviour:
@@ -654,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 839211481042843478}
   - component: {fileID: 6723675715315346052}
-  - component: {fileID: 5569820998094556146}
+  - component: {fileID: 1672020578670975131}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -739,7 +739,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &5569820998094556146
+--- !u!114 &1672020578670975131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4555381185898123889}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dba74fd02fa54f549a6479161767ec30, type: 3}
+  m_Script: {fileID: 11500000, guid: ac3af7f768ea49819c61b2bccd33ef4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionsToSubscribeTo:
@@ -756,7 +756,19 @@ MonoBehaviour:
   coolDownTimer: 10
   onFlashReady:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FlashUINotifier, Assembly-CSharp
+        m_MethodName: CheckFlashState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   targetOnIntensity: 150
   stayOnDuration: 0.3
   flashOnSettings:
@@ -764,7 +776,19 @@ MonoBehaviour:
     TweenEase: 2
     OnStartAction:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: FlashUINotifier, Assembly-CSharp
+          m_MethodName: CheckFlashState
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
