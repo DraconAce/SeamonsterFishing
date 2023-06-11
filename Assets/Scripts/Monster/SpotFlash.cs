@@ -8,6 +8,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 {
     [SerializeField] private string[] actionsToSubscribeTo = { "ActivateSpot" };
     [SerializeField] private float coolDownTimer = 10;
+    [SerializeField] private bool autoChargeAfterUse = true;
     [SerializeField] private UnityEvent onFlashReady;
 
     [Header("Flash On")] 
@@ -61,6 +62,9 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         flashSequence.AppendInterval(stayOnDuration);
         
         flashSequence.Append(FlashTween(targetOffIntensity, flashOffSettings));
+
+        if (!autoChargeAfterUse) return;
+        
         flashSequence.AppendInterval(coolDownTimer);
 
         flashSequence.OnComplete(() =>
