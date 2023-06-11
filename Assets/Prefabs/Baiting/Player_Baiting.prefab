@@ -154,7 +154,7 @@ Transform:
   - {fileID: 8604992665726154377}
   - {fileID: 402557528367553742}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5317766621725189979
 MonoBehaviour:
@@ -280,8 +280,8 @@ GameObject:
   m_Component:
   - component: {fileID: 402557528367553742}
   - component: {fileID: 6591469849174564242}
-  - component: {fileID: 8561153701907730772}
   - component: {fileID: 1697271072922113355}
+  - component: {fileID: 7959796556991837305}
   - component: {fileID: 9064044533832547363}
   m_Layer: 0
   m_Name: Flashlight
@@ -318,8 +318,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.0001
-  m_Range: 80
-  m_SpotAngle: 130
+  m_Range: 3
+  m_SpotAngle: 110
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -359,7 +359,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -367,7 +367,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &8561153701907730772
+--- !u!114 &1697271072922113355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -376,12 +376,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 4516152437214290642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac3af7f768ea49819c61b2bccd33ef4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c0b5e5e1c134340a4b786e4cdd53008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flash: {fileID: 7959796556991837305}
+--- !u!114 &7959796556991837305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516152437214290642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5963946d5d704457ae7d8cc6d58d2bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionsToSubscribeTo:
   - Defend
   coolDownTimer: 10
+  autoChargeAfterUse: 0
   onFlashReady:
     m_PersistentCalls:
       m_Calls:
@@ -397,7 +411,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  targetOnIntensity: 150
+  targetOnIntensity: 240
   stayOnDuration: 0.3
   flashOnSettings:
     Duration: 0.15
@@ -430,19 +444,6 @@ MonoBehaviour:
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
---- !u!114 &1697271072922113355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4516152437214290642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c0b5e5e1c134340a4b786e4cdd53008, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flash: {fileID: 8561153701907730772}
 --- !u!1818360609 &9064044533832547363
 RotationConstraint:
   m_ObjectHideFlags: 0
