@@ -8,6 +8,8 @@ public class MonsterSpawnBehaviour : MonoBehaviour, IPoolObject
     private MonsterApproachManager monsterApproachManager;
     
     public event Action MonsterSpawnedEvent;
+    public event Action MonsterDespawnedEvent;
+    
     public MonsterSpawner MonsterSpawner { get; set; }
     public PoolObjectContainer ContainerOfObject { get; set; }
 
@@ -21,7 +23,11 @@ public class MonsterSpawnBehaviour : MonoBehaviour, IPoolObject
 
     public void OnInstantiation(PoolObjectContainer container) { }
 
-    public void DespawnMonster() => ContainerOfObject.SourcePool.ReturnInstance(ContainerOfObject);
+    public void DespawnMonster()
+    {
+        MonsterDespawnedEvent?.Invoke();
+        ContainerOfObject.SourcePool.ReturnInstance(ContainerOfObject);
+    }
 
     public void OnReturnInstance() => MonsterSpawner.MonsterDespawned();
 }

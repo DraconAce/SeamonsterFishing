@@ -95,6 +95,8 @@ public class MonsterSpawner : MonoBehaviour
 
         monster.TryGetCachedComponent<MonsterSpawnBehaviour>(out var spawnBehaviour);
         spawnBehaviour.MonsterSpawner = this;
+
+        currentNumberMonsters++;
     }
 
     private int GetRandomMonsterPoolIndex() => Random.Range(0, monsterTypePools.Count);

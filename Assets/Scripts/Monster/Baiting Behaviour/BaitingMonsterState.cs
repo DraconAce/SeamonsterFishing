@@ -1,6 +1,3 @@
 using UnityEngine;
 
-public class BaitingMonsterState : AbstractMonsterState
-{
-    
-}
+public class BaitingMonsterState : AbstractMonsterState { }
