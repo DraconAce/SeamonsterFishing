@@ -20,6 +20,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     public float LastDriveDirection { get; set; }
     public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
 
+    public FMODUnity.EventReference MoveBoatSound;
+    private FMOD.Studio.EventInstance MoveBoatSoundInstance;
+
     private void Awake()
     {
         LastDriveDirection = initialDrivingDirection;
@@ -28,6 +31,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
         TryGetComponent(out movingController);
         TryGetComponent(out rotatingController);
+
+        MoveBoatSoundInstance = FMODUnity.RuntimeManager.CreateInstance(MoveBoatSound);
     }
 
     protected override void GameStateMatches()
@@ -69,11 +74,20 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     {
         var moveDirection = driveAction.ReadValue<Vector2>().x;
         
-        if(movingController.BoatIsNotMoving(moveDirection)) return;
+        if(movingController.BoatIsNotMoving(moveDirection)) 
+        {
+            MoveBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            return;
+        }
 
         var hasDirectionChanged = rotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
 
         if (hasDirectionChanged || rotatingController.MovingLocked) return;
+        
+        //Boat is Moving Sound should play
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        MoveBoatSoundInstance.getPlaybackState(out playbackState);
+        if (playbackState == FMOD.Studio.PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
         
         movingController.MoveBoat(moveDirection);
     }
@@ -82,6 +96,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     {
         base.OnDestroy();
         
+        MoveBoatSoundInstance.release();
+
         driveAction.Disable();
 
         if (UpdateManager == null) return;

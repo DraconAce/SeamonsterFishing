@@ -103,7 +103,7 @@ MonoBehaviour:
       Data2: 1279112507
       Data3: 206045360
       Data4: -883023138
-    Path: event:/Boat/Boat Motor
+    Path: event:/Boat/Boat Motor Idle
   Event: 
   PlayEvent: 1
   StopEvent: 2

@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{1d2e257e-7d98-49d2-9da2-bf93662953a6}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{31684f9c-e2d3-4348-af23-c1dff4081c0e}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{4a9d44ea-5275-480d-9e40-0a5ff1cae99d}">
 		<relationship name="masterBus">
@@ -110,9 +113,6 @@
 		<relationship name="automators">
 			<destination>{890b8206-87eb-4029-a7b1-607331797282}</destination>
 		</relationship>
-		<relationship name="fadeInCurve">
-			<destination>{fbb2f18b-b77b-4d99-b98b-2dd94751ed54}</destination>
-		</relationship>
 		<relationship name="fadeOutCurve">
 			<destination>{4f99442d-1113-4580-8a42-c9962890e206}</destination>
 		</relationship>
@@ -163,14 +163,6 @@
 			<destination>{4b353cad-a783-4161-a9a3-ab56abc92f25}</destination>
 		</relationship>
 	</object>
-	<object class="FadeCurve" id="{fbb2f18b-b77b-4d99-b98b-2dd94751ed54}">
-		<relationship name="startPoint">
-			<destination>{d9b217a8-608f-4b8f-b3b9-a7cc668d3e1a}</destination>
-		</relationship>
-		<relationship name="endPoint">
-			<destination>{8d54c6ea-c6d6-4761-8502-299f4bd809ef}</destination>
-		</relationship>
-	</object>
 	<object class="FadeCurve" id="{4f99442d-1113-4580-8a42-c9962890e206}">
 		<relationship name="startPoint">
 			<destination>{3653c1c7-b2cf-4b65-993d-e9b6c30d3ec3}</destination>
@@ -196,25 +188,6 @@
 			<destination>{8d7d9d2e-88dc-4c12-ad92-07ae4fc71ba8}</destination>
 			<destination>{62c6b973-31fd-4f3d-b972-8c0ccc99f9c3}</destination>
 		</relationship>
-	</object>
-	<object class="AutomationPoint" id="{d9b217a8-608f-4b8f-b3b9-a7cc668d3e1a}">
-		<property name="position">
-			<value>0</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
-		<property name="curveShape">
-			<value>-0.2547189</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{8d54c6ea-c6d6-4761-8502-299f4bd809ef}">
-		<property name="position">
-			<value>0.5</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
 	</object>
 	<object class="AutomationPoint" id="{3653c1c7-b2cf-4b65-993d-e9b6c30d3ec3}">
 		<property name="position">
