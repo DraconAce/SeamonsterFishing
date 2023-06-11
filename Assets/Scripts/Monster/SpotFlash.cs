@@ -21,7 +21,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private TweenSettings flashOffSettings;
     
 
-    public bool FlashIsReady { get; private set; }= true;
+    public bool FlashIsReady { get; protected set; }= true;
     private Sequence flashSequence;
     
     private Light spotLight;
@@ -67,11 +67,13 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         
         flashSequence.AppendInterval(coolDownTimer);
 
-        flashSequence.OnComplete(() =>
-        {
-            FlashIsReady = true;
-            onFlashReady?.Invoke();
-        });
+        flashSequence.OnComplete(SetFlashToReady);
+    }
+
+    protected void SetFlashToReady()
+    {
+        FlashIsReady = true;
+        onFlashReady?.Invoke();
     }
 
     private Tween FlashTween(float targetIntensity, TweenSettings targetSettings)
