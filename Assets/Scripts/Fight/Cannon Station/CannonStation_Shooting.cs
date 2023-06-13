@@ -35,6 +35,12 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
 
     public string[] ActionsToSubscribeTo { get; } = { shootActionName };
     
+    public FMODUnity.EventReference CannonShotSound;
+    public FMODUnity.EventReference CannonFuseSound;
+    private FMOD.Studio.EventInstance CannonShotSoundInstance;
+    private FMOD.Studio.EventInstance CannonFuseSoundInstance;
+
+
     private void Start()
     {
         SubscribeToInputManager();
@@ -84,6 +90,10 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
         cannonBallOb.Ob.transform.localScale = Vector3.one;
         cannonBallOb.TryGetCachedComponent(out currentCannonBall);
         
+        //play fuse sound
+        CannonFuseSoundInstance = FMODUnity.RuntimeManager.CreateInstance(CannonFuseSound);
+        CannonFuseSoundInstance.start();
+
         shootDelayTween = DOVirtual.DelayedCall(shootDelay, Shoot, false);
         ShootIsScheduled = true;
         
@@ -104,6 +114,14 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
 
         currentCannonBall = null;
         
+        //stop and release fuse sound
+        CannonFuseSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        CannonFuseSoundInstance.release();
+        //play and release shot sound
+        CannonShotSoundInstance = FMODUnity.RuntimeManager.CreateInstance(CannonShotSound);
+        CannonShotSoundInstance.start();
+        CannonShotSoundInstance.release();
+
         InvokeSegmentStateChangedEvent();
     }
 

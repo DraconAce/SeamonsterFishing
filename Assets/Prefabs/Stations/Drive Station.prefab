@@ -55,6 +55,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   initialDrivingDirection: -1
+  MoveBoatSound:
+    Guid:
+      Data1: 432150634
+      Data2: 1207686084
+      Data3: -1272445520
+      Data4: -241522648
+    Path: event:/Boat/Boat Movement/Boat Movement
+  TurnBoatSound:
+    Guid:
+      Data1: 1890744389
+      Data2: 1282808123
+      Data3: 2074554247
+      Data4: -2118906339
+    Path: event:/Boat/Boat Movement/Boat Movement Change Direction
 --- !u!114 &8275002602943678508
 MonoBehaviour:
   m_ObjectHideFlags: 0
