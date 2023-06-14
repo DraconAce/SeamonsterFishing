@@ -5,16 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(MonsterSpawnBehaviour))]
 public class MonsterRepelledChecker : MonoBehaviour
 {
+    private MonsterSoundPlayer soundPlayer;
     private MonsterSpawnBehaviour spawnBehaviour;
     private BaitingMonsterState monsterState;
     private BaitingMonsterSingleton monsterSingleton;
-
-    private bool isInRepelRange;
 
     private void Start()
     {
         TryGetComponent(out spawnBehaviour);
         TryGetComponent(out monsterState);
+        TryGetComponent(out soundPlayer);
         
         monsterSingleton = BaitingMonsterSingleton.instance;
 
@@ -26,38 +26,41 @@ public class MonsterRepelledChecker : MonoBehaviour
 
     private void SubscribeToWasRepelledEvent() => monsterSingleton.MonsterWasRepelledEvent += OnMonsterWasRepelled;
 
-    private void UnsubscribeFromWasRepelledEvent()
-    {
-        monsterSingleton.MonsterWasRepelledEvent -= OnMonsterWasRepelled;
-        isInRepelRange = false;
-    }
+    private void UnsubscribeFromWasRepelledEvent() => monsterSingleton.MonsterWasRepelledEvent -= OnMonsterWasRepelled;
 
     private void OnMonsterWasRepelled()
     {
+        if (monsterState.CurrentState != MonsterState.Attacking) return;
+        
         Debug.Log("Repelled");
         monsterState.CurrentState = MonsterState.Repelled;
 
         //Todo: Repelled Animation
         //Todo: despawn after repelled animation ended
 
-        var repelledPosition = transform.position + -transform.forward * 10;
+        soundPlayer.PlayRepelledSound();
+
+        var position = transform.position;
+        var forward = transform.forward;
         
-        transform.DOLocalMove(repelledPosition, 0.5f)
+        var towardsPlayerPos = position + forward * 6f;
+        var repelledPosition = position + -forward * 10;
+
+        var repelledSequence = DOTween.Sequence();
+
+        repelledSequence.Append(transform.DOLocalMove(towardsPlayerPos, 1.5f)
             .SetRelative(true)
-            .SetEase(Ease.InExpo)
-            .OnComplete(() => spawnBehaviour.DespawnMonster());
-    }
+            .SetEase(Ease.InQuad));
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("RepelRange")) return;
-        isInRepelRange = true;
-    }
+        repelledSequence.AppendInterval(0.5f);
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("RepelRange")) return;
-        isInRepelRange = false;
+        repelledSequence.Append(transform.DOLocalMove(repelledPosition, 1f)
+            .SetRelative(true)
+            .SetEase(Ease.InExpo));
+
+        repelledSequence.OnComplete(() => spawnBehaviour.DespawnMonster());
+
+        repelledSequence.Play();
     }
 
     private void OnDestroy() => UnsubscribeFromWasRepelledEvent();

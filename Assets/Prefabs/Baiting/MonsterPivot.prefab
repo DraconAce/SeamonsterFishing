@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &658746476023054743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3363569009453421918}
+  - component: {fileID: 4713329607241235055}
+  m_Layer: 0
+  m_Name: AttackSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3363569009453421918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658746476023054743}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1902592877256480813}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4713329607241235055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658746476023054743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -526948481
+      Data2: 1175336441
+      Data3: 701655956
+      Data4: 1595307201
+    Path: event:/Baiting/Monster/MonsterAttack
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1803277403338532531
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,11 +79,11 @@ GameObject:
   - component: {fileID: 2770388103404711760}
   - component: {fileID: 6156792141593589403}
   - component: {fileID: 6857377819920078147}
-  - component: {fileID: 9043515470260605122}
   - component: {fileID: 2202494461000125404}
   - component: {fileID: 8086199271232993806}
   - component: {fileID: 4146503280141272089}
   - component: {fileID: 5881421570666721864}
+  - component: {fileID: 994620168594848085}
   m_Layer: 0
   m_Name: MonsterPivot
   m_TagString: monster
@@ -41,6 +104,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5310343775316627640}
+  - {fileID: 8112896167923530534}
+  - {fileID: 3363569009453421918}
+  - {fileID: 303066937344934137}
+  - {fileID: 2781570584133332300}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -86,6 +153,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c762b5e431374dd193d2d994bce1addc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterProxy: {fileID: 8112896167923530534}
+  numberOfPointsLimits:
+    MinLimit: 6
+    MaxLimit: 20
+  distanceStepLimits:
+    MinLimit: 0.5
+    MaxLimit: 2
+  rotationAroundSpawnerLimits:
+    MinLimit: -90
+    MaxLimit: 90
+  waitAtWaypointChance: 0.3
+  waitLimits:
+    MinLimit: 3
+    MaxLimit: 10
+  durationLimits:
+    MinLimit: 30
+    MaxLimit: 90
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,19 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1260115134f85ba542dca01a95747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matSwitcher: {fileID: 4438122261592848291}
 --- !u!114 &6857377819920078147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803277403338532531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90ecfdcbe2fa44cb9fc4a600890452a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9043515470260605122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +238,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.37, z: 0.1}
+  m_Size: {x: 0.62, y: 0.55, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8086199271232993806
 MonoBehaviour:
@@ -191,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3cd7ffd2d144cebb98948cbcb3ebfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matSwitcher: {fileID: 4438122261592848291}
 --- !u!54 &5881421570666721864
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -218,6 +292,114 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &994620168594848085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803277403338532531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474abe20fca343428191daac0491bef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxWaitBetweenSounds: 30
+  monsterSoundsList:
+  - distance: 6
+    monsterSoundRefList:
+    - eventRef:
+        Guid:
+          Data1: 405518708
+          Data2: 1170595162
+          Data3: 1887554482
+          Data4: 696217430
+        Path: event:/Baiting/Monster/MonsterApproach_Close
+  - distance: 12
+    monsterSoundRefList:
+    - eventRef:
+        Guid:
+          Data1: 1751421191
+          Data2: 1114429410
+          Data3: 1090218892
+          Data4: 659623664
+        Path: event:/Baiting/Monster/MonsterApproach_Mid
+  - distance: 20
+    monsterSoundRefList:
+    - eventRef:
+        Guid:
+          Data1: -532456143
+          Data2: 1082579004
+          Data3: -1024259163
+          Data4: -1386984086
+        Path: event:/Baiting/Monster/MonsterApproach_Far
+  approachSoundEmitter: {fileID: 7971904250638264494}
+  attackSoundEmitter: {fileID: 4713329607241235055}
+  repelledSoundEmitter: {fileID: 419608736329854840}
+  killSoundEmitter: {fileID: 3220299671235003051}
+--- !u!1 &2322878972957858732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8112896167923530534}
+  - component: {fileID: 7971904250638264494}
+  m_Layer: 0
+  m_Name: MonsterProxy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8112896167923530534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2322878972957858732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1902592877256480813}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7971904250638264494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2322878972957858732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &3503271686785841455
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +463,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da089e272f19860488a26306fea83922, type: 2}
+  - {fileID: 2100000, guid: 0cef3597f3a6a0546bb6377e25d68590, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -317,10 +499,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 365559296240111083}
   defaultMaterialIndex: 0
-  defaultMat: {fileID: 2100000, guid: da089e272f19860488a26306fea83922, type: 2}
+  defaultMat: {fileID: 2100000, guid: 0cef3597f3a6a0546bb6377e25d68590, type: 2}
   availableMaterials:
-  - mat: {fileID: 2100000, guid: da089e272f19860488a26306fea83922, type: 2}
   - mat: {fileID: 2100000, guid: 0cef3597f3a6a0546bb6377e25d68590, type: 2}
+  - mat: {fileID: 2100000, guid: da089e272f19860488a26306fea83922, type: 2}
 --- !u!1 &4641255824985591926
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,3 +597,129 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &6267192235732865853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2781570584133332300}
+  - component: {fileID: 3220299671235003051}
+  m_Layer: 0
+  m_Name: Kill Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2781570584133332300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6267192235732865853}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1902592877256480813}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3220299671235003051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6267192235732865853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 2080958000
+      Data2: 1260700026
+      Data3: 1402715545
+      Data4: -195174011
+    Path: event:/Baiting/KillSound
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!1 &9132798152387988329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 303066937344934137}
+  - component: {fileID: 419608736329854840}
+  m_Layer: 0
+  m_Name: Repelled Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &303066937344934137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132798152387988329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1902592877256480813}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &419608736329854840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132798152387988329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1302265142
+      Data2: 1126026749
+      Data3: 15636399
+      Data4: -49899857
+    Path: event:/Baiting/Monster/MonsterRepelled
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

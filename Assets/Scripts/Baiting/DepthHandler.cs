@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSecondProvider
 {
+    [SerializeField] private float depthOffset = 110f;
     [SerializeField] private float meterPerSecond = 0.1f;
     [SerializeField] private TextMeshProUGUI depthText;
     [SerializeField] private Transform waterSurface;
@@ -32,7 +33,7 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
         depthText.text = "Depth: " + currentDepth;
     }
 
-    private int CalculateCurrentDepth() => (int) Mathf.Round(timer * meterPerSecond);
+    private int CalculateCurrentDepth() => (int) Mathf.Round(timer * meterPerSecond + depthOffset);
 
     private void UpdateSurfacePosition()
     {

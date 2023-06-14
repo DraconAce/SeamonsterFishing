@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{404eec6c-ec25-43b9-9f9f-fe39b0de5e15}">
+		<property name="name">
+			<value>Underwater Effect</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{6db7e290-7aeb-407d-a8ae-28abec84ff7e}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{8e818d2a-fa90-4e16-8b76-0a0203eb9467}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{3aee5e8d-fc44-48de-aad5-5a49ad7be123}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{6db7e290-7aeb-407d-a8ae-28abec84ff7e}">
+		<relationship name="effects">
+			<destination>{3596ef96-a16e-4012-9073-c8f8118f2825}</destination>
+			<destination>{73d10b2d-cff3-4c8c-9cfa-653d7cf564a4}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{8e818d2a-fa90-4e16-8b76-0a0203eb9467}" />
+	<object class="MixerBusFader" id="{3596ef96-a16e-4012-9073-c8f8118f2825}" />
+	<object class="MultibandEqEffect" id="{73d10b2d-cff3-4c8c-9cfa-653d7cf564a4}">
+		<property name="filterTypeB">
+			<value>7</value>
+		</property>
+		<property name="frequencyA">
+			<value>1000</value>
+		</property>
+		<property name="frequencyB">
+			<value>115</value>
+		</property>
+		<property name="frequencyC">
+			<value>7000</value>
+		</property>
+		<property name="frequencyD">
+			<value>7000</value>
+		</property>
+		<property name="qualityA">
+			<value>1.5</value>
+		</property>
+		<property name="qualityD">
+			<value>0.100000001</value>
+		</property>
+		<property name="gainB">
+			<value>-8.5</value>
+		</property>
+	</object>
+</objects>

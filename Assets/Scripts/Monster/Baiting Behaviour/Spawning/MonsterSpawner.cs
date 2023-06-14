@@ -91,10 +91,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         var monsterPool = monsterTypePools[GetRandomMonsterPoolIndex()];
 
-        var monster = monsterPool.RequestInstance(positionGenerator.GenerateMonsterSpawnPosition(), monsterPool.transform);
-
-        monster.TryGetCachedComponent<MonsterSpawnBehaviour>(out var spawnBehaviour);
-        spawnBehaviour.MonsterSpawner = this;
+        monsterPool.RequestInstance(positionGenerator.GenerateMonsterSpawnPosition(), monsterPool.transform);
 
         currentNumberMonsters++;
     }
