@@ -104,5 +104,8 @@ MonoBehaviour:
   cannonBaseTransform: {fileID: 0}
   cannonBarrelPivot: {fileID: 0}
   cannonAnimationEase: 8
+  lampRotationAxis: 0
+  lampPivot: {fileID: 0}
+  lampAnimationEase: 8
   rotationDuration: 3
   rotationEase: 2
