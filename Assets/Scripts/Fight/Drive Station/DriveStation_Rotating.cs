@@ -37,7 +37,7 @@ public class DriveStation_Rotating : AbstractStationSegment
     private float backwardsCannonBarrelRotation;
     private Sequence rotationSequence;
 
-    private float forwardLampRotation;
+    public float forwardLampRotation = 95f;
     private float backwardsLampRotation;
     #endregion
 
@@ -48,8 +48,8 @@ public class DriveStation_Rotating : AbstractStationSegment
 
         CalculateBarrelBackwardsLocalRotation();
 
-        forwardLampRotation = lampPivot.localRotation.eulerAngles[(int)lampRotationAxis];
-        backwardsLampRotation = 180f + lampPivot.localRotation.eulerAngles[(int)lampRotationAxis];
+        //forwardLampRotation = lampPivot.localRotation.eulerAngles[(int)lampRotationAxis];
+        backwardsLampRotation = 0f - forwardLampRotation;
     }
 
     private void CalculateBarrelBackwardsLocalRotation()
