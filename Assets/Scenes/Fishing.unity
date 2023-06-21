@@ -188,7 +188,103 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9221120c3092c03419ff1b6b1718aa3a, type: 3}
---- !u!21 &663344111
+--- !u!84 &620330193
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 128
+  m_Height: 128
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 52
+  m_MipMap: 0
+  m_GenerateMips: 0
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 2
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
+--- !u!84 &719906506
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 128
+  m_Height: 128
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 52
+  m_MipMap: 0
+  m_GenerateMips: 0
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 2
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
+--- !u!114 &779170486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5378214978799876160, guid: 9654dadadfd5391429654dedabcc7e7e, type: 3}
+  m_PrefabInstance: {fileID: 2078501864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &803854611 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7810283510172397606, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
+  m_PrefabInstance: {fileID: 3860441666228393386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c5141853cbab7438b034790b1a108f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!21 &996021410
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -439,76 +535,7 @@ Material:
     - _depthColor: {r: 0.057, g: 0.132, b: 0.126, a: 1}
     - _shallowColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &779170486 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5378214978799876160, guid: 9654dadadfd5391429654dedabcc7e7e, type: 3}
-  m_PrefabInstance: {fileID: 2078501864}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &803854611 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7810283510172397606, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
-  m_PrefabInstance: {fileID: 3860441666228393386}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87c5141853cbab7438b034790b1a108f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!84 &1239631376
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 128
-  m_Height: 128
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 52
-  m_MipMap: 0
-  m_GenerateMips: 0
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 2
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
---- !u!4 &1494077818 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5243194052820666692, guid: 3d9944d2223c39849892d925cd84c008, type: 3}
-  m_PrefabInstance: {fileID: 1987534626}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &1494077824 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 7562997774959605821, guid: 3d9944d2223c39849892d925cd84c008, type: 3}
-  m_PrefabInstance: {fileID: 1987534626}
-  m_PrefabAsset: {fileID: 0}
---- !u!84 &1525809292
+--- !u!84 &1301642063
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -545,7 +572,7 @@ RenderTexture:
   m_Dimension: 2
   m_VolumeDepth: 1
   m_ShadowSamplingMode: 2
---- !u!84 &1720038634
+--- !u!84 &1412364524
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -559,8 +586,8 @@ RenderTexture:
   m_DownscaleFallback: 0
   m_IsAlphaChannelOptional: 0
   serializedVersion: 5
-  m_Width: 128
-  m_Height: 128
+  m_Width: 512
+  m_Height: 512
   m_AntiAliasing: 1
   m_MipCount: -1
   m_DepthStencilFormat: 94
@@ -582,7 +609,17 @@ RenderTexture:
   m_Dimension: 2
   m_VolumeDepth: 1
   m_ShadowSamplingMode: 2
---- !u!84 &1946800840
+--- !u!4 &1494077818 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5243194052820666692, guid: 3d9944d2223c39849892d925cd84c008, type: 3}
+  m_PrefabInstance: {fileID: 1987534626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1494077824 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7562997774959605821, guid: 3d9944d2223c39849892d925cd84c008, type: 3}
+  m_PrefabInstance: {fileID: 1987534626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!84 &1499851540
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -733,43 +770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b739f81899d4e19944ee4ec1023e263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!84 &2008110835
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 512
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 52
-  m_MipMap: 0
-  m_GenerateMips: 0
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 2
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1001 &2078501864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1484,7 +1484,7 @@ PrefabInstance:
     - target: {fileID: 1434983587634241836, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 663344111}
+      objectReference: {fileID: 996021410}
     - target: {fileID: 1434983587653830738, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_RenderingPath
       value: 1
@@ -1492,7 +1492,7 @@ PrefabInstance:
     - target: {fileID: 1434983587653830738, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1946800840}
+      objectReference: {fileID: 1412364524}
     - target: {fileID: 1434983587653830739, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.2586563
@@ -1569,6 +1569,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4262182965680891793, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
+      propertyPath: lightningOnDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4338103672573631708, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -1616,7 +1620,7 @@ PrefabInstance:
     - target: {fileID: 7810283509441264306, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1525809292}
+      objectReference: {fileID: 1301642063}
     - target: {fileID: 7810283509441264310, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.2586563
@@ -1648,7 +1652,7 @@ PrefabInstance:
     - target: {fileID: 7810283509691654868, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1239631376}
+      objectReference: {fileID: 620330193}
     - target: {fileID: 7810283509691654870, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.2586563
@@ -1676,7 +1680,7 @@ PrefabInstance:
     - target: {fileID: 7810283509963341226, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 2008110835}
+      objectReference: {fileID: 1499851540}
     - target: {fileID: 7810283509963341228, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.2586563
@@ -1764,7 +1768,7 @@ PrefabInstance:
     - target: {fileID: 7810283510411556021, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1720038634}
+      objectReference: {fileID: 719906506}
     - target: {fileID: 7810283510411556023, guid: 658bde22bcd63bc4aa4bd9874520efd1, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.2586563
