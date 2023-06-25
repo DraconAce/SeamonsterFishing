@@ -30,15 +30,17 @@ public class PauseMenu : AbstractMenu
         if (gameStateManager.CurrentGameState is GameState.Dead or GameState.Won) return;
         
         GameIsPaused = !GameIsPaused;
+        
+        gameStateManager.BlockGameStateChange = GameIsPaused;
+        
+        SceneController.ToggleCursorForLevel(GameIsPaused);
 
         if (GameIsPaused)
         {
-            gameStateManager.BlockGameStateChange = true;
             OpenMenu();
             return;
         }
 
-        gameStateManager.BlockGameStateChange = false;
         CloseMenu();
     }
 

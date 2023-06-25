@@ -8,7 +8,15 @@ public struct MinMaxLimit
     public float MinLimit;
     public float MaxLimit;
 
+    public MinMaxLimit(float minLimit, float maxLimit)
+    {
+        MinLimit = minLimit < maxLimit ? minLimit : maxLimit;
+        MaxLimit = maxLimit >= minLimit ? maxLimit : minLimit;
+    }
+
     public float GetRandomBetweenLimits() => Random.Range(MinLimit, MaxLimit);
+
+    public bool IsValueBetweenLimits(float value) => value >= MinLimit && value <= MaxLimit;
 }
 
 [Serializable]

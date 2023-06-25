@@ -6,6 +6,8 @@ public class GameStateManager : Singleton<GameStateManager>
 {
     [SerializeField] private GameState currentGameState = GameState.FightOverview;
     
+    private SceneController sceneController;
+    
     public bool BlockGameStateChange { get; set; }
     public GameState PreviousGameState { get; private set; }
 
@@ -22,6 +24,13 @@ public class GameStateManager : Singleton<GameStateManager>
         PreviousGameState = currentGameState;
         
         InputGameStateChangeRequestor.instance.Activation();
+    }
+
+    private void Start()
+    {
+        sceneController = SceneController.instance;
+        
+        sceneController.SceneStarted(currentGameState);
     }
 
     public event Action<GameState> GameStateChangedEvent;

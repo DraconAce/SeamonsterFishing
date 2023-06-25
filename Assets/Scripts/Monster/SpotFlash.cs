@@ -25,16 +25,22 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     private Sequence flashSequence;
     
     private Light spotLight;
+    public Light SpotLight => spotLight;
+
     private InputManager inputManager;
     
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
+    
+    protected virtual void Awake()
+    {
+        TryGetComponent(out spotLight);
+    }
     
     protected virtual void Start()
     {
         inputManager = InputManager.instance;
         
         inputManager.SubscribeToActions(this);
-        TryGetComponent(out spotLight);
     }
 
     public void InputPerformed(InputAction.CallbackContext callContext) => CheckIfFlashReadyAndActivate();
