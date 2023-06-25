@@ -336,7 +336,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516152437214290642}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.382, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.32278997, y: 0.32279, z: 0.12616}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -354,10 +354,10 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.0001
+  m_Color: {r: 1, g: 0.92941177, b: 0.69411767, a: 1}
+  m_Intensity: 10
   m_Range: 3
-  m_SpotAngle: 110
+  m_SpotAngle: 90
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -514,6 +514,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f420893e22400dbd12cffc5737b3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completelyDrainedPercentage: 0.2
+  spotIntensityLimits:
+    MinLimit: 0.0001
+    MaxLimit: 10
   drainPerSecond: 0.01
   flashlight: {fileID: 7959796556991837305}
   actionsToSubscribeTo:

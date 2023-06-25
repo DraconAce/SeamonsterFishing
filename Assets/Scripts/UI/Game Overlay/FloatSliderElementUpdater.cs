@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class FloatSliderElementUpdater : AbstractOverlayElement
 {
     //Todo: proper own component
-    [SerializeField] private Color colorIfZeroOnce;
+    [SerializeField] private float limit = 0.2f;
+    [FormerlySerializedAs("colorIfZeroOnce")] [SerializeField] private Color colorIfLimitReached;
     [SerializeField] private Color normalColor;
     
     private IFloatInfoProvider floatInfoProvider;
@@ -28,13 +30,11 @@ public class FloatSliderElementUpdater : AbstractOverlayElement
     protected override void OnDisplayInfoUpdated()
     {
         slider.value = floatInfoProvider.Info;
-
-        fillImage.color = floatInfoProvider.Info switch
-        {
-            <= 0 => colorIfZeroOnce,
-            >= 1f => normalColor,
-            _ => fillImage.color
-        };
+        
+        if(floatInfoProvider.Info <= limit)
+            fillImage.color = colorIfLimitReached;
+        else if(floatInfoProvider.Info >= 1f)
+            fillImage.color = normalColor;
     }
 
     private void OnDestroy() => floatInfoProvider.InfoChanged -= OnDisplayInfoUpdated;

@@ -6,6 +6,7 @@ using FMODUnity;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(MonsterPositionFaker))]
 public class MonsterSoundPlayer : MonoBehaviour
 {
     [Serializable]
@@ -41,21 +42,39 @@ public class MonsterSoundPlayer : MonoBehaviour
 
     [SerializeField] private float maxWaitBetweenSounds;
     [SerializeField] private List<SoundGroupForDistance> monsterSoundsList;
-    
+
+    [Header("Sound Emitters")]
     [SerializeField] private StudioEventEmitter approachSoundEmitter;
+
     [SerializeField] private StudioEventEmitter attackSoundEmitter;
     [SerializeField] private StudioEventEmitter repelledSoundEmitter;
     [SerializeField] private StudioEventEmitter killSoundEmitter;
+
+    private Vector3 spawnLeft;
+
+    private Transform spawnOrigin;
     private Transform playerTrans;
+    private Transform fakeMonsterTrans;
+    
+    private WaitForSeconds waitSecond = new (1f);
     private Coroutine soundsRoutine;
+
+    private readonly MinMaxLimit[] soundProhibitedAngles = new MinMaxLimit[2]
+    {
+        new (40f, 50f),
+        new (130f, 140f)
+    };
 
     private void Start()
     {
+        spawnOrigin = BaitingMonsterSingleton.instance.Spawner.SpawnCenter;
+        spawnLeft = spawnOrigin.right;
+
+        fakeMonsterTrans = GetComponent<MonsterPositionFaker>().MonsterProxy;
+        
         AssignPlayerTransformIfNotAssigned();
 
         monsterSoundsList.Sort((a, b) => a.distance.CompareTo(b.distance));
-        
-        StartMonsterApproachSounds();
     }
 
     private void AssignPlayerTransformIfNotAssigned() => playerTrans = PlayerSingleton.instance.PlayerTransform;
@@ -73,7 +92,13 @@ public class MonsterSoundPlayer : MonoBehaviour
 
         while (loop)
         {
-            var distanceToPlayer = (playerTrans.position - transform.position).magnitude;
+            if (IsMonsterInProhibitedAngle())
+            {
+                yield return waitSecond;
+                continue;
+            }
+            
+            var distanceToPlayer = (playerTrans.position - fakeMonsterTrans.position).magnitude;
 
             var soundGroupToPlay = GetSoundGroupOfDistance(distanceToPlayer);
 
@@ -85,12 +110,26 @@ public class MonsterSoundPlayer : MonoBehaviour
         }
     }
 
+    private bool IsMonsterInProhibitedAngle()
+    {
+        var angleMonsterAndSpawnOrigin = Vector3.Angle(spawnLeft, transform.position - spawnOrigin.position);
+
+        foreach (var prohibitedZone in soundProhibitedAngles)
+            if (prohibitedZone.IsValueBetweenLimits(angleMonsterAndSpawnOrigin))
+                return true;
+
+        return false;
+    }
+
     private SoundGroupForDistance GetSoundGroupOfDistance(float distanceToPlayer)
     {
         return monsterSoundsList.Aggregate(monsterSoundsList[0], (currentSoundRange, nextSoundRange) =>
-            currentSoundRange.distance < distanceToPlayer && distanceToPlayer <= nextSoundRange.distance
-                ? nextSoundRange
-                : currentSoundRange);
+        {
+            if(distanceToPlayer <= currentSoundRange.distance) 
+                return currentSoundRange;
+
+            return nextSoundRange;
+        });
     }
 
     private void PlayMonsterSound(EventReference eventRef)

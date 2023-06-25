@@ -1,20 +1,37 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInputEventSubscriber
 {
+    [SerializeField] private float completelyDrainedPercentage = 0.2f;
+    [SerializeField] private MinMaxLimit spotIntensityLimits = new MinMaxLimit(0, 10);
     [SerializeField] private float drainPerSecond = 0.01f;
     [SerializeField] private BaitingFlash flashlight;
     [SerializeField] private string[] actionsToSubscribeTo;
 
     private bool isCharging;
     private bool flashCompletelyDrained;
+    
     private float currentChargePercentage = 1f;
 
-    private WaitForSeconds waitSec;
+    private float CurrentChargePercentage
+    {
+        get => currentChargePercentage;
+        set
+        {
+            var formerValue = currentChargePercentage;
+            currentChargePercentage = Mathf.Clamp01(value);
+
+            if (Mathf.Approximately(formerValue, currentChargePercentage)) return;
+
+            flashlight.SpotLight.intensity 
+                = Mathf.Lerp(spotIntensityLimits.MinLimit, spotIntensityLimits.MaxLimit, currentChargePercentage);
+            InfoChanged?.Invoke();
+        }
+    }
+
     private WaitUntil waitForChargeStop;
     private Coroutine drainRoutine;
 
@@ -24,13 +41,12 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
     public float Info
     {
-        get => currentChargePercentage;
-        set => currentChargePercentage = value;
+        get => CurrentChargePercentage;
+        set => CurrentChargePercentage = value;
     }
 
     private void Start()
     {
-        waitSec = new(1f);
         waitForChargeStop = new WaitUntil(() => !isCharging);
         
         flashlight.onFlashUsed += OnFlashUsed;
@@ -42,7 +58,7 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
     }
 
     #region Draining
-    private void OnFlashUsed() => currentChargePercentage = 0f;
+    private void OnFlashUsed() => CurrentChargePercentage = 0f;
 
     private IEnumerator DrainBatteryRoutine()
     {
@@ -53,10 +69,9 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
             if (isCharging)
                 yield return waitForChargeStop;
 
-            currentChargePercentage -= drainPerSecond * Time.deltaTime;
-            InfoChanged?.Invoke();
+            CurrentChargePercentage -= drainPerSecond * Time.deltaTime;
 
-            if (currentChargePercentage <= 0 && !flashCompletelyDrained)
+            if (CurrentChargePercentage <= completelyDrainedPercentage && !flashCompletelyDrained)
             {
                 flashlight.ToggleFlashReady(false);
                 flashCompletelyDrained = true;
@@ -101,10 +116,9 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
             if(inputReceivedFlag)
             {
-                currentChargePercentage += chargePerInput;
-                InfoChanged?.Invoke();
+                CurrentChargePercentage += chargePerInput;
                 
-                if(currentChargePercentage >= 1f)
+                if(CurrentChargePercentage >= 1f)
                 {
                     flashlight.ToggleFlashReady(true);
                     flashCompletelyDrained = false;

@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 public class MonsterPositionFaker : MonoBehaviour
 {
     [SerializeField] private Transform monsterProxy;
+    public Transform MonsterProxy => monsterProxy;
 
     [SerializeField] private MinMaxLimit numberOfPointsLimits;
     [SerializeField] private MinMaxLimit distanceStepLimits;
@@ -21,12 +22,7 @@ public class MonsterPositionFaker : MonoBehaviour
     [SerializeField] private float waitAtWaypointChance = 0.15f;
     [SerializeField] private MinMaxLimit waitLimits;
     [SerializeField] private MinMaxLimit durationLimits;
-
-    private MonsterAttackManager attackManager;
-    private MonsterSoundPlayer soundPlayer;
-    private Coroutine fakePosRoutine;
-    private Tween movementTween;
-
+    
     private float minDistanceToPlayer;
     private float currentDistance;
 
@@ -34,6 +30,13 @@ public class MonsterPositionFaker : MonoBehaviour
     private Vector3 spawnerAsPivot;
 
     private Transform spawnerTrans;
+    private MonsterAttackManager attackManager;
+    private MonsterSoundPlayer soundPlayer;
+    
+    private WaitForSeconds waitSecond = new (1f);
+    private Coroutine fakePosRoutine;
+    private Tween movementTween;
+
     private readonly List<Vector3> fakePositionsList = new();
 
 
@@ -70,6 +73,9 @@ public class MonsterPositionFaker : MonoBehaviour
         GeneratePositions();
 
         monsterProxy.position = fakePositionsList[0];
+        fakePositionsList.RemoveAt(0);
+
+        yield return waitSecond;
         
         StartMoveProxyTween();
         
@@ -102,18 +108,17 @@ public class MonsterPositionFaker : MonoBehaviour
         var newPosition = spawnerTrans.position + spawnerTrans.forward * currentDistance;
 
         var newRotation = new Vector3(0, rotationAroundSpawnerLimits.GetRandomBetweenLimits(), 0);
-        newPosition = RotateAroundPivot(spawnerAsPivot, newPosition, newRotation);
+        newPosition = TransformationHelper.RotateAroundPivot(spawnerAsPivot, newPosition, newRotation);
+
         return newPosition;
     }
-
-    private Vector3 RotateAroundPivot(Vector3 pivotPoint, Vector3 pointToRotate, Vector3 angles) 
-        => Quaternion.Euler(angles) * (pointToRotate - pivotPoint) + pivotPoint;
 
     private void StartMoveProxyTween()
     {
         var duration = durationLimits.GetRandomBetweenLimits();
 
-        movementTween = monsterProxy.DOPath(fakePositionsList.ToArray(), duration, PathType.CatmullRom)
+        movementTween = monsterProxy.DOPath(fakePositionsList.ToArray(), duration)
+            .OnUpdate(() => Debug.LogFormat("Monster position: {0}", monsterProxy.position))
             .OnWaypointChange((wayPointIndex) =>
             {
                 if (wayPointIndex < fakePositionsList.Count - 1

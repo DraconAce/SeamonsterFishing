@@ -155,11 +155,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterProxy: {fileID: 8112896167923530534}
   numberOfPointsLimits:
-    MinLimit: 6
-    MaxLimit: 20
+    MinLimit: 20
+    MaxLimit: 40
   distanceStepLimits:
-    MinLimit: 0.5
-    MaxLimit: 2
+    MinLimit: 0.6
+    MaxLimit: 1.5
   rotationAroundSpawnerLimits:
     MinLimit: -90
     MaxLimit: 90
@@ -169,7 +169,7 @@ MonoBehaviour:
     MaxLimit: 10
   durationLimits:
     MinLimit: 30
-    MaxLimit: 90
+    MaxLimit: 120
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ MonoBehaviour:
           Data3: 1887554482
           Data4: 696217430
         Path: event:/Baiting/Monster/MonsterApproach_Close
-  - distance: 12
+  - distance: 9
     monsterSoundRefList:
     - eventRef:
         Guid:
@@ -324,7 +324,7 @@ MonoBehaviour:
           Data3: 1090218892
           Data4: 659623664
         Path: event:/Baiting/Monster/MonsterApproach_Mid
-  - distance: 20
+  - distance: 13
     monsterSoundRefList:
     - eventRef:
         Guid:

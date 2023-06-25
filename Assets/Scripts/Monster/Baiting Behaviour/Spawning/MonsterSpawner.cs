@@ -21,6 +21,7 @@ public class MonsterSpawner : MonoBehaviour
     private readonly Dictionary<int, PrefabPool> monsterTypePools = new();
 
     public int MaxNumberMonsters { get; set; } = 1;
+    public Transform SpawnCenter => positionGenerator.SpawnCircleCenter;
 
     private void Start()
     {
