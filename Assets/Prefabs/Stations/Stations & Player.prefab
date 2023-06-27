@@ -317,6 +317,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1077861936763938861}
   m_SourcePrefab: {fileID: 100100000, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+--- !u!4 &1477414869050997894 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8680940885367030487, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+  m_PrefabInstance: {fileID: 7852080115157417553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2013439447090315054 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8577419681534443903, guid: aa96e1e513c477b4da068c757d069584, type: 3}
@@ -522,6 +527,10 @@ PrefabInstance:
       propertyPath: stationCamera
       value: 
       objectReference: {fileID: 5378214978799876160}
+    - target: {fileID: 4036470185025516150, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
+      propertyPath: lampPivot
+      value: 
+      objectReference: {fileID: 1477414869050997894}
     - target: {fileID: 4036470185025516150, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
       propertyPath: cannonBarrelPivot
       value: 

@@ -23,6 +23,11 @@ public class DriveStation_Rotating : AbstractStationSegment
     [SerializeField] private Transform cannonBarrelPivot;
     [SerializeField] private Ease cannonAnimationEase = Ease.InCubic; 
     
+    [Header("Flash Rotation")]
+    [SerializeField] private Axis lampRotationAxis = Axis.XAXIS;
+    [SerializeField] private Transform lampPivot;
+    [SerializeField] private Ease lampAnimationEase = Ease.InCubic; 
+
     [Header("Animation")]
     [SerializeField] private float rotationDuration = 3;
     [SerializeField] private Ease rotationEase = Ease.InSine;
@@ -31,6 +36,9 @@ public class DriveStation_Rotating : AbstractStationSegment
     private float forwardCannonBarrelRotation;
     private float backwardsCannonBarrelRotation;
     private Sequence rotationSequence;
+
+    public float forwardLampRotation = 95f;
+    private float backwardsLampRotation;
     #endregion
 
     private void Start()
@@ -39,6 +47,9 @@ public class DriveStation_Rotating : AbstractStationSegment
         forwardCannonBarrelRotation = cannonBarrelPivot.localEulerAngles[(int)cannonBarrelRotationAxis];
 
         CalculateBarrelBackwardsLocalRotation();
+
+        //forwardLampRotation = lampPivot.localRotation.eulerAngles[(int)lampRotationAxis];
+        backwardsLampRotation = 0f - forwardLampRotation;
     }
 
     private void CalculateBarrelBackwardsLocalRotation()
@@ -93,6 +104,7 @@ public class DriveStation_Rotating : AbstractStationSegment
         rotationSequence.Append(CreateBoatRotationTween(newDirection));
         rotationSequence.Join(CreateCannonBaseMoveTween(newDirection));
         rotationSequence.Join(CreateCannonBarrelRotationTween(newDirection));
+        rotationSequence.Join(CreateLampRotationTween(newDirection));
         rotationSequence.OnComplete(() =>
         {
             MovingLocked = false;
@@ -144,7 +156,19 @@ public class DriveStation_Rotating : AbstractStationSegment
             .SetEase(cannonAnimationEase);
     }
 
+    private Tween CreateLampRotationTween(float newDirection)
+    {
+        var targetLocalLampRot = Vector3.zero;
+        targetLocalLampRot[(int)lampRotationAxis] = DetermineTargetLampRotation(newDirection * driveStation.InitialDrivingDirection);
+
+        return lampPivot
+            .DOLocalRotate(targetLocalLampRot, rotationDuration, RotateMode.Fast)
+            .SetEase(lampAnimationEase);
+    }
+
     private float DetermineTargetBarrelRotation(float newDirection) => newDirection >= 0 ? forwardCannonBarrelRotation : backwardsCannonBarrelRotation;
+    
+    private float DetermineTargetLampRotation(float newDirection) => newDirection >= 0 ? forwardLampRotation : backwardsLampRotation;
     #endregion
     
     protected override void OnDestroy()
