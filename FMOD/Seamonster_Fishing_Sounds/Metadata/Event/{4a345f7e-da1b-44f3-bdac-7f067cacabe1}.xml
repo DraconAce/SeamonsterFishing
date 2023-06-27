@@ -109,6 +109,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{2e0901fa-9703-43b4-ba4d-b72e1da92c8e}">
+		<property name="volume">
+			<value>-3</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{e8a53275-2e1f-4c0d-bf68-25e7a46363de}</destination>
 		</relationship>
@@ -138,7 +141,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{1dad8d81-90be-4551-a255-fede9b58aa9a}">
 		<property name="volume">
-			<value>-10</value>
+			<value>-6</value>
 		</property>
 		<property name="name">
 			<value>Waves</value>
@@ -169,7 +172,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{5dd53e78-1760-4131-85b3-d107162a3fc6}">
 		<property name="volume">
-			<value>-4</value>
+			<value>-3</value>
 		</property>
 		<property name="name">
 			<value>Wind</value>
@@ -262,6 +265,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{e8a53275-2e1f-4c0d-bf68-25e7a46363de}">
 		<relationship name="effects">
+			<destination>{89345b88-a01d-47ed-ab08-afbc757431de}</destination>
 			<destination>{d27d0587-1a95-409c-b703-aaeecb41a971}</destination>
 		</relationship>
 	</object>
@@ -311,6 +315,11 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{1d6ae851-c9a3-4500-b8f6-8eac558ec921}" />
+	<object class="DistortionEffect" id="{89345b88-a01d-47ed-ab08-afbc757431de}">
+		<property name="level">
+			<value>0.239999995</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{d27d0587-1a95-409c-b703-aaeecb41a971}" />
 	<object class="MixerBusFader" id="{5eb404bf-3e8a-43e8-bf6d-6a54f3fede2b}" />
 	<object class="MultibandEqEffect" id="{9f1cb678-7fa3-4eb8-8ea8-ce2a39071ec8}">

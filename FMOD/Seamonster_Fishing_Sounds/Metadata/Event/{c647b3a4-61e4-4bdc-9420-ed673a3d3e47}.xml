@@ -63,8 +63,11 @@
 		<property name="maxVoices">
 			<value>1</value>
 		</property>
+		<property name="minimumDistance">
+			<value>7</value>
+		</property>
 		<property name="maximumDistance">
-			<value>6</value>
+			<value>250</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{a99d430f-ea05-43a8-a7b8-652f41b80504}" />
@@ -120,8 +123,20 @@
 		<property name="distanceRolloffType">
 			<value>2</value>
 		</property>
+		<property name="minimumDistance">
+			<value>7</value>
+		</property>
 		<property name="maximumDistance">
-			<value>6</value>
+			<value>250</value>
+		</property>
+		<property name="extentMode">
+			<value>1</value>
+		</property>
+		<property name="soundSize">
+			<value>14</value>
+		</property>
+		<property name="minimumExtent">
+			<value>64</value>
 		</property>
 	</object>
 	<object class="SingleSound" id="{3481f042-ed13-47b6-8507-f9f90bc981a6}">
