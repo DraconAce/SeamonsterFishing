@@ -45,6 +45,9 @@ public abstract class AbstractStation : MonoBehaviour
 
     private void OnGameStateChanged(GameState newGameState)
     {
+        if(newGameState is GameState.PauseMenu 
+           || GameStateManager.PreviousGameState is GameState.PauseMenu) return;
+        
         if (newGameState != StationGameState)
         {
             GameStateDoesNotMatch();

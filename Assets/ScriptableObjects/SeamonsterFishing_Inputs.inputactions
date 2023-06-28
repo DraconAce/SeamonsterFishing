@@ -220,7 +220,7 @@
                 {
                     "name": "",
                     "id": "4e600ad5-b312-449a-a616-ad81d035de24",
-                    "path": "<Keyboard>/#(3)",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -361,7 +361,7 @@
                 {
                     "name": "",
                     "id": "7b49ba8c-1b68-4353-bc5f-df55421a3943",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -491,15 +491,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Return",
-                    "type": "Button",
-                    "id": "c6f72770-165b-47c0-96a7-1b5cc8306def",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleMenu",
@@ -641,39 +632,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
                     "action": "Reel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7830c036-6610-4bc5-be7c-9eb7b3e6e01d",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Return",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5987cf1d-b60e-45c4-bd5a-b9c2417c40ca",
-                    "path": "<SwitchProControllerHID>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Return",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "80ae2e6d-9a17-4b9f-9adf-62ac117191a6",
-                    "path": "*/{Back}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Return",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

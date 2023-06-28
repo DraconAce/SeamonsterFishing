@@ -25,12 +25,15 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
     private Coroutine reactToFlashRoutine;
 
     private IEnumerator currentBehaviourRoutine;
+    private WaitUntil waitForReelingStopped;
     
     protected override void Start()
     {
         base.Start();
         
         waitForLoopUnblocked = new(() => !blockBehaviourLoop);
+        waitForReelingStopped = new(() 
+            => gameStateManager.CurrentGameState != GameState.FightReelingStation);
     }
 
     protected override IEnumerator UpdateBehaviour()
@@ -55,6 +58,11 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
             if(restartBehaviourLoop) continue;
             yield return CheckIfLoopBlocked();
 
+            currentBehaviourRoutine = ReelingBehaviour();
+            yield return currentMonsterBehaviour;
+            
+            if(restartBehaviourLoop) continue;
+            yield return CheckIfLoopBlocked();
             //Fleeing
         }
     }
@@ -101,6 +109,13 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
     private IEnumerator AttackBehaviour()
     {
         yield return TriggerGivenBehaviour(monsterAttack);
+    }
+
+    private IEnumerator ReelingBehaviour()
+    {
+        gameStateManager.ChangeGameState(GameState.FightReelingStation);
+        
+        yield return waitForReelingStopped;
     }
 
     public void ReactToCannonBallMiss()

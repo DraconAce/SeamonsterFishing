@@ -6,6 +6,7 @@ public class WinDeathUI : AbstractMenu
     [Header("Events")]
     [SerializeField] private UnityEvent playerIsDeadEvent;
     [SerializeField] private UnityEvent playerWonEvent;
+    //[SerializeField] private UnityEvent monsterEscapedEvent;
     
     private GameStateManager gameStateManager;
 
@@ -31,7 +32,7 @@ public class WinDeathUI : AbstractMenu
             OpenMenu();
             OnRunEnded(playerWonEvent);
         }
-        
+
         if (newGameState != GameState.Dead) return;
 
         OpenMenu();

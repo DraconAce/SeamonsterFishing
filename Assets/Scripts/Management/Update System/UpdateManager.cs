@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public class UpdateManager : Singleton<UpdateManager>
@@ -5,10 +6,14 @@ public class UpdateManager : Singleton<UpdateManager>
     private readonly List<IManualUpdateSubscriber> manualUpdateSubscribers = new();
     private readonly List<IManualUpdateSubscriber> manualFixedUpdateSubscribers = new();
     private readonly List<IManualUpdateSubscriber> manualLateUpdateSubscribers = new();
+    
+    private GameStateManager gameStateManager;
+
+    private void Start() => gameStateManager = GameStateManager.instance;
 
     private void Update()
     {        
-        if (!ListHasElements(manualUpdateSubscribers)) return;
+        if (!UpdateCanBeExecuted(manualUpdateSubscribers)) return;
 
         foreach(var subscriber in manualUpdateSubscribers)
         {
@@ -20,7 +25,7 @@ public class UpdateManager : Singleton<UpdateManager>
 
     private void FixedUpdate()
     {
-        if (!ListHasElements(manualFixedUpdateSubscribers)) return;
+        if (!UpdateCanBeExecuted(manualFixedUpdateSubscribers)) return;
 
         foreach(var subscriber in manualFixedUpdateSubscribers)
         {
@@ -32,7 +37,7 @@ public class UpdateManager : Singleton<UpdateManager>
 
     private void LateUpdate()
     {
-        if (!ListHasElements(manualLateUpdateSubscribers)) return;
+        if (!UpdateCanBeExecuted(manualLateUpdateSubscribers)) return;
         
         foreach(var subscriber in manualLateUpdateSubscribers)
         {
@@ -41,6 +46,9 @@ public class UpdateManager : Singleton<UpdateManager>
             subscriber.ManualLateUpdate();
         }
     }
+
+    private bool UpdateCanBeExecuted(List<IManualUpdateSubscriber> subcriberList) 
+        => !gameStateManager.GameIsPaused && ListHasElements(subcriberList);
 
     private bool ListHasElements(List<IManualUpdateSubscriber> manualUpdateSubscriberList) 
         => manualUpdateSubscriberList.Count > 0;
