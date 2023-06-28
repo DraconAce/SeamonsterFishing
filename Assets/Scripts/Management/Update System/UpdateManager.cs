@@ -12,12 +12,16 @@ public class UpdateManager : Singleton<UpdateManager>
     private void Start() => gameStateManager = GameStateManager.instance;
 
     private void Update()
-    {        
+    {
         if (!UpdateCanBeExecuted(manualUpdateSubscribers)) return;
 
-        foreach(var subscriber in manualUpdateSubscribers)
+        for (var subIndex = 0; subIndex < manualUpdateSubscribers.Count; subIndex++)
         {
-            if(!subscriber.SubscriberCanReceiveUpdate()) continue;
+            if(subIndex >= manualUpdateSubscribers.Count) break;
+            
+            var subscriber = manualUpdateSubscribers[subIndex];
+            
+            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
 
             subscriber.ManualUpdate();
         }
@@ -27,10 +31,14 @@ public class UpdateManager : Singleton<UpdateManager>
     {
         if (!UpdateCanBeExecuted(manualFixedUpdateSubscribers)) return;
 
-        foreach(var subscriber in manualFixedUpdateSubscribers)
+        for (var subIndex = 0; subIndex < manualFixedUpdateSubscribers.Count; subIndex++)
         {
-            if(!subscriber.SubscriberCanReceiveUpdate()) continue;
+            if(subIndex >= manualFixedUpdateSubscribers.Count) break;
             
+            var subscriber = manualFixedUpdateSubscribers[subIndex];
+            
+            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
+
             subscriber.ManualFixedUpdate();
         }
     }
@@ -38,11 +46,15 @@ public class UpdateManager : Singleton<UpdateManager>
     private void LateUpdate()
     {
         if (!UpdateCanBeExecuted(manualLateUpdateSubscribers)) return;
-        
-        foreach(var subscriber in manualLateUpdateSubscribers)
+
+        for (var subIndex = 0; subIndex < manualLateUpdateSubscribers.Count; subIndex++)
         {
-            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
+            if(subIndex >= manualLateUpdateSubscribers.Count) break;
             
+            var subscriber = manualLateUpdateSubscribers[subIndex];
+            
+            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
+
             subscriber.ManualLateUpdate();
         }
     }

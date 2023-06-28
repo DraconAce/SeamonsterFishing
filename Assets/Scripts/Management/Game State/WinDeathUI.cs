@@ -29,11 +29,15 @@ public class WinDeathUI : AbstractMenu
     {
         if (newGameState == GameState.Won)
         {
+            SceneController.ToggleCursorForLevel(true);
+
             OpenMenu();
             OnRunEnded(playerWonEvent);
         }
 
         if (newGameState != GameState.Dead) return;
+
+        SceneController.ToggleCursorForLevel(true);
 
         OpenMenu();
         OnRunEnded(playerIsDeadEvent);

@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class ReelingStation_Animation : AbstractStationSegment
 {
+    [SerializeField] private Transform reelingPivotTransform;
+    
     [SerializeField] private float reelEntryDuration;
     [SerializeField] private float reelExitDuration;
-    
+
     [SerializeField] private Ease reelEntryEase;
     [SerializeField] private Ease reelExitEase;
-    
-    private Transform boatTransform;
+
     private Transform monsterTransform;
     
     private Quaternion initialBoatRotation;
@@ -36,9 +37,7 @@ public class ReelingStation_Animation : AbstractStationSegment
 
     private void SetupBoatVariables()
     {
-        boatTransform = PlayerSingleton.instance.PlayerTransform;
-
-        initialBoatRotation = boatTransform.rotation;
+        initialBoatRotation = reelingPivotTransform.rotation;
         oppositeBoatRotation = Quaternion.Euler(initialBoatRotation.eulerAngles + Vector3.up * 180);
     }
 
@@ -48,11 +47,11 @@ public class ReelingStation_Animation : AbstractStationSegment
 
     private void ReelingEntryAnimation()
     {
-        rotationAfterReeling = DetermineCloserBoatRotation(boatTransform.rotation);
+        rotationAfterReeling = DetermineCloserBoatRotation(reelingPivotTransform.rotation);
         
-        var lookAtRotation = Quaternion.LookRotation(monsterTransform.position - boatTransform.position);
+        var lookAtRotation = Quaternion.LookRotation(monsterTransform.position - reelingPivotTransform.position);
         
-        boatTransform.DORotateQuaternion(lookAtRotation, reelEntryDuration)
+        reelingPivotTransform.DORotateQuaternion(lookAtRotation, reelEntryDuration)
             .SetEase(reelEntryEase);
     }
 
@@ -72,7 +71,7 @@ public class ReelingStation_Animation : AbstractStationSegment
     
     private void ReelingExitAnimation()
     {
-        boatTransform.DORotateQuaternion(rotationAfterReeling, reelExitDuration)
+        reelingPivotTransform.DORotateQuaternion(rotationAfterReeling, reelExitDuration)
             .SetEase(reelExitEase)
             .OnComplete(() => gameStateManager.ChangeGameState(GameState.FightOverview));
     }

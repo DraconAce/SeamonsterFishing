@@ -9,6 +9,9 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 
     [Header("Attack")] 
     [SerializeField] private MonsterAttackBehaviour monsterAttack;
+    
+    [Header("Reeling")]
+    [SerializeField] private MonsterReelingBehaviour monsterReeling;
 
     [Header("Stunned")] 
     [SerializeField] private FightMonsterStunned monsterStunned;
@@ -25,15 +28,12 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
     private Coroutine reactToFlashRoutine;
 
     private IEnumerator currentBehaviourRoutine;
-    private WaitUntil waitForReelingStopped;
     
     protected override void Start()
     {
         base.Start();
         
         waitForLoopUnblocked = new(() => !blockBehaviourLoop);
-        waitForReelingStopped = new(() 
-            => gameStateManager.CurrentGameState != GameState.FightReelingStation);
     }
 
     protected override IEnumerator UpdateBehaviour()
@@ -46,24 +46,26 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
             
             restartBehaviourLoop = false;
             
+            //Idle
             currentBehaviourRoutine = IdleBehaviour();
             yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
             yield return CheckIfLoopBlocked();
 
+            //Attack
             currentBehaviourRoutine = AttackBehaviour();
             yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
             yield return CheckIfLoopBlocked();
 
+            //Reeling
             currentBehaviourRoutine = ReelingBehaviour();
-            yield return currentMonsterBehaviour;
+            yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
             yield return CheckIfLoopBlocked();
-            //Fleeing
         }
     }
 
@@ -81,13 +83,15 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 
     private IEnumerator TriggerGivenBehaviour(AbstractMonsterBehaviour behaviour)
     {
-        Debug.LogFormat("Start Behaviour of type: {0}", nameof(behaviour));
+        var behaviourName = behaviour.GetType().Name;
+
+        Debug.LogFormat("Start Behaviour of type: {0}", behaviourName);
         yield return StartMonsterBehaviourRoutine(behaviour);
         
-        Debug.LogFormat("Wait For Potential Interrupt: {0}", nameof(behaviour));
+        Debug.LogFormat("Wait For Potential Interrupt: {0}", behaviourName);
         yield return WaitForInterruptBehaviourIfExists();
         
-        Debug.LogFormat("Behaviour Finished: {0}", nameof(behaviour));
+        Debug.LogFormat("Behaviour Finished: {0}", behaviourName);
     }
 
     private IEnumerator StartMonsterBehaviourRoutine(AbstractMonsterBehaviour monsterBehaviour)
@@ -113,9 +117,7 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 
     private IEnumerator ReelingBehaviour()
     {
-        gameStateManager.ChangeGameState(GameState.FightReelingStation);
-        
-        yield return waitForReelingStopped;
+        yield return TriggerGivenBehaviour(monsterReeling);
     }
 
     public void ReactToCannonBallMiss()
