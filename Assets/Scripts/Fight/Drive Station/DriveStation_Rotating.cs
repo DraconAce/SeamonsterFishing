@@ -44,28 +44,30 @@ public class DriveStation_Rotating : AbstractStationSegment
     private void Start()
     {
         initialCannonBaseCoordinate = cannonBaseTransform.localPosition[(int)cannonBaseMovementAxis];
+        
         forwardCannonBarrelRotation = cannonBarrelPivot.localEulerAngles[(int)cannonBarrelRotationAxis];
+        backwardsCannonBarrelRotation = CalculateBackwardsLocalRotation(cannonBarrelPivot.parent);
 
-        CalculateBarrelBackwardsLocalRotation();
-
-        //forwardLampRotation = lampPivot.localRotation.eulerAngles[(int)lampRotationAxis];
-        backwardsLampRotation = 0f - forwardLampRotation;
+        forwardLampRotation = lampPivot.localEulerAngles[(int)lampRotationAxis];
+        backwardsLampRotation = CalculateBackwardsLocalRotation(lampPivot.parent); //0f - forwardLampRotation;
     }
 
-    private void CalculateBarrelBackwardsLocalRotation()
+    private float CalculateBackwardsLocalRotation(Transform fixParent)
     {
-        var offsetObjectRotation = GetBarrelOffsetLocalRotation();
-        backwardsCannonBarrelRotation = CalculateOn180MirroredRotation(offsetObjectRotation);
+        var offsetObjectRotation = GetFixParentOffsetLocalRotation(fixParent);
+        return CalculateOn180MirroredRotation(offsetObjectRotation);
     }
 
-    private float GetBarrelOffsetLocalRotation() => cannonBarrelPivot.parent.localEulerAngles[(int)cannonBarrelRotationAxis];
+    private float GetFixParentOffsetLocalRotation(Transform fixParent) => fixParent.localEulerAngles[(int)cannonBarrelRotationAxis];
 
     private float CalculateOn180MirroredRotation(float rotationToMirror)
     {
         var mirrorRotationClampedBetween180s = Converter.AdjustRotationToNegative(0 - rotationToMirror);
         var rotationOffsetTo180InParent = mirrorRotationClampedBetween180s;
+
+        var totalOffset = rotationOffsetTo180InParent + mirrorRotationClampedBetween180s;
         
-        return Converter.AdjustRotationToNegative(180 + rotationOffsetTo180InParent + mirrorRotationClampedBetween180s) ;
+        return Converter.AdjustRotationToNegative(Mathf.Abs(totalOffset) <= 90 ? 180 + totalOffset : -totalOffset);
     }
 
     private DriveStation driveStation => (DriveStation)ControllerStation;

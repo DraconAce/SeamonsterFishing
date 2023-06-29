@@ -119,7 +119,9 @@ public class HitWithArmsAttack : AbstractMonsterAttack
         var returnOuterRight= RotateArmOutwards(rightArmYPivot, true);
 
         yield return new WaitUntil(() =>
-            returnLeftRot.IsComplete() && returnRightRot.IsComplete() && returnOuterLeft.IsComplete() &&
-            returnOuterRight.IsComplete());
+            TweenCompletedOrIsDead(returnLeftRot) && TweenCompletedOrIsDead(returnRightRot) 
+            && TweenCompletedOrIsDead(returnOuterLeft) && TweenCompletedOrIsDead(returnOuterRight));
     }
+    
+    private bool TweenCompletedOrIsDead(Tween tween) => tween.IsComplete() || !tween.IsActive();
 }

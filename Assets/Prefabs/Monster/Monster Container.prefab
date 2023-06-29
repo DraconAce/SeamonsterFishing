@@ -757,6 +757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterIdle: {fileID: 1670158520635827350}
   monsterAttack: {fileID: 3091651377225908947}
+  monsterReeling: {fileID: 4476395590857316474}
   monsterStunned: {fileID: 2142761786762955205}
 --- !u!114 &2538198034605590219
 MonoBehaviour:

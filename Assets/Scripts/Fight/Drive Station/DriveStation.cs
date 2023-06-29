@@ -1,4 +1,6 @@
 using System;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,10 +22,11 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     public float LastDriveDirection { get; set; }
     public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
 
-    public FMODUnity.EventReference MoveBoatSound;
-    private FMOD.Studio.EventInstance MoveBoatSoundInstance;
-    public FMODUnity.EventReference TurnBoatSound;
-    private FMOD.Studio.EventInstance TurnBoatSoundInstance;
+    public EventReference MoveBoatSound;
+    private EventInstance MoveBoatSoundInstance;
+    
+    public EventReference TurnBoatSound;
+    private EventInstance TurnBoatSoundInstance;
 
     private void Awake()
     {
@@ -34,8 +37,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         TryGetComponent(out movingController);
         TryGetComponent(out rotatingController);
 
-        MoveBoatSoundInstance = FMODUnity.RuntimeManager.CreateInstance(MoveBoatSound);
-        TurnBoatSoundInstance = FMODUnity.RuntimeManager.CreateInstance(TurnBoatSound);
+        MoveBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MoveBoatSound, PlayerTransform.gameObject);
+        TurnBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(TurnBoatSound, PlayerTransform.gameObject);
     }
 
     protected override void GameStateMatches()
@@ -88,15 +91,14 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         if (hasDirectionChanged || rotatingController.MovingLocked) 
         {
             //Turn Boat Sound should play
-            FMOD.Studio.PLAYBACK_STATE turnPlaybackState;
-            TurnBoatSoundInstance.getPlaybackState(out turnPlaybackState);
-            if (turnPlaybackState == FMOD.Studio.PLAYBACK_STATE.STOPPED) TurnBoatSoundInstance.start();
+            TurnBoatSoundInstance.getPlaybackState(out var turnPlaybackState);
+            if (turnPlaybackState == PLAYBACK_STATE.STOPPED) TurnBoatSoundInstance.start();
             return;
         } 
+        
         //Boat is Moving Sound should play
-        FMOD.Studio.PLAYBACK_STATE playbackState;
-        MoveBoatSoundInstance.getPlaybackState(out playbackState);
-        if (playbackState == FMOD.Studio.PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
+        MoveBoatSoundInstance.getPlaybackState(out var playbackState);
+        if (playbackState == PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
         
         movingController.MoveBoat(moveDirection);
     }
@@ -109,8 +111,11 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        
+
+        MoveBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         MoveBoatSoundInstance.release();
+        
+        TurnBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         TurnBoatSoundInstance.release();
 
         driveAction.Disable();

@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using FMOD.Studio;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -9,6 +10,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 {
     [SerializeField] private string[] actionsToSubscribeTo = { "ActivateSpot" };
     [SerializeField] private float coolDownTimer = 10;
+    [SerializeField] private bool autoChargeAfterUse = true;
     [SerializeField] private UnityEvent onFlashReady;
 
     [Header("Flash On")] 
@@ -20,26 +22,23 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private float targetOffIntensity;
     [SerializeField] private TweenSettings flashOffSettings;
     
-
-    public bool FlashIsReady { get; private set; }= true;
+    public bool FlashIsReady { get; protected set; }= true;
     private Sequence flashSequence;
     
     private Light spotLight;
-    private InputManager inputManager;
-    private FightMonsterSingleton monsterSingleton;
+    public Light SpotLight => spotLight;
 
-    public EventReference flashSound;
-    public EventReference reloadFlashSound;
+    private InputManager inputManager;
 
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
     
-    private void Start()
+    private void Awake() => TryGetComponent(out spotLight);
+
+    protected virtual void Start()
     {
         inputManager = InputManager.instance;
-        monsterSingleton = FightMonsterSingleton.instance;
         
         inputManager.SubscribeToActions(this);
-        TryGetComponent(out spotLight);
     }
 
     public void InputPerformed(InputAction.CallbackContext callContext) => CheckIfFlashReadyAndActivate();
@@ -50,42 +49,37 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         
         flashSequence?.Kill();
         
-        monsterSingleton.FlashWasUsed();
+        FlashActivatedImpl();
         
         ActivateFlash();
     }
+    
+    protected virtual void FlashActivatedImpl(){}
 
     private void ActivateFlash()
     {
         FlashIsReady = false;
-
+        
         flashSequence = DOTween.Sequence();
 
         flashSequence.Append(FlashTween(targetOnIntensity, flashOnSettings));
         flashSequence.AppendInterval(stayOnDuration);
-        
+
         flashSequence.Append(FlashTween(targetOffIntensity, flashOffSettings));
+
+        if (!autoChargeAfterUse) return;
+
         flashSequence.AppendInterval(coolDownTimer);
-        
-        //create Instance of the flash sound for this activation
-        FMOD.Studio.EventInstance flashSoundInstance = FMODUnity.RuntimeManager.CreateInstance(flashSound);
-        //create Instance of the sound to signal that flash is reloaded
-        FMOD.Studio.EventInstance reloadFlashSoundInstance = FMODUnity.RuntimeManager.CreateInstance(reloadFlashSound);
-        //start playing flash sound
-        flashSoundInstance.start();
 
-        flashSequence.OnComplete(() =>
-        {
-            //stop playing flash sound onComplete
-            flashSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            flashSoundInstance.release();
-            //play sound to signal that flash is reloaded
-            reloadFlashSoundInstance.start();
-            reloadFlashSoundInstance.release();
+        flashSequence.OnComplete(FlashIsRecharged);
+    }
 
-            FlashIsReady = true;
-            onFlashReady?.Invoke();
-        });
+    protected virtual void FlashIsRecharged() => SetFlashToReady();
+
+    protected void SetFlashToReady()
+    {
+        FlashIsReady = true;
+        onFlashReady?.Invoke();
     }
 
     private Tween FlashTween(float targetIntensity, TweenSettings targetSettings)
@@ -96,7 +90,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
             .OnComplete(() => targetSettings.OnCompleteAction?.Invoke());
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         UnsubscribeOnDestroy();
         
