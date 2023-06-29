@@ -124,6 +124,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7757787760665009016}
+  - {fileID: 1834934452603027330}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,6 +148,7 @@ MonoBehaviour:
       Data3: 1344880263
       Data4: 1070525145
     Path: event:/Ambience/Lightning
+  LightningParticleSystem: {fileID: 7954526432268011475}
   minCooldown: 10
   maxCooldown: 15
   targetIntensity: 100
@@ -160,3 +162,46 @@ MonoBehaviour:
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
+--- !u!1001 &1184539057440185964
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5344972485132318737}
+    m_Modifications:
+    - target: {fileID: 650397233552499182, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 650397233552499182, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 650397233552499182, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 650397233552499182, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024028677164397158, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+      propertyPath: m_Name
+      value: Lightning_Particles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+--- !u!4 &1834934452603027330 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 650397233552499182, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+  m_PrefabInstance: {fileID: 1184539057440185964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7954526432268011475 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9085014278251354559, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+  m_PrefabInstance: {fileID: 1184539057440185964}
+  m_PrefabAsset: {fileID: 0}
