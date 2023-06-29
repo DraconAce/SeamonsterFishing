@@ -9,6 +9,8 @@ public class Lightning_Manager : MonoBehaviour
     [SerializeField] private Light spotLight;
     
     [SerializeField] private FMODUnity.EventReference LightningSound;
+    
+    [SerializeField] private ParticleSystem LightningParticleSystem;
 
     private Sequence lightningSequence;
     [Header("Flash Settings")] 
@@ -26,6 +28,7 @@ public class Lightning_Manager : MonoBehaviour
         lightningIsActive = true;
         lightningCoroutine = DoLightning();
         StartCoroutine(lightningCoroutine);
+        LightningParticleSystem.Stop();
     }
 
     private IEnumerator DoLightning() 
@@ -46,6 +49,10 @@ public class Lightning_Manager : MonoBehaviour
         lightningSequence.AppendInterval(keepLightningOnDuration);
         lightningSequence.Append(LightningTween(0f, lightningSettings));
 
+        //play Lightning particle at random z-Location
+        float z = Random.Range(-65f, 65f);
+        LightningParticleSystem.transform.position = new Vector3(-30f,20f,z);
+        LightningParticleSystem.Play();
         FMODUnity.RuntimeManager.PlayOneShot(LightningSound);
     }
 

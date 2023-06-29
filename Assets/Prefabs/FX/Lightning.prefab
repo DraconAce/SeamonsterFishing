@@ -148,6 +148,7 @@ MonoBehaviour:
       Data3: 1344880263
       Data4: 1070525145
     Path: event:/Ambience/Lightning
+  LightningParticleSystem: {fileID: 7954526432268011475}
   minCooldown: 10
   maxCooldown: 15
   targetIntensity: 100
@@ -197,5 +198,10 @@ PrefabInstance:
 --- !u!4 &1834934452603027330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 650397233552499182, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
+  m_PrefabInstance: {fileID: 1184539057440185964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7954526432268011475 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9085014278251354559, guid: abf0ed0d2f954904fa53e9bcd117969f, type: 3}
   m_PrefabInstance: {fileID: 1184539057440185964}
   m_PrefabAsset: {fileID: 0}
