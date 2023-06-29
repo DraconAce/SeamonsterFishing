@@ -1,8 +1,10 @@
 using System;
 using DG.Tweening;
+using FMOD.Studio;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class SpotFlash : MonoBehaviour, IInputEventSubscriber
 {
@@ -20,7 +22,6 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private float targetOffIntensity;
     [SerializeField] private TweenSettings flashOffSettings;
     
-
     public bool FlashIsReady { get; protected set; }= true;
     private Sequence flashSequence;
     
@@ -28,14 +29,11 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     public Light SpotLight => spotLight;
 
     private InputManager inputManager;
-    
+
     public string[] ActionsToSubscribeTo => actionsToSubscribeTo;
     
-    protected virtual void Awake()
-    {
-        TryGetComponent(out spotLight);
-    }
-    
+    private void Awake() => TryGetComponent(out spotLight);
+
     protected virtual void Start()
     {
         inputManager = InputManager.instance;
@@ -61,20 +59,22 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
     private void ActivateFlash()
     {
         FlashIsReady = false;
-
+        
         flashSequence = DOTween.Sequence();
 
         flashSequence.Append(FlashTween(targetOnIntensity, flashOnSettings));
         flashSequence.AppendInterval(stayOnDuration);
-        
+
         flashSequence.Append(FlashTween(targetOffIntensity, flashOffSettings));
 
         if (!autoChargeAfterUse) return;
-        
+
         flashSequence.AppendInterval(coolDownTimer);
 
-        flashSequence.OnComplete(SetFlashToReady);
+        flashSequence.OnComplete(FlashIsRecharged);
     }
+
+    protected virtual void FlashIsRecharged() => SetFlashToReady();
 
     protected void SetFlashToReady()
     {
@@ -90,7 +90,7 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
             .OnComplete(() => targetSettings.OnCompleteAction?.Invoke());
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         UnsubscribeOnDestroy();
         

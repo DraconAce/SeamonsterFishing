@@ -4,9 +4,6 @@
 		<property name="assetPath">
 			<value>Atmo/Water/zapsplat_nature_ocean_gentle_waves_amongst_rocks_distant_surf_002_12733.mp3</value>
 		</property>
-		<property name="isStreaming">
-			<value>true</value>
-		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
 		</property>

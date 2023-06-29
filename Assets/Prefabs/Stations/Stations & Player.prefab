@@ -453,6 +453,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8577419681534443903, guid: aa96e1e513c477b4da068c757d069584, type: 3}
   m_PrefabInstance: {fileID: 7852080115157417553}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2395991373973523435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5600353915960440250, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+  m_PrefabInstance: {fileID: 7852080115157417553}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2918385492460101833 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4933694936234155672, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+  m_PrefabInstance: {fileID: 7852080115157417553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3676241149962111403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6916562119235729402, guid: aa96e1e513c477b4da068c757d069584, type: 3}
@@ -518,11 +528,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 290194287925910205, guid: aa96e1e513c477b4da068c757d069584, type: 3}
   m_PrefabInstance: {fileID: 7852080115157417553}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8252129644581675631 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2196988555901754430, guid: aa96e1e513c477b4da068c757d069584, type: 3}
-  m_PrefabInstance: {fileID: 7852080115157417553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8620015876444444087 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1970399088007408614, guid: aa96e1e513c477b4da068c757d069584, type: 3}
@@ -567,6 +572,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4621593664194074883}
     - target: {fileID: 1140069061896769200, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
+      propertyPath: cannonPivot
+      value: 
+      objectReference: {fileID: 2395991373973523435}
+    - target: {fileID: 1140069061896769200, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: onEnterStation.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5187348253809250021}
@@ -581,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 1140069061896769200, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: onLeaveStation.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 8252129644581675631}
+      objectReference: {fileID: 0}
     - target: {fileID: 2090611449141144019, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: m_Name
       value: Cannon Station
@@ -669,6 +678,10 @@ PrefabInstance:
       propertyPath: stationCamera
       value: 
       objectReference: {fileID: 5378214978799876160}
+    - target: {fileID: 4036470185025516150, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
+      propertyPath: lampPivot
+      value: 
+      objectReference: {fileID: 2918385492460101833}
     - target: {fileID: 4036470185025516150, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
       propertyPath: cannonBarrelPivot
       value: 
