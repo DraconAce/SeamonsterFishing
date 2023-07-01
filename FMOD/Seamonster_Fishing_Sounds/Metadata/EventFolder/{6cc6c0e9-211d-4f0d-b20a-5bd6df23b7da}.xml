@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-<<<<<<<< HEAD:FMOD/Seamonster_Fishing_Sounds/Metadata/Bank/{20e8e7d8-800c-40ce-977c-83f71454251e}.xml
-	<object class="Bank" id="{20e8e7d8-800c-40ce-977c-83f71454251e}">
-		<property name="name">
-			<value>Diver</value>
-========
 	<object class="EventFolder" id="{6cc6c0e9-211d-4f0d-b20a-5bd6df23b7da}">
 		<property name="name">
 			<value>Boat</value>
->>>>>>>> development:FMOD/Seamonster_Fishing_Sounds/Metadata/EventFolder/{6cc6c0e9-211d-4f0d-b20a-5bd6df23b7da}.xml
 		</property>
 		<relationship name="folder">
 			<destination>{0b6b8495-f7ae-4cfe-828e-ee7fb5932494}</destination>
