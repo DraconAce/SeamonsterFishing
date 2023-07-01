@@ -51,6 +51,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster: {fileID: 8065992250933780961}
   upMovement: {x: 0, y: 1, z: 0}
+  loopLimits:
+    MinLimit: 10
+    MaxLimit: 25
   idleAnimationDuration: 1
   idleEase: 4
 --- !u!114 &4476395590857316474
@@ -474,6 +477,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5403306fc6c4d3cb129df85b107573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BoatIsHitSound:
+    Guid:
+      Data1: -426714516
+      Data2: 1129044293
+      Data3: -2009891420
+      Data4: 1783340351
+    Path: event:/Boat/Hit Boat
 --- !u!1 &6881338408507313173
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +632,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5403306fc6c4d3cb129df85b107573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BoatIsHitSound:
+    Guid:
+      Data1: -426714516
+      Data2: 1129044293
+      Data3: -2009891420
+      Data4: 1783340351
+    Path: event:/Boat/Hit Boat
 --- !u!1 &7566473411707662205
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,11 +755,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1727c0486ef24a94a5f2041dd23c74d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeUntilNextStateCheck:
-    MinLimit: 3
-    MaxLimit: 15
   monsterIdle: {fileID: 1670158520635827350}
   monsterAttack: {fileID: 3091651377225908947}
+  monsterReeling: {fileID: 4476395590857316474}
   monsterStunned: {fileID: 2142761786762955205}
 --- !u!114 &2538198034605590219
 MonoBehaviour:

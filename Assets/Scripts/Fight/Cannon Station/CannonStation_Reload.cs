@@ -1,4 +1,6 @@
 using DG.Tweening;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +24,19 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
 
     public string[] ActionsToSubscribeTo { get; } = { reloadActionName };
     
+    public EventReference reloadCannonSound;
+    private EventInstance reloadCannonSoundInstance;
+
+    private CannonStation cannonStation => (CannonStation)ControllerStation;
+
     private void Start() => SubscribeToInputManager();
+
+    protected override void OnControllerSetup()
+    {
+        base.OnControllerSetup();
+        
+        reloadCannonSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(reloadCannonSound, cannonStation.CannonPivot.gameObject);
+    }
 
     protected override void OnGameStateDoesNotMatchCannonStation()
     {
@@ -51,6 +65,9 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         if (IsLoaded || IsReloading) return;
 
         IsReloading = true;
+        
+        //play sound
+        reloadCannonSoundInstance.start();
 
         reloadingTween = DOVirtual.DelayedCall(reloadTime, Reload, false);
         
@@ -62,6 +79,9 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         IsLoaded = true;
         IsReloading = false;
         
+        //stop sound
+        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
         InvokeSegmentStateChangedEvent();
     }
     
@@ -70,6 +90,9 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         base.OnDestroy();
         
         reloadingTween?.Kill();
+        
+        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        reloadCannonSoundInstance.release();
 
         if (inputManager == null) return;
         UnsubscribeOnDestroy();

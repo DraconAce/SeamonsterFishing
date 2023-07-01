@@ -1,9 +1,34 @@
+using DG.Tweening;
 using UnityEngine;
 
-namespace Fight.Reeling_Station
+public class ReelingStation_ProgressController : AbstractStationSegment
 {
-    public class ReelingStation_ProgressController : MonoBehaviour
+    [SerializeField] private GameObject reelingUI;
+    
+    private ReelingStation reelingStation => (ReelingStation) ControllerStation;
+    
+    private void Start()
     {
+        reelingUI.SetActive(false);
         
+        reelingStation.OnReelingStartedEvent += OnReelingStarted;
+        reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
+    }
+    
+    private void OnReelingStarted() => reelingUI.SetActive(true);
+    private void OnReelingCompleted()
+    {
+        DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, 
+            () => reelingUI.SetActive(false));
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        if(reelingStation == null) return;
+        
+        reelingStation.OnReelingStartedEvent -= OnReelingStarted;
+        reelingStation.OnReelingCompletedEvent -= OnReelingCompleted;
     }
 }

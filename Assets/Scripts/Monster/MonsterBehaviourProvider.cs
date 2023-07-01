@@ -7,8 +7,13 @@ public class MonsterBehaviourProvider : MonoBehaviour
     private Coroutine updateBehaviourRoutine;
     
     protected AbstractMonsterBehaviour activeBehaviour;
+    protected GameStateManager gameStateManager;
 
-    protected virtual void Start() => updateBehaviourRoutine = StartCoroutine(UpdateBehaviour());
+    protected virtual void Start()
+    {
+        gameStateManager = GameStateManager.instance;
+        updateBehaviourRoutine = StartCoroutine(UpdateBehaviour());
+    }
 
     protected virtual IEnumerator UpdateBehaviour()
     {

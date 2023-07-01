@@ -1,5 +1,6 @@
 using System;
 using System.Xml;
+using DG.Tweening;
 using UnityEngine;
 
 public class GameStateManager : Singleton<GameStateManager>
@@ -9,6 +10,7 @@ public class GameStateManager : Singleton<GameStateManager>
     private SceneController sceneController;
     
     public bool BlockGameStateChange { get; set; }
+    public bool GameIsPaused => CurrentGameState == GameState.PauseMenu;
     public GameState PreviousGameState { get; private set; }
 
     public GameState CurrentGameState
@@ -31,6 +33,9 @@ public class GameStateManager : Singleton<GameStateManager>
         sceneController = SceneController.instance;
         
         sceneController.SceneStarted(currentGameState);
+        
+        //Todo: Remove this
+        DOVirtual.DelayedCall(1f, () => GameStateChangedEvent?.Invoke(currentGameState));
     }
 
     public event Action<GameState> GameStateChangedEvent;

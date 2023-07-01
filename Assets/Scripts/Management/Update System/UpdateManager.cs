@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public class UpdateManager : Singleton<UpdateManager>
@@ -5,14 +6,22 @@ public class UpdateManager : Singleton<UpdateManager>
     private readonly List<IManualUpdateSubscriber> manualUpdateSubscribers = new();
     private readonly List<IManualUpdateSubscriber> manualFixedUpdateSubscribers = new();
     private readonly List<IManualUpdateSubscriber> manualLateUpdateSubscribers = new();
+    
+    private GameStateManager gameStateManager;
+
+    private void Start() => gameStateManager = GameStateManager.instance;
 
     private void Update()
-    {        
-        if (!ListHasElements(manualUpdateSubscribers)) return;
+    {
+        if (!UpdateCanBeExecuted(manualUpdateSubscribers)) return;
 
-        foreach(var subscriber in manualUpdateSubscribers)
+        for (var subIndex = 0; subIndex < manualUpdateSubscribers.Count; subIndex++)
         {
-            if(!subscriber.SubscriberCanReceiveUpdate()) continue;
+            if(subIndex >= manualUpdateSubscribers.Count) break;
+            
+            var subscriber = manualUpdateSubscribers[subIndex];
+            
+            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
 
             subscriber.ManualUpdate();
         }
@@ -20,27 +29,38 @@ public class UpdateManager : Singleton<UpdateManager>
 
     private void FixedUpdate()
     {
-        if (!ListHasElements(manualFixedUpdateSubscribers)) return;
+        if (!UpdateCanBeExecuted(manualFixedUpdateSubscribers)) return;
 
-        foreach(var subscriber in manualFixedUpdateSubscribers)
+        for (var subIndex = 0; subIndex < manualFixedUpdateSubscribers.Count; subIndex++)
         {
-            if(!subscriber.SubscriberCanReceiveUpdate()) continue;
+            if(subIndex >= manualFixedUpdateSubscribers.Count) break;
             
+            var subscriber = manualFixedUpdateSubscribers[subIndex];
+            
+            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
+
             subscriber.ManualFixedUpdate();
         }
     }
 
     private void LateUpdate()
     {
-        if (!ListHasElements(manualLateUpdateSubscribers)) return;
-        
-        foreach(var subscriber in manualLateUpdateSubscribers)
+        if (!UpdateCanBeExecuted(manualLateUpdateSubscribers)) return;
+
+        for (var subIndex = 0; subIndex < manualLateUpdateSubscribers.Count; subIndex++)
         {
-            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
+            if(subIndex >= manualLateUpdateSubscribers.Count) break;
             
+            var subscriber = manualLateUpdateSubscribers[subIndex];
+            
+            if (!subscriber.SubscriberCanReceiveUpdate()) continue;
+
             subscriber.ManualLateUpdate();
         }
     }
+
+    private bool UpdateCanBeExecuted(List<IManualUpdateSubscriber> subcriberList) 
+        => !gameStateManager.GameIsPaused && ListHasElements(subcriberList);
 
     private bool ListHasElements(List<IManualUpdateSubscriber> manualUpdateSubscriberList) 
         => manualUpdateSubscriberList.Count > 0;
