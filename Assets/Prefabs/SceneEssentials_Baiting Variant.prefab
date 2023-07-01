@@ -14,19 +14,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: field of view
-      value: 60.000004
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
+      propertyPath: m_FocalLength
+      value: 20.78461
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: far clip plane
-      value: 5000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: near clip plane
-      value: 0.1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2863489015764493886, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_Intensity
@@ -163,6 +167,10 @@ PrefabInstance:
     - target: {fileID: 7636459376872908525, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370402436042479153, guid: f54835b787767774aa735d91f2361471, type: 3}
+      propertyPath: BlockCount
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 8428814468877849716, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_DefaultActionMap

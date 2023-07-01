@@ -16,6 +16,7 @@ public class PlayerLookController : MonoBehaviour, IManualUpdateSubscriber
     [SerializeField] private float lookSpeed = 10f;
     
     private UpdateManager updateManager;
+    private PlayerSingleton playerSingleton;
 
     private PlayerInputs customPlayerInputs;
     private InputAction lookAction;
@@ -37,11 +38,18 @@ public class PlayerLookController : MonoBehaviour, IManualUpdateSubscriber
     {
         yield return deferredSubscriptionTime;
         
+        playerSingleton = PlayerSingleton.instance;
+        
         updateManager = UpdateManager.instance;
         updateManager.SubscribeToManualUpdate(this);
     }
 
-    public void ManualUpdate() => UpdateLookRotation();
+    public void ManualUpdate()
+    {
+        if(playerSingleton.DisableMovementControls) return;
+
+        UpdateLookRotation();
+    }
 
     private void UpdateLookRotation()
     {

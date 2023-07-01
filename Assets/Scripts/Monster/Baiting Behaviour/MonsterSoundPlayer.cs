@@ -61,8 +61,8 @@ public class MonsterSoundPlayer : MonoBehaviour
 
     private readonly MinMaxLimit[] soundProhibitedAngles = new MinMaxLimit[2]
     {
-        new (40f, 50f),
-        new (130f, 140f)
+        new (35f, 60f),
+        new (120f, 155f)
     };
 
     private void Start()

@@ -14,7 +14,7 @@ public class MonsterSpawner_PositionGenerator : MonoBehaviour
     
     private MinMaxLimit[] spawnSectors;
 
-    private readonly float[] spawnSectionLimits = {0, 40, 50, 90, 90, 130, 140, 180 };
+    private readonly float[] spawnSectionLimits = {0, 35, 60, 90, 90, 120, 155, 180 };
 
     private void Awake()
     {

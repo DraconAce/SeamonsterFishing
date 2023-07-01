@@ -1,10 +1,16 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 {
+    public struct ViewRotationSettings
+    {
+        public float RotationDurationPercentage;
+        public Vector3 TargetRotation;
+    }
+    
     private enum RotationDirection
     {
         Left = -1,
@@ -41,15 +47,24 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
     private const float MaxViewRotation = 180.0f;
 
+    private PlayerSingleton playerSingleton;
+    
+    public event Action<ViewRotationSettings> OnTransmitTargetRotation;
+
     private void Start()
     {
+        playerSingleton = PlayerSingleton.instance;
         inputManager = InputManager.instance;
 
         inputManager.SubscribeToActions(this);
     }
 
-    public void InputPerformed(InputAction.CallbackContext callContext) 
-        => ChangeViewBasedOnInput(callContext.action.name);
+    public void InputPerformed(InputAction.CallbackContext callContext)
+    {
+        if(playerSingleton.DisableMovementControls) return;
+        
+        ChangeViewBasedOnInput(callContext.action.name);
+    }
 
     private void ChangeViewBasedOnInput(string actionName)
     {
@@ -85,10 +100,21 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
         var rotationAngle = rotateToLeft ? leftRotation : rightRotation;
 
         var targetRotation = CalculateTargetRotation(rotationAngle);
-
+        
         leftRightTween?.Kill();
 
         AnimateViewChangeRotation(targetRotation);
+    }
+
+    private Vector3 CalculateTargetRotation(float rotationAngle)
+    {
+        var baseRotation = RotationTweenIsPlaying() ? lastTargetRotation : viewLeftRightPivot.eulerAngles;
+
+        var targetRotation = baseRotation + new Vector3(0,rotationAngle, 0);
+
+        lastTargetRotation = targetRotation;
+
+        return targetRotation;
     }
 
     private void AnimateViewChangeRotation(Vector3 targetRotation)
@@ -97,6 +123,8 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
         var diffToTargetRot = Quaternion.Angle(viewLeftRightPivot.rotation, Quaternion.Euler(targetRotation));
         var diffPercentage = 1f / MaxViewRotation * diffToTargetRot;
+        
+        OnTransmitTargetRotation?.Invoke(new(){ RotationDurationPercentage = diffPercentage, TargetRotation = targetRotation });
 
         var totalRotDuration = MaxRotationDurationToNextView * 2 * diffPercentage;
 
@@ -112,17 +140,6 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
         leftRightTween = viewLeftRightPivot.DORotate(targetRotation, totalRotDuration)
             .SetEase(rotationEase)
             .OnComplete(OnCompleteAction);
-    }
-
-    private Vector3 CalculateTargetRotation(float rotationAngle)
-    {
-        var baseRotation = RotationTweenIsPlaying() ? lastTargetRotation : viewLeftRightPivot.eulerAngles;
-
-        var targetRotation = baseRotation + new Vector3(0,rotationAngle, 0);
-
-        lastTargetRotation = targetRotation;
-
-        return targetRotation;
     }
 
     private bool RotationTweenIsPlaying() => leftRightTween != null && leftRightTween.IsPlaying();

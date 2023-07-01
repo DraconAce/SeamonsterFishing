@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class MonsterAttackManager : MonoBehaviour
 {
+    [SerializeField] private float delayBeforeAttack = 2f;
+    
     private Tween attackTween;
     
     private MonsterSoundPlayer soundPlayer;
@@ -31,7 +33,8 @@ public class MonsterAttackManager : MonoBehaviour
         soundPlayer.PlayAttackSound();
         monsterState.CurrentState = MonsterState.Attacking;
 
-        attackTween = DOVirtual.DelayedCall(3f, () => killedChecker.StartKillingPlayer(), false);
+        attackTween = DOVirtual.DelayedCall(delayBeforeAttack, () 
+            => killedChecker.StartKillingPlayer(), false);
     }
 
     private void OnMonsterWasRepelled() => attackTween?.Kill();

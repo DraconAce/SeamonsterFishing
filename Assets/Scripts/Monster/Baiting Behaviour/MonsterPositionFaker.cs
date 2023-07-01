@@ -118,7 +118,6 @@ public class MonsterPositionFaker : MonoBehaviour
         var duration = durationLimits.GetRandomBetweenLimits();
 
         movementTween = monsterProxy.DOPath(fakePositionsList.ToArray(), duration)
-            .OnUpdate(() => Debug.LogFormat("Monster position: {0}", monsterProxy.position))
             .OnWaypointChange((wayPointIndex) =>
             {
                 if (wayPointIndex < fakePositionsList.Count - 1
