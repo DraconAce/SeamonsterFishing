@@ -50,10 +50,12 @@ public class Lightning_Manager : MonoBehaviour
         lightningSequence.Append(LightningTween(0f, lightningSettings));
 
         //play Lightning particle at random z-Location
-        float z = Random.Range(-65f, 65f);
-        LightningParticleSystem.transform.position = new Vector3(-30f,20f,z);
+        float z = Random.Range(-150f, 150f);
+        LightningParticleSystem.transform.position = new Vector3(-125f,30f,z);
         LightningParticleSystem.Play();
         FMODUnity.RuntimeManager.PlayOneShot(LightningSound);
+        //put Spotlight at Lightning location
+        spotLight.transform.position = new Vector3(-125f,30f,z);
     }
 
     private Tween LightningTween(float targetIntensity, TweenSettings targetSettings)
