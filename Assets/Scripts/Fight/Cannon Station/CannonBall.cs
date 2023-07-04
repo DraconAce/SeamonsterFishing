@@ -59,7 +59,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
             monsterSingleton.CannonBallMissed();
 
             //play sound Hit No Weakpoint
-            FMODUnity.RuntimeManager.PlayOneShot(regularHit);
+            FMODUnity.RuntimeManager.PlayOneShot(regularHit, this.transform.position);
         }
         else if (collidedGameOb.CompareTag(weakPointTag))
         {
@@ -68,7 +68,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
             monsterSingleton.WeakPointWasHit();
 
             //play sound Hit Weakpoint
-            FMODUnity.RuntimeManager.PlayOneShot(weakpointHit);
+            FMODUnity.RuntimeManager.PlayOneShot(weakpointHit, this.transform.position);
         }
         else
         {
@@ -79,7 +79,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
             if (collidedGameOb.CompareTag(waterTag))
             {
                 //play sound Hit Ocean
-                FMODUnity.RuntimeManager.PlayOneShot(oceanHit);
+                FMODUnity.RuntimeManager.PlayOneShot(oceanHit, this.transform.position);
             }
         }
     }
