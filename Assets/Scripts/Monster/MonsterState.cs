@@ -1,19 +1,19 @@
 public enum MonsterState
 {
-    None,
+    None = 0,
     
     //Both Modes
-    Attacking,
-    Repelled,
-    Idle,
-    Feinting,
+    Attacking = 1,
+    Repelled = 2,
+    Idle = 3,
+    Feinting = 4,
     
     //Fighting
-    Stunned,
-    Fleeing,
-    PreparingAttack,
-    Cooldown,
+    Stunned = 5,
+    Reeling = 6,
+    PreparingAttack = 7,
+    Cooldown = 8,
 
     //Baiting
-    Approaching
+    Approaching = 9,
 }

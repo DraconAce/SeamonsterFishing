@@ -242,7 +242,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4e600ad5-b312-449a-a616-ad81d035de24"",
-                    ""path"": ""<Keyboard>/#(3)"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -383,7 +383,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7b49ba8c-1b68-4353-bc5f-df55421a3943"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -513,15 +513,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Return"",
-                    ""type"": ""Button"",
-                    ""id"": ""c6f72770-165b-47c0-96a7-1b5cc8306def"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""ToggleMenu"",
@@ -663,39 +654,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse;Touch"",
                     ""action"": ""Reel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7830c036-6610-4bc5-be7c-9eb7b3e6e01d"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Return"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5987cf1d-b60e-45c4-bd5a-b9c2417c40ca"",
-                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Return"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""80ae2e6d-9a17-4b9f-9adf-62ac117191a6"",
-                    ""path"": ""*/{Back}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Return"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1729,7 +1687,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Fight_Reeling = asset.FindActionMap("Fight_Reeling", throwIfNotFound: true);
         m_Fight_Reeling_Pull = m_Fight_Reeling.FindAction("Pull", throwIfNotFound: true);
         m_Fight_Reeling_Reel = m_Fight_Reeling.FindAction("Reel", throwIfNotFound: true);
-        m_Fight_Reeling_Return = m_Fight_Reeling.FindAction("Return", throwIfNotFound: true);
         m_Fight_Reeling_ToggleMenu = m_Fight_Reeling.FindAction("ToggleMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1973,7 +1930,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<IFight_ReelingActions> m_Fight_ReelingActionsCallbackInterfaces = new List<IFight_ReelingActions>();
     private readonly InputAction m_Fight_Reeling_Pull;
     private readonly InputAction m_Fight_Reeling_Reel;
-    private readonly InputAction m_Fight_Reeling_Return;
     private readonly InputAction m_Fight_Reeling_ToggleMenu;
     public struct Fight_ReelingActions
     {
@@ -1981,7 +1937,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public Fight_ReelingActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pull => m_Wrapper.m_Fight_Reeling_Pull;
         public InputAction @Reel => m_Wrapper.m_Fight_Reeling_Reel;
-        public InputAction @Return => m_Wrapper.m_Fight_Reeling_Return;
         public InputAction @ToggleMenu => m_Wrapper.m_Fight_Reeling_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Reeling; }
         public void Enable() { Get().Enable(); }
@@ -1998,9 +1953,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reel.started += instance.OnReel;
             @Reel.performed += instance.OnReel;
             @Reel.canceled += instance.OnReel;
-            @Return.started += instance.OnReturn;
-            @Return.performed += instance.OnReturn;
-            @Return.canceled += instance.OnReturn;
             @ToggleMenu.started += instance.OnToggleMenu;
             @ToggleMenu.performed += instance.OnToggleMenu;
             @ToggleMenu.canceled += instance.OnToggleMenu;
@@ -2014,9 +1966,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reel.started -= instance.OnReel;
             @Reel.performed -= instance.OnReel;
             @Reel.canceled -= instance.OnReel;
-            @Return.started -= instance.OnReturn;
-            @Return.performed -= instance.OnReturn;
-            @Return.canceled -= instance.OnReturn;
             @ToggleMenu.started -= instance.OnToggleMenu;
             @ToggleMenu.performed -= instance.OnToggleMenu;
             @ToggleMenu.canceled -= instance.OnToggleMenu;
@@ -2330,7 +2279,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     {
         void OnPull(InputAction.CallbackContext context);
         void OnReel(InputAction.CallbackContext context);
-        void OnReturn(InputAction.CallbackContext context);
         void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions

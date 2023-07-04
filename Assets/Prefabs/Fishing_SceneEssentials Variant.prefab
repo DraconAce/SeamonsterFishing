@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: far clip plane
-      value: 1000
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_RenderingPath
@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: near clip plane
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1235510248040924842, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2863489015764493886, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_Color.b
@@ -50,31 +50,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.137756
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1486564
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.014885426
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7027647
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.09123589
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6996762
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.09083492
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3536400306987202515, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -149,9 +149,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2958922513392504870, guid: f54835b787767774aa735d91f2361471, type: 3}
       insertIndex: 4
       addedObject: {fileID: 8677178774858494481}
-    - targetCorrespondingSourceObject: {fileID: 2958922513392504870, guid: f54835b787767774aa735d91f2361471, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1007087554307860646}
   m_SourcePrefab: {fileID: 100100000, guid: f54835b787767774aa735d91f2361471, type: 3}
 --- !u!1 &5818778506724011697 stripped
 GameObject:
@@ -199,17 +196,3 @@ MonoBehaviour:
   mask2Tex: {fileID: 0}
   fogShader: {fileID: 0}
   fogMaterial: {fileID: 0}
---- !u!114 &1007087554307860646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5818778506724011697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
-  BlockCount: 512
