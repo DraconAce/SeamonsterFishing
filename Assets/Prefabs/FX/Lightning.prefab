@@ -149,8 +149,11 @@ MonoBehaviour:
       Data4: 1070525145
     Path: event:/Ambience/Lightning
   LightningParticleSystem: {fileID: 4152953191455589902}
-  minCooldown: 10
-  maxCooldown: 15
+  chanceMultipleLightning: 75
+  delayMultipleLightning: 0.5
+  maxConsecutiveLightnings: 4
+  minCooldown: 20
+  maxCooldown: 30
   targetIntensity: 20
   keepLightningOnDuration: 0.2
   lightningSettings:

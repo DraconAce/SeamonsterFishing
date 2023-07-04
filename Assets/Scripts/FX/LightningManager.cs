@@ -12,6 +12,10 @@ public class Lightning_Manager : MonoBehaviour
     
     [SerializeField] private ParticleSystem LightningParticleSystem;
 
+    [SerializeField] private int chanceMultipleLightning = 50;
+    [SerializeField] private float delayMultipleLightning = 0.5f;
+    [SerializeField] private int maxConsecutiveLightnings = 4;
+
     private Sequence lightningSequence;
     [Header("Flash Settings")] 
     [SerializeField] float minCooldown = 2f;
@@ -39,6 +43,16 @@ public class Lightning_Manager : MonoBehaviour
             //Debug.Log("Lightning wait:" + waitTime);
             yield return new WaitForSeconds(waitTime);
             createLightning();
+            for (int i = 1; i < maxConsecutiveLightnings; i++)
+            {
+                int randomMoreLightning = Random.Range(0, 100);
+                if (randomMoreLightning < chanceMultipleLightning) 
+                {
+                    yield return new WaitForSeconds(delayMultipleLightning);
+                    createLightning();
+                }
+            }
+
         }
     }
 
@@ -51,11 +65,12 @@ public class Lightning_Manager : MonoBehaviour
 
         //play Lightning particle at random z-Location
         float z = Random.Range(-150f, 150f);
-        LightningParticleSystem.transform.position = new Vector3(-125f,30f,z);
+        Vector3 lightningPositionVector = new Vector3(-125f,30f,z);
+        LightningParticleSystem.transform.position = lightningPositionVector;
         LightningParticleSystem.Play();
-        FMODUnity.RuntimeManager.PlayOneShot(LightningSound);
+        FMODUnity.RuntimeManager.PlayOneShot(LightningSound, lightningPositionVector);
         //put Spotlight at Lightning location
-        spotLight.transform.position = new Vector3(-125f,30f,z);
+        spotLight.transform.position = lightningPositionVector;
     }
 
     private Tween LightningTween(float targetIntensity, TweenSettings targetSettings)
