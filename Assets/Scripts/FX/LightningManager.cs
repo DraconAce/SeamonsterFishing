@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using FMODUnity;
 
 public class Lightning_Manager : MonoBehaviour
 {
     
     [SerializeField] private Light spotLight;
     
-    [SerializeField] private FMODUnity.EventReference LightningSound;
+    [SerializeField] private EventReference LightningSound;
     
     [SerializeField] private ParticleSystem LightningParticleSystem;
 
@@ -68,7 +69,7 @@ public class Lightning_Manager : MonoBehaviour
         Vector3 lightningPositionVector = new Vector3(-125f,30f,z);
         LightningParticleSystem.transform.position = lightningPositionVector;
         LightningParticleSystem.Play();
-        FMODUnity.RuntimeManager.PlayOneShot(LightningSound, lightningPositionVector);
+        RuntimeManager.PlayOneShot(LightningSound, lightningPositionVector);
         //put Spotlight at Lightning location
         spotLight.transform.position = lightningPositionVector;
     }
