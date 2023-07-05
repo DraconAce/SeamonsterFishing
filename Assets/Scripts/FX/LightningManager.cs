@@ -60,9 +60,9 @@ public class Lightning_Manager : MonoBehaviour
     void createLightning()
     {
         lightningSequence = DOTween.Sequence();
-        lightningSequence.Append(LightningTween(targetIntensity, lightningSettings));
+        lightningSequence.Append(LightningTweenOne(targetIntensity, lightningSettings));
         lightningSequence.AppendInterval(keepLightningOnDuration);
-        lightningSequence.Append(LightningTween(0f, lightningSettings));
+        lightningSequence.Append(LightningTweenTwo(0f, lightningSettings));
 
         //play Lightning particle at random z-Location
         float z = Random.Range(-150f, 150f);
@@ -74,11 +74,17 @@ public class Lightning_Manager : MonoBehaviour
         spotLight.transform.position = new Vector3(-125f,80f,z);
     }
 
-    private Tween LightningTween(float targetIntensity, TweenSettings targetSettings)
+    private Tween LightningTweenOne(float targetIntensity, TweenSettings targetSettings)
     {
         return spotLight.DOIntensity(targetIntensity, targetSettings.Duration)
             .SetEase(targetSettings.TweenEase)
-            .OnStart(() => targetSettings.OnStartAction?.Invoke())
+            .OnStart(() => targetSettings.OnStartAction?.Invoke());
+    }
+
+    private Tween LightningTweenTwo(float targetIntensity, TweenSettings targetSettings)
+    {
+        return spotLight.DOIntensity(targetIntensity, targetSettings.Duration)
+            .SetEase(targetSettings.TweenEase)
             .OnComplete(() => targetSettings.OnCompleteAction?.Invoke());
     }
 

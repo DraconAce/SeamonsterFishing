@@ -187,7 +187,7 @@ MonoBehaviour:
     Path: event:/Ambience/Lightning
   LightningParticleSystem: {fileID: 4152953191455589902}
   chanceMultipleLightning: 75
-  delayMultipleLightning: 0.5
+  delayMultipleLightning: 0.6
   maxConsecutiveLightnings: 4
   minCooldown: 20
   maxCooldown: 30
