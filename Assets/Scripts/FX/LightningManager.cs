@@ -71,7 +71,7 @@ public class Lightning_Manager : MonoBehaviour
         LightningParticleSystem.Play();
         RuntimeManager.PlayOneShot(LightningSound, lightningPositionVector);
         //put Spotlight at Lightning location
-        spotLight.transform.position = lightningPositionVector;
+        spotLight.transform.position = new Vector3(-125f,80f,z);
     }
 
     private Tween LightningTween(float targetIntensity, TweenSettings targetSettings)
