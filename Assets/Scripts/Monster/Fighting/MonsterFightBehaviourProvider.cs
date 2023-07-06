@@ -45,7 +45,7 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
             yield return CheckIfLoopBlocked();
             
             restartBehaviourLoop = false;
-            
+
             //Idle
             currentBehaviourRoutine = IdleBehaviour();
             yield return currentBehaviourRoutine;
