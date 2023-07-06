@@ -5,10 +5,7 @@ using UnityEngine.InputSystem;
 public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdateSubscriber
 {
     [SerializeField] private int numberOfRotationsNeeded = 20;
-    [SerializeField] private float maxTimeToReel = 7;
     [SerializeField] private float progressDecreasePercentagePerSecond = 0.01f;
-
-    private float timer;
 
     private InputAction reelAction;
 
@@ -42,7 +39,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         ControllerStation.UpdateManager.UnsubscribeFromManualUpdate(this);
         
-        Debug.LogFormat("Timer: {0}", timer);
+        //Debug.LogFormat("Timer: {0}", reelingStation.ReelingTimer);
 
         DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, ResetReeling);
     }
@@ -52,7 +49,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         PlayerInputEnabled = false;
         
         currentNumberOfRotations = 0;
-        timer = 0;
+        reelingStation.ReelingTimer = 0;
         
         reelingStation.Progress = 0;
         neutralInputTimer = 0;
@@ -64,7 +61,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         if (!PlayerInputEnabled) return;
 
-        timer += Time.deltaTime;
+        reelingStation.ReelingTimer += Time.deltaTime;
         
         DoReeling();
         
@@ -219,7 +216,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     private void CheckForReelingFailed()
     {
-        if (timer < maxTimeToReel) return;
+        if (!reelingStation.IsReelingTimeUp) return;
         
         reelingStation.GameStateManager.BlockGameStateChange = false;
 
