@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4507104737923835737}
   - component: {fileID: 2557120395299513412}
   - component: {fileID: 8838369382948821384}
+  - component: {fileID: 3868373211832194408}
+  - component: {fileID: 4041211189809770293}
   m_Layer: 0
   m_Name: Baiting Station
   m_TagString: Untagged
@@ -66,3 +68,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8896a8bcde3f4b347b6b982d5585281c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3868373211832194408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828657098088275997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf350dd535bc47a28362901e51b5eceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depthHandler: {fileID: 2557120395299513412}
+  lastThresholdEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4041211189809770293}
+        m_TargetAssemblyTypeName: DifficultyProgressionManager, Assembly-CSharp
+        m_MethodName: StartGradualDifficultyIncrease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  depthEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &4041211189809770293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828657098088275997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b25786fe34245c38bc2a98bcfc2d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depthHandler: {fileID: 2557120395299513412}
+  maxDifficultyFactor: 5
+  difficultyPerDepthThreshold:
+  - 0
+  - 0.5
+  - 1
+  - 1
+  increasePerSecond: 0.0055

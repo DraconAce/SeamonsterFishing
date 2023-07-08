@@ -40,7 +40,7 @@ public class MonsterSoundPlayer : MonoBehaviour
         public int NumberOfSounds => monsterSoundRefList.Count;
     }
 
-    [SerializeField] private float maxWaitBetweenSounds;
+    [SerializeField] private MinMaxLimit waitBetweenSoundsLimit;
     [SerializeField] private List<SoundGroupForDistance> monsterSoundsList;
 
     [Header("Sound Emitters")]
@@ -58,6 +58,8 @@ public class MonsterSoundPlayer : MonoBehaviour
     
     private WaitForSeconds waitSecond = new (1f);
     private Coroutine soundsRoutine;
+    
+    private DifficultyProgressionManager difficultyManager;
 
     private readonly MinMaxLimit[] soundProhibitedAngles = new MinMaxLimit[2]
     {
@@ -67,6 +69,7 @@ public class MonsterSoundPlayer : MonoBehaviour
 
     private void Start()
     {
+        difficultyManager = DifficultyProgressionManager.instance;
         spawnOrigin = BaitingMonsterSingleton.instance.Spawner.SpawnCenter;
         spawnLeft = spawnOrigin.right;
 
@@ -106,7 +109,9 @@ public class MonsterSoundPlayer : MonoBehaviour
             
             PlayMonsterSound(randomSound.eventRef);
 
-            yield return new WaitForSeconds(Random.Range(randomSound.GetSoundLength(), maxWaitBetweenSounds));
+            var waitNextSoundTime = randomSound.GetSoundLength() + GenerateAdditionalWaitTimeForNextSound();
+            
+            yield return new WaitForSeconds(Random.Range(randomSound.GetSoundLength(), waitNextSoundTime));
         }
     }
 
@@ -137,6 +142,12 @@ public class MonsterSoundPlayer : MonoBehaviour
         approachSoundEmitter.EventReference = eventRef;
         
         approachSoundEmitter.Play();
+    }
+
+    private float GenerateAdditionalWaitTimeForNextSound()
+    {
+        return Random.Range(waitBetweenSoundsLimit.MinLimit, 
+            waitBetweenSoundsLimit.MaxLimit * difficultyManager.DifficultyFraction);
     }
 
     public void StopMonsterApproachSounds()

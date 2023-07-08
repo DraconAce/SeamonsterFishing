@@ -32,6 +32,7 @@ public class MonsterPositionFaker : MonoBehaviour
     private Transform spawnerTrans;
     private MonsterAttackManager attackManager;
     private MonsterSoundPlayer soundPlayer;
+    private DifficultyProgressionManager difficultyManager;
     
     private WaitForSeconds waitSecond = new (1f);
     private Coroutine fakePosRoutine;
@@ -46,7 +47,12 @@ public class MonsterPositionFaker : MonoBehaviour
         TryGetComponent(out soundPlayer);
     }
 
-    private void Start() => AssignSpawnerIfNotAssigned();
+    private void Start()
+    {
+        difficultyManager = DifficultyProgressionManager.instance;
+        
+        AssignSpawnerIfNotAssigned();
+    }
 
     private void AssignSpawnerIfNotAssigned()
     {
@@ -86,8 +92,8 @@ public class MonsterPositionFaker : MonoBehaviour
     {
         fakePositionsList.Add(finalPositionMonster);
         
-        //generate number of points to generate
-        var numberOfPointsToGenerate = numberOfPointsLimits.GetRandomBetweenLimits();
+        var numberOfPointsToGenerate =
+            numberOfPointsLimits.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction);
 
         for (var i = 0; i < numberOfPointsToGenerate; i++)
         {
@@ -115,7 +121,7 @@ public class MonsterPositionFaker : MonoBehaviour
 
     private void StartMoveProxyTween()
     {
-        var duration = durationLimits.GetRandomBetweenLimits();
+        var duration = durationLimits.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction);
 
         movementTween = monsterProxy.DOPath(fakePositionsList.ToArray(), duration)
             .OnWaypointChange((wayPointIndex) =>
@@ -123,7 +129,7 @@ public class MonsterPositionFaker : MonoBehaviour
                 if (wayPointIndex < fakePositionsList.Count - 1
                     && Random.Range(0f, 1f) > waitAtWaypointChance) return;
 
-                var waitDuration = waitLimits.GetRandomBetweenLimits();
+                var waitDuration = waitLimits.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction);
                 DOVirtual.DelayedCall(waitDuration, () => movementTween.TogglePause());
 
                 movementTween.TogglePause();

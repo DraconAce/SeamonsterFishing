@@ -15,6 +15,8 @@ public struct MinMaxLimit
     }
 
     public float GetRandomBetweenLimits() => Random.Range(MinLimit, MaxLimit);
+    public float GetRandomBetweenLimits(float minFactor, float maxFactor) 
+        => Random.Range(MinLimit * minFactor, MaxLimit * maxFactor);
 
     public bool IsValueBetweenLimits(float value) => value >= MinLimit && value <= MaxLimit;
 }

@@ -22,15 +22,18 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
             
             currentDepth = value;
 
-            if (Mathf.Approximately(formerValue, currentDepth)
-                || currentDepth <= depthThresholds[currentDepthThresholdIndex]) return;
+            if (Mathf.Approximately(formerValue, currentDepth)) return;
             
-            if(currentDepthThresholdIndex < depthThresholds.Length-1)
-                currentDepthThresholdIndex++;
+            if(currentDepthThresholdIndex >= depthThresholds.Length
+               || currentDepth <= depthThresholds[currentDepthThresholdIndex]) return;
+            
+            currentDepthThresholdIndex++;
             
             DepthThresholdChangedEvent?.Invoke(currentDepthThresholdIndex);
         }
     }
+    
+    public int NumberDepthThresholds => depthThresholds.Length;
 
     private UpdateManager updateManager;
     private float timer;

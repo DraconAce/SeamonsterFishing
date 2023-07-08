@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Suimono.Core;
@@ -20,9 +21,11 @@ public class EnvironmentProgressController : MonoBehaviour
 
     private void SetWaterDepthColor(int depthIndex) => suimonoObject.underwaterColor = depthEnvironmentColors[depthIndex];
 
-    private void OnDepthThresholdChanged(int depthIndex)
+    private void OnDepthThresholdChanged(int currentDepthThreshold)
     {
-        StartColorChangeTween(depthEnvironmentColors[depthIndex]);
+        if(currentDepthThreshold >= depthEnvironmentColors.Count) return;
+        
+        StartColorChangeTween(depthEnvironmentColors[currentDepthThreshold]);
     }
 
     private void StartColorChangeTween(Color targetColor)
@@ -35,4 +38,9 @@ public class EnvironmentProgressController : MonoBehaviour
 
     private void LerpColor(Color startColor, Color targetColor, float lerpValue) 
         => suimonoObject.underwaterColor = Color.Lerp(startColor, targetColor, lerpValue);
+
+    private void OnDestroy()
+    {
+        depthHandler.DepthThresholdChangedEvent -= OnDepthThresholdChanged;
+    }
 }
