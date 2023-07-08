@@ -137,6 +137,7 @@ MonoBehaviour:
   onLeaveStation:
     m_PersistentCalls:
       m_Calls: []
+  maxTimeToReel: 30
   delayForSubStationsOnReelingCompleted: 1
 --- !u!114 &1496635002560388064
 MonoBehaviour:

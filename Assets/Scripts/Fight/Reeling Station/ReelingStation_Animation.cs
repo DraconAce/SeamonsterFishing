@@ -9,17 +9,25 @@ public class ReelingStation_Animation : AbstractStationSegment
     
     [SerializeField] private float reelEntryDuration;
     [SerializeField] private float reelExitDuration;
+    [SerializeField] private float returnToPositionDuration = 2f;
 
     [SerializeField] private Ease reelEntryEase;
     [SerializeField] private Ease reelExitEase;
+    [SerializeField] private Ease returnToPositionEase = Ease.InCubic;
 
     private Transform monsterTransform;
+    
+    private Vector3 positionBeforeReeling;
     
     private Quaternion initialBoatRotation;
     private Quaternion oppositeBoatRotation;
     
     private Quaternion rotationAfterReeling;
+
+    private Tween moveBoatForReelTween;
     private GameStateManager gameStateManager;
+
+    private const float pathToMonsterPercentage = 0.95f;
     
     private ReelingStation reelingStation => (ReelingStation) ControllerStation;
 
@@ -30,7 +38,7 @@ public class ReelingStation_Animation : AbstractStationSegment
         reelingStation.OnReelingStartedEvent += OnReelingStarted;
         reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
 
-        monsterTransform = FightMonsterSingleton.instance.transform;
+        monsterTransform = FightMonsterSingleton.instance.MonsterTransform;
         
         SetupBoatVariables();
     }
@@ -41,9 +49,13 @@ public class ReelingStation_Animation : AbstractStationSegment
         oppositeBoatRotation = Quaternion.Euler(initialBoatRotation.eulerAngles + Vector3.up * 180);
     }
 
-    private void OnReelingStarted() => ReelingEntryAnimation();
-
-    private void OnReelingCompleted() => ReelingExitAnimation();
+    private void OnReelingStarted()
+    {
+        positionBeforeReeling = reelingPivotTransform.position;
+        
+        ReelingEntryAnimation();
+        StartMoveTowardsMonsterTween();
+    }
 
     private void ReelingEntryAnimation()
     {
@@ -62,18 +74,46 @@ public class ReelingStation_Animation : AbstractStationSegment
         
         return angleInitial < angleOpposite ? initialBoatRotation : oppositeBoatRotation;
     }
-    
+
     private float CalculateAngleBetweenRotations(Quaternion rotation1, Quaternion rotation2)
     {
         var angle = Quaternion.Angle(rotation1, rotation2);
         return angle;
     }
-    
+
+    private void StartMoveTowardsMonsterTween()
+    {
+        var monsterPos = monsterTransform.position;
+        
+        var toMonsterDirection = (monsterPos - positionBeforeReeling).normalized;
+        var targetDistanceToMonster = Vector3.Distance(positionBeforeReeling, monsterPos) * pathToMonsterPercentage;
+        
+        var targetPosition = positionBeforeReeling + toMonsterDirection * targetDistanceToMonster;
+
+        moveBoatForReelTween = reelingPivotTransform.DOMove(targetPosition, reelingStation.MaxTimeToReel)
+            .SetEase(Ease.InQuad);
+    }
+
+    private void OnReelingCompleted()
+    {
+        ReelingExitAnimation();
+        
+        StartReturnToOriginalPositionTween();
+    }
+
     private void ReelingExitAnimation()
     {
         reelingPivotTransform.DORotateQuaternion(rotationAfterReeling, reelExitDuration)
             .SetEase(reelExitEase)
             .OnComplete(() => gameStateManager.ChangeGameState(GameState.FightOverview));
+    }
+
+    private void StartReturnToOriginalPositionTween()
+    {
+        moveBoatForReelTween?.Kill();
+        
+        moveBoatForReelTween = reelingPivotTransform.DOMove(positionBeforeReeling, returnToPositionDuration)
+            .SetEase(returnToPositionEase);
     }
 
     protected override void OnDestroy()

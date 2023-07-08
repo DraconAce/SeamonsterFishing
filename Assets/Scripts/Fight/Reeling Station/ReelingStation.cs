@@ -5,6 +5,8 @@ using UnityEngine;
     typeof(ReelingStation_Animation))]
 public class ReelingStation : AbstractStation, IFloatInfoProvider
 {
+    [SerializeField] private float maxTimeToReel = 7;
+    public float MaxTimeToReel => maxTimeToReel;
     [SerializeField] private float delayForSubStationsOnReelingCompleted = 1f;
     public float DelayForSubStationsOnReelingCompleted => delayForSubStationsOnReelingCompleted;
 
@@ -33,6 +35,10 @@ public class ReelingStation : AbstractStation, IFloatInfoProvider
             InfoChanged?.Invoke();
         }
     }
+    
+    public float ReelingTimer { get; set; }
+    
+    public bool IsReelingTimeUp => ReelingTimer >= MaxTimeToReel;
 
     protected override void GameStateMatches()
     {
