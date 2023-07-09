@@ -4,6 +4,4 @@ using UnityEngine;
 public class BehaviourTree : ScriptableObject
 {
     [SerializeField] private AbstractBehaviourTreeNode rootNode;
-
-    public AbstractBehaviourTreeNode  RequestNextBehaviour() => rootNode.ExecuteNode();
 }

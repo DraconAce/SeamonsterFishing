@@ -6,6 +6,4 @@ public abstract class AbstractBehaviourTreeNode : ScriptableObject
     [SerializeField] private AbstractBehaviourTreeNode nextNode;
 
     public string BehaviourID => behaviourID;
-    
-    public virtual AbstractBehaviourTreeNode ExecuteNode() => this;
 }

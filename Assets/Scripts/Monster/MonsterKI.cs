@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+//Todo: Update this
 public class MonsterKI : Singleton<MonsterKI>
 {
     [SerializeField] private BehaviourTree behaviourTree;
@@ -64,7 +65,7 @@ public class MonsterKI : Singleton<MonsterKI>
     {
         lastExecutedNode = currentlyExecutedNode;
 
-        currentlyExecutedNode = behaviourTree.RequestNextBehaviour();
+        //currentlyExecutedNode = behaviourTree.RequestNextBehaviour();
     }
 
     private IEnumerator DeferredTriggerNextBehaviour()
