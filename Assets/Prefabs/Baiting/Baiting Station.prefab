@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depthOffset: 0
-  meterPerSecond: 0.25
+  meterPerSecond: 3
+  movementDamper: 1
   depthText: {fileID: 0}
   waterSurface: {fileID: 0}
   depthThresholds:

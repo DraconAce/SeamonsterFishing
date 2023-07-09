@@ -55,7 +55,7 @@ public class LoopMover : MonoBehaviour, IPoolObject, IManualUpdateSubscriber
         var trans = transform;
         var currentPos = trans.position;
 
-        var targetPos = currentPos + movementVector * (Time.deltaTime * movePerSecondProvider.MovePerSecond * wallLoopManager.MoveDirection);
+        var targetPos = currentPos + movementVector * (Time.deltaTime * movePerSecondProvider.ModifiedMovePerSecond * wallLoopManager.MoveDirection);
 
         trans.position = targetPos;
     }

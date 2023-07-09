@@ -29,10 +29,11 @@ public class MonsterSpawner : MonoBehaviour
         SetupPrefabPoolsForEachMonsterPrefab();
 
         gameStateManager = GameStateManager.instance;
-        spawningRoutine = StartCoroutine(MonsterSpawnRoutine());
 
         TryGetComponent(out positionGenerator);
     }
+
+    public void StartSpawning() => spawningRoutine = StartCoroutine(MonsterSpawnRoutine());
 
     private void SetupPrefabPoolsForEachMonsterPrefab()
     {

@@ -1,4 +1,4 @@
 public interface IMovePerSecondProvider
 {
-    public float MovePerSecond { get; }
+    public float ModifiedMovePerSecond { get; }
 }

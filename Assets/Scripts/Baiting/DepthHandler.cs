@@ -6,11 +6,12 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
 {
     [SerializeField] private float depthOffset = 110f;
     [SerializeField] private float meterPerSecond = 0.1f;
+    [SerializeField] private float movementDamper = 0.01f;
     [SerializeField] private TextMeshProUGUI depthText;
     [SerializeField] private Transform waterSurface;
     [SerializeField] private float[] depthThresholds;
     
-    public float MovePerSecond => meterPerSecond;
+    public float ModifiedMovePerSecond => meterPerSecond * movementDamper;
 
     private float currentDepth;
     public float CurrentDepth
