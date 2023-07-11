@@ -12,4 +12,6 @@ public class PlayerSingleton : Singleton<PlayerSingleton>
     public Transform PlayerTransform => playerTransform;
 
     public Transform PlayerRepresentation => playerRepresentation;
+    
+    public bool DisableMovementControls { get; set; }
 }
