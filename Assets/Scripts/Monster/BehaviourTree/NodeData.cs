@@ -1,5 +1,6 @@
 using Unity.Collections;
 using Unity.Mathematics;
+using UnityEngine.Serialization;
 
 public struct NodeData
 {
@@ -26,7 +27,7 @@ public struct NodeComparisonData
 {
     public NodeType NodeType;
     public NodePriorityMode PriorityMode;
-    public NativeArray<CompareableData> DataPoints; //Todo: Maybe use persistent?, Important !!! Dispose of all on destroy otherwise memory leak!!!
+    public NativeArray<ComparableData> DataPoints; //Todo: Maybe use persistent?, Important !!! Dispose of all on destroy otherwise memory leak!!!
 }
 
 public enum NodeType
@@ -42,13 +43,24 @@ public enum NodePriorityMode
     Less
 }
 
-public struct CompareableData
+public readonly struct ComparableData : IComparableNode
 {
-    public NativeText NodeRepID;
-    public bool IsExecutable;
+    private readonly bool isExecutable;
+    private readonly float executability;
+
+    public ComparableData(NativeText nodeRepID, bool isExecutable, int priority, float executability)
+    {
+        this.executability = executability;
+        this.isExecutable = isExecutable;
+        
+        NodeRepID = nodeRepID;
+        Priority = priority;
+    }
+
+    public NativeText NodeRepID { get; }
+    public int Priority { get; }
+    public float Usability => Priority * executability;
     
-    public int Priority; //doesn't change
-    public float Executability; //1-100, changes with game situation
-    
-    public float Usability => Priority * Executability;
+    public bool IsNodeExecutable() => isExecutable;
+    public float GetExecutability() => executability;
 }

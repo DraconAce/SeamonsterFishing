@@ -3,13 +3,15 @@ using UnityEngine;
 public interface INodeImpl
 {
     public AbstractBehaviourTreeNode NodeToRepresent { get; }
-    public string GetBehaviourID => NodeToRepresent.BehaviourID;
+    public string BehaviourID { get; }
 
-    void RegisterInBehaviourManager();
+    void BehaviourHasFinished();
     
     public void Execute();
-    public void StopBehaviour();
+    public void Stop();
     public void UpdateNodeData();
+    
+    public ComparableData GetComparableData();
 
     //Todo: notify the behaviour tree manager that this behaviour has finished
 }

@@ -3,24 +3,23 @@ using Random = Unity.Mathematics.Random;
 
 public static class NodeFunctionality
 {
-    public static void EvaluateNodeData(NodeData nodeData, int threadIndex)
+    public static void EvaluateNodeData(ref NodeData nodeData, int threadIndex)
     {
         var comparisonData = nodeData.NodeComparisonData;
         
         var nextNodeID = comparisonData.NodeType == NodeType.Action ? 
             nodeData.NodeID : CompareData(comparisonData, nodeData.RandomArray[threadIndex]);
 
-        nodeData.NextNodeID.Dispose();
         nodeData.NextNodeID = nextNodeID;
     }
 
     private static NativeText CompareData(NodeComparisonData nodeComparisonData, Random random)
     {
-        var executableData = new NativeArray<CompareableData>(nodeComparisonData.DataPoints.Length, Allocator.TempJob);
+        var executableData = new NativeArray<ComparableData>(nodeComparisonData.DataPoints.Length, Allocator.Temp);
         
         var totalUsability = CalculateTotalUsabilityAndRemoveUnexecutable(nodeComparisonData, ref executableData);
 
-        var idOfNextNode = GetNextNode(random, executableData, totalUsability);
+        var idOfNextNode = GetNextNode(random, executableData, totalUsability, nodeComparisonData.PriorityMode);
 
         executableData.Dispose();
 
@@ -28,7 +27,7 @@ public static class NodeFunctionality
     }
 
     private static float CalculateTotalUsabilityAndRemoveUnexecutable(NodeComparisonData nodeComparisonData, 
-        ref NativeArray<CompareableData> executableData)
+        ref NativeArray<ComparableData> executableData)
     {
         var totalUsability = 0f;
         
@@ -36,7 +35,7 @@ public static class NodeFunctionality
         {
             var dataPoint = nodeComparisonData.DataPoints[i];
 
-            if (!dataPoint.IsExecutable)
+            if (!dataPoint.IsNodeExecutable())
             {
                 executableData[i] = default;
                 continue;
@@ -49,23 +48,30 @@ public static class NodeFunctionality
         return totalUsability;
     }
 
-    private static NativeText GetNextNode(Random random, NativeArray<CompareableData> executableData, float totalUsability)
+    private static NativeText GetNextNode(Random random, NativeArray<ComparableData> executableData, float totalUsability, NodePriorityMode priorityMode)
     {
         NativeText idOfNextNode = default;
         
         foreach (var dataPoint in executableData)
         {
-            if (!dataPoint.IsExecutable) continue;
+            if (!dataPoint.IsNodeExecutable()) continue;
 
             var randomValue = random.NextFloat(0, totalUsability);
 
-            if (randomValue > dataPoint.Usability) continue;
+            if (!NodeWasRandomlyChosen(randomValue, dataPoint.Usability, priorityMode)) continue;
 
-            idOfNextNode.Dispose();
             idOfNextNode = dataPoint.NodeRepID;
             break;
         }
 
         return idOfNextNode;
+    }
+
+    private static bool NodeWasRandomlyChosen(float randomValue, float usability, NodePriorityMode priorityMode)
+    {
+        if(priorityMode == NodePriorityMode.Greater)
+            return randomValue < usability;
+
+        return randomValue > usability;
     }
 }
