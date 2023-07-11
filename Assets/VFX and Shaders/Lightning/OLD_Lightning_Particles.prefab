@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9085014278251354559}
   - component: {fileID: 4215634294888847838}
   m_Layer: 0
-  m_Name: Lightning_Particles
+  m_Name: OLD_Lightning_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4835,7 +4835,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 62dca9859e593f849b7e58a5be36e4ed, type: 3}
+  - {fileID: -876546973899608171, guid: 317abd8282c2d144aa6038a51f3702a5, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
