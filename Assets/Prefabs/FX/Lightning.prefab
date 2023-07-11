@@ -177,6 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed43412e2b992b48929d801545a990c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Monster: {fileID: 0}
+  outlineWidth: 3
   spotLight: {fileID: 3925946616873160712}
   LightningSound:
     Guid:
@@ -187,7 +189,7 @@ MonoBehaviour:
     Path: event:/Ambience/Lightning
   LightningParticleSystem: {fileID: 4152953191455589902}
   chanceMultipleLightning: 75
-  delayMultipleLightning: 0.6
+  delayMultipleLightning: 1
   maxConsecutiveLightnings: 4
   minCooldown: 20
   maxCooldown: 30

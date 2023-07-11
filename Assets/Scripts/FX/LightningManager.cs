@@ -7,6 +7,12 @@ using FMODUnity;
 public class Lightning_Manager : MonoBehaviour
 {
     
+    [SerializeField] private GameObject Monster;
+    private Outline outlineComponent;
+    [SerializeField] private float outlineWidth;
+    [SerializeField] private float AppearOutlineDuration = 0.5f;
+    [SerializeField] private float DisappearOutlineDuration = 0.2f;
+
     [SerializeField] private Light spotLight;
     
     [SerializeField] private EventReference LightningSound;
@@ -34,6 +40,9 @@ public class Lightning_Manager : MonoBehaviour
         lightningCoroutine = DoLightning();
         StartCoroutine(lightningCoroutine);
         LightningParticleSystem.Stop();
+
+        outlineComponent = Monster.GetComponent<Outline>();
+        outlineComponent.OutlineWidth = outlineWidth;
     }
 
     private IEnumerator DoLightning() 
@@ -78,14 +87,30 @@ public class Lightning_Manager : MonoBehaviour
     {
         return spotLight.DOIntensity(targetIntensity, targetSettings.Duration)
             .SetEase(targetSettings.TweenEase)
-            .OnStart(() => targetSettings.OnStartAction?.Invoke());
+            .OnStart(() =>
+            {
+                targetSettings.OnStartAction?.Invoke();
+                //outlineComponent.OutlineWidth = 3;
+                DOVirtual.Color(new Color(1,1,1,0), new Color(1,1,1,1), AppearOutlineDuration, (colorValue) =>
+                {
+                    outlineComponent.OutlineColor = colorValue;
+                });
+            });
     }
 
     private Tween LightningTweenTwo(float targetIntensity, TweenSettings targetSettings)
     {
         return spotLight.DOIntensity(targetIntensity, targetSettings.Duration)
             .SetEase(targetSettings.TweenEase)
-            .OnComplete(() => targetSettings.OnCompleteAction?.Invoke());
+            .OnComplete(() =>
+            { 
+                targetSettings.OnCompleteAction?.Invoke();
+                //outlineComponent.OutlineWidth = 0;
+                DOVirtual.Color(new Color(1,1,1,1), new Color(1,1,1,0), DisappearOutlineDuration, (colorValue) =>
+                {
+                    outlineComponent.OutlineColor = colorValue;
+                });
+            });
     }
 
     private void OnDestroy()
