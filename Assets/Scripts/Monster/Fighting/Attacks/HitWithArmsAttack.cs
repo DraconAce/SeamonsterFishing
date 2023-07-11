@@ -33,12 +33,12 @@ public class HitWithArmsAttack : AbstractMonsterAttack
     public override MonsterAttackType AttackType => MonsterAttackType.MidRange;
 
     private Sequence attackSequence;
-
-    public override void StartBehaviour()
+    
+    protected override IEnumerator StartBehaviourImpl()
     {
-        base.StartBehaviour();
+        yield return StartCoroutine(SwingAttackRoutine());
         
-        BehaviourRoutine = StartCoroutine(SwingAttackRoutine());
+        yield return base.StartBehaviourImpl();
     }
 
     private IEnumerator SwingAttackRoutine()
@@ -47,7 +47,7 @@ public class HitWithArmsAttack : AbstractMonsterAttack
 
         yield return attackSequence.WaitForCompletion();
         
-        InterruptBehaviour();
+        yield return ReturnToOriginalPositionTween();
     }
 
     private void CreateArmAttackSequence()
@@ -102,21 +102,26 @@ public class HitWithArmsAttack : AbstractMonsterAttack
             .SetEase(swingEase);
     }
 
-    protected override void InterruptBehaviour()
+    protected override IEnumerator StartInterruptedRoutineImpl()
     {
-        base.InterruptBehaviour();
-        
         attackSequence?.Kill();
         
-        ReturnToOriginalPositionTween();
+        yield return ReturnToOriginalPositionTween();
+        yield return base.StartInterruptedRoutineImpl();
     }
 
-    private void ReturnToOriginalPositionTween()
+    private IEnumerator ReturnToOriginalPositionTween()
     {
-        RotateArmDown(leftArmZPivot);
-        RotateArmDown(rightArmZPivot);
+         var returnLeftRot = RotateArmDown(leftArmZPivot);
+         var returnRightRot = RotateArmDown(rightArmZPivot);
         
-        RotateArmOutwards(leftArmYPivot, false);
-        RotateArmOutwards(rightArmYPivot, true);
+        var returnOuterLeft = RotateArmOutwards(leftArmYPivot, false);
+        var returnOuterRight= RotateArmOutwards(rightArmYPivot, true);
+
+        yield return new WaitUntil(() =>
+            TweenCompletedOrIsDead(returnLeftRot) && TweenCompletedOrIsDead(returnRightRot) 
+            && TweenCompletedOrIsDead(returnOuterLeft) && TweenCompletedOrIsDead(returnOuterRight));
     }
+    
+    private bool TweenCompletedOrIsDead(Tween tween) => tween.IsComplete() || !tween.IsActive();
 }

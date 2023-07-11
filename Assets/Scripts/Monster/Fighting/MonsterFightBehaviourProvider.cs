@@ -4,55 +4,37 @@ using UnityEngine;
 //Todo: Later replaced with normal monster behaviour provider when decision tree is implemented
 public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 {
-    [SerializeField] private MinMaxLimit timeUntilNextStateCheck;
-
     [Header("Idle")]
     [SerializeField] private FightMonsterIdle monsterIdle;
 
     [Header("Attack")] 
     [SerializeField] private MonsterAttackBehaviour monsterAttack;
+    
+    [Header("Reeling")]
+    [SerializeField] private MonsterReelingBehaviour monsterReeling;
 
-    /*
-     * attack provider
-     *
-     * idle behaviour provider
-     *
-     * Fleeing Behaviour provider
-     *
-     * Stunned/Repelled Behaviour provider
-     */
+    [Header("Stunned")] 
+    [SerializeField] private FightMonsterStunned monsterStunned;
 
     private bool restartBehaviourLoop;
-    private IEnumerator currentBehaviourRoutine;
+    private bool blockBehaviourLoop;
 
-    private WaitForSeconds waitUntilNextStateCheck;
-    private WaitUntil waitForNeutralIdlePosition;
+    private AbstractMonsterBehaviour currentMonsterBehaviour;
+
     private WaitUntil waitForLoopUnblocked;
+    private WaitForSeconds waitUntilNextStateCheck;
 
-    public bool BlockBehaviourLoop { get; set; }
+    private Coroutine reactToMissRoutine;
+    private Coroutine reactToFlashRoutine;
 
+    private IEnumerator currentBehaviourRoutine;
+    
     protected override void Start()
     {
         base.Start();
         
-        waitForNeutralIdlePosition = new (() => monsterIdle.IsInNeutralPosition);
-        waitForLoopUnblocked = new(() => !BlockBehaviourLoop);
+        waitForLoopUnblocked = new(() => !blockBehaviourLoop);
     }
-
-    public void RequestRestartOfBehaviourLoop()
-    {
-        restartBehaviourLoop = true;
-
-        StopCurrentBehaviourRoutine();
-    }
-
-    private void StopCurrentBehaviourRoutine()
-    {
-        if (currentBehaviourRoutine == null) return;
-        StopCoroutine(currentBehaviourRoutine);
-    }
-
-    public void AdvanceBehaviourRoutine() => StopCurrentBehaviourRoutine();
 
     protected override IEnumerator UpdateBehaviour()
     {
@@ -60,51 +42,160 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 
         while (loop)
         {
+            yield return CheckIfLoopBlocked();
+            
             restartBehaviourLoop = false;
 
+            //Idle
             currentBehaviourRoutine = IdleBehaviour();
             yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
+            yield return CheckIfLoopBlocked();
 
+            //Attack
             currentBehaviourRoutine = AttackBehaviour();
             yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
+            yield return CheckIfLoopBlocked();
 
-
-            //Fleeing
+            //Reeling
+            currentBehaviourRoutine = ReelingBehaviour();
+            yield return currentBehaviourRoutine;
+            
+            if(restartBehaviourLoop) continue;
+            yield return CheckIfLoopBlocked();
         }
     }
 
-    private IEnumerator IdleBehaviour()
-    {
-        monsterIdle.StartBehaviour();
-
-        GenerateWaitUntilNextCheck();
-        yield return waitUntilNextStateCheck;
-
-        yield return waitForNeutralIdlePosition;
-        
-        yield return CheckIfLoopBlocked();
-    }
-
-    private void GenerateWaitUntilNextCheck() 
-        => waitUntilNextStateCheck = new(timeUntilNextStateCheck.GetRandomBetweenLimits());
-
     private IEnumerator CheckIfLoopBlocked()
     {
-        if (!BlockBehaviourLoop) yield break;
+        if (!blockBehaviourLoop) yield break;
 
         yield return waitForLoopUnblocked;
     }
 
+    private IEnumerator IdleBehaviour()
+    {
+        yield return TriggerGivenBehaviour(monsterIdle);
+    }
+
+    private IEnumerator TriggerGivenBehaviour(AbstractMonsterBehaviour behaviour)
+    {
+        var behaviourName = behaviour.GetType().Name;
+
+        Debug.LogFormat("Start Behaviour of type: {0}", behaviourName);
+        yield return StartMonsterBehaviourRoutine(behaviour);
+        
+        Debug.LogFormat("Wait For Potential Interrupt: {0}", behaviourName);
+        yield return WaitForInterruptBehaviourIfExists();
+        
+        Debug.LogFormat("Behaviour Finished: {0}", behaviourName);
+    }
+
+    private IEnumerator StartMonsterBehaviourRoutine(AbstractMonsterBehaviour monsterBehaviour)
+    {
+        currentMonsterBehaviour = monsterBehaviour;
+
+        currentMonsterBehaviour.TriggerBehaviour();
+
+        yield return currentMonsterBehaviour.WaitForCompletionOrInterruption;
+    }
+
+    private IEnumerator WaitForInterruptBehaviourIfExists()
+    {
+        if (currentMonsterBehaviour.InterruptIsDone) yield break;
+
+        yield return currentMonsterBehaviour.WaitForInterruptDone;
+    }
+
     private IEnumerator AttackBehaviour()
     {
-        monsterAttack.StartBehaviour();
+        yield return TriggerGivenBehaviour(monsterAttack);
+    }
 
-        yield return monsterAttack.BehaviourRoutine;
+    private IEnumerator ReelingBehaviour()
+    {
+        yield return TriggerGivenBehaviour(monsterReeling);
+    }
 
-        yield return CheckIfLoopBlocked();
+    public void ReactToCannonBallMiss()
+    {
+        if (reactToMissRoutine != null) return;
+        
+        StartCoroutine(RequestRestartOfBehaviourLoop());
+
+        reactToMissRoutine = StartCoroutine(ReactToMissRoutine());
+    }
+
+    private IEnumerator RequestRestartOfBehaviourLoop()
+    {
+        restartBehaviourLoop = true;
+        
+        StopCurrentBehaviourRoutine();
+
+        yield return currentMonsterBehaviour.WaitForInterruptDone;
+    }
+
+    private void StopCurrentBehaviourRoutine()
+    {
+        if (currentMonsterBehaviour == null) return;
+        
+        currentMonsterBehaviour.InterruptBehaviour();
+    }
+
+    private IEnumerator ReactToMissRoutine()
+    {
+        blockBehaviourLoop = true;
+
+        yield return RequestRestartOfBehaviourLoop();
+        
+        currentBehaviourRoutine = AttackBehaviour();
+        yield return currentBehaviourRoutine;
+
+        blockBehaviourLoop = false;
+    }
+
+    public void ReactToStunned()
+    {
+        if (reactToFlashRoutine != null) 
+            StopCoroutine(reactToFlashRoutine);
+        
+        reactToFlashRoutine = StartCoroutine(ReactToStunnedRoutine());
+    }
+
+    private IEnumerator ReactToStunnedRoutine()
+    {
+        yield return StartCoroutine(ResetAllBehaviour());
+        
+        blockBehaviourLoop = true;
+
+        yield return StartMonsterBehaviourRoutine(monsterStunned);
+        
+        blockBehaviourLoop = false;
+    }
+
+    private IEnumerator ResetAllBehaviour()
+    {
+        if(reactToMissRoutine != null) StopCoroutine(reactToMissRoutine);
+
+        blockBehaviourLoop = true;
+
+        yield return RequestRestartOfBehaviourLoop();
+        
+        blockBehaviourLoop = false;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        if (reactToMissRoutine != null)
+            StopCoroutine(reactToMissRoutine);
+
+        if (reactToFlashRoutine == null) return;
+        
+        StopCoroutine(reactToFlashRoutine);
     }
 }

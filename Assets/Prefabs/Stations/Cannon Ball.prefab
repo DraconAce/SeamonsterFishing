@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8566517290471475889}
   m_Layer: 0
   m_Name: Cannon Ball
-  m_TagString: Untagged
+  m_TagString: cannonBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,3 +150,24 @@ MonoBehaviour:
   onCannonBallHit:
     m_PersistentCalls:
       m_Calls: []
+  oceanHit:
+    Guid:
+      Data1: -968379484
+      Data2: 1272734180
+      Data3: 1743593620
+      Data4: 1195261242
+    Path: event:/Monster/Hit Ocean
+  regularHit:
+    Guid:
+      Data1: -1838752658
+      Data2: 1164888294
+      Data3: 448552862
+      Data4: 665508369
+    Path: event:/Monster/Hit No Weakpoint
+  weakpointHit:
+    Guid:
+      Data1: -948089745
+      Data2: 1254127406
+      Data3: 1870342808
+      Data4: 367378158
+    Path: event:/Monster/Hit Weakpoint

@@ -7,12 +7,22 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "Level Representation", menuName = "Create Level Representation", order = 0)]
 public class LevelRepresentation : ScriptableObject
 {
-    public Level LevelIdentifier = Level.MainMenu;
-    public GameState InitialLevelGameState = GameState.None;
+    [SerializeField] private Level levelIdentifier = Level.MainMenu;
+    [SerializeField] private GameState initialLevelGameState = GameState.None;
+    [SerializeField] private string sceneName;
+    [SerializeField] private bool hideCursorOnLoad = true;
+
+    public Level LevelIdentifier => levelIdentifier;
+
+    public GameState InitialLevelGameState => initialLevelGameState;
+
+    public string SceneName => sceneName;
     
-    #if UNITY_EDITOR
+    public bool HideCursorOnLoad => hideCursorOnLoad;
+
+#if UNITY_EDITOR
     [SerializeField] private SceneAsset sceneAsset;
-    
+
     private void OnValidate()
     {
         if (sceneAsset == null) return;
@@ -20,7 +30,4 @@ public class LevelRepresentation : ScriptableObject
         sceneName = sceneAsset.name;
     }
     #endif
-    
-    private string sceneName;
-    public string SceneName => sceneName;
 }

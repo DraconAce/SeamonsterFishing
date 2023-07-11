@@ -944,7 +944,8 @@ PrefabInstance:
       propertyPath: reloadScene
       value: 
       objectReference: {fileID: 11400000, guid: 840442d7181476747abb1c99fbf5ab5d, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2176619065248661645, guid: fe6f198dd0d8aab4fb5521b08f8141eb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

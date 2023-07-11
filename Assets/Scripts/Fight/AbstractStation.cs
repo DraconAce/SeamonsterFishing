@@ -39,10 +39,15 @@ public abstract class AbstractStation : MonoBehaviour
         StationManager.RegisterStation(this);
         
         CustomPlayerInputs = new();
+        
+        SetupSegments();
     }
 
     private void OnGameStateChanged(GameState newGameState)
     {
+        if(newGameState is GameState.PauseMenu 
+           || GameStateManager.PreviousGameState is GameState.PauseMenu) return;
+        
         if (newGameState != StationGameState)
         {
             GameStateDoesNotMatch();
@@ -50,6 +55,14 @@ public abstract class AbstractStation : MonoBehaviour
         }
         
         GameStateMatches();
+    }
+    
+    private void SetupSegments()
+    {
+        var stationSegments = GetComponentsInChildren<AbstractStationSegment>();
+        
+        foreach(var segment in stationSegments)
+            segment.SetupController(this);
     }
 
     protected virtual void GameStateDoesNotMatch()
