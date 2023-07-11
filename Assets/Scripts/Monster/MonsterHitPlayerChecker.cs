@@ -10,7 +10,7 @@ public class MonsterHitPlayerChecker : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player")) return;
         
-        FMODUnity.RuntimeManager.PlayOneShot(BoatIsHitSound);
+        FMODUnity.RuntimeManager.PlayOneShot(BoatIsHitSound, other.ClosestPoint(transform.position));
 
         GameStateManager.instance.ChangeGameState(GameState.Dead);
     }
