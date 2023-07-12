@@ -83,6 +83,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         if(movingController.BoatIsNotMoving(moveDirection)) 
         {
             MoveBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            movingController.currentSpeed = 0;
             return;
         }
 
