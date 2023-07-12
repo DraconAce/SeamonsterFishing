@@ -107,5 +107,6 @@ MonoBehaviour:
   lampRotationAxis: 0
   lampPivot: {fileID: 0}
   lampAnimationEase: 8
-  rotationDuration: 3
-  rotationEase: 2
+  rotationDuration: 2.5
+  rotationEase: 4
+  forwardLampRotation: 95
