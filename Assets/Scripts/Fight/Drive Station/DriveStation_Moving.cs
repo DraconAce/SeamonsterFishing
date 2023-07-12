@@ -30,14 +30,6 @@ public class DriveStation_Moving : AbstractStationSegment
         var boatPosition = boatTransform.position;
         var newBoatPosition = boatPosition + CalculateMoveAmount(moveDirection);
 
-        //increase current speed
-        if (currentSpeed < maxDriveSpeed) {
-            currentSpeed += driveSpeedincrease;
-        }
-        else 
-        {
-            currentSpeed = maxDriveSpeed;
-        }
         //Debug.Log("currentSpeed"+currentSpeed);
         newBoatPosition = ClampToMovementLimits(newBoatPosition);
         
@@ -59,6 +51,18 @@ public class DriveStation_Moving : AbstractStationSegment
         newBoatPosWorld = boatParent.TransformPoint(newBoatPosLocal);
         
         return newBoatPosWorld;
+    }
+
+    public void IncreaseCurrentBoatSpeed() 
+    {
+        //increase current speed
+        if (currentSpeed < maxDriveSpeed) {
+            currentSpeed += driveSpeedincrease;
+        }
+        else 
+        {
+            currentSpeed = maxDriveSpeed;
+        }
     }
 
     public bool BoatIsNotMoving (float newDirection) => Mathf.Approximately(0, newDirection);

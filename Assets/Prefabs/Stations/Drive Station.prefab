@@ -55,6 +55,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   initialDrivingDirection: -1
+  stoppingBoatSpeedReduction: 0.2
   MoveBoatSound:
     Guid:
       Data1: 432150634
