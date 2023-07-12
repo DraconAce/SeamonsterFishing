@@ -113,6 +113,11 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         MoveBoatSoundInstance.getPlaybackState(out var playbackState);
         if (playbackState == PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
         
+        if (stoppingBoatMoveCoroutingIsRunning)
+        {
+            StopCoroutineIfItExists();
+        }
+        
         movingController.IncreaseCurrentBoatSpeed();
         movingController.MoveBoat(moveDirection);
         
@@ -151,7 +156,11 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     
     private void StopCoroutineIfItExists()
     {
-        if (stoppingBoatMoveCoroutine != null) StopCoroutine(stoppingBoatMoveCoroutine);
+        if (stoppingBoatMoveCoroutine != null) 
+        {
+            StopCoroutine(stoppingBoatMoveCoroutine);
+            stoppingBoatMoveCoroutingIsRunning = false;
+        }
     }
     
     private IEnumerator DoBoatStop(float moveDirection) 
