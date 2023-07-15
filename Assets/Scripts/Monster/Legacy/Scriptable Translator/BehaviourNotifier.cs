@@ -9,7 +9,7 @@ public class BehaviourNotifier : AbstractBehaviourTranslator<AbstractMonsterBeha
     {
         monsterKi = MonsterKI.instance;
 
-        monsterKi.StartBehaviourEvent += OnStartImpl;
+        //monsterKi.StartBehaviourEvent += OnStartImpl;
         monsterKi.interruptNodeActionNotificationEvent += OnInterruptActionNotification;
     }
 
@@ -33,7 +33,7 @@ public class BehaviourNotifier : AbstractBehaviourTranslator<AbstractMonsterBeha
 
         if (monsterKi == null) return;
         
-        monsterKi.StartBehaviourEvent -= OnStartImpl;
+        //monsterKi.StartBehaviourEvent -= OnStartImpl;
         monsterKi.interruptNodeActionNotificationEvent -= OnInterruptActionNotification;
     }
 }

@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 
@@ -5,26 +8,61 @@ public abstract class AbstractDecisionNodeImpl : AbstractMonsterNodeImpl
 {
     [SerializeField] private bool useRandomPriorityMode = true;
     [SerializeField] private NodePriorityMode preferredPriorityMode = NodePriorityMode.Greater;
-    
+
+    private readonly Dictionary<string, int> possibleNextNodeIndices = new();
+
     private DecisionNode DecisionNode => (DecisionNode) NodeToRepresent;
-    
+
+    public override bool IsNodeExecutable
+    {
+        get => true;
+        set { }
+    }
+
+
+    protected override void Start()
+    {
+        base.Start();
+        
+        StartCoroutine(DeferredStart());
+    }
+
+    private IEnumerator DeferredStart()
+    {
+        yield return null;
+        yield return null;
+        yield return null;
+        
+        GetNodeImplementationsOfNextNodes();
+    }
+
+    private void GetNodeImplementationsOfNextNodes()
+    {
+        MakeSureTreeManagerIsAssigned();
+        
+        foreach (var node in DecisionNode.PossibleNextBehaviourNodes)
+        {
+            var nodeImpl = behaviourTreeManager.GetNodeImplementation(node.BehaviourName);
+            
+            possibleNextNodeIndices.Add(node.BehaviourName, nodeImpl.NodeIndex);
+        }
+    }
+
     protected override NodeData CollectNodeData()
     {
         var nodeComparisonData = new NodeComparisonData
         {
             NodeType = NodeType.Decision,
-            PriorityMode = GetPriorityMode(),
-            DataPoints = GatherComparableData()
+            PriorityMode = GetPriorityMode()
         };
         
         return new NodeData
         {
-            NodeID = new NativeText(BehaviourID, Allocator.Persistent),
-            RandomArray = randomArrayProvider.RandomArray,
+            NodeIndex = NodeIndex,
             NodeComparisonData = nodeComparisonData
         };
     }
-    
+
     private NodePriorityMode GetPriorityMode()
     {
         return !useRandomPriorityMode ? preferredPriorityMode : GetRandomPriorityMode();
@@ -37,33 +75,45 @@ public abstract class AbstractDecisionNodeImpl : AbstractMonsterNodeImpl
         return randomNumber == 0 ? NodePriorityMode.Greater : NodePriorityMode.Less;
     }
 
-    protected virtual NativeArray<ComparableData> GatherComparableData()
+    public virtual List<ComparableData> GatherComparableData()
     {
-        var comparableData = new NativeArray<ComparableData>(NodeToRepresent.NumberOfNextNodes, Allocator.Persistent);
+        var comparableData = new List<ComparableData>();
 
         if (NodeToRepresent.NumberOfNextNodes <= 1)
         {
-            var nextBehaviourID = DecisionNode.PossibleNextBehaviourIDs[0].BehaviourID;
+            var nextBehaviourIndex = possibleNextNodeIndices.Values.ToArray()[0];
 
-            comparableData[0] = GetComparableDataOfBehaviour(nextBehaviourID);
+            comparableData.Add(GetComparableDataOfBehaviour(nextBehaviourIndex));
 
             return comparableData;
         }
 
-        for (var index = 0; index < DecisionNode.PossibleNextBehaviourIDs.Length; index++)
-        {
-            var childNodeID = DecisionNode.PossibleNextBehaviourIDs[index].BehaviourID;
-            
-            comparableData[index] = GetComparableDataOfBehaviour(childNodeID);
-        }
+        foreach (var childNodeIndex in possibleNextNodeIndices.Values)
+            comparableData.Add(GetComparableDataOfBehaviour(childNodeIndex));
+        
+        comparableData.Sort((dataPointA, dataPointB) => dataPointA.Usability.CompareTo(dataPointB.Usability));
 
         return comparableData;
     }
 
-    private ComparableData GetComparableDataOfBehaviour(string behaviourID)
+    private ComparableData GetComparableDataOfBehaviour(int behaviourIndex)
     {
-        var nextBehaviour = behaviourTreeManager.GetNodeImplementation(behaviourID);
+        var nextBehaviour = behaviourTreeManager.GetNodeImplementation(behaviourIndex);
 
-        return nextBehaviour.GetComparableData();
+        return nextBehaviour.CurrentNodeData.NodeComparableData;
+    }
+
+    protected override void StartBehaviour()
+    {
+#if UNITY_EDITOR
+        Debug.LogErrorFormat("StartBehaviour() called on decision node {0}", NodeToRepresent.BehaviourName);
+#endif
+    }
+
+    protected override void StopBehaviour()
+    {
+#if UNITY_EDITOR
+        Debug.LogErrorFormat("StartBehaviour() called on decision node {0}", NodeToRepresent.BehaviourName);
+#endif
     }
 }

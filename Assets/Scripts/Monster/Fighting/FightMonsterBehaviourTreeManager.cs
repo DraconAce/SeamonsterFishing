@@ -5,18 +5,22 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubscriber
 {
     [SerializeField] private float delayBeforeFirstBehaviour = 1f;
-    [SerializeField] private BehaviourTree rootOfTree;
+    [SerializeField] private AbstractMonsterNodeImpl rootNode;
+    [SerializeField] private BehaviourTree behaviourTree;
     
-    private readonly Dictionary<string, INodeImpl> nodeImplDict = new();
-    private NativeHashMap<NativeText, NodeData> nodeDataMap;
-    
-    private JobHandle chooseBehaviourJobHandle;
-    private NativeArray<NativeText> nextBehaviourID;
+    private readonly Dictionary<int, INodeImpl> nodeImplDict = new();
+    private NativeHashMap<int, NodeData> nodeDataMap;
 
+    private JobHandle chooseBehaviourJobHandle;
+    private NativeArray<int> nextBehaviourID;
+    private NativeMultiHashMap<int, ComparableData> comparableDataMapRef;
+
+    private RandomArrayProvider randomArrayProvider;
     private UpdateManager updateManager;
     private MonsterKI monsterKI;
     
@@ -31,6 +35,10 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         updateManager = UpdateManager.instance;
         monsterKI = MonsterKI.instance;
         
+        randomArrayProvider = new RandomArrayProvider();
+        nextBehaviourID = new NativeArray<int>(1, Allocator.Persistent);
+        comparableDataMapRef = new NativeMultiHashMap<int, ComparableData>(0,Allocator.Persistent);
+
         monsterKI.BehaviourTreeManager = this;
         monsterKI.StopCurrentBehaviourEvent += StopCurrentBehaviour;
         
@@ -43,71 +51,74 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         StartCoroutine(StartFirstBehaviourRoutine());
     }
 
-    private void StopCurrentBehaviour() => StopCurrentBehaviour("");
+    private void StopCurrentBehaviour() => StopCurrentBehaviour(-1);
 
-    private void StopCurrentBehaviour(string nextBehaviour)
+    private void StopCurrentBehaviour(int nextBehaviourIndex)
     {
-        stopCurrentBehaviourRoutine = StartCoroutine(StopCurrentBehaviourRoutine(nextBehaviour));
+        stopCurrentBehaviourRoutine = StartCoroutine(StopCurrentBehaviourRoutine(nextBehaviourIndex));
     }
 
     private void CreateNodeImplDict()
     {
-        var allNodeImplementation = FindObjectsByType<AbstractMonsterBehaviour>
+        var allNodeImplementation = FindObjectsByType<AbstractMonsterNodeImpl>
             (FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<INodeImpl>();
 
         foreach (var nodeImpl in allNodeImplementation) 
-            nodeImplDict.Add(nodeImpl.BehaviourID, nodeImpl);
+            nodeImplDict.Add(nodeImpl.NodeIndex, nodeImpl);
     }
 
     private void CreateNodeDataMap()
     {
-        nodeDataMap = new NativeHashMap<NativeText, NodeData>(nodeImplDict.Count, Allocator.Persistent);
+        nodeDataMap = new NativeHashMap<int, NodeData>(nodeImplDict.Count, Allocator.Persistent);
     }
 
     private IEnumerator StartFirstBehaviourRoutine()
     {
-        yield return new WaitForSeconds(delayBeforeFirstBehaviour);
-        
-        RequestNextBehaviour();
+        while(true)
+        {
+            yield return new WaitForSeconds(delayBeforeFirstBehaviour);
+
+            RequestNextBehaviour();
+        }
     }
-    
-    public void UpdateNodeData(string behaviourID, NodeData nodeData)
+
+    public INodeImpl GetNodeImplementation(int behaviourIndex) => nodeImplDict[behaviourIndex];
+
+    public INodeImpl GetNodeImplementation(string behaviourName)
     {
-        var tempNativeID = new NativeText(behaviourID, Allocator.Temp);
-        
-        var oldData = nodeDataMap[tempNativeID];
-        
-        nodeDataMap[tempNativeID] = nodeData;
-        
-        oldData.Dispose();
-        tempNativeID.Dispose();
+        return nodeImplDict.Values.First(x => x.NodeToRepresent.BehaviourName == behaviourName);
     }
-    
-    public INodeImpl GetNodeImplementation(string behaviourID) => nodeImplDict[behaviourID];
 
     public void RequestNextBehaviour()
     {
         CurrentBehaviourEnded();
-        
-        foreach (var nodeImpl in nodeImplDict.Values) 
-            nodeImpl.UpdateNodeData();
+
+        UpdateNodeData();
         
         ScheduleBehaviourTreeJobs();
 
         updateManager.SubscribeToManualLateUpdate(this);
     }
 
+    private void UpdateNodeData()
+    {
+        var nodeImplArray = nodeImplDict.Values.ToArray();
+
+        foreach (var nodeImpl in nodeImplArray) 
+            nodeDataMap[nodeImpl.NodeIndex] = nodeImpl.RefreshNodeData();
+    }
+
     public void CurrentBehaviourEnded() => CurrentBehaviour = null;
 
-    private IEnumerator StopCurrentBehaviourRoutine(string nextBehaviour)
+    private IEnumerator StopCurrentBehaviourRoutine(int nextBehaviourIndex)
     {
         yield return waitUntilBehaviourIsInactive;
         
         CurrentBehaviourEnded();
         
-        if(nextBehaviour != string.Empty)
+        if(nextBehaviourIndex >= 0)
         {
-            monsterKI.ForwardActionRequest(nextBehaviour);
+            monsterKI.ForwardActionRequest(nextBehaviourIndex);
             yield break;
         }
         
@@ -116,14 +127,32 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private void ScheduleBehaviourTreeJobs()
     {
-        var evaluateTreeJob = new EvaluateTreeJob(nodeDataMap);
+        var randomArray = randomArrayProvider.RandomArray;
+
+        comparableDataMapRef.Clear();
+        CreateNodeComparableDataLookup(comparableDataMapRef);
+        
+        var evaluateTreeJob = new EvaluateTreeJob { RootIndex = rootNode.NodeIndex, RandomArray = randomArray, NodeDataMap = nodeDataMap, ComparableDataPointsOfNodes = comparableDataMapRef};
         var evaluateJobHandle = evaluateTreeJob.Schedule();
-
-        nextBehaviourID = new NativeArray<NativeText>(1, Allocator.TempJob);
-        var rootBehaviourID = new NativeText(rootOfTree.RootNode.BehaviourID, Allocator.TempJob);
-
-        var chooseBehaviourJob = new ChooseBehaviourJob(rootBehaviourID, nodeDataMap, nextBehaviourID);
+        
+        var chooseBehaviourJob = new ChooseBehaviourJob{RootIndex = rootNode.NodeIndex, NodeDataMap = nodeDataMap, ChosenBehaviourIndex = nextBehaviourID};
         chooseBehaviourJobHandle = chooseBehaviourJob.Schedule(evaluateJobHandle);
+    }
+
+    private void CreateNodeComparableDataLookup(NativeMultiHashMap<int, ComparableData> nodeComparableDataLookup)
+    {
+        foreach(var nodeImpl in nodeImplDict.Values)
+        {
+            if(nodeImpl.NodeToRepresent.NodeType == NodeType.Action)
+                continue;
+
+            var decisionImpl = (AbstractDecisionNodeImpl) nodeImpl;
+            
+            var comparableDataList = decisionImpl.GatherComparableData();
+            
+            foreach(var dataPoint in comparableDataList)
+                nodeComparableDataLookup.Add(nodeImpl.NodeIndex, dataPoint);
+        }
     }
 
     public void ManualLateUpdate()
@@ -135,17 +164,17 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         ScheduleStartOfNextBehaviour();
 
         updateManager.UnsubscribeFromManualLateUpdate(this);
-        nextBehaviourID.Dispose();
     }
 
     private void ScheduleStartOfNextBehaviour()
     {
-        var behaviourID = nextBehaviourID[0].ToString();
-        monsterKI.ForwardActionRequest(behaviourID);
-        CurrentBehaviour = nodeImplDict[behaviourID];
+        var behaviourIndex = nextBehaviourID[0];
+        
+        monsterKI.ForwardActionRequest(behaviourIndex);
+        CurrentBehaviour = nodeImplDict[behaviourIndex];
     }
     
-    public void RequestSpecificBehaviour(string behaviourID) => StopCurrentBehaviour(behaviourID);
+    public void RequestSpecificBehaviour(int behaviourIndex) => StopCurrentBehaviour(behaviourIndex);
 
     private void OnDestroy()
     {
@@ -156,10 +185,13 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private void DisposeOfJobData()
     {
-        nodeDataMap.Dispose();
+        randomArrayProvider.Dispose();
+        
+        if(comparableDataMapRef.IsCreated) comparableDataMapRef.Dispose();
+        
+        if(nodeDataMap.IsCreated) nodeDataMap.Dispose();
 
-        if (nextBehaviourID.IsCreated)
-            nextBehaviourID.Dispose();
+        if (nextBehaviourID.IsCreated) nextBehaviourID.Dispose();
 
         if (stopCurrentBehaviourRoutine == null) return;
 
@@ -170,61 +202,45 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 //Todo: Convert to parallel job
 public struct EvaluateTreeJob : IJob
 {
-    private NativeHashMap<NativeText, NodeData> nodeDataMap;
-
-    public EvaluateTreeJob(NativeHashMap<NativeText, NodeData> nodeDataMap)
-    {
-        this.nodeDataMap = nodeDataMap;
-    }
+    public int RootIndex;
+    public NativeArray<Unity.Mathematics.Random> RandomArray;
+    public NativeHashMap<int, NodeData> NodeDataMap;
+    public NativeMultiHashMap<int, ComparableData> ComparableDataPointsOfNodes;
 
     public void Execute() => EvaluateNodes();
 
     private void EvaluateNodes()
     {
-        var nodeKeyArray = nodeDataMap.GetKeyArray(Allocator.Temp);
-        
-        for (var index = 0; index < nodeKeyArray.Length; index++)
-        {
-            var key = nodeKeyArray[index];
-            var node = nodeDataMap[key];
-            
-            NodeFunctionality.EvaluateNodeData(ref node, index);
-            
-            nodeDataMap[key] = node;
-        }
+        NodeFunctionality.RecursiveEvaluateNodeData(RandomArray[0], RootIndex, ref NodeDataMap, ComparableDataPointsOfNodes);
     }
 }
 
 public struct ChooseBehaviourJob : IJob
 {
-    private readonly NativeText rootID;
-    private NativeHashMap<NativeText, NodeData> nodeDataMap;
-    private NativeArray<NativeText> chosenBehaviourID;
-    
-    public ChooseBehaviourJob(NativeText rootID, NativeHashMap<NativeText, NodeData> nodeDataMap, NativeArray<NativeText> chosenBehaviourID)
-    {
-        this.rootID = rootID;
-        this.nodeDataMap = nodeDataMap;
-        this.chosenBehaviourID = chosenBehaviourID;
-    }
+    public int RootIndex;
+    public NativeHashMap<int, NodeData> NodeDataMap;
+    public NativeArray<int> ChosenBehaviourIndex;
 
     public void Execute() => ChooseBehaviour();
 
     private void ChooseBehaviour()
     {
         var numberOfNodesChecked = 0;
-        var currentNode = nodeDataMap[rootID];
+        var currentNode = NodeDataMap[RootIndex];
         
-        while(numberOfNodesChecked < nodeDataMap.Count())
+        ChosenBehaviourIndex[0] = -1;
+        
+        while(numberOfNodesChecked <= NodeDataMap.Count())
         {
+            numberOfNodesChecked++;
+            
             if (currentNode.NodeComparisonData.NodeType == NodeType.Action)
             {
-                chosenBehaviourID[0] = currentNode.NodeID;
+                ChosenBehaviourIndex[0] = currentNode.NodeIndex;
                 break;
             }
             
-            currentNode = nodeDataMap[currentNode.NextNodeID];
-            numberOfNodesChecked++;
+            currentNode = NodeDataMap[currentNode.NextNodeIndex];
         }
     }
 }

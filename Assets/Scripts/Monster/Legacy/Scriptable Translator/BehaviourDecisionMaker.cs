@@ -41,6 +41,6 @@ public class BehaviourDecisionMaker : AbstractBehaviourTranslator<BehaviourChoic
 
         behaviour.Execute();
 
-        return choice.NodeToRepresent.BehaviourID;
+        return choice.NodeToRepresent.BehaviourName;
     }
 }

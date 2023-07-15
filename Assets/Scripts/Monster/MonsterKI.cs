@@ -8,14 +8,14 @@ public class MonsterKI : Singleton<MonsterKI>
     
     public FightMonsterBehaviourTreeManager BehaviourTreeManager { get; set; }
 
-    public event Action<string> StartBehaviourEvent;
+    public event Action<int> StartBehaviourEvent;
     public event Action StopCurrentBehaviourEvent;
 
-    public void ForwardActionRequest(string idOfRequestedBehaviour) => StartBehaviourEvent?.Invoke(idOfRequestedBehaviour);
+    public void ForwardActionRequest(int indexOfRequestedBehaviour) => StartBehaviourEvent?.Invoke(indexOfRequestedBehaviour);
     
     public void TriggerStopCurrentBehaviour() => StopCurrentBehaviourEvent?.Invoke();
 
-    public void RequestDirectStartOfBehaviour(string behaviourID) => BehaviourTreeManager.RequestSpecificBehaviour(behaviourID);
+    public void RequestDirectStartOfBehaviour(int behaviourIndex) => BehaviourTreeManager.RequestSpecificBehaviour(behaviourIndex);
 
     protected override void OnDestroy()
     {
@@ -73,7 +73,7 @@ public class MonsterKI : Singleton<MonsterKI>
 
         public void InterruptCurrentBehaviour(bool scheduleNewBehaviour = false, string followUpAction = "")
     {
-        interruptNodeActionNotificationEvent?.Invoke(currentlyExecutedNode.BehaviourID);
+        interruptNodeActionNotificationEvent?.Invoke(currentlyExecutedNode.BehaviourName);
 
         currentlyExecutedNode = null;
 
@@ -81,8 +81,8 @@ public class MonsterKI : Singleton<MonsterKI>
         
         if(followUpAction == "")
             StartBehaviour();
-        else
-            ForwardActionRequest(followUpAction);
+        //else
+        //    ForwardActionRequest(followUpAction);
     }
 
         public void BehaviourEnded() => StartBehaviour();
@@ -120,7 +120,7 @@ public class MonsterKI : Singleton<MonsterKI>
     {
         if (currentlyExecutedNode == null) return false;
 
-        return currentlyExecutedNode.BehaviourID == behaviourIDToCheck;
+        return currentlyExecutedNode.BehaviourName == behaviourIDToCheck;
     }
 
     #endregion

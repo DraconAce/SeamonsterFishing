@@ -4,34 +4,47 @@ using UnityEngine;
 
 public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, IComparableNode
 {
+    private static int nodeImplIndexCounter;
+    
+    [RuntimeInitializeOnLoadMethod]
+    static void RunOnApplicationStart()
+    {
+        nodeImplIndexCounter = 0;
+    }
+    
     [SerializeField] private AbstractBehaviourTreeNode nodeToRepresent;
     public AbstractBehaviourTreeNode NodeToRepresent => nodeToRepresent;
     
-    protected RandomArrayProvider randomArrayProvider;
-
     private MonsterKI monsterKI;
     protected FightMonsterBehaviourTreeManager behaviourTreeManager;
 
-    public string BehaviourID => nodeToRepresent.BehaviourID;
+    public abstract int Priority { get; }
+    public abstract bool IsNodeExecutable { get; set; }
+
+    public NodeData CurrentNodeData { get; set; }
     
-    public int Priority { get; }
+    private int nodeIndex = -1;
+    public int NodeIndex => nodeIndex;
+
+    private void Awake() => GetNodeIndex();
+
+    public void GetNodeIndex() => nodeIndex = nodeImplIndexCounter++;
 
     protected virtual void Start()
     {
         monsterKI = MonsterKI.instance;
         MakeSureTreeManagerIsAssigned();
 
-        randomArrayProvider = new RandomArrayProvider();
-        
+        if (nodeToRepresent.NodeType == NodeType.Decision) return;
         monsterKI.StartBehaviourEvent += OnStartBehaviour;
     }
 
-    private void MakeSureTreeManagerIsAssigned() 
+    protected void MakeSureTreeManagerIsAssigned() 
         => behaviourTreeManager ??= monsterKI.BehaviourTreeManager;
 
-    private void OnStartBehaviour(string requestedID)
+    private void OnStartBehaviour(int requestedIndex)
     {
-        if(requestedID != ((INodeImpl)this).BehaviourID) return;
+        if(requestedIndex != NodeIndex) return;
         
         Execute();
     }
@@ -44,35 +57,37 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     }
 
     public void Execute() => StartBehaviour();
-    protected virtual void StartBehaviour() { }
+    protected abstract void StartBehaviour();
 
-    public virtual void Stop() => StopBehaviour();
-    protected virtual void StopBehaviour() { }
+    public void Stop() => StopBehaviour();
+    protected abstract void StopBehaviour();
 
 
-    public virtual void UpdateNodeData()
+    public virtual NodeData RefreshNodeData()
     {
         MakeSureTreeManagerIsAssigned();
 
-        var updatedData = CollectNodeData();
+        var newNodeData = CollectNodeData();
+        newNodeData.NodeComparableData = GetComparableData();
         
-        behaviourTreeManager.UpdateNodeData(((INodeImpl)this).BehaviourID, updatedData);
+        CurrentNodeData = newNodeData;
+
+        return CurrentNodeData;
     }
 
     public virtual ComparableData GetComparableData()
     {
-        return new ComparableData(new NativeText(BehaviourID, Allocator.Persistent), IsNodeExecutable(), Priority, GetExecutability());
+        return new ComparableData(NodeIndex, IsNodeExecutable, Priority, GetExecutability());
     }
 
-    protected virtual NodeData CollectNodeData() => default;
-
-    public virtual bool IsNodeExecutable() => true;
-
-    public virtual float GetExecutability() => 100f;
+    protected abstract NodeData CollectNodeData();
+    
+    public abstract float GetExecutability();
 
 
     protected virtual void OnDestroy()
     {
-        randomArrayProvider.Dispose();
+        if (monsterKI == null || nodeToRepresent.NodeType == NodeType.Action) return;
+        monsterKI.StartBehaviourEvent -= OnStartBehaviour;
     }
 }

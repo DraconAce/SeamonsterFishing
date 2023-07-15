@@ -50,7 +50,7 @@ public abstract class AbstractMonsterBehaviour : MonoBehaviour, IDecisionRuntime
 
     public void TriggerBehaviour()
     {
-        if (monsterKi.IsBehaviourActive(nodeToRep.BehaviourID)) return;
+        if (monsterKi.IsBehaviourActive(nodeToRep.BehaviourName)) return;
         
         BehaviourRoutine = StartCoroutine(StartBehaviourRoutine());
 
