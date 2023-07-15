@@ -50,16 +50,18 @@ public class MonsterSoundPlayer : MonoBehaviour
     [SerializeField] private StudioEventEmitter repelledSoundEmitter;
     [SerializeField] private StudioEventEmitter killSoundEmitter;
 
+    private float initialDistanceToPlayer;
     private Vector3 spawnLeft;
 
     private Transform spawnOrigin;
     private Transform playerTrans;
     private Transform fakeMonsterTrans;
-    
-    private WaitForSeconds waitSecond = new (1f);
+
     private Coroutine soundsRoutine;
-    
+
     private DifficultyProgressionManager difficultyManager;
+
+    private readonly WaitForSeconds waitSecond = new (1f);
 
     private readonly MinMaxLimit[] soundProhibitedAngles = new MinMaxLimit[2]
     {
@@ -85,6 +87,8 @@ public class MonsterSoundPlayer : MonoBehaviour
     public void StartMonsterApproachSounds()
     {
         AssignPlayerTransformIfNotAssigned();
+        
+        initialDistanceToPlayer = (playerTrans.position - fakeMonsterTrans.position).magnitude;
         
         soundsRoutine = StartCoroutine(MonsterSoundsRoutine());
     }
@@ -139,6 +143,11 @@ public class MonsterSoundPlayer : MonoBehaviour
 
     private void PlayMonsterSound(EventReference eventRef)
     {
+        approachSoundEmitter.OverrideAttenuation = true;
+        
+        approachSoundEmitter.OverrideMinDistance = 1f;
+        approachSoundEmitter.OverrideMaxDistance = initialDistanceToPlayer - 5f;
+
         approachSoundEmitter.EventReference = eventRef;
         
         approachSoundEmitter.Play();

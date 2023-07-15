@@ -155,11 +155,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterProxy: {fileID: 8112896167923530534}
   numberOfPointsLimits:
-    MinLimit: 20
-    MaxLimit: 40
+    MinLimit: 7
+    MaxLimit: 30
   distanceStepLimits:
-    MinLimit: 0.6
-    MaxLimit: 1.5
+    MinLimit: 1.3
+    MaxLimit: 5
   rotationAroundSpawnerLimits:
     MinLimit: -90
     MaxLimit: 90
@@ -168,8 +168,8 @@ MonoBehaviour:
     MinLimit: 3
     MaxLimit: 10
   durationLimits:
-    MinLimit: 30
-    MaxLimit: 120
+    MinLimit: 45
+    MaxLimit: 150
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae81666d68c442968c8689e2bf29607f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBeforeAttack: 2
+  delayBeforeAttack:
+    MinLimit: 0.5
+    MaxLimit: 3
 --- !u!114 &2770388103404711760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,8 +310,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitBetweenSoundsLimit:
-    MinLimit: 3
-    MaxLimit: 30
+    MinLimit: 7
+    MaxLimit: 20
   monsterSoundsList:
   - distance: 6
     monsterSoundRefList:
