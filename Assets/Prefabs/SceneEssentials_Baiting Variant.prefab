@@ -170,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8370402436042479153, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: BlockCount
-      value: 256
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 8428814468877849716, guid: f54835b787767774aa735d91f2361471, type: 3}
       propertyPath: m_DefaultActionMap

@@ -7,6 +7,7 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
     [SerializeField] private float depthOffset = 110f;
     [SerializeField] private float meterPerSecond = 0.1f;
     [SerializeField] private float movementDamper = 0.01f;
+    
     [SerializeField] private TextMeshProUGUI depthText;
     [SerializeField] private Transform waterSurface;
     [SerializeField] private float[] depthThresholds;
@@ -36,10 +37,14 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
     
     public int NumberDepthThresholds => depthThresholds.Length;
 
-    private UpdateManager updateManager;
-    private float timer;
     private int currentDepthThresholdIndex;
+    private int lastFullDepth;
+    
+    private float timer;
 
+    private UpdateManager updateManager;
+
+    public event Action<int> DepthUpdatedEvent;
     public event Action<int> DepthThresholdChangedEvent;
 
     private void Start()
@@ -65,7 +70,18 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
         depthText.text = "Depth: " + CurrentDepth;
     }
 
-    private int CalculateCurrentDepth() => (int) Mathf.Round(timer * meterPerSecond + depthOffset);
+    private int CalculateCurrentDepth()
+    {
+        var newDepth = (int) Mathf.Round(timer * meterPerSecond + depthOffset);
+
+        if (newDepth > lastFullDepth)
+        {
+            DepthUpdatedEvent?.Invoke(newDepth);
+            lastFullDepth = newDepth;
+        }
+
+        return newDepth;
+    }
 
     private void UpdateSurfacePosition()
     {

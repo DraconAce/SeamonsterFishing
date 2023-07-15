@@ -33,7 +33,13 @@ public class PrefabPool : MonoBehaviour
     public PoolObjectContainer RequestInstance(Vector3 newPosition, Transform parent = null)
     {
         var newOb = RequestInstance(parent);
-        newOb.Ob.transform.position = newPosition;
+        
+        var newObTrans = newOb.Ob.transform;
+        
+        if(newObTrans is RectTransform rectTrans)
+            rectTrans.anchoredPosition = newPosition;
+        else
+            newObTrans.position = newPosition;
 
         return newOb;
     }
