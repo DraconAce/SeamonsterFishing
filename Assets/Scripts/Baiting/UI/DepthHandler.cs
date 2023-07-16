@@ -8,7 +8,6 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
     [SerializeField] private float meterPerSecond = 0.1f;
     [SerializeField] private float movementDamper = 0.01f;
     
-    [SerializeField] private TextMeshProUGUI depthText;
     [SerializeField] private Transform waterSurface;
     [SerializeField] private float[] depthThresholds;
     
@@ -66,8 +65,6 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
         timer += Time.deltaTime;
 
         CurrentDepth = CalculateCurrentDepth();
-        
-        depthText.text = "Depth: " + CurrentDepth;
     }
 
     private int CalculateCurrentDepth()
