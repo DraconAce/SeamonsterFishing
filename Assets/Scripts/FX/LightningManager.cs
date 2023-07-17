@@ -91,7 +91,7 @@ public class Lightning_Manager : MonoBehaviour
             {
                 targetSettings.OnStartAction?.Invoke();
                 //outlineComponent.OutlineWidth = 3;
-                DOVirtual.Color(new Color(1,1,1,0), new Color(1,1,1,1), AppearOutlineDuration, (colorValue) =>
+                DOVirtual.Color(new Color(1,1,1,0), new Color(1,1,1,0.2f), AppearOutlineDuration, (colorValue) =>
                 {
                     outlineComponent.OutlineColor = colorValue;
                 });
@@ -106,7 +106,7 @@ public class Lightning_Manager : MonoBehaviour
             { 
                 targetSettings.OnCompleteAction?.Invoke();
                 //outlineComponent.OutlineWidth = 0;
-                DOVirtual.Color(new Color(1,1,1,1), new Color(1,1,1,0), DisappearOutlineDuration, (colorValue) =>
+                DOVirtual.Color(new Color(1,1,1,0.2f), new Color(1,1,1,0), DisappearOutlineDuration, (colorValue) =>
                 {
                     outlineComponent.OutlineColor = colorValue;
                 });
