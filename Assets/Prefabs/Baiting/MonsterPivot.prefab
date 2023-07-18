@@ -322,6 +322,20 @@ MonoBehaviour:
           Data3: 1887554482
           Data4: 696217430
         Path: event:/Baiting/Monster/MonsterApproach_Close
+    - eventRef:
+        Guid:
+          Data1: -1063449817
+          Data2: 1200754180
+          Data3: -2035005001
+          Data4: 512249181
+        Path: event:/Baiting/Monster/MonsterApproach_Close 2
+    - eventRef:
+        Guid:
+          Data1: 1497957587
+          Data2: 1109909887
+          Data3: -2133717601
+          Data4: -1508049441
+        Path: event:/Baiting/Monster/MonsterApproach_Close 3
   - distance: 9
     monsterSoundRefList:
     - eventRef:
@@ -331,6 +345,20 @@ MonoBehaviour:
           Data3: 1090218892
           Data4: 659623664
         Path: event:/Baiting/Monster/MonsterApproach_Mid
+    - eventRef:
+        Guid:
+          Data1: 2131099128
+          Data2: 1203956122
+          Data3: 1663217072
+          Data4: 1732614024
+        Path: event:/Baiting/Monster/MonsterApproach_Mid 2
+    - eventRef:
+        Guid:
+          Data1: -742145156
+          Data2: 1084820483
+          Data3: -1107806025
+          Data4: 1519174537
+        Path: event:/Baiting/Monster/MonsterApproach_Mid 3
   - distance: 13
     monsterSoundRefList:
     - eventRef:
@@ -340,6 +368,20 @@ MonoBehaviour:
           Data3: -1024259163
           Data4: -1386984086
         Path: event:/Baiting/Monster/MonsterApproach_Far
+    - eventRef:
+        Guid:
+          Data1: 22232733
+          Data2: 1128837121
+          Data3: 1889097371
+          Data4: 1666310223
+        Path: event:/Baiting/Monster/MonsterApproach_Far 2
+    - eventRef:
+        Guid:
+          Data1: 955934232
+          Data2: 1220497516
+          Data3: -1510612322
+          Data4: -1041651160
+        Path: event:/Baiting/Monster/MonsterApproach_Far 3
   approachSoundEmitter: {fileID: 7971904250638264494}
   attackSoundEmitter: {fileID: 4713329607241235055}
   repelledSoundEmitter: {fileID: 419608736329854840}

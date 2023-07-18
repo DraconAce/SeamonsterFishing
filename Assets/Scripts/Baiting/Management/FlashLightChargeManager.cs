@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,8 +11,9 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
     [SerializeField] private MinMaxLimit spotIntensityLimits = new MinMaxLimit(0, 10);
     [SerializeField] private float drainPerSecond = 0.01f;
     [SerializeField] private BaitingFlash flashlight;
+    [SerializeField] private EventReference chargeSound;
     [SerializeField] private string[] actionsToSubscribeTo;
-
+    
     private bool isCharging;
     private bool flashCompletelyDrained;
     
@@ -34,6 +37,7 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
     private WaitUntil waitForChargeStop;
     private Coroutine drainRoutine;
+    private EventInstance chargeSoundInstance;
 
     private InputManager inputManager;
     
@@ -48,6 +52,8 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
     private void Start()
     {
         waitForChargeStop = new WaitUntil(() => !isCharging);
+
+        chargeSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(chargeSound, gameObject);
         
         flashlight.onFlashUsed += OnFlashUsed;
 
@@ -101,15 +107,18 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
     {
         isCharging = true;
         inputReceivedFlag = true;
-
-        if (chargingRoutine != null)
-            timeBetweenInputs = 0;
-        else
-            chargingRoutine = StartCoroutine(ChargingRoutine());
+        
+        timeBetweenInputs = 0;
+        
+        if (chargingRoutine != null) return;
+            
+        chargingRoutine = StartCoroutine(ChargingRoutine());
     }
 
     private IEnumerator ChargingRoutine()
     {
+        chargeSoundInstance.start();
+        
         while (isCharging)
         {
             yield return waitForEndFrame;
@@ -131,6 +140,7 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
                 if (timeBetweenInputs >= maxTimeBetweenChargeInput)
                 {
                     isCharging = false;
+
                     break;
                 }
             }
@@ -138,6 +148,7 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
             inputReceivedFlag = false;
         }
 
+        chargeSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         chargingRoutine = null;
     }
 
@@ -151,6 +162,9 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
     private void OnDestroy()
     {
+        chargeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        chargeSoundInstance.release();
+        
         flashlight.onFlashUsed -= OnFlashUsed;
         
         UnsubscribeOnDestroy();

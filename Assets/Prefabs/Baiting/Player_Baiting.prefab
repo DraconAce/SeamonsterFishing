@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 7959796556991837305}
   - component: {fileID: 6428979121587742864}
   - component: {fileID: 4563017704193970575}
+  - component: {fileID: 7076965012866823455}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Untagged
@@ -351,6 +352,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 7076965012866823455}
+          m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
@@ -382,9 +395,16 @@ MonoBehaviour:
     MaxLimit: 10
   drainPerSecond: 0.01
   flashlight: {fileID: 7959796556991837305}
+  chargeSound:
+    Guid:
+      Data1: 1595060766
+      Data2: 1132724704
+      Data3: -1872884300
+      Data4: -961279607
+    Path: event:/Baiting/Diver/ReloadFlashlight
   actionsToSubscribeTo:
   - Charge_Flashlight
-  maxTimeBetweenChargeInput: 1
+  maxTimeBetweenChargeInput: 0.5
   chargePerInput: 0.05
 --- !u!114 &4563017704193970575
 MonoBehaviour:
@@ -454,6 +474,37 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7076965012866823455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516152437214290642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -112315476
+      Data2: 1110339604
+      Data3: -1655927642
+      Data4: 1526397600
+    Path: event:/Baiting/Diver/FlashUsed
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &6363403873056219890
 GameObject:
   m_ObjectHideFlags: 0
