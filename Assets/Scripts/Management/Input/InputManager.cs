@@ -127,8 +127,10 @@ public class InputManager : Singleton<InputManager>
             actionEvent.CanceledAction -= subscriber.InputCanceled;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+        
         playerInput.onActionTriggered -= OnActionTriggered;
 
         if (gameStateManager == null) return;
