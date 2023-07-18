@@ -10,7 +10,7 @@ public class GameStateManager : Singleton<GameStateManager>
     private SceneController sceneController;
     
     public bool BlockGameStateChange { get; set; }
-    public bool GameIsPaused => CurrentGameState == GameState.PauseMenu;
+    public bool GameIsPaused => CurrentGameState == GameState.Pause;
     public GameState PreviousGameState { get; private set; }
 
     public GameState CurrentGameState

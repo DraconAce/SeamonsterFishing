@@ -55,6 +55,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   initialDrivingDirection: -1
+  stoppingBoatSpeedReduction: 0.2
   MoveBoatSound:
     Guid:
       Data1: 432150634
@@ -81,7 +82,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985206358eaf4ffda7fcd3970777c93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  driveSpeed: 7
+  maxDriveSpeed: 8
+  driveSpeedincrease: 0.025
+  currentSpeed: 0
   moveLimit:
     MinLimit: -7.5
     MaxLimit: 7.5
@@ -107,5 +110,6 @@ MonoBehaviour:
   lampRotationAxis: 0
   lampPivot: {fileID: 0}
   lampAnimationEase: 8
-  rotationDuration: 3
-  rotationEase: 2
+  rotationDuration: 2.5
+  rotationEase: 4
+  forwardLampRotation: 95
