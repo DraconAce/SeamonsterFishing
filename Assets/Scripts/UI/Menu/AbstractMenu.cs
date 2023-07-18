@@ -13,6 +13,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
     private InputManager inputManager;
 
     private bool initialCloseExecuted;
+    protected bool menuIsOpen;
 
     protected virtual bool UseInputActions => true;
     
@@ -40,6 +41,10 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 
     protected void OpenMenu()
     {
+        if(menuIsOpen) return;
+        
+        menuIsOpen = true;
+        
         ToggleMenuCanvas(true);
         OpenMenuImpl();
         
@@ -56,6 +61,10 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 
     protected void CloseMenu(bool invokeEvent = true)
     {
+        if(!menuIsOpen) return;
+        
+        menuIsOpen = false;
+        
         ToggleMenuCanvas(false);
         
         if(initialCloseExecuted) CloseMenuImpl();
