@@ -11,9 +11,8 @@ public enum GameState
     Navigation = 4,
 
     Dead = 5,
-    //Escaped = 10,
     Won = 7,
     
-    PauseMenu = 8,
+    Pause = 8,
     MainMenu = 9
 }
