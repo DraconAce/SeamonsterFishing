@@ -1,7 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+
+public enum PlayerDevice
+{
+    Gamepad = 0,
+    Keyboard = 1,
+    Other = 2
+}
 
 public class InputManager : Singleton<InputManager>
 {
@@ -25,14 +33,29 @@ public class InputManager : Singleton<InputManager>
         public void InvokePerformed(InputAction.CallbackContext context) => PerformedAction?.Invoke(context);
         public void InvokeCanceled(InputAction.CallbackContext context) => CanceledAction?.Invoke(context);
     }
-
+    
     [SerializeField] private List<GameStateInputMap> inputMapsList;
 
     public PlayerInput playerInput { get; private set; }
+    
+    private EventSystem eventSystem;
+    public EventSystem EventSystem 
+    {
+        get
+        {
+            if (eventSystem != null) return eventSystem;
+                
+            eventSystem = FindFirstObjectByType<EventSystem>();
+            
+            return eventSystem;
+        }
+    }
 
     private GameStateManager gameStateManager;
     private Dictionary<GameState, string> inputMapsLookup = new();
     private readonly Dictionary<string, ActionEvent> inputActionAndActionEvents = new();
+
+    public PlayerDevice LatestDevice { get; private set; } = PlayerDevice.Keyboard;
 
     private void Awake()
     {
@@ -44,9 +67,23 @@ public class InputManager : Singleton<InputManager>
 
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
     {
+        DetermineUsedDevice(callbackContext);
+        
         if (!inputActionAndActionEvents.TryGetValue(callbackContext.action.name, out var actionEvent)) return;
 
         NotifySubscribers(callbackContext, actionEvent);
+    }
+
+    private void DetermineUsedDevice(InputAction.CallbackContext callbackContext)
+    {
+        var usedDevice = callbackContext.control.device;
+
+        LatestDevice = usedDevice switch
+        {
+            Gamepad => PlayerDevice.Gamepad,
+            Keyboard => PlayerDevice.Keyboard,
+            _ => PlayerDevice.Other
+        };
     }
 
     private void NotifySubscribers(InputAction.CallbackContext callbackContext, ActionEvent triggeredActionEvent)
