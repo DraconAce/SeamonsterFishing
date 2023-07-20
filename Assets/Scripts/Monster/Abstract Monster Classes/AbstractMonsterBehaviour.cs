@@ -1,125 +1,94 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
+using DG.Tweening;
 using UnityEngine;
 
-public abstract class AbstractMonsterBehaviour : MonoBehaviour, IDecisionRuntimeRep, IMonsterBehaviourDecisionState
+public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
 {
-    [SerializeField] private int priority;
-    [SerializeField] private AbstractBehaviourTreeNode nodeToRep;
+    [SerializeField] private float timeout = 1f;
+
+    private float currentTimer;
+
+    private Tween timeoutTween;
+    private Coroutine behaviourRoutine;
+    private Coroutine stopBehaviourRoutine;
+
+    protected FightMonsterState FightMonsterState { get; private set; }
+
+    protected bool IsTimedOut { get; private set; }
+    protected abstract MonsterState BehaviourState { get; }
+
+    public override bool IsNodeExecutable
+    {
+        get => !IsTimedOut; 
+        set => IsTimedOut = !value;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        FightMonsterState = FightMonsterSingleton.instance.FightState;
+    }
+
+    protected override void StartBehaviour()
+    {
+        if(stopBehaviourRoutine != null)
+            StopCoroutine(stopBehaviourRoutine);
+        
+        FightMonsterState.CurrentState = BehaviourState;
+        
+        behaviourRoutine = StartCoroutine(BehaviourRoutine());
+    }
     
-    public virtual bool ChangeMonsterStateOnStartBehaviour => false;
-    public virtual MonsterState MonsterStateOnBehaviourStart => MonsterState.None;
+    private IEnumerator BehaviourRoutine()
+    {
+        yield return BehaviourRoutineImpl();
+        
+        MonsterKi.BehaviourTreeManager.RequestBehaviourEnd(this);
+        StartTimeoutTween();
+    }
 
-    private AbstractMonsterState monsterState;
-    private BehaviourNotifier behaviourNotifier;
-    private MonsterKI monsterKi;
+    protected abstract IEnumerator BehaviourRoutineImpl();
 
-    private Coroutine behaviourImplRoutine;
-    private Coroutine BehaviourRoutine;
-    private Coroutine InterruptRoutine;
+    private void StartTimeoutTween()
+    {
+        if (timeout <= 0) return;
+        
+        IsTimedOut = true;
+        
+        timeoutTween = DOVirtual.DelayedCall(timeout, () => IsTimedOut = false);
+    }
 
-    private bool behaviourIsPlaying;
-    protected bool interruptBehaviourRoutine;
+    protected override void StopBehaviour()
+    {
+        if(behaviourRoutine != null)
+            StopCoroutine(behaviourRoutine);
+        
+        stopBehaviourRoutine = StartCoroutine(StopBehaviourRoutine());
+    }
     
-    public bool BehaviourIsDone { get; private set; }
-    public bool InterruptIsDone { get; private set; } = true;
-    public int Priority => priority;
-
-    public WaitUntil WaitForInterruptDone { get; private set; }
-    public WaitUntil WaitForCompletionOrInterruption { get; private set; }
-    public AbstractBehaviourTreeNode NodeToRepresent => nodeToRep;
-
-
-    private void Awake()
+    private IEnumerator StopBehaviourRoutine()
     {
-        WaitForCompletionOrInterruption = new(() => interruptBehaviourRoutine || BehaviourIsDone);
-        WaitForInterruptDone = new(() => InterruptIsDone);
-    }
-
-    protected virtual void Start()
-    {
-        behaviourNotifier = BehaviourNotifier.instance as BehaviourNotifier;
-        behaviourNotifier.RegisterBehaviour(this);
+        yield return StopBehaviourRoutineImpl();
         
-        monsterState = GetComponentInParent<AbstractMonsterState>();
-        monsterKi = MonsterKI.instance;
-
-        monsterState.MonsterStateChangedEvent += OnMonsterStateChanged;
+        MonsterKi.BehaviourTreeManager.RequestBehaviourEnd(this);
     }
 
-    public void TriggerBehaviour()
-    {
-        if (monsterKi.IsBehaviourActive(nodeToRep.BehaviourName)) return;
-        
-        BehaviourRoutine = StartCoroutine(StartBehaviourRoutine());
-
-        if (!ChangeMonsterStateOnStartBehaviour) return;
-        
-        monsterState.CurrentState = MonsterStateOnBehaviourStart;
-    }
-
-    private IEnumerator StartBehaviourRoutine()
-    {
-        behaviourImplRoutine = StartCoroutine(StartBehaviourImpl());
-        behaviourIsPlaying = true;
-
-        yield return WaitForCompletionOrInterruption;
-
-        yield return null;
-        ResetAfterBehaviourCompleted();
-    }
-
-    protected virtual IEnumerator StartBehaviourImpl()
-    {
-        BehaviourIsDone = true;
-        yield break;
-    }
-
-    private void OnMonsterStateChanged(MonsterState newState)
-    {
-        if (newState == MonsterStateOnBehaviourStart) return;
-        
-        InterruptBehaviour();
-    }
-
-    public void InterruptBehaviour()
-    {
-        if (!behaviourIsPlaying) return;
-
-        InterruptIsDone = false;
-        interruptBehaviourRoutine = true;
-
-        if(behaviourImplRoutine != null)
-            StopCoroutine(behaviourImplRoutine);
-
-        InterruptRoutine = StartCoroutine(StartInterruptedRoutineImpl());
-    }
-
-    protected virtual IEnumerator StartInterruptedRoutineImpl()
-    {
-        InterruptIsDone = true;
-
-        yield return null;
-        yield return null;
-
-        interruptBehaviourRoutine = false;
-    }
-
-    private void ResetAfterBehaviourCompleted() => (BehaviourIsDone, interruptBehaviourRoutine, behaviourIsPlaying) = (false, false, false);
-
-
-    protected virtual void OnDestroy()
-    {
-        if (BehaviourRoutine != null)
-            StopCoroutine(BehaviourRoutine);
-
-        if (InterruptRoutine == null) return;
-        
-        StopCoroutine(InterruptRoutine);
-    }
-
-    public virtual bool CanBeExecuted() => true;
+    protected abstract IEnumerator StopBehaviourRoutineImpl();
     
-    public void Execute() => TriggerBehaviour();
+    protected override NodeData CollectNodeData()
+    {
+        return new NodeData
+        {
+            NodeIndex = this.NodeIndex,
+            NodeComparisonData = new NodeComparisonData { NodeType = NodeType.Action }
+        };
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        timeoutTween?.Kill();
+    }
 }

@@ -11,14 +11,18 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     {
         nodeImplIndexCounter = 0;
     }
-    
+ 
+    [SerializeField] private int priority = 1;
     [SerializeField] private AbstractBehaviourTreeNode nodeToRepresent;
     public AbstractBehaviourTreeNode NodeToRepresent => nodeToRepresent;
     
     private MonsterKI monsterKI;
+
+    public MonsterKI MonsterKi => monsterKI;
+
     protected FightMonsterBehaviourTreeManager behaviourTreeManager;
 
-    public abstract int Priority { get; }
+    public int Priority => priority;
     public abstract bool IsNodeExecutable { get; set; }
 
     public NodeData CurrentNodeData { get; set; }
@@ -32,7 +36,7 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
 
     protected virtual void Start()
     {
-        monsterKI = MonsterKI.instance;
+        monsterKI = FightMonsterSingleton.instance.MonsterKI;
         MakeSureTreeManagerIsAssigned();
 
         if (nodeToRepresent.NodeType == NodeType.Decision) return;
@@ -53,7 +57,7 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     {
         MakeSureTreeManagerIsAssigned();
         
-        behaviourTreeManager.CurrentBehaviourEnded();
+        behaviourTreeManager.RequestBehaviourEnd();
     }
 
     public void Execute() => StartBehaviour();
@@ -75,7 +79,7 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
         return CurrentNodeData;
     }
 
-    public virtual ComparableData GetComparableData()
+    public ComparableData GetComparableData()
     {
         return new ComparableData(NodeIndex, IsNodeExecutable, Priority, GetExecutability());
     }
@@ -83,6 +87,8 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     protected abstract NodeData CollectNodeData();
     
     public abstract float GetExecutability();
+
+    public void TriggerBehaviourDirectly() => MonsterKi.RequestDirectStartOfBehaviour(NodeIndex);
 
 
     protected virtual void OnDestroy()

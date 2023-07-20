@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class HitWithArmsAttack : AbstractMonsterAttack
+public class HitWithArmsAttack : AbstractAttackNode
 {
     [Header("Horizontal Rotation")]
     
@@ -34,11 +34,15 @@ public class HitWithArmsAttack : AbstractMonsterAttack
 
     private Sequence attackSequence;
     
-    protected override IEnumerator StartBehaviourImpl()
+    public override float GetExecutability()
+    { 
+        return 100f;
+    }
+
+    
+    protected override IEnumerator BehaviourRoutineImpl()
     {
         yield return StartCoroutine(SwingAttackRoutine());
-        
-        yield return base.StartBehaviourImpl();
     }
 
     private IEnumerator SwingAttackRoutine()
@@ -102,12 +106,11 @@ public class HitWithArmsAttack : AbstractMonsterAttack
             .SetEase(swingEase);
     }
 
-    protected override IEnumerator StartInterruptedRoutineImpl()
+    protected override IEnumerator StopBehaviourRoutineImpl()
     {
         attackSequence?.Kill();
         
         yield return ReturnToOriginalPositionTween();
-        yield return base.StartInterruptedRoutineImpl();
     }
 
     private IEnumerator ReturnToOriginalPositionTween()

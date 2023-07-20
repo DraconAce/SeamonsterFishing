@@ -4,10 +4,7 @@ using UnityEngine;
 public class TestBehaviourActionImpl : AbstractMonsterNodeImpl
 {
     [SerializeField] private bool isExecutable = true;
-    [SerializeField] private int priority = 1;
     [SerializeField] private float executability = 1f;
-    
-    public override int Priority => priority;
 
     public override bool IsNodeExecutable
     {

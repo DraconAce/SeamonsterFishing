@@ -18,8 +18,7 @@ public abstract class AbstractDecisionNodeImpl : AbstractMonsterNodeImpl
         get => true;
         set { }
     }
-
-
+    
     protected override void Start()
     {
         base.Start();

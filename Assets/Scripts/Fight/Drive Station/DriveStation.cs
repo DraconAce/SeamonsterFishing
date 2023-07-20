@@ -17,8 +17,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
     private InputAction driveAction;
 
-    private DriveStation_Moving movingController;
-    private DriveStation_Rotating rotatingController;
+    public DriveStation_Moving MovingController { get; private set; }
+    public DriveStation_Rotating RotatingController { get; private set; }
 
     public float LastDriveDirection { get; set; }
     public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
@@ -37,11 +37,13 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     private void Awake()
     {
         LastDriveDirection = initialDrivingDirection;
-        
-        PlayerTransform = PlayerSingleton.instance.PlayerTransform;
 
-        TryGetComponent(out movingController);
-        TryGetComponent(out rotatingController);
+        var playerSingleton = PlayerSingleton.instance;
+        PlayerTransform = playerSingleton.PlayerTransform;
+        playerSingleton.DriveStation = this;
+
+        MovingController = GetComponent<DriveStation_Moving>();
+        RotatingController = GetComponent<DriveStation_Rotating>();
 
         MoveBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MoveBoatSound, PlayerTransform.gameObject);
         TurnBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(TurnBoatSound, PlayerTransform.gameObject);
@@ -67,7 +69,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
         UpdateManager.SubscribeToManualUpdate(this);
 
-        rotatingController.CalculateLeftRotation();
+        RotatingController.CalculateLeftRotation();
     }
 
     private void GetAndEnableDriveAction()
@@ -88,7 +90,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         
         //Debug.Log("currentBoatSpeed: "+ movingController.currentSpeed);
         
-        if(movingController.BoatIsNotMoving(moveDirection)) 
+        if(MovingController.BoatIsNotMoving(moveDirection)) 
         {
             //movingController.currentSpeed = 0;
             if (lastMoveDirection != 0f)
@@ -99,9 +101,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
             return;
         }
 
-        var hasDirectionChanged = rotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
+        var hasDirectionChanged = RotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
 
-        if (hasDirectionChanged || rotatingController.MovingLocked) 
+        if (hasDirectionChanged || RotatingController.MovingLocked) 
         {
             //Turn Boat Sound should play
             TurnBoatSoundInstance.getPlaybackState(out var turnPlaybackState);
@@ -118,8 +120,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
             StopCoroutineIfItExists();
         }
         
-        movingController.IncreaseCurrentBoatSpeed();
-        movingController.MoveBoat(moveDirection);
+        MovingController.IncreaseCurrentBoatSpeed();
+        MovingController.MoveBoat(moveDirection);
         
         //save moveDirection to determine if the BoatStopper should play
         lastMoveDirection = moveDirection; 
@@ -168,14 +170,14 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         //Debug.Log("Coroutine started");
         while (stoppingBoatMoveCoroutingIsRunning) 
         {
-            movingController.currentSpeed -= stoppingBoatSpeedReduction;
-            if (movingController.currentSpeed <= stoppingBoatSpeedReduction) 
+            MovingController.currentSpeed -= stoppingBoatSpeedReduction;
+            if (MovingController.currentSpeed <= stoppingBoatSpeedReduction) 
             {
-                movingController.currentSpeed = 0f;
+                MovingController.currentSpeed = 0f;
                 stoppingBoatMoveCoroutingIsRunning = false;
                 yield return null;
             }
-            movingController.MoveBoat(moveDirection);
+            MovingController.MoveBoat(moveDirection);
             yield return new WaitForFixedUpdate();
         } 
     }

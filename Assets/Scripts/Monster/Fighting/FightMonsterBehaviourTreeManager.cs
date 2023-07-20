@@ -5,13 +5,11 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubscriber
 {
     [SerializeField] private float delayBeforeFirstBehaviour = 1f;
     [SerializeField] private AbstractMonsterNodeImpl rootNode;
-    [SerializeField] private BehaviourTree behaviourTree;
     
     private readonly Dictionary<int, INodeImpl> nodeImplDict = new();
     private NativeHashMap<int, NodeData> nodeDataMap;
@@ -32,17 +30,10 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private void Start()
     {
-        updateManager = UpdateManager.instance;
-        monsterKI = MonsterKI.instance;
-        
-        randomArrayProvider = new RandomArrayProvider();
-        nextBehaviourID = new NativeArray<int>(1, Allocator.Persistent);
-        comparableDataMapRef = new NativeMultiHashMap<int, ComparableData>(0,Allocator.Persistent);
+        SetupVariables();
 
         monsterKI.BehaviourTreeManager = this;
-        monsterKI.StopCurrentBehaviourEvent += StopCurrentBehaviour;
-        
-        waitUntilBehaviourIsInactive = new WaitUntil(() => !IsAnyBehaviourActive);
+        monsterKI.RequestSpecificBehaviourEvent += RequestSpecificSpecificBehaviour;
 
         CreateNodeImplDict();
         
@@ -51,11 +42,23 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         StartCoroutine(StartFirstBehaviourRoutine());
     }
 
-    private void StopCurrentBehaviour() => StopCurrentBehaviour(-1);
-
-    private void StopCurrentBehaviour(int nextBehaviourIndex)
+    private void SetupVariables()
     {
-        stopCurrentBehaviourRoutine = StartCoroutine(StopCurrentBehaviourRoutine(nextBehaviourIndex));
+        updateManager = UpdateManager.instance;
+        monsterKI = FightMonsterSingleton.instance.MonsterKI;
+
+        randomArrayProvider = new RandomArrayProvider();
+        nextBehaviourID = new NativeArray<int>(1, Allocator.Persistent);
+        comparableDataMapRef = new NativeMultiHashMap<int, ComparableData>(0, Allocator.Persistent);
+
+        waitUntilBehaviourIsInactive = new WaitUntil(() => !IsAnyBehaviourActive);
+    }
+
+    private void StopCurrentBehaviour() => StopCurrentBehaviour(-1, false);
+
+    private void StopCurrentBehaviour(int nextBehaviourIndex, bool requestNewBehaviourAfter = true)
+    {
+        stopCurrentBehaviourRoutine = StartCoroutine(StopCurrentBehaviourRoutine(nextBehaviourIndex, requestNewBehaviourAfter));
     }
 
     private void CreateNodeImplDict()
@@ -74,12 +77,9 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private IEnumerator StartFirstBehaviourRoutine()
     {
-        while(true)
-        {
-            yield return new WaitForSeconds(delayBeforeFirstBehaviour);
+        yield return new WaitForSeconds(delayBeforeFirstBehaviour);
 
-            RequestNextBehaviour();
-        }
+        RequestNextBehaviour();
     }
 
     public INodeImpl GetNodeImplementation(int behaviourIndex) => nodeImplDict[behaviourIndex];
@@ -91,7 +91,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     public void RequestNextBehaviour()
     {
-        CurrentBehaviourEnded();
+        RequestBehaviourEnd();
 
         UpdateNodeData();
         
@@ -108,14 +108,22 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
             nodeDataMap[nodeImpl.NodeIndex] = nodeImpl.RefreshNodeData();
     }
 
-    public void CurrentBehaviourEnded() => CurrentBehaviour = null;
+    public void RequestBehaviourEnd(INodeImpl behaviourToEndIfActive = null)
+    {
+        if(behaviourToEndIfActive == null || CurrentBehaviour != behaviourToEndIfActive)
+            return;
+        
+        CurrentBehaviour = null;
+    }
 
-    private IEnumerator StopCurrentBehaviourRoutine(int nextBehaviourIndex)
+    private IEnumerator StopCurrentBehaviourRoutine(int nextBehaviourIndex, bool requestNewBehaviourAfter)
     {
         yield return waitUntilBehaviourIsInactive;
         
-        CurrentBehaviourEnded();
+        RequestBehaviourEnd();
         
+        if(!requestNewBehaviourAfter) yield break;
+
         if(nextBehaviourIndex >= 0)
         {
             monsterKI.ForwardActionRequest(nextBehaviourIndex);
@@ -172,13 +180,17 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         
         monsterKI.ForwardActionRequest(behaviourIndex);
         CurrentBehaviour = nodeImplDict[behaviourIndex];
+        
+        #if UNITY_EDITOR
+        Debug.Log(CurrentBehaviour.NodeToRepresent.BehaviourName);
+        #endif
     }
-    
-    public void RequestSpecificBehaviour(int behaviourIndex) => StopCurrentBehaviour(behaviourIndex);
+
+    private void RequestSpecificSpecificBehaviour(int behaviourIndex) => StopCurrentBehaviour(behaviourIndex);
 
     private void OnDestroy()
     {
-        monsterKI.StopCurrentBehaviourEvent -= StopCurrentBehaviour;
+        monsterKI.RequestSpecificBehaviourEvent -= RequestSpecificSpecificBehaviour;
 
         DisposeOfJobData();
     }
@@ -199,7 +211,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     }
 }
 
-//Todo: Convert to parallel job
+#region Job Implementations
 public struct EvaluateTreeJob : IJob
 {
     public int RootIndex;
@@ -244,3 +256,4 @@ public struct ChooseBehaviourJob : IJob
         }
     }
 }
+#endregion
