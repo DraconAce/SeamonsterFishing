@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 {
     [SerializeField] protected string[] menuInputActions;
+    [SerializeField] private GameObject firstSelectedOnMenuOpen;
     [SerializeField] private GameObject menuContainer;
     [SerializeField] private UnityEvent onMenuOpened;
     [SerializeField] private UnityEvent onMenuClosed;
@@ -45,6 +47,9 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         
         menuIsOpen = true;
         
+        inputManager.EventSystem.SetSelectedGameObject(null);
+        inputManager.EventSystem.SetSelectedGameObject(firstSelectedOnMenuOpen);
+        
         ToggleMenuCanvas(true);
         OpenMenuImpl();
         
@@ -65,6 +70,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         
         menuIsOpen = false;
         
+        inputManager.EventSystem.SetSelectedGameObject(null);
         ToggleMenuCanvas(false);
         
         if(initialCloseExecuted) CloseMenuImpl();
