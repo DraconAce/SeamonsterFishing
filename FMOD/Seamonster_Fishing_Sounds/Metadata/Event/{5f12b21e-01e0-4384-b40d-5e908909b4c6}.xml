@@ -60,7 +60,7 @@
 	<object class="MarkerTrack" id="{a1c29216-990d-41ce-840f-30b038500591}" />
 	<object class="GroupTrack" id="{499f9f29-640b-4dfe-9f94-5aac08aab475}">
 		<relationship name="modules">
-			<destination>{32a40115-cd2b-4f6b-beb5-317386633ffc}</destination>
+			<destination>{40aae292-7229-4cd2-ba61-c31e3d9580ec}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{e840e4e5-1882-42dd-89bb-f5492d15def8}</destination>
@@ -68,7 +68,7 @@
 	</object>
 	<object class="Timeline" id="{7e8c531c-5fc8-469a-89dc-bc0a1a4bd55e}">
 		<relationship name="modules">
-			<destination>{32a40115-cd2b-4f6b-beb5-317386633ffc}</destination>
+			<destination>{40aae292-7229-4cd2-ba61-c31e3d9580ec}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{7dbe7f2a-c3b5-4902-98ae-98ceabc684ee}</destination>
@@ -94,24 +94,18 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6cfdfbcf-cbe5-40a2-9d5b-24c2dd82347d}" />
-	<object class="SingleSound" id="{32a40115-cd2b-4f6b-beb5-317386633ffc}">
+	<object class="SingleSound" id="{40aae292-7229-4cd2-ba61-c31e3d9580ec}">
 		<property name="length">
-			<value>0.20000000000000001</value>
+			<value>5.166666666666667</value>
 		</property>
-		<property name="timelockedOffset">
-			<value>2.9066539883275229</value>
-		</property>
-		<property name="pitch">
-			<value>8</value>
-		</property>
-		<relationship name="fadeOutCurve">
-			<destination>{59100f11-384a-4b95-87ff-63696498ee76}</destination>
-		</relationship>
 		<relationship name="audioFile">
-			<destination>{4fbb8dc6-9dc7-47f7-b2eb-050379ac158b}</destination>
+			<destination>{b8f77e24-7066-469c-87d9-3a0e045a3c8c}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e840e4e5-1882-42dd-89bb-f5492d15def8}">
+		<property name="volume">
+			<value>-9</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -130,7 +124,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>0.47999999999999998</value>
+			<value>5.166666666666667</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{7e8c531c-5fc8-469a-89dc-bc0a1a4bd55e}</destination>
@@ -147,14 +141,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{91cdf7e9-0161-4783-8395-3c2a392f3495}" />
 	<object class="MixerBusFader" id="{42a1548c-c746-445b-aab7-99132341be56}" />
-	<object class="FadeCurve" id="{59100f11-384a-4b95-87ff-63696498ee76}">
-		<relationship name="startPoint">
-			<destination>{c2a871b6-9e11-4ad1-b404-c0c914b94dd1}</destination>
-		</relationship>
-		<relationship name="endPoint">
-			<destination>{5fe37fe3-e0ba-4e76-a75e-6adb4d8d0d53}</destination>
-		</relationship>
-	</object>
 	<object class="MixerBusEffectChain" id="{d6cb2061-7419-4aad-907f-acfa46031a03}">
 		<relationship name="effects">
 			<destination>{a5fe924d-5c19-4895-a828-7d486f8b04d2}</destination>
@@ -165,35 +151,13 @@
 	<object class="MixerBusPanner" id="{8af655ab-e9e5-40a7-ba11-a0e9da4ae65c}" />
 	<object class="MixerBusFader" id="{f06a40f3-720d-4275-8524-76f53f3ac18f}" />
 	<object class="SpatialiserEffect" id="{1fe6844a-ecba-47c6-9595-8b94edfe0af0}" />
-	<object class="AutomationPoint" id="{c2a871b6-9e11-4ad1-b404-c0c914b94dd1}">
-		<property name="position">
-			<value>0.13</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
-		<property name="curveShape">
-			<value>0.220539302</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{5fe37fe3-e0ba-4e76-a75e-6adb4d8d0d53}">
-		<property name="position">
-			<value>0.20000000000000001</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
-	</object>
 	<object class="MixerBusFader" id="{a5fe924d-5c19-4895-a828-7d486f8b04d2}" />
 	<object class="ThreeEQEffect" id="{1ce751f5-7b0e-4e7b-8aad-38c956d9fefd}">
-		<property name="lowGain">
-			<value>-21</value>
-		</property>
 		<property name="midGain">
-			<value>1.5</value>
+			<value>-1</value>
 		</property>
 		<property name="highGain">
-			<value>10</value>
+			<value>-6</value>
 		</property>
 		<property name="lowCrossover">
 			<value>360</value>

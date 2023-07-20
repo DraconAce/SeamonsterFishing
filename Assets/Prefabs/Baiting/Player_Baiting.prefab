@@ -390,11 +390,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   completelyDrainedPercentage: 0.2
+  drainPerSecond: 0.01
   spotIntensityLimits:
     MinLimit: 0.0001
     MaxLimit: 10
-  drainPerSecond: 0.01
   flashlight: {fileID: 7959796556991837305}
+  actionsToSubscribeTo:
+  - Charge_Flashlight
+  emptySound:
+    Guid:
+      Data1: 476375359
+      Data2: 1267124139
+      Data3: -94457161
+      Data4: 184931629
+    Path: event:/Baiting/Diver/FlashlightEmpty
+  maxTimeBetweenChargeInput: 0.5
+  chargePerInput: 0.05
   chargeSound:
     Guid:
       Data1: 1595060766
@@ -402,10 +413,13 @@ MonoBehaviour:
       Data3: -1872884300
       Data4: -961279607
     Path: event:/Baiting/Diver/ReloadFlashlight
-  actionsToSubscribeTo:
-  - Charge_Flashlight
-  maxTimeBetweenChargeInput: 0.5
-  chargePerInput: 0.05
+  fullyChargedSound:
+    Guid:
+      Data1: 1305785848
+      Data2: 1283910140
+      Data3: 1948678840
+      Data4: -2083439266
+    Path: event:/Baiting/Diver/FlashlightEnoughCharge
 --- !u!114 &4563017704193970575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,4 +659,5 @@ MonoBehaviour:
   lookLimit:
     HorizontalLimit: 25
     VerticalLimit: 7.5
-  lookSpeed: 6
+  lookSpeed: 4
+  gamePadFactor: 15

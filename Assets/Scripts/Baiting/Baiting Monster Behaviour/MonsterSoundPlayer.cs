@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MonsterPositionFaker))]
@@ -46,7 +47,7 @@ public class MonsterSoundPlayer : MonoBehaviour
     [Header("Sound Emitters")]
     [SerializeField] private StudioEventEmitter approachSoundEmitter;
 
-    [SerializeField] private StudioEventEmitter attackSoundEmitter;
+    [SerializeField] private StudioEventEmitter lurkSoundEmitter;
     [SerializeField] private StudioEventEmitter repelledSoundEmitter;
     [SerializeField] private StudioEventEmitter killSoundEmitter;
 
@@ -166,7 +167,7 @@ public class MonsterSoundPlayer : MonoBehaviour
         StopCoroutine(soundsRoutine);
     }
 
-    public void PlayAttackSound() => attackSoundEmitter.Play();
+    public void PlayLurkSound() => lurkSoundEmitter.Play();
 
     public void PlayKillSound() => killSoundEmitter.Play();
     

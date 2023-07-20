@@ -4,14 +4,14 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInputEventSubscriber
 {
     [SerializeField] private float completelyDrainedPercentage = 0.2f;
-    [SerializeField] private MinMaxLimit spotIntensityLimits = new MinMaxLimit(0, 10);
     [SerializeField] private float drainPerSecond = 0.01f;
+    [SerializeField] private MinMaxLimit spotIntensityLimits = new (0, 10);
     [SerializeField] private BaitingFlash flashlight;
-    [SerializeField] private EventReference chargeSound;
     [SerializeField] private string[] actionsToSubscribeTo;
     
     private bool isCharging;
@@ -37,9 +37,8 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
     private WaitUntil waitForChargeStop;
     private Coroutine drainRoutine;
-    private EventInstance chargeSoundInstance;
-
     private InputManager inputManager;
+    private GameStateManager gameStateManager;
     
     public event Action InfoChanged;
 
@@ -54,6 +53,8 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
         waitForChargeStop = new WaitUntil(() => !isCharging);
 
         chargeSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(chargeSound, gameObject);
+        emptySoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(emptySound, gameObject);
+        fullyChargedSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(fullyChargedSound, gameObject);
         
         flashlight.onFlashUsed += OnFlashUsed;
 
@@ -61,9 +62,30 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
         inputManager = InputManager.instance;
         inputManager.SubscribeToActions(this);
+        
+        gameStateManager = GameStateManager.instance;
+        gameStateManager.GameStateChangedEvent += OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath(GameState newGameState)
+    {
+        if(newGameState != GameState.Dead) return;
+
+        StopFlashlightSounds();
+    }
+
+    private void StopFlashlightSounds()
+    {
+        chargeSoundInstance.stop(STOP_MODE.IMMEDIATE);
+        emptySoundInstance.stop(STOP_MODE.IMMEDIATE);
     }
 
     #region Draining
+    [Header("Draining")]
+    [SerializeField] private EventReference emptySound;
+
+    private EventInstance emptySoundInstance;
+
     private void OnFlashUsed() => CurrentChargePercentage = 0f;
 
     private IEnumerator DrainBatteryRoutine()
@@ -77,24 +99,41 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
             CurrentChargePercentage -= drainPerSecond * Time.deltaTime;
 
-            if (CurrentChargePercentage <= completelyDrainedPercentage && !flashCompletelyDrained)
-            {
-                flashlight.ToggleFlashReady(false);
-                flashCompletelyDrained = true;
-            }
+            if (IsFlashlightDrained())
+                SetFlashlightToDrained();
 
             yield return null;
         }
     }
+
+    private bool IsFlashlightDrained()
+    {
+        return CurrentChargePercentage <= completelyDrainedPercentage && !flashCompletelyDrained;
+    }
+
+    private void SetFlashlightToDrained()
+    {
+        flashlight.ToggleFlashReady(false);
+        flashCompletelyDrained = true;
+        emptySoundInstance.start();
+    }
+
     #endregion
     
     #region Charging
 
+    [Header("Charging")]
     [SerializeField] private float maxTimeBetweenChargeInput = 1f;
     [SerializeField] private float chargePerInput = 0.05f;
+    [SerializeField] private EventReference chargeSound;
+    [SerializeField] private EventReference fullyChargedSound;
 
     private bool inputReceivedFlag;
     private float timeBetweenInputs;
+    
+    private EventInstance chargeSoundInstance;
+    private EventInstance fullyChargedSoundInstance;
+    
     private Coroutine chargingRoutine;
     private readonly WaitForEndOfFrame waitForEndFrame = new();
 
@@ -130,7 +169,12 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
                 if(CurrentChargePercentage >= 1f)
                 {
                     flashlight.ToggleFlashReady(true);
+                    
+                    if(flashCompletelyDrained)
+                        fullyChargedSoundInstance.start();
+
                     flashCompletelyDrained = false;
+                    emptySoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                 }
             }
             else
@@ -149,6 +193,7 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
         }
 
         chargeSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
         chargingRoutine = null;
     }
 
@@ -162,7 +207,10 @@ public class FlashLightChargeManager : MonoBehaviour, IFloatInfoProvider, IInput
 
     private void OnDestroy()
     {
-        chargeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        emptySoundInstance.stop(STOP_MODE.IMMEDIATE);
+        emptySoundInstance.release();
+        
+        chargeSoundInstance.stop(STOP_MODE.IMMEDIATE);
         chargeSoundInstance.release();
         
         flashlight.onFlashUsed -= OnFlashUsed;

@@ -14,9 +14,11 @@ public class PlayerLookController : MonoBehaviour, IManualUpdateSubscriber
 
     [SerializeField] private RotationLimits lookLimit;
     [SerializeField] private float lookSpeed = 10f;
+    [SerializeField] private float gamePadFactor = 3f;
     
     private UpdateManager updateManager;
     private PlayerSingleton playerSingleton;
+    private InputManager inputManager;
 
     private PlayerInputs customPlayerInputs;
     private InputAction lookAction;
@@ -39,6 +41,7 @@ public class PlayerLookController : MonoBehaviour, IManualUpdateSubscriber
         yield return deferredSubscriptionTime;
         
         playerSingleton = PlayerSingleton.instance;
+        inputManager = InputManager.instance;
         
         updateManager = UpdateManager.instance;
         updateManager.SubscribeToManualUpdate(this);
@@ -64,11 +67,21 @@ public class PlayerLookController : MonoBehaviour, IManualUpdateSubscriber
         var lookInput = lookAction.ReadValue<Vector2>();
 
         var lookVector = new Vector3(-lookInput.y, lookInput.x, 0);
-        var rotationToAdd = Time.deltaTime * lookSpeed * lookVector;
+        var rotationToAdd = Time.deltaTime * DetermineLookSpeedFactor() * lookVector;
 
         targetLookAngle += rotationToAdd;
         
         return targetLookAngle;
+    }
+
+    private float DetermineLookSpeedFactor()
+    {
+        return lookSpeed * (IsPlayerUsingGamepad() ? gamePadFactor : 1);
+    }
+
+    private bool IsPlayerUsingGamepad()
+    {
+        return inputManager.LatestDevice == PlayerDevice.Gamepad;
     }
 
     private Quaternion ClampRotation(Vector3 rotationToClamp)

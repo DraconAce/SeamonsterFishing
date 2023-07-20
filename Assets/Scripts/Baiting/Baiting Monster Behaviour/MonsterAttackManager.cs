@@ -32,7 +32,7 @@ public class MonsterAttackManager : MonoBehaviour
 
     public void StartAttack()
     {
-        soundPlayer.PlayAttackSound();
+        soundPlayer.PlayLurkSound();
         monsterState.CurrentState = MonsterState.Attacking;
 
         attackTween = DOVirtual.DelayedCall(delayBeforeAttack.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction),
