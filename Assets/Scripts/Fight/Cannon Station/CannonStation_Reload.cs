@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscriber
 {
+    [SerializeField] private GameObject fuse;
+    private Material fuseMat;
+    
     [SerializeField] private float reloadTime = 3f;
     
     public bool IsLoaded { get; set; } = true;
@@ -29,7 +32,12 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
 
     private CannonStation cannonStation => (CannonStation)ControllerStation;
 
-    private void Start() => SubscribeToInputManager();
+    private void Start() 
+    {
+        SubscribeToInputManager();
+        //Fetch the Material from the Renderer of the fuse-GameObject
+        fuseMat = fuse.GetComponent<Renderer>().sharedMaterial;
+    } 
 
     protected override void OnControllerSetup()
     {
@@ -82,12 +90,29 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         //stop sound
         reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
+        //turn fuse back on
+        resetFuse();
+        
         InvokeSegmentStateChangedEvent();
+    }
+    
+    private void resetFuse()
+    {
+        fuseMat.SetFloat("_isFuseActive", 0f);
+        fuseMat.SetFloat("_Transparancy", 1f);
+    }
+    
+    public void burnFuse() 
+    {
+        fuseMat.SetFloat("_isFuseActive", 1f);
+        fuseMat.SetFloat("_Transparancy", 0.5f);
     }
     
     protected override void OnDestroy()
     {
         base.OnDestroy();
+        
+        resetFuse();
         
         reloadingTween?.Kill();
         
