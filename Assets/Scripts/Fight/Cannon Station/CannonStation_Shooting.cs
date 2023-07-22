@@ -108,6 +108,7 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
         CannonFuseSoundInstance.start();
 
         //burn fuse
+        reloadSegment.SetShootDelayforFuse(shootDelay);
         reloadSegment.burnFuse();
 
         shootDelayTween = DOVirtual.DelayedCall(shootDelay, Shoot, false);
