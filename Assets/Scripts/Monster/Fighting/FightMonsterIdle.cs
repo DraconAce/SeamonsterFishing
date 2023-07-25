@@ -70,7 +70,7 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
         yield return returnToOriginalPosTween.WaitForCompletion();
     }
 
-    public override float GetExecutability() => 1f;
+    public override float GetExecutability() => 0.1f;
 
     protected override void OnDestroy() => idleSequence?.Kill();
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestBehaviourDecisionImpl : AbstractDecisionNodeImpl
+public class GenericBehaviourDecisionImpl : AbstractDecisionNodeImpl
 {
     [SerializeField] private float executability = 1f;
 

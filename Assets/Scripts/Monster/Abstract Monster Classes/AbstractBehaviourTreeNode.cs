@@ -4,10 +4,9 @@ using UnityEngine;
 public abstract class AbstractBehaviourTreeNode : ScriptableObject
 {
     [SerializeField] private string behaviourName;
-    [SerializeField] private NodeType nodeType;
-
     public string BehaviourName => behaviourName;
-    public NodeType NodeType => nodeType;
+
+    public abstract NodeType NodeType { get; }
     
     public virtual int NumberOfNextNodes => 1;
     

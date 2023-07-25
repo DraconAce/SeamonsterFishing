@@ -1,7 +1,7 @@
 using Unity.Collections;
 using UnityEngine;
 
-public class TestBehaviourActionImpl : AbstractMonsterNodeImpl
+public class GenericBehaviourActionImpl : AbstractMonsterNodeImpl
 {
     [SerializeField] private bool isExecutable = true;
     [SerializeField] private float executability = 1f;

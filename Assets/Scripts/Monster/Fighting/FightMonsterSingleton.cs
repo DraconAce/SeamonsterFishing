@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 {
@@ -35,6 +34,5 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
         if (fightState.CurrentState == MonsterState.Stunned) return;
         
         swipeAttack.TriggerBehaviourDirectly();
-        //fightBehaviourProvider.ReactToCannonBallMiss();
     }
 }

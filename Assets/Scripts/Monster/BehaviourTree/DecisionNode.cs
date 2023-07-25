@@ -7,4 +7,6 @@ public class DecisionNode : AbstractBehaviourTreeNode
     public AbstractBehaviourTreeNode[] PossibleNextBehaviourNodes => possibleNextBehaviours;
 
     public override int NumberOfNextNodes => possibleNextBehaviours.Length;
+    
+    public override NodeType NodeType => NodeType.Decision;
 }
