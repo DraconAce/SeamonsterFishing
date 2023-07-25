@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MonsterPositionFaker))]
@@ -23,19 +22,17 @@ public class MonsterSoundPlayer : MonoBehaviour
         {
             if (lengthWasCached) return cachedLength;
 
-            var eventDescription = eventRef.Guid == default ? default : RuntimeManager.GetEventDescription(eventRef);
+            cachedLength = SoundHelper.GetSoundLength(eventRef);
+            lengthWasCached = true;
 
-            if (!eventDescription.isValid()) return 2f;
-
-            eventDescription.getLength(out var timeInMillis);
-            return timeInMillis / 1000f;
+            return cachedLength;
         }
     }
     
     [Serializable]
     private struct SoundGroupForDistance
     {
-        public float distance;
+        public MonsterRange MonsterRange;
         public List<SoundEventRep> monsterSoundRefList;
 
         public int NumberOfSounds => monsterSoundRefList.Count;
@@ -51,7 +48,6 @@ public class MonsterSoundPlayer : MonoBehaviour
     [SerializeField] private StudioEventEmitter repelledSoundEmitter;
     [SerializeField] private StudioEventEmitter killSoundEmitter;
 
-    private float initialDistanceToPlayer;
     private Vector3 spawnLeft;
 
     private Transform spawnOrigin;
@@ -61,7 +57,10 @@ public class MonsterSoundPlayer : MonoBehaviour
     private Coroutine soundsRoutine;
 
     private DifficultyProgressionManager difficultyManager;
+    private PauseManager pauseManager;
+    private BaitingMonsterSingleton monsterSingleton;
 
+    private WaitUntil waitForGameUnpaused;
     private readonly WaitForSeconds waitSecond = new (1f);
 
     private readonly MinMaxLimit[] soundProhibitedAngles = new MinMaxLimit[2]
@@ -73,6 +72,11 @@ public class MonsterSoundPlayer : MonoBehaviour
     private void Start()
     {
         difficultyManager = DifficultyProgressionManager.instance;
+        pauseManager = PauseManager.instance;
+        monsterSingleton = BaitingMonsterSingleton.instance;
+        
+        waitForGameUnpaused = new WaitUntil(() => !pauseManager.GameIsPaused);
+        
         spawnOrigin = BaitingMonsterSingleton.instance.Spawner.SpawnCenter;
         spawnLeft = spawnOrigin.right;
 
@@ -80,7 +84,7 @@ public class MonsterSoundPlayer : MonoBehaviour
         
         AssignPlayerTransformIfNotAssigned();
 
-        monsterSoundsList.Sort((a, b) => a.distance.CompareTo(b.distance));
+        monsterSoundsList.Sort((a, b) => a.MonsterRange.CompareTo(b.MonsterRange));
     }
 
     private void AssignPlayerTransformIfNotAssigned() => playerTrans = PlayerSingleton.instance.PlayerTransform;
@@ -88,8 +92,6 @@ public class MonsterSoundPlayer : MonoBehaviour
     public void StartMonsterApproachSounds()
     {
         AssignPlayerTransformIfNotAssigned();
-        
-        initialDistanceToPlayer = (playerTrans.position - fakeMonsterTrans.position).magnitude;
         
         soundsRoutine = StartCoroutine(MonsterSoundsRoutine());
     }
@@ -105,8 +107,11 @@ public class MonsterSoundPlayer : MonoBehaviour
                 yield return waitSecond;
                 continue;
             }
-            
-            var distanceToPlayer = (playerTrans.position - fakeMonsterTrans.position).magnitude;
+
+            if (pauseManager.GameIsPaused) 
+                yield return waitForGameUnpaused;
+
+            var distanceToPlayer = GetDistanceToPlayer();
 
             var soundGroupToPlay = GetSoundGroupOfDistance(distanceToPlayer);
 
@@ -118,6 +123,11 @@ public class MonsterSoundPlayer : MonoBehaviour
             
             yield return new WaitForSeconds(Random.Range(randomSound.GetSoundLength(), waitNextSoundTime));
         }
+    }
+
+    private float GetDistanceToPlayer()
+    {
+        return (playerTrans.position - fakeMonsterTrans.position).magnitude;
     }
 
     private bool IsMonsterInProhibitedAngle()
@@ -135,7 +145,9 @@ public class MonsterSoundPlayer : MonoBehaviour
     {
         return monsterSoundsList.Aggregate(monsterSoundsList[0], (currentSoundRange, nextSoundRange) =>
         {
-            if(distanceToPlayer <= currentSoundRange.distance) 
+            var categoryDistance = monsterSingleton.MonsterRangesDict[currentSoundRange.MonsterRange];
+            
+            if(distanceToPlayer <= categoryDistance) 
                 return currentSoundRange;
 
             return nextSoundRange;
@@ -147,7 +159,9 @@ public class MonsterSoundPlayer : MonoBehaviour
         approachSoundEmitter.OverrideAttenuation = true;
         
         approachSoundEmitter.OverrideMinDistance = 1f;
-        approachSoundEmitter.OverrideMaxDistance = initialDistanceToPlayer - 5f;
+        
+        var currentDistanceToPlayer = GetDistanceToPlayer();
+        approachSoundEmitter.OverrideMaxDistance = currentDistanceToPlayer + 10f;
 
         approachSoundEmitter.EventReference = eventRef;
         
@@ -172,4 +186,6 @@ public class MonsterSoundPlayer : MonoBehaviour
     public void PlayKillSound() => killSoundEmitter.Play();
     
     public void PlayRepelledSound() => repelledSoundEmitter.Play();
+    
+    public float GetLurkSoundLength() => SoundHelper.GetSoundLength(lurkSoundEmitter.EventReference);
 }

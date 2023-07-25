@@ -21,6 +21,7 @@ public class MonsterSpawner : MonoBehaviour
     private readonly Dictionary<int, PrefabPool> monsterTypePools = new();
 
     public int MaxNumberMonsters { get; set; } = 1;
+    public List<Transform> ActiveMonsterProxyTransforms { get; } = new();
     public Transform SpawnCenter => positionGenerator.SpawnCircleCenter;
 
     private void Start()
@@ -93,7 +94,10 @@ public class MonsterSpawner : MonoBehaviour
     {
         var monsterPool = monsterTypePools[GetRandomMonsterPoolIndex()];
 
-        monsterPool.RequestInstance(positionGenerator.GenerateMonsterSpawnPosition(), monsterPool.transform);
+        var newMonster = monsterPool.RequestInstance(positionGenerator.GenerateMonsterSpawnPosition(), monsterPool.transform);
+        
+        newMonster.TryGetCachedComponent<MonsterPositionFaker>(out var monsterPositionFaker);
+        ActiveMonsterProxyTransforms.Add(monsterPositionFaker.MonsterProxy);
 
         currentNumberMonsters++;
     }
@@ -106,6 +110,8 @@ public class MonsterSpawner : MonoBehaviour
 
         if (currentNumberMonsters < 0) currentNumberMonsters = 0;
     }
+    
+    public void RemoveMonsterFromActiveList(Transform monsterTrans) => ActiveMonsterProxyTransforms.Remove(monsterTrans);
 
     private void OnDestroy()
     {

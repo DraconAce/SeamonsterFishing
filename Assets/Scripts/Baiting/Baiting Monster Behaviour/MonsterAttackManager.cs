@@ -7,6 +7,8 @@ using UnityEngine;
 public class MonsterAttackManager : MonoBehaviour
 {
     [SerializeField] private MinMaxLimit delayBeforeAttack = new(0.5f, 3f);
+
+    private float lurkSoundLength;
     
     private Tween attackTween;
     
@@ -26,6 +28,8 @@ public class MonsterAttackManager : MonoBehaviour
 
         TryGetComponent(out soundPlayer);
         TryGetComponent(out killedChecker);
+        
+        lurkSoundLength = soundPlayer.GetLurkSoundLength();
 
         monsterSingleton.MonsterWasRepelledEvent += OnMonsterWasRepelled;
     }
@@ -35,7 +39,10 @@ public class MonsterAttackManager : MonoBehaviour
         soundPlayer.PlayLurkSound();
         monsterState.CurrentState = MonsterState.Attacking;
 
-        attackTween = DOVirtual.DelayedCall(delayBeforeAttack.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction),
+        var killDelay = delayBeforeAttack.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction) +
+                    lurkSoundLength;
+        
+        attackTween = DOVirtual.DelayedCall(killDelay,
             () => killedChecker.StartKillingPlayer(), false);
     }
 

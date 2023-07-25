@@ -79,6 +79,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 4859553733012079114}
+  monsterRangeDefinitions:
+  - Range: 0
+    Distance: 20
+  - Range: 1
+    Distance: 50
+  - Range: 2
+    Distance: 200
 --- !u!1001 &5568632916518323261
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -156,7 +156,7 @@ MonoBehaviour:
   monsterProxy: {fileID: 8112896167923530534}
   numberOfPointsLimits:
     MinLimit: 7
-    MaxLimit: 30
+    MaxLimit: 25
   distanceStepLimits:
     MinLimit: 1.3
     MaxLimit: 5
@@ -168,8 +168,8 @@ MonoBehaviour:
     MinLimit: 3
     MaxLimit: 10
   durationLimits:
-    MinLimit: 45
-    MaxLimit: 150
+    MinLimit: 60
+    MaxLimit: 210
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,10 +310,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitBetweenSoundsLimit:
-    MinLimit: 7
-    MaxLimit: 20
+    MinLimit: 6
+    MaxLimit: 13
   monsterSoundsList:
-  - distance: 6
+  - MonsterRange: 0
     monsterSoundRefList:
     - eventRef:
         Guid:
@@ -322,7 +322,7 @@ MonoBehaviour:
           Data3: 1887554482
           Data4: 696217430
         Path: event:/Baiting/Monster/MonsterApproach_Close
-  - distance: 9
+  - MonsterRange: 1
     monsterSoundRefList:
     - eventRef:
         Guid:
@@ -331,7 +331,7 @@ MonoBehaviour:
           Data3: 1090218892
           Data4: 659623664
         Path: event:/Baiting/Monster/MonsterApproach_Mid
-  - distance: 13
+  - MonsterRange: 2
     monsterSoundRefList:
     - eventRef:
         Guid:

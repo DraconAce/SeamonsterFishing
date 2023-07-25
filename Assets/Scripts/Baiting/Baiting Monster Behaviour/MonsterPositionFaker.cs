@@ -33,6 +33,7 @@ public class MonsterPositionFaker : MonoBehaviour
     private MonsterAttackManager attackManager;
     private MonsterSoundPlayer soundPlayer;
     private DifficultyProgressionManager difficultyManager;
+    private PauseManager pauseManager;
     
     private WaitForSeconds waitSecond = new (1f);
     private Coroutine fakePosRoutine;
@@ -50,6 +51,9 @@ public class MonsterPositionFaker : MonoBehaviour
     private void Start()
     {
         difficultyManager = DifficultyProgressionManager.instance;
+        pauseManager = PauseManager.instance;
+        
+        pauseManager.GamePausedStateChangedEvent += OnGamePaused;
         
         AssignSpawnerIfNotAssigned();
     }
@@ -60,6 +64,12 @@ public class MonsterPositionFaker : MonoBehaviour
         
         spawnerTrans = BaitingMonsterSingleton.instance.Spawner.transform;
         spawnerAsPivot = spawnerTrans.position;
+    }
+
+    private void OnGamePaused(bool isPaused)
+    {
+        if(isPaused) movementTween?.Pause();
+        else movementTween?.Play();
     }
 
     public void StartPositionVariationRoutine() => StartCoroutine(DeferredPositionVariation());
@@ -143,6 +153,9 @@ public class MonsterPositionFaker : MonoBehaviour
 
     private void OnDestroy()
     {
+        if(pauseManager != null) 
+            pauseManager.GamePausedStateChangedEvent -= OnGamePaused;
+        
         if (fakePosRoutine == null) return;
         
         StopCoroutine(fakePosRoutine);

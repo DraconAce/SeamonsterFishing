@@ -27,7 +27,7 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private bool useAnimationCurve;
     [SerializeField] private AnimationCurve rotationCurve;
 
-    public bool SubscribedToStarted => false;
+    public bool SubscribedToStarted => true;
 
     public bool SubscribedToPerformed => true;
 
@@ -45,6 +45,8 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
 
     private int lookDirection;
 
+    private bool viewInputWasStarted;
+
     private const float MaxViewRotation = 180.0f;
 
     private PlayerSingleton playerSingleton;
@@ -59,11 +61,20 @@ public class ViewDirectionHandler : MonoBehaviour, IInputEventSubscriber
         inputManager.SubscribeToActions(this);
     }
 
-    public void InputPerformed(InputAction.CallbackContext callContext)
+    public void InputStarted(InputAction.CallbackContext callContext)
     {
         if(playerSingleton.DisableMovementControls) return;
-        
+
+        viewInputWasStarted = true;
+    }
+
+    public void InputPerformed(InputAction.CallbackContext callContext)
+    {
+        if(playerSingleton.DisableMovementControls || !viewInputWasStarted) return;
+
         ChangeViewBasedOnInput(callContext.action.name);
+        
+        viewInputWasStarted = false;
     }
 
     private void ChangeViewBasedOnInput(string actionName)
