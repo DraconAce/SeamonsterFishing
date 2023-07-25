@@ -10,6 +10,8 @@ public class PauseManager : Singleton<PauseManager>
     public override bool AddToDontDestroy => false;
 
     private void Start() => gameStateManager = GameStateManager.instance;
+    
+    public event Action<bool> GamePausedStateChangedEvent;
 
     public void ToggleGamePause()
     {
@@ -21,11 +23,13 @@ public class PauseManager : Singleton<PauseManager>
 
         if (GameIsPaused)
         {
+            GamePausedStateChangedEvent?.Invoke(true);
             gameStateManager.ChangeGameState(GameState.Pause);
             gameStateManager.BlockGameStateChange = GameIsPaused;
         }
         else
         {
+            GamePausedStateChangedEvent?.Invoke(false);
             gameStateManager.BlockGameStateChange = GameIsPaused;
             gameStateManager.ChangeToPreviousGameState();
         }

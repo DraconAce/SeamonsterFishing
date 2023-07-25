@@ -505,6 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuInputActions:
   - ToggleMenu
+  firstSelectedOnMenuOpen: {fileID: 9101175844919679709}
   menuContainer: {fileID: 9009596904916213093}
   onMenuOpened:
     m_PersistentCalls:
@@ -1267,6 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuInputActions: []
+  firstSelectedOnMenuOpen: {fileID: 0}
   menuContainer: {fileID: 8162786655743078998}
   onMenuOpened:
     m_PersistentCalls:
@@ -3346,7 +3348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3938784416768389167, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
       propertyPath: m_Navigation.m_Mode
-      value: 4
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3938784416768389167, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
@@ -3392,5 +3394,10 @@ PrefabInstance:
 --- !u!224 &7347543126210565920 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2194823257428747315, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
+  m_PrefabInstance: {fileID: 8899714935998296851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9101175844919679709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 418831059202288078, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
   m_PrefabInstance: {fileID: 8899714935998296851}
   m_PrefabAsset: {fileID: 0}
