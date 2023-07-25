@@ -31,9 +31,10 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         CloseMenu(false);
 
         initialCloseExecuted = true;
+        
+        inputManager = InputManager.instance;
 
         if (!UseInputActions) return;
-        inputManager = InputManager.instance;
         inputManager.SubscribeToActions(this);
     }
 
