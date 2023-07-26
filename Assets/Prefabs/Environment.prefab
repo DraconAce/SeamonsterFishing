@@ -927,6 +927,10 @@ PrefabInstance:
       value: 60.000004
       objectReference: {fileID: 0}
     - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
+      propertyPath: setLight
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
       propertyPath: setTrack
       value: 
       objectReference: {fileID: 0}
@@ -937,14 +941,6 @@ PrefabInstance:
     - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
-      propertyPath: systemTime
-      value: 109.60742
-      objectReference: {fileID: 0}
-    - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
-      propertyPath: enableCaustics
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
       propertyPath: showPerformance

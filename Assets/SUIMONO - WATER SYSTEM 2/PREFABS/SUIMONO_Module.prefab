@@ -5512,7 +5512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   suimonoVersionNumber: 2.1.14
-  systemTime: 0.02
+  systemTime: 185.61876
   autoSetLayers: 1
   layerWater: Suimono_Water
   layerWaterNum: 8
@@ -5549,8 +5549,8 @@ MonoBehaviour:
   fxRippleObject: {fileID: 0}
   isUnderwater: 0
   enableTransparency: 1
-  transResolution: 3
-  transLayer: 268376319
+  transResolution: 5
+  transLayer: 268376318
   transLayerMask:
     serializedVersion: 2
     m_Bits: 0
