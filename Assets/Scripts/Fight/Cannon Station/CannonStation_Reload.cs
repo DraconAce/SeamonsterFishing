@@ -136,7 +136,7 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
     {
         base.OnDestroy();
         
-        StopCoroutine(burnFuseCoroutine);
+        //StopCoroutine(burnFuseCoroutine);
         resetFuse();
         
         reloadingTween?.Kill();
