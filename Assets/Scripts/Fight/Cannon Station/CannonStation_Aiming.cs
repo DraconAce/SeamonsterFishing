@@ -60,7 +60,16 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
     {
         var aimInput = aimAction.ReadValue<Vector2>();
         aimInput *= driveStation.InfluencedDrivingDirection;
-
+        
+        //Debug.Log("drivingDirection: "+driveStation.InfluencedDrivingDirection);
+        if (driveStation.InfluencedDrivingDirection < 0)
+        {
+            //rotation of the cannonbarrel to show the fuse inverts left/right- and up/down-movement of the player
+            //-> so we invert it again here:
+            aimInput = -aimInput;
+        }
+        //Debug.Log("aiminput: "+aimInput);
+        
         targetAimAngle += InputBasedRotationProvider.CalculateRotationBasedOnInput(aimInput, aimSpeed);
     }
     
