@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -91,5 +92,10 @@ public class PoolObjectContainer
             if(comp is Object ob)
                 objectList.Add(ob);
         }
+    }
+    
+    public void ReturnToPool()
+    {
+        SourcePool.ReturnInstance(this);
     }
 }

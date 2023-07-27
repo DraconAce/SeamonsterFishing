@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
     public float LastDriveDirection { get; set; }
     public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
+
+    private bool stoppingBoatMoveCoroutingIsRunning = false;
+    private IEnumerator stoppingBoatMoveCoroutine;
+    private float lastMoveDirection = 0f;
+    [SerializeField] private float stoppingBoatSpeedReduction = 0.2f;
 
     public EventReference MoveBoatSound;
     private EventInstance MoveBoatSoundInstance;
@@ -80,9 +86,18 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     {
         var moveDirection = driveAction.ReadValue<Vector2>().x;
         
+        //Debug.Log("currentBoatSpeed: "+ movingController.currentSpeed);
+        
         if(movingController.BoatIsNotMoving(moveDirection)) 
         {
-            MoveBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            //movingController.currentSpeed = 0;
+            if (lastMoveDirection != 0f && !rotatingController.MovingLocked)
+            {
+                float rememberlastMoveDirection = lastMoveDirection;
+                lastMoveDirection = 0f;
+                MoveBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                tryStartingCoroutine(rememberlastMoveDirection);
+            }
             return;
         }
 
@@ -100,7 +115,17 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         MoveBoatSoundInstance.getPlaybackState(out var playbackState);
         if (playbackState == PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
         
+        if (stoppingBoatMoveCoroutingIsRunning)
+        {
+            //stop move-fadeout coroutine while driving 
+            StopCoroutineIfItExists();
+        }
+        
+        movingController.IncreaseCurrentBoatSpeed();
         movingController.MoveBoat(moveDirection);
+        
+        //save moveDirection to determine if the BoatStopper should play
+        lastMoveDirection = moveDirection; 
     }
 
     public void TurnRotationComplete() 
@@ -123,4 +148,40 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         if (UpdateManager == null) return;
         UpdateManager.UnsubscribeFromManualUpdate(this);
     }
+    
+    private void tryStartingCoroutine(float directionToStopIn)
+    {
+        if (stoppingBoatMoveCoroutingIsRunning) return;
+        stoppingBoatMoveCoroutingIsRunning = true;
+        stoppingBoatMoveCoroutine = DoBoatStop(directionToStopIn);
+        StartCoroutine(stoppingBoatMoveCoroutine);
+    }
+    
+    private void StopCoroutineIfItExists()
+    {
+        if (stoppingBoatMoveCoroutine != null) 
+        {
+            StopCoroutine(stoppingBoatMoveCoroutine);
+            stoppingBoatMoveCoroutingIsRunning = false;
+        }
+    }
+    
+    private IEnumerator DoBoatStop(float moveDirection) 
+    {
+        //Debug.Log("Coroutine started");
+        while (stoppingBoatMoveCoroutingIsRunning) 
+        {
+            movingController.currentSpeed -= stoppingBoatSpeedReduction;
+            if (movingController.currentSpeed <= stoppingBoatSpeedReduction) 
+            {
+                movingController.currentSpeed = 0f;
+                stoppingBoatMoveCoroutingIsRunning = false;
+                yield return null;
+            }
+            movingController.MoveBoat(moveDirection);
+            yield return new WaitForFixedUpdate();
+        } 
+        //Debug.Log("Coroutine stop over time");
+    }
+    
 }

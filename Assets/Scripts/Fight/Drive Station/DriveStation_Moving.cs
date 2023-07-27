@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class DriveStation_Moving : AbstractStationSegment
 {
-    [SerializeField] private float driveSpeed = 5.0f;
+    [SerializeField] private float maxDriveSpeed = 5.0f;
+    [SerializeField] private float driveSpeedincrease = 0.025f;
+    public float currentSpeed = 0f;
+
     [SerializeField] private MinMaxLimit moveLimit;
 
     private Vector3 boatForwardDirection;
@@ -27,12 +30,14 @@ public class DriveStation_Moving : AbstractStationSegment
         var boatPosition = boatTransform.position;
         var newBoatPosition = boatPosition + CalculateMoveAmount(moveDirection);
 
+        //Debug.Log("currentSpeed"+currentSpeed);
         newBoatPosition = ClampToMovementLimits(newBoatPosition);
+        
         boatTransform.position = newBoatPosition;
     }
     
     private Vector3 CalculateMoveAmount(float driveDirection) 
-        => boatForwardDirection * (driveSpeed * driveDirection * Time.deltaTime);
+        => boatForwardDirection * (currentSpeed * driveDirection * Time.deltaTime);
     
     private Vector3 ClampToMovementLimits(Vector3 newBoatPosWorld)
     {
@@ -47,6 +52,18 @@ public class DriveStation_Moving : AbstractStationSegment
         
         return newBoatPosWorld;
     }
-    
+
+    public void IncreaseCurrentBoatSpeed() 
+    {
+        //increase current speed
+        if (currentSpeed < maxDriveSpeed) {
+            currentSpeed += driveSpeedincrease;
+        }
+        else 
+        {
+            currentSpeed = maxDriveSpeed;
+        }
+    }
+
     public bool BoatIsNotMoving (float newDirection) => Mathf.Approximately(0, newDirection);
 }

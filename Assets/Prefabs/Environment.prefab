@@ -340,16 +340,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: dir
-      value: C:/Users/Claudia/UnityGames/SeamonsterFishing/Assets\SUIMONO - WATER
-        SYSTEM 2/RESOURCES/
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: pdir
-      value: C:/Users/Claudia/UnityGames/SeamonsterFishing/Assets\SUIMONO - WATER
-        SYSTEM 2/RESOURCES//SUIMONO_PRESETS_Built-In Presets
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: skybox
       value: 
       objectReference: {fileID: 2100000, guid: 0c56b35a6d7bad544a5b576592b6e51e, type: 2}
@@ -372,10 +362,6 @@ PrefabInstance:
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: foamSpeed
       value: 0.842
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: localTime
-      value: 45.408817
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: showShore
@@ -410,14 +396,6 @@ PrefabInstance:
       value: 0.278
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: waveHeight
-      value: 0.20434776
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: beaufortVal
-      value: 0.7782609
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: edgeFoamAmt
       value: 0.9
       objectReference: {fileID: 0}
@@ -442,15 +420,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: presetIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: reflectBlur
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: showPresets
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
@@ -470,12 +440,8 @@ PrefabInstance:
       value: 0.057
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: lgWaveHeight
-      value: 2.2728696
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: beaufortScale
-      value: 9.33913
+      propertyPath: moduleObject
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: heightFoamAmt
@@ -484,10 +450,6 @@ PrefabInstance:
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: shorelineFreq
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: presetUseIndex
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: shallowColor.a
@@ -528,126 +490,6 @@ PrefabInstance:
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: specularColor.r
       value: 0.235
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: systemLocalTime
-      value: 270.2906
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
-      propertyPath: presetDataString
-      value: '<color_depth>(0.057,0.132,0.126,1.000)
-
-        <color_shallow>(0.000,0.000,0.000,0.000)
-
-        <color_blend>(0.360,1.000,0.867,1.000)
-
-        <color_overlay>(0.000,0.000,0.000,0.000)
-
-        <color_caustics>(1.000,1.000,1.000,1.000)
-
-        <color_reflection>(1.000,1.000,1.000,1.000)
-
-        <color_specular>(0.235,0.177,0.073,0.275)
-
-        <color_sss>(0.278,0.426,0.000,0.129)
-
-        <color_foam>(0.618,0.595,0.545,1.000)
-
-        <color_underwater>(0.038,0.097,0.110,0.145)
-
-        <data_beaufort>(9.33913)
-
-        <data_flowdir>(180)
-
-        <data_flowspeed>(0.084)
-
-        <data_wavescale>(0.5)
-
-        <data_customwaves>(False)
-
-        <data_waveheight>(0.2043478)
-
-        <data_heightprojection>(1)
-
-        <data_turbulence>(0.75)
-
-        <data_lgwaveheight>(2.27287)
-
-        <data_lgwavescale>(0.03125)
-
-        <data_shorelineheight>(0.397)
-
-        <data_shorelinefreq>(0.5)
-
-        <data_shorelinescale>(3.55)
-
-        <data_shorelinespeed>(4)
-
-        <data_shorelinenorm>(0)
-
-        <data_overallbright>(1)
-
-        <data_overalltransparency>(1)
-
-        <data_edgeamt>(0.07)
-
-        <data_depthamt>(0.428)
-
-        <data_shallowamt>(1)
-
-        <data_refractstrength>(1)
-
-        <data_aberrationscale>(0)
-
-        <data_causticsfade>(0.122)
-
-        <data_reflectprojection>(1)
-
-        <data_reflectblur>(0)
-
-        <data_reflectterm>(0)
-
-        <data_reflectsharpen>(0)
-
-        <data_roughness>(0.025)
-
-        <data_roughness2>(0.8)
-
-        <data_enablefoam>(True)
-
-        <data_foamscale>(0.98)
-
-        <data_foamspeed>(0.842)
-
-        <data_edgefoamamt>(0.9)
-
-        <data_shallowfoamamt>(1)
-
-        <data_heightfoamamt>(0.462)
-
-        <data_hfoamheight>(0.195)
-
-        <data_hfoamspread>(0)
-
-        <data_enableunderdebris>(True)
-
-        <data_underlightfactor>(1)
-
-        <data_underrefractionamount>(0.005)
-
-        <data_underrefractionscale>(0.5)
-
-        <data_underrefractionspeed>(1)
-
-        <data_underbluramount>(1)
-
-        <data_underwaterfogdist>(34.2)
-
-        <data_underwaterfogspread>(0)
-
-        <data_underDarkRange>(50)
-
-'
       objectReference: {fileID: 0}
     - target: {fileID: 6873994171610052526, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: turbulenceFactor
@@ -1085,6 +927,10 @@ PrefabInstance:
       value: 60.000004
       objectReference: {fileID: 0}
     - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
+      propertyPath: setLight
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
       propertyPath: setTrack
       value: 
       objectReference: {fileID: 0}
@@ -1095,14 +941,6 @@ PrefabInstance:
     - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
-      propertyPath: systemTime
-      value: 109.60742
-      objectReference: {fileID: 0}
-    - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
-      propertyPath: enableCaustics
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4439848727087715988, guid: decb25ac7e8e6d9439bfb5397e23740b, type: 3}
       propertyPath: showPerformance
