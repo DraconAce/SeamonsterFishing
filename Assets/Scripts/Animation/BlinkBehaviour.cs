@@ -28,7 +28,7 @@ public class BlinkBehaviour : MonoBehaviour
         while (blinkingIsActive)
         {
             float waitTime = Random.Range(minCooldown, maxCooldown);
-            Debug.Log("Blink wait:" + waitTime);
+            //Debug.Log("Blink wait:" + waitTime);
             yield return new WaitForSeconds(waitTime);
             BlinkOnce();
         }
