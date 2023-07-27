@@ -59,7 +59,7 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
     private void CalculateNewAimRotation()
     {
         var aimInput = aimAction.ReadValue<Vector2>();
-        aimInput *= driveStation.InfluencedDrivingDirection;
+        aimInput *= driveStation.InfluencedDrivingDirection * 0.4f; //also reduce cannon movement by player
         
         //Debug.Log("drivingDirection: "+driveStation.InfluencedDrivingDirection);
         if (driveStation.InfluencedDrivingDirection < 0)
