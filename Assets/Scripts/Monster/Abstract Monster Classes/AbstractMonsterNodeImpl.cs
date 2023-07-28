@@ -18,7 +18,7 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     
     private MonsterKI monsterKI;
 
-    public MonsterKI MonsterKi => monsterKI;
+    protected MonsterKI MonsterKi => monsterKI;
 
     protected FightMonsterBehaviourTreeManager behaviourTreeManager;
 
@@ -57,7 +57,7 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     {
         MakeSureTreeManagerIsAssigned();
         
-        behaviourTreeManager.RequestBehaviourEnd();
+        behaviourTreeManager.TryResetCurrentBehaviour();
     }
 
     public void Execute() => StartBehaviour();

@@ -178,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 100
   nodeToRepresent: {fileID: 11400000, guid: cdaef7747090a2e4dbb6fc50a02aaf1b, type: 2}
-  useRandomPriorityMode: 1
+  useRandomPriorityMode: 0
   preferredPriorityMode: 0
   executability: 100
 --- !u!1 &469395925820121862
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041e1a2e40964c04b626f68b73ad6d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 1
+  priority: 5
   nodeToRepresent: {fileID: 11400000, guid: 60d64c66cb01b814eab776e913c58bf9, type: 2}
   timeout: 1
 --- !u!1 &987786277029470399
@@ -555,9 +555,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c42aad6154b47a68803e90c25b8e2ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 1
+  priority: 2
   nodeToRepresent: {fileID: 11400000, guid: 099613440867bd9488c2997c52936cea, type: 2}
-  timeout: 1
+  timeout: 10
 --- !u!1 &6543329888222596868
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,9 +740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e0632f73af43a89ce877f04e56d48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 1
+  priority: 3
   nodeToRepresent: {fileID: 11400000, guid: 82f45f08d7f1e8e4a84dacbe5c3942d4, type: 2}
-  timeout: 1
+  timeout: 5
 --- !u!1 &9128519014903644445
 GameObject:
   m_ObjectHideFlags: 0

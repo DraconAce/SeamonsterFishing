@@ -44,7 +44,9 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
     {
         yield return BehaviourRoutineImpl();
         
-        MonsterKi.BehaviourTreeManager.RequestBehaviourEnd(this);
+        behaviourTreeManager.TryResetCurrentBehaviour(this);
+        behaviourTreeManager.RequestNextBehaviour();
+        
         StartTimeoutTween();
     }
 
@@ -71,7 +73,7 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
     {
         yield return StopBehaviourRoutineImpl();
         
-        MonsterKi.BehaviourTreeManager.RequestBehaviourEnd(this);
+        MonsterKi.BehaviourTreeManager.TryResetCurrentBehaviour(this);
     }
 
     protected abstract IEnumerator StopBehaviourRoutineImpl();

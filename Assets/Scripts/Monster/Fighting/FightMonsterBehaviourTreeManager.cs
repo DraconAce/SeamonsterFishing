@@ -91,7 +91,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     public void RequestNextBehaviour()
     {
-        RequestBehaviourEnd();
+        TryResetCurrentBehaviour();
 
         UpdateNodeData();
         
@@ -108,7 +108,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
             nodeDataMap[nodeImpl.NodeIndex] = nodeImpl.RefreshNodeData();
     }
 
-    public void RequestBehaviourEnd(INodeImpl behaviourToEndIfActive = null)
+    public void TryResetCurrentBehaviour(INodeImpl behaviourToEndIfActive = null)
     {
         if(behaviourToEndIfActive == null || CurrentBehaviour != behaviourToEndIfActive)
             return;
@@ -120,7 +120,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     {
         yield return waitUntilBehaviourIsInactive;
         
-        RequestBehaviourEnd();
+        TryResetCurrentBehaviour();
         
         if(!requestNewBehaviourAfter) yield break;
 
