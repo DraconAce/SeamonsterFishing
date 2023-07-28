@@ -84,7 +84,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfRotationsNeeded: 40
-  maxTimeToReel: 30
   progressDecreasePercentagePerSecond: 0.005
   inputBuffer: 0.45
 --- !u!114 &9001025296299548414
@@ -115,8 +114,10 @@ MonoBehaviour:
   reelingPivotTransform: {fileID: 3713289375606010562}
   reelEntryDuration: 1.5
   reelExitDuration: 3
+  returnToPositionDuration: 2
   reelEntryEase: 17
   reelExitEase: 9
+  returnToPositionEase: 8
 --- !u!114 &7571611506109095277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +450,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1077861936763938861}
   m_SourcePrefab: {fileID: 100100000, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+--- !u!1 &98514278041031602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7900949226873236963, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+  m_PrefabInstance: {fileID: 7852080115157417553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2013439447090315054 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8577419681534443903, guid: aa96e1e513c477b4da068c757d069584, type: 3}
@@ -600,6 +606,10 @@ PrefabInstance:
       propertyPath: cannonBarrelMovementPivot
       value: 
       objectReference: {fileID: 9026873623968928799}
+    - target: {fileID: 6565113176275434114, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
+      propertyPath: fuse
+      value: 
+      objectReference: {fileID: 98514278041031602}
     - target: {fileID: 6935723897159092324, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: barrelOpening
       value: 
