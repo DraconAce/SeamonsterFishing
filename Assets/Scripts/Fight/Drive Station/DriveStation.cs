@@ -93,10 +93,12 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         if(MovingController.BoatIsNotMoving(moveDirection)) 
         {
             //movingController.currentSpeed = 0;
-            if (lastMoveDirection != 0f)
+            if (lastMoveDirection != 0f && !rotatingController.MovingLocked)
             {
+                float rememberlastMoveDirection = lastMoveDirection;
+                lastMoveDirection = 0f;
                 MoveBoatSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                tryStartingCoroutine(lastMoveDirection);
+                tryStartingCoroutine(rememberlastMoveDirection);
             }
             return;
         }
@@ -117,6 +119,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         
         if (stoppingBoatMoveCoroutingIsRunning)
         {
+            //stop move-fadeout coroutine while driving 
             StopCoroutineIfItExists();
         }
         
@@ -180,6 +183,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
             MovingController.MoveBoat(moveDirection);
             yield return new WaitForFixedUpdate();
         } 
+        //Debug.Log("Coroutine stop over time");
     }
     
 }

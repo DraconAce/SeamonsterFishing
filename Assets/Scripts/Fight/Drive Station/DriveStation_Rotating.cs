@@ -153,6 +153,12 @@ public class DriveStation_Rotating : AbstractStationSegment
         var targetLocalBarrelRot = Vector3.zero;
         targetLocalBarrelRot[(int)cannonBarrelRotationAxis] = DetermineTargetBarrelRotation(newDirection * driveStation.InitialDrivingDirection);
 
+        if (newDirection > 0)
+        {
+            targetLocalBarrelRot[2] = 180f;
+        }
+        //Debug.Log("Tween target rot: "+targetLocalBarrelRot);
+        
         return cannonBarrelPivot
             .DOLocalRotate(targetLocalBarrelRot, rotationDuration)
             .SetEase(cannonAnimationEase);
