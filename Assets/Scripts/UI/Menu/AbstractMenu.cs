@@ -15,7 +15,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
     private InputManager inputManager;
 
     private bool initialCloseExecuted;
-    protected bool menuIsOpen;
+    protected bool menuIsOpen = true;
 
     protected virtual bool UseInputActions => true;
     
@@ -27,13 +27,13 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 
     protected virtual void Start()
     {
+        inputManager = InputManager.instance;
+        
         TryGetComponent(out menuGroup);
         CloseMenu(false);
 
         initialCloseExecuted = true;
         
-        inputManager = InputManager.instance;
-
         if (!UseInputActions) return;
         inputManager.SubscribeToActions(this);
     }

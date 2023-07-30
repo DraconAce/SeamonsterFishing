@@ -8,8 +8,11 @@ public class SceneController : Singleton<SceneController>
 {
     [SerializeField] private List<LevelRepresentation> scenesList;
 
+    private InputManager inputManager;
     private GameStateManager gameStateManager;
     private readonly Dictionary<Level, LevelRepresentation> scenesDictionary = new(); //identifier / level rep
+    
+    public LevelRepresentation CurrentLevelRepresentation { get; private set; }
     
     public event Action OnSceneLoadedEvent;
 
@@ -20,6 +23,8 @@ public class SceneController : Singleton<SceneController>
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         gameStateManager = GameStateManager.instance;
+        inputManager = InputManager.instance;
+        
         CreateScenesDictionary();
     }
 
@@ -52,26 +57,42 @@ public class SceneController : Singleton<SceneController>
             OnSceneLoadedEvent -= toggleCursor;
         };
 
-        TrySwitchToScene(sceneName);
+        if (!TrySwitchToScene(sceneName)) return;
+        
+        CurrentLevelRepresentation = levelRep;
     }
 
-    public static void ToggleCursorForLevel(LevelRepresentation levelRep)
+    public void ToggleCursorForLevel(LevelRepresentation levelRep)
     {
         Cursor.visible = !levelRep.HideCursorOnLoad;
-        Cursor.lockState = levelRep.HideCursorOnLoad ? CursorLockMode.Locked : CursorLockMode.None;
-    }
-    
-    public static void ToggleCursorForLevel(bool isCursorActive)
-    {
-        Cursor.visible = isCursorActive;
-        Cursor.lockState = isCursorActive ? CursorLockMode.None : CursorLockMode.Locked;
+
+        var cursorNotActiveMode = DetermineCursorNotActiveMode();
+
+        Cursor.lockState = levelRep.HideCursorOnLoad ? cursorNotActiveMode : CursorLockMode.None;
     }
 
-    private void TrySwitchToScene(string scene)
+    private CursorLockMode DetermineCursorNotActiveMode()
+    {
+        var playerIsUsingGamepad = inputManager.LatestDevice == PlayerDevice.Gamepad;
+        var cursorNotActiveMode = playerIsUsingGamepad ? CursorLockMode.Locked : CursorLockMode.Confined;
+        return cursorNotActiveMode;
+    }
+
+    public void ToggleCursorForLevel(bool isCursorActive)
+    {
+        Cursor.visible = isCursorActive;
+        
+        var cursorNotActiveMode = DetermineCursorNotActiveMode();
+
+        Cursor.lockState = isCursorActive ? CursorLockMode.None : cursorNotActiveMode;
+    }
+
+    private bool TrySwitchToScene(string scene)
     {
         try
         {
             SceneManager.LoadScene(scene);
+            return true;
         }
         catch (Exception e)
         {
@@ -90,6 +111,7 @@ public class SceneController : Singleton<SceneController>
         
         if(levelRep == null) return;
         
+        CurrentLevelRepresentation = levelRep;
         ToggleCursorForLevel(levelRep);
     }
 
