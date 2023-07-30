@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 1762410582347039948}
   - component: {fileID: 706682325437420274}
   - component: {fileID: 6905573295170275905}
+  - component: {fileID: 7685147069483743536}
+  - component: {fileID: 8633619053254246127}
   m_Layer: 0
   m_Name: Player_Baiting
   m_TagString: Player
@@ -67,6 +69,7 @@ Transform:
   - {fileID: 1439667051941123238}
   - {fileID: 402557528367553742}
   - {fileID: 8432969242579965097}
+  - {fileID: 9025771307305842611}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,11 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7d20982686416bbe0605335a09b311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewLeftRightPivot: {fileID: 7344333748671687044}
-  actionsToSubscribeTo:
-  - Change_View_Left
-  - Change_View_Right
   MaxRotationDurationToNextView: 2.5
+  viewLeftRightPivot: {fileID: 7344333748671687044}
   rotationEase: 7
   useAnimationCurve: 0
   rotationCurve:
@@ -189,6 +189,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationDuration: 0.75
   animationEase: 17
+--- !u!114 &7685147069483743536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331338038138839782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062a812aafe44f87ac9635315c094fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionsToSubscribeTo:
+  - Change_View_Left
+  - Change_View_Right
+--- !u!114 &8633619053254246127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331338038138839782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf5550b922471aa0e775446214d6d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionsToSubscribeTo: []
+  triggerTurnEdgePercentage: 0.05
+  timePlayerNeedsToBeStationary: 0.5
+--- !u!1 &2440284208973648278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9025771307305842611}
+  - component: {fileID: 7337255397921808891}
+  m_Layer: 0
+  m_Name: EffectsVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9025771307305842611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440284208973648278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7344333748671687044}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7337255397921808891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440284208973648278}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 530ab6359c95e894c8dd8ed282e375bd, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 1
 --- !u!1 &4516152437214290642
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +317,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.92941177, b: 0.69411767, a: 1}
-  m_Intensity: 10
+  m_Intensity: 15
   m_Range: 5
   m_SpotAngle: 90
   m_InnerSpotAngle: 1
@@ -560,7 +639,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5460156435122439137, guid: 90ba488e866555444b3b95957af3194d, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 58
+      value: 67.380135
       objectReference: {fileID: 0}
     - target: {fileID: 5460156435122439137, guid: 90ba488e866555444b3b95957af3194d, type: 3}
       propertyPath: m_Lens.FarClipPlane

@@ -10,26 +10,6 @@ using Random = UnityEngine.Random;
 public class MonsterSoundPlayer : MonoBehaviour
 {
     [Serializable]
-    private struct SoundEventRep
-    {
-        public EventReference eventRef;
-        
-        private float cachedLength;
-
-        private bool lengthWasCached;
-
-        public float GetSoundLength()
-        {
-            if (lengthWasCached) return cachedLength;
-
-            cachedLength = SoundHelper.GetSoundLength(eventRef);
-            lengthWasCached = true;
-
-            return cachedLength;
-        }
-    }
-    
-    [Serializable]
     private struct SoundGroupForDistance
     {
         public MonsterRange MonsterRange;
@@ -41,7 +21,8 @@ public class MonsterSoundPlayer : MonoBehaviour
     [SerializeField] private MinMaxLimit waitBetweenSoundsLimit;
     [SerializeField] private List<SoundGroupForDistance> monsterSoundsList;
 
-    [Header("Sound Emitters")]
+    [Header("Sound Emitters")] 
+    [SerializeField] private float maxAttenuationDistanceForApproach = 40f;
     [SerializeField] private StudioEventEmitter approachSoundEmitter;
 
     [SerializeField] private StudioEventEmitter lurkSoundEmitter;
@@ -111,18 +92,24 @@ public class MonsterSoundPlayer : MonoBehaviour
             if (pauseManager.GameIsPaused) 
                 yield return waitForGameUnpaused;
 
-            var distanceToPlayer = GetDistanceToPlayer();
+            var randomSound = GetRandomSoundFromSuitableSoundGroup();
 
-            var soundGroupToPlay = GetSoundGroupOfDistance(distanceToPlayer);
-
-            var randomSound = soundGroupToPlay.monsterSoundRefList[Random.Range(0, soundGroupToPlay.NumberOfSounds)];
-            
             PlayMonsterSound(randomSound.eventRef);
 
             var waitNextSoundTime = randomSound.GetSoundLength() + GenerateAdditionalWaitTimeForNextSound();
             
             yield return new WaitForSeconds(Random.Range(randomSound.GetSoundLength(), waitNextSoundTime));
         }
+    }
+
+    private SoundEventRep GetRandomSoundFromSuitableSoundGroup()
+    {
+        var distanceToPlayer = GetDistanceToPlayer();
+
+        var soundGroupToPlay = GetSoundGroupOfDistance(distanceToPlayer);
+
+        var randomSound = soundGroupToPlay.monsterSoundRefList[Random.Range(0, soundGroupToPlay.NumberOfSounds)];
+        return randomSound;
     }
 
     private float GetDistanceToPlayer()
@@ -159,9 +146,8 @@ public class MonsterSoundPlayer : MonoBehaviour
         approachSoundEmitter.OverrideAttenuation = true;
         
         approachSoundEmitter.OverrideMinDistance = 1f;
-        
-        var currentDistanceToPlayer = GetDistanceToPlayer();
-        approachSoundEmitter.OverrideMaxDistance = currentDistanceToPlayer + 10f;
+
+        approachSoundEmitter.OverrideMaxDistance = maxAttenuationDistanceForApproach;
 
         approachSoundEmitter.EventReference = eventRef;
         

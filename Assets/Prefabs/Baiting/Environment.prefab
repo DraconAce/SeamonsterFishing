@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depthHandler: {fileID: 0}
   suimonoObject: {fileID: 6777368928813684238}
-  colorTransitionTime: 10
+  colorTransitionTime: 15
   colorTransitionEase: 4
   depthEnvironmentColors:
   - {r: 0.08788716, g: 0.23584908, b: 0.19153664, a: 0.46666667}

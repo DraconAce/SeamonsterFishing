@@ -10,11 +10,15 @@ public class TutorialDisplayer : MonoBehaviour
     
     private PauseManager pauseManager;
     private InputManager inputManager;
+    private PlayerSingleton playerSingleton;
 
     private IEnumerator Start()
     {
         pauseManager = PauseManager.instance;
         inputManager = InputManager.instance;
+        playerSingleton = PlayerSingleton.instance;
+        
+        playerSingleton.DisableMovementControls = true;
         
         yield return new WaitForEndOfFrame();
         ShowTutorialAndPauseGame();
@@ -42,5 +46,7 @@ public class TutorialDisplayer : MonoBehaviour
         inputManager.playerInput.currentActionMap.Enable();
         
         tutorialScreen.SetActive(false);
+        
+        playerSingleton.DisableMovementControls = false;
     }
 }
