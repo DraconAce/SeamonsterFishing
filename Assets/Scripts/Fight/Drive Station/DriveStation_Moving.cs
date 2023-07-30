@@ -7,6 +7,7 @@ public class DriveStation_Moving : AbstractStationSegment
     public float currentSpeed = 0f;
 
     [SerializeField] private MinMaxLimit moveLimit;
+    public MinMaxLimit MoveLimit => moveLimit;
 
     private Vector3 boatForwardDirection;
     private Transform boatParent;

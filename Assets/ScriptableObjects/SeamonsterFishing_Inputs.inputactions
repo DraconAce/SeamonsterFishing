@@ -24,15 +24,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Station_Reeling",
-                    "type": "Button",
-                    "id": "adb0ab28-350f-4570-8d92-8394adb9c0b0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ActivateSpot",
                     "type": "Button",
                     "id": "18e0be23-e4b7-43c3-9ac8-ac9af2ad238e",
@@ -181,28 +172,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Station_Cannon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "eeb7c1b6-6c1f-4b91-af84-7e83e760c60f",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Station_Reeling",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fc782629-4492-4eab-9571-d5b58b82139f",
-                    "path": "<Keyboard>/#(2)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Station_Reeling",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

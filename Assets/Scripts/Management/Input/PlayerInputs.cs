@@ -46,15 +46,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Station_Reeling"",
-                    ""type"": ""Button"",
-                    ""id"": ""adb0ab28-350f-4570-8d92-8394adb9c0b0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ActivateSpot"",
                     ""type"": ""Button"",
                     ""id"": ""18e0be23-e4b7-43c3-9ac8-ac9af2ad238e"",
@@ -203,28 +194,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Station_Cannon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""eeb7c1b6-6c1f-4b91-af84-7e83e760c60f"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Station_Reeling"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fc782629-4492-4eab-9571-d5b58b82139f"",
-                    ""path"": ""<Keyboard>/#(2)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Station_Reeling"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1561,7 +1530,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Fight_Overview = asset.FindActionMap("Fight_Overview", throwIfNotFound: true);
         m_Fight_Overview_Drive = m_Fight_Overview.FindAction("Drive", throwIfNotFound: true);
         m_Fight_Overview_Station_Cannon = m_Fight_Overview.FindAction("Station_Cannon", throwIfNotFound: true);
-        m_Fight_Overview_Station_Reeling = m_Fight_Overview.FindAction("Station_Reeling", throwIfNotFound: true);
         m_Fight_Overview_ActivateSpot = m_Fight_Overview.FindAction("ActivateSpot", throwIfNotFound: true);
         m_Fight_Overview_ToggleMenu = m_Fight_Overview.FindAction("ToggleMenu", throwIfNotFound: true);
         // Fight_Cannon
@@ -1663,7 +1631,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<IFight_OverviewActions> m_Fight_OverviewActionsCallbackInterfaces = new List<IFight_OverviewActions>();
     private readonly InputAction m_Fight_Overview_Drive;
     private readonly InputAction m_Fight_Overview_Station_Cannon;
-    private readonly InputAction m_Fight_Overview_Station_Reeling;
     private readonly InputAction m_Fight_Overview_ActivateSpot;
     private readonly InputAction m_Fight_Overview_ToggleMenu;
     public struct Fight_OverviewActions
@@ -1672,7 +1639,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public Fight_OverviewActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Drive => m_Wrapper.m_Fight_Overview_Drive;
         public InputAction @Station_Cannon => m_Wrapper.m_Fight_Overview_Station_Cannon;
-        public InputAction @Station_Reeling => m_Wrapper.m_Fight_Overview_Station_Reeling;
         public InputAction @ActivateSpot => m_Wrapper.m_Fight_Overview_ActivateSpot;
         public InputAction @ToggleMenu => m_Wrapper.m_Fight_Overview_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Overview; }
@@ -1690,9 +1656,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Station_Cannon.started += instance.OnStation_Cannon;
             @Station_Cannon.performed += instance.OnStation_Cannon;
             @Station_Cannon.canceled += instance.OnStation_Cannon;
-            @Station_Reeling.started += instance.OnStation_Reeling;
-            @Station_Reeling.performed += instance.OnStation_Reeling;
-            @Station_Reeling.canceled += instance.OnStation_Reeling;
             @ActivateSpot.started += instance.OnActivateSpot;
             @ActivateSpot.performed += instance.OnActivateSpot;
             @ActivateSpot.canceled += instance.OnActivateSpot;
@@ -1709,9 +1672,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Station_Cannon.started -= instance.OnStation_Cannon;
             @Station_Cannon.performed -= instance.OnStation_Cannon;
             @Station_Cannon.canceled -= instance.OnStation_Cannon;
-            @Station_Reeling.started -= instance.OnStation_Reeling;
-            @Station_Reeling.performed -= instance.OnStation_Reeling;
-            @Station_Reeling.canceled -= instance.OnStation_Reeling;
             @ActivateSpot.started -= instance.OnActivateSpot;
             @ActivateSpot.performed -= instance.OnActivateSpot;
             @ActivateSpot.canceled -= instance.OnActivateSpot;
@@ -2160,7 +2120,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     {
         void OnDrive(InputAction.CallbackContext context);
         void OnStation_Cannon(InputAction.CallbackContext context);
-        void OnStation_Reeling(InputAction.CallbackContext context);
         void OnActivateSpot(InputAction.CallbackContext context);
         void OnToggleMenu(InputAction.CallbackContext context);
     }

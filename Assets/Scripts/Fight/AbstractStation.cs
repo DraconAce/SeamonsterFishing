@@ -13,10 +13,8 @@ public abstract class AbstractStation : MonoBehaviour
     public GameState StationGameState => stationGameState;
     
     [SerializeField] private UnityEvent onEnterStation;
-    public UnityEvent OnEnterStation => onEnterStation;
 
     [SerializeField] private UnityEvent onLeaveStation;
-    public UnityEvent OnLeaveStation => onLeaveStation;
 
     public bool IsInStation { get; private set; }
     public GameStateManager GameStateManager { get; private set; }

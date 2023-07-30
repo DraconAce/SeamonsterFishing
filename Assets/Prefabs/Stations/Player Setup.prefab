@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 8790332009883055501}
-  playerRepresentation: {fileID: 989463600331948423}
+  playerRepresentation: {fileID: 0}
 --- !u!1 &2034871868831227664
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &989463600331948423
 Transform:
   m_ObjectHideFlags: 0

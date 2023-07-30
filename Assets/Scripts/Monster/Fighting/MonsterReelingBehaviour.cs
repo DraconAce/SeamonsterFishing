@@ -1,9 +1,15 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MonsterReelingBehaviour : AbstractMonsterBehaviour
 {
+    [Header("Node Implementation Details")] 
+    [SerializeField] private int minNumberAttacksNeededUntilNextReeling = 3;
+
+    [SerializeField] private float baseReelingExecutability = 55f;
+    
     [Header("Body Animations")]
     [SerializeField] private float moveDownTarget = 3f;
     [SerializeField] private Transform monsterTransform;
@@ -31,9 +37,6 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
     private GameStateManager gameStateManager;
     private PlayerSingleton playerSingleton;
     
-    public override bool ChangeMonsterStateOnStartBehaviour => true;
-    public override MonsterState MonsterStateOnBehaviourStart => MonsterState.Reeling;
-    
     private Vector3 positionBeforeReeling;
     private Quaternion rotationBeforeReeling;
     
@@ -41,6 +44,9 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
     private Quaternion mouthRotationBeforeReeling;
     
     private Sequence moveAndTurnSequence;
+    private int numberOfAttackUsagesSinceLastReeling;
+
+    protected override MonsterState BehaviourState => MonsterState.Reeling;
 
     protected override void Start()
     {
@@ -53,9 +59,20 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
             => gameStateManager.CurrentGameState != GameState.FightReelingStation);
     }
 
-    protected override IEnumerator StartBehaviourImpl()
+    public override float GetExecutability()
+    {
+        var numberOfAttackUsages = FightMonsterState.GetUsageOfMonsterState(MonsterState.Attacking);
+        
+        var diffCurrentAndLastReelingUsages = numberOfAttackUsages - numberOfAttackUsagesSinceLastReeling;
+
+        return diffCurrentAndLastReelingUsages < minNumberAttacksNeededUntilNextReeling ? 0f : baseReelingExecutability;
+    }
+
+    protected override IEnumerator BehaviourRoutineImpl()
     {
         gameStateManager.ChangeGameState(GameState.FightReelingStation);
+        
+        numberOfAttackUsagesSinceLastReeling = FightMonsterState.GetUsageOfMonsterState(MonsterState.Attacking);
         
         StartMoveAndTurnSequence(true);
         AttachHeadMovementToSequence(true);
@@ -68,14 +85,12 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         AttachHeadMovementToSequence(false);
 
         yield return moveAndTurnSequence.WaitForCompletion();
-
-        yield return base.StartBehaviourImpl();
     }
 
     private void StartMoveAndTurnSequence(bool startReeling)
     {
         var targetPos = monsterTransform.position;
-        var targetRotation = monsterTransform.rotation;
+        Quaternion targetRotation;
         
         if(startReeling)
         {
@@ -145,7 +160,7 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         );
     }
 
-    protected override IEnumerator StartInterruptedRoutineImpl()
+    protected override IEnumerator StopBehaviourRoutineImpl()
     {
         gameStateManager.ChangeGameState(GameState.FightOverview);
         
