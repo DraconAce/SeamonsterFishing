@@ -9,6 +9,9 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 
     [Header("Attack")] 
     [SerializeField] private MonsterAttackBehaviour monsterAttack;
+    
+    [Header("Reeling")]
+    [SerializeField] private MonsterReelingBehaviour monsterReeling;
 
     [Header("Stunned")] 
     [SerializeField] private FightMonsterStunned monsterStunned;
@@ -42,20 +45,27 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
             yield return CheckIfLoopBlocked();
             
             restartBehaviourLoop = false;
-            
+
+            //Idle
             currentBehaviourRoutine = IdleBehaviour();
             yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
             yield return CheckIfLoopBlocked();
 
+            //Attack
             currentBehaviourRoutine = AttackBehaviour();
             yield return currentBehaviourRoutine;
             
             if(restartBehaviourLoop) continue;
             yield return CheckIfLoopBlocked();
 
-            //Fleeing
+            //Reeling
+            currentBehaviourRoutine = ReelingBehaviour();
+            yield return currentBehaviourRoutine;
+            
+            if(restartBehaviourLoop) continue;
+            yield return CheckIfLoopBlocked();
         }
     }
 
@@ -73,13 +83,15 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
 
     private IEnumerator TriggerGivenBehaviour(AbstractMonsterBehaviour behaviour)
     {
-        Debug.LogFormat("Start Behaviour of type: {0}", nameof(behaviour));
+        var behaviourName = behaviour.GetType().Name;
+
+        Debug.LogFormat("Start Behaviour of type: {0}", behaviourName);
         yield return StartMonsterBehaviourRoutine(behaviour);
         
-        Debug.LogFormat("Wait For Potential Interrupt: {0}", nameof(behaviour));
+        Debug.LogFormat("Wait For Potential Interrupt: {0}", behaviourName);
         yield return WaitForInterruptBehaviourIfExists();
         
-        Debug.LogFormat("Behaviour Finished: {0}", nameof(behaviour));
+        Debug.LogFormat("Behaviour Finished: {0}", behaviourName);
     }
 
     private IEnumerator StartMonsterBehaviourRoutine(AbstractMonsterBehaviour monsterBehaviour)
@@ -101,6 +113,11 @@ public class MonsterFightBehaviourProvider : MonsterBehaviourProvider
     private IEnumerator AttackBehaviour()
     {
         yield return TriggerGivenBehaviour(monsterAttack);
+    }
+
+    private IEnumerator ReelingBehaviour()
+    {
+        yield return TriggerGivenBehaviour(monsterReeling);
     }
 
     public void ReactToCannonBallMiss()

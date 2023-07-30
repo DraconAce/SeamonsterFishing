@@ -16,6 +16,12 @@ public class CannonBall : MonoBehaviour, IPoolObject
 
     private const string monsterTag = "monster";
     private const string weakPointTag = "weakPoint";
+    private const string waterTag = "water";
+
+
+    public FMODUnity.EventReference oceanHit;
+    public FMODUnity.EventReference regularHit;
+    public FMODUnity.EventReference weakpointHit;
 
     private void Awake() => TryGetComponent(out rigidbody);
 
@@ -49,17 +55,33 @@ public class CannonBall : MonoBehaviour, IPoolObject
         if (collidedGameOb.CompareTag(monsterTag))
         {
             CannonBallRecordedValidHit();
-            
+
             monsterSingleton.CannonBallMissed();
+
+            //play sound Hit No Weakpoint
+            FMODUnity.RuntimeManager.PlayOneShot(regularHit, this.transform.position);
         }
         else if (collidedGameOb.CompareTag(weakPointTag))
         {
             CannonBallRecordedValidHit();
-            
+
             monsterSingleton.WeakPointWasHit();
+
+            //play sound Hit Weakpoint
+            FMODUnity.RuntimeManager.PlayOneShot(weakpointHit, this.transform.position);
         }
         else
+        {
+            //Cannon Ball missed the monster
             monsterSingleton.CannonBallMissed();
+            //but could have still hit the water -
+            //technically we need an additional case after this with a generic explosion sound for hitting objects with collider, but the cannonball can only hit the monster or water in our scene
+            if (collidedGameOb.CompareTag(waterTag))
+            {
+                //play sound Hit Ocean
+                FMODUnity.RuntimeManager.PlayOneShot(oceanHit, this.transform.position);
+            }
+        }
     }
 
     private void CannonBallRecordedValidHit()

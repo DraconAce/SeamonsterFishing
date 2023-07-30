@@ -9,4 +9,14 @@ public static class Converter
             _ => rotationAxisValue
         };
     }
+
+    public static float GetAngleFrom0To360(float signedAngle)
+    {
+        if (signedAngle < 0)
+        {
+            signedAngle = 360 + signedAngle;
+        }
+
+        return signedAngle;
+    }
 }

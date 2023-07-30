@@ -8,6 +8,7 @@ public class WinDeathUI : AbstractMenu
     [SerializeField] private UnityEvent playerWonEvent;
     
     private GameStateManager gameStateManager;
+    private SceneController sceneController;
 
     protected override bool UseInputActions => false;
 
@@ -16,6 +17,7 @@ public class WinDeathUI : AbstractMenu
         base.Start();
 
         gameStateManager = GameStateManager.instance;
+        sceneController = SceneController.instance;
         
         SetInitialTimeScale();
 
@@ -28,11 +30,15 @@ public class WinDeathUI : AbstractMenu
     {
         if (newGameState == GameState.Won)
         {
+            sceneController.ToggleCursorForLevel(true);
+
             OpenMenu();
             OnRunEnded(playerWonEvent);
         }
-        
+
         if (newGameState != GameState.Dead) return;
+
+        sceneController.ToggleCursorForLevel(true);
 
         OpenMenu();
         OnRunEnded(playerIsDeadEvent);

@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 {
+    [SerializeField] private Transform monsterTransform;
     [SerializeField] private MonsterFightBehaviourProvider fightBehaviourProvider;
     [SerializeField] private FightMonsterState fightState;
 
     public override bool AddToDontDestroy => false;
+    public Transform MonsterTransform => monsterTransform;
 
     public void WeakPointWasHit()
     {

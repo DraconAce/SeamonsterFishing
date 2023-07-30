@@ -1,5 +1,7 @@
 using System;
 using DG.Tweening;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -35,11 +37,29 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
 
     public string[] ActionsToSubscribeTo { get; } = { shootActionName };
     
+    public EventReference CannonShotSound;
+    public EventReference CannonFuseSound;
+    
+    private EventInstance CannonShotSoundInstance;
+    private EventInstance CannonFuseSoundInstance;
+    
+    private CannonStation cannonStation => (CannonStation) ControllerStation;
+
+
     private void Start()
     {
+        CannonShotSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(CannonShotSound, barrelOpening.gameObject);
+        
         SubscribeToInputManager();
 
         PrepareCannonBallPool();
+    }
+
+    protected override void OnControllerSetup()
+    {
+        base.OnControllerSetup();
+        
+        CannonFuseSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(CannonFuseSound, cannonStation.CannonPivot.gameObject);
     }
 
     private void SubscribeToInputManager()
@@ -84,6 +104,13 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
         cannonBallOb.Ob.transform.localScale = Vector3.one;
         cannonBallOb.TryGetCachedComponent(out currentCannonBall);
         
+        //play fuse sound
+        CannonFuseSoundInstance.start();
+
+        //burn fuse
+        reloadSegment.SetShootDelayforFuse(shootDelay);
+        reloadSegment.burnFuse();
+
         shootDelayTween = DOVirtual.DelayedCall(shootDelay, Shoot, false);
         ShootIsScheduled = true;
         
@@ -104,6 +131,12 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
 
         currentCannonBall = null;
         
+        //stop and release fuse sound
+        CannonFuseSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
+        //play and release shot sound
+        CannonShotSoundInstance.start();
+
         InvokeSegmentStateChangedEvent();
     }
 
@@ -112,6 +145,12 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
         base.OnDestroy();
         
         shootDelayTween?.Kill();
+        
+        CannonShotSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        CannonShotSoundInstance.release();
+        
+        CannonFuseSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        CannonFuseSoundInstance.release();
 
         if (inputManager == null) return;
         UnsubscribeOnDestroy();

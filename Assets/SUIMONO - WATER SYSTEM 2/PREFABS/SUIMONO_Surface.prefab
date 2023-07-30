@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6873994170279649173}
   m_Layer: 8
   m_Name: Suimono_ObjectScale
-  m_TagString: Untagged
+  m_TagString: water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 6873994170500343263}
   m_Layer: 8
   m_Name: Suimono_Object
-  m_TagString: Untagged
+  m_TagString: water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -392,16 +392,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   systemTime: 0
-  systemLocalTime: 0.02
+  systemLocalTime: 185.16528
   flowSpeed: 0.05
   flowDirection: 180
   useBeaufortScale: 1
-  beaufortScale: 2
+  beaufortScale: 8.2
   turbulenceFactor: 0.23999998
   waveScale: 0.5
-  lgWaveHeight: 0.04666669
+  lgWaveHeight: 1.9273334
   lgWaveScale: 0.03125
-  waveHeight: 0.65
+  waveHeight: 0.44166663
   heightProjection: 1
   useHeightProjection: 1
   refractStrength: 0.5
@@ -466,8 +466,8 @@ MonoBehaviour:
   useTexNormal3: {fileID: 2800000, guid: fb77700eb10ac344db495df815b29823, type: 3}
   showWaves: 0
   customWaves: 0
-  localTime: 0.002
-  beaufortVal: 0.16666667
+  localTime: 31.107767
+  beaufortVal: 0.68333334
   showShore: 0
   shorelineHeight: 0.25
   shorelineFreq: 1
@@ -496,7 +496,7 @@ MonoBehaviour:
   hFoamHeight: 0.65
   hFoamSpread: 0.276
   heightFoamAmt: 0.85
-  showUnderwater: 0
+  showUnderwater: 1
   underwaterColor: {r: 0.034, g: 0.102, b: 0.154, a: 0.404}
   underLightFactor: 1
   underRefractionAmount: 0.005
@@ -540,12 +540,12 @@ MonoBehaviour:
   - Mud Thick Brown
   - Oil Slick
   - Swimming Pool
-  presetIndex: 0
-  presetUseIndex: 0
+  presetIndex: -1
+  presetUseIndex: -1
   presetFileIndex: 0
   presetFileUseIndex: 0
   presetOptions: []
-  showPresets: 0
+  showPresets: 1
   presetStartTransition: 0
   presetTimer: 1
   currentPresetFolder: Built-In Presets
@@ -614,49 +614,49 @@ MonoBehaviour:
   - <data_underwaterfogspread>(0)
   - <data_underDarkRange>(50)
   - 
-  presetDataString: '<color_depth>(0.160,0.281,0.382,1.000)
+  presetDataString: '<color_depth>(0.057,0.132,0.126,1.000)
 
-    <color_shallow>(0.208,0.373,0.441,0.784)
+    <color_shallow>(0.000,0.000,0.000,0.000)
 
-    <color_blend>(0.360,1.000,0.867,0.220)
+    <color_blend>(0.360,1.000,0.867,1.000)
 
     <color_overlay>(0.000,0.000,0.000,0.000)
 
     <color_caustics>(1.000,1.000,1.000,1.000)
 
-    <color_reflection>(1.000,1.000,1.000,0.376)
+    <color_reflection>(1.000,1.000,1.000,1.000)
 
-    <color_specular>(0.063,0.326,0.375,0.161)
+    <color_specular>(0.235,0.177,0.073,0.275)
 
-    <color_sss>(0.000,0.324,0.015,0.239)
+    <color_sss>(0.278,0.426,0.000,0.129)
 
-    <color_foam>(0.912,0.874,0.791,1.000)
+    <color_foam>(0.618,0.595,0.545,1.000)
 
-    <color_underwater>(0.034,0.102,0.154,0.404)
+    <color_underwater>(0.038,0.097,0.110,0.145)
 
-    <data_beaufort>(2)
+    <data_beaufort>(9.33913)
 
     <data_flowdir>(180)
 
-    <data_flowspeed>(0.05)
+    <data_flowspeed>(0.084)
 
     <data_wavescale>(0.5)
 
     <data_customwaves>(False)
 
-    <data_waveheight>(0.65)
+    <data_waveheight>(0.2043478)
 
     <data_heightprojection>(1)
 
-    <data_turbulence>(0.24)
+    <data_turbulence>(0.75)
 
-    <data_lgwaveheight>(0.04666669)
+    <data_lgwaveheight>(2.27287)
 
     <data_lgwavescale>(0.03125)
 
-    <data_shorelineheight>(0.25)
+    <data_shorelineheight>(0.397)
 
-    <data_shorelinefreq>(1)
+    <data_shorelinefreq>(0.5)
 
     <data_shorelinescale>(3.55)
 
@@ -668,13 +668,13 @@ MonoBehaviour:
 
     <data_overalltransparency>(1)
 
-    <data_edgeamt>(0.064)
+    <data_edgeamt>(0.07)
 
-    <data_depthamt>(0.064)
+    <data_depthamt>(0.428)
 
-    <data_shallowamt>(0.057)
+    <data_shallowamt>(1)
 
-    <data_refractstrength>(0.5)
+    <data_refractstrength>(1)
 
     <data_aberrationscale>(0)
 
@@ -682,7 +682,7 @@ MonoBehaviour:
 
     <data_reflectprojection>(1)
 
-    <data_reflectblur>(0.25)
+    <data_reflectblur>(0)
 
     <data_reflectterm>(0)
 
@@ -690,23 +690,23 @@ MonoBehaviour:
 
     <data_roughness>(0.025)
 
-    <data_roughness2>(0.45)
+    <data_roughness2>(0.8)
 
     <data_enablefoam>(True)
 
-    <data_foamscale>(0.94)
+    <data_foamscale>(0.98)
 
-    <data_foamspeed>(0)
+    <data_foamspeed>(0.842)
 
-    <data_edgefoamamt>(0.933)
+    <data_edgefoamamt>(0.9)
 
     <data_shallowfoamamt>(1)
 
-    <data_heightfoamamt>(0.85)
+    <data_heightfoamamt>(0.462)
 
-    <data_hfoamheight>(0.65)
+    <data_hfoamheight>(0.195)
 
-    <data_hfoamspread>(0.276)
+    <data_hfoamspread>(0)
 
     <data_enableunderdebris>(True)
 
@@ -720,15 +720,15 @@ MonoBehaviour:
 
     <data_underbluramount>(1)
 
-    <data_underwaterfogdist>(34)
+    <data_underwaterfogdist>(34.2)
 
     <data_underwaterfogspread>(0)
 
     <data_underDarkRange>(50)
 
 '
-  dir: G:/PROJECTS/SUIMONO 2.0/SUIMONO_V2.2.0 (base 2019.4)/Assets\SUIMONO - WATER
-    SYSTEM 2/RESOURCES/
+  dir: P:/School/MA_Semester_1/Praxisprojekt/Seamonster Fishing Project/Assets\SUIMONO
+    - WATER SYSTEM 2/RESOURCES/
   baseDir: SUIMONO - WATER SYSTEM 2/RESOURCES/
   presetSaveName: my custom preset
   presetFile: 
@@ -744,8 +744,8 @@ MonoBehaviour:
   skybox: {fileID: 2100000, guid: d4ddea6029592ec40aad6d5080007bda, type: 2}
   d: 2
   dn: 2
-  pdir: G:/PROJECTS/SUIMONO 2.0/SUIMONO_V2.2.0 (base 2019.4)/Assets\SUIMONO - WATER
-    SYSTEM 2/RESOURCES//SUIMONO_PRESETS_Built-In Presets
+  pdir: P:/School/MA_Semester_1/Praxisprojekt/Seamonster Fishing Project/Assets\SUIMONO
+    - WATER SYSTEM 2/RESOURCES//SUIMONO_PRESETS_Built-In Presets
   f: 28
   px: 14
   nx: 28

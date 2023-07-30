@@ -227,8 +227,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3536400306987202515}
   - component: {fileID: 1235510248040924842}
-  - component: {fileID: 5941898202895934309}
+  - component: {fileID: 3617786493964686081}
   - component: {fileID: 415886720692100454}
+  - component: {fileID: 8370402436042479153}
   - component: {fileID: 4387531031625972010}
   m_Layer: 0
   m_Name: Main Camera
@@ -303,14 +304,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5941898202895934309
-AudioListener:
+--- !u!114 &3617786493964686081
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2958922513392504870}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!114 &415886720692100454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,7 +337,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -345,6 +351,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8370402436042479153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2958922513392504870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 512
 --- !u!114 &4387531031625972010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +531,12 @@ MonoBehaviour:
   - state: 8
     stateInputMap: UI
   - state: 9
+    stateInputMap: UI
+  - state: 5
+    stateInputMap: UI
+  - state: 7
+    stateInputMap: UI
+  - state: 10
     stateInputMap: UI
 --- !u!114 &8428814468877849716
 MonoBehaviour:

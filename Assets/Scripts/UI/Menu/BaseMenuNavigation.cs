@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BaseMenuNavigation : MonoBehaviour
 {
     [SerializeField] private LevelRepresentation reloadScene;
-    
+
+    private void Start() => SceneController.instance.Activation();
+
     public void ReturnToMenu()
     {
         GameStateManager.instance.BlockGameStateChange = false;
