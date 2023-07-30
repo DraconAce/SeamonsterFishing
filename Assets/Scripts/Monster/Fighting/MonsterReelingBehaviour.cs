@@ -1,11 +1,14 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MonsterReelingBehaviour : AbstractMonsterBehaviour
 {
     [Header("Node Implementation Details")] 
-    [SerializeField] private int maxNumberAttacksNeededUntilNextReeling = 3;
+    [SerializeField] private int minNumberAttacksNeededUntilNextReeling = 3;
+
+    [SerializeField] private float baseReelingExecutability = 55f;
     
     [Header("Body Animations")]
     [SerializeField] private float moveDownTarget = 3f;
@@ -61,11 +64,8 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         var numberOfAttackUsages = FightMonsterState.GetUsageOfMonsterState(MonsterState.Attacking);
         
         var diffCurrentAndLastReelingUsages = numberOfAttackUsages - numberOfAttackUsagesSinceLastReeling;
-        
-        var executability = Mathf.Clamp01(diffCurrentAndLastReelingUsages 
-                                          / (float) maxNumberAttacksNeededUntilNextReeling) * 100f;
 
-        return executability;
+        return diffCurrentAndLastReelingUsages < minNumberAttacksNeededUntilNextReeling ? 0f : baseReelingExecutability;
     }
 
     protected override IEnumerator BehaviourRoutineImpl()

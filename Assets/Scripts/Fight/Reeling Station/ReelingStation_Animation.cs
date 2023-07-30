@@ -15,7 +15,7 @@ public class ReelingStation_Animation : AbstractStationSegment
     [SerializeField] private Ease reelExitEase;
     [SerializeField] private Ease returnToPositionEase = Ease.InCubic;
 
-    private Transform monsterTransform;
+    private Transform reelingTarget;
     
     private Vector3 positionBeforeReeling;
     
@@ -27,8 +27,6 @@ public class ReelingStation_Animation : AbstractStationSegment
     private Tween moveBoatForReelTween;
     private GameStateManager gameStateManager;
 
-    private const float pathToMonsterPercentage = 0.95f;
-    
     private ReelingStation reelingStation => (ReelingStation) ControllerStation;
 
     private void Start()
@@ -38,7 +36,7 @@ public class ReelingStation_Animation : AbstractStationSegment
         reelingStation.OnReelingStartedEvent += OnReelingStarted;
         reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
 
-        monsterTransform = FightMonsterSingleton.instance.MonsterTransform;
+        reelingTarget = FightMonsterSingleton.instance.ReelingTarget;
         
         SetupBoatVariables();
     }
@@ -61,7 +59,9 @@ public class ReelingStation_Animation : AbstractStationSegment
     {
         rotationAfterReeling = DetermineCloserBoatRotation(reelingPivotTransform.rotation);
         
-        var lookAtRotation = Quaternion.LookRotation(monsterTransform.position - reelingPivotTransform.position);
+        var reelingTargetPos = GetReelingTargetPositionOnBoatHeight();
+
+        var lookAtRotation = Quaternion.LookRotation(reelingTargetPos - reelingPivotTransform.position);
         
         reelingPivotTransform.DORotateQuaternion(lookAtRotation, reelEntryDuration)
             .SetEase(reelEntryEase);
@@ -83,15 +83,21 @@ public class ReelingStation_Animation : AbstractStationSegment
 
     private void StartMoveTowardsMonsterTween()
     {
-        var monsterPos = monsterTransform.position;
+        var reelingTargetPos = GetReelingTargetPositionOnBoatHeight();
+
+        var toMonsterVector = reelingTargetPos - positionBeforeReeling;
         
-        var toMonsterDirection = (monsterPos - positionBeforeReeling).normalized;
-        var targetDistanceToMonster = Vector3.Distance(positionBeforeReeling, monsterPos) * pathToMonsterPercentage;
-        
-        var targetPosition = positionBeforeReeling + toMonsterDirection * targetDistanceToMonster;
+        var targetPosition = positionBeforeReeling + toMonsterVector;
 
         moveBoatForReelTween = reelingPivotTransform.DOMove(targetPosition, reelingStation.MaxTimeToReel)
             .SetEase(Ease.InQuad);
+    }
+
+    private Vector3 GetReelingTargetPositionOnBoatHeight()
+    {
+        var reelingTargetPos = reelingTarget.position;
+        reelingTargetPos.y = reelingPivotTransform.position.y;
+        return reelingTargetPos;
     }
 
     private void OnReelingCompleted()

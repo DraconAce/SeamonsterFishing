@@ -8,8 +8,17 @@ using UnityEngine;
 
 public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubscriber
 {
+    #if UNITY_EDITOR
+    [Header("Debug Stuff")] 
+    [SerializeField] private bool startWithSpecificBehaviour;
+    [SerializeField] private AbstractMonsterBehaviour behaviourToStartWith;
+#endif
+    
+    [Header("Behaviour Tree Setup")]
     [SerializeField] private float delayBeforeFirstBehaviour = 1f;
+    [SerializeField] private float backupBehaviourCheckInterval = 5f;
     [SerializeField] private AbstractMonsterNodeImpl rootNode;
+    [SerializeField] private AbstractMonsterBehaviour backupBehaviour;
     
     private readonly Dictionary<int, INodeImpl> nodeImplDict = new();
     private NativeHashMap<int, NodeData> nodeDataMap;
@@ -26,14 +35,18 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     public bool IsAnyBehaviourActive => CurrentBehaviour != null;
     
     private WaitUntil waitUntilBehaviourIsInactive;
+    private WaitForSeconds backupBehaviourCheckIntervalWait;
     private Coroutine stopCurrentBehaviourRoutine;
+    private Coroutine backupBehaviourRoutine;
+    
+    private bool useDirectBehaviourRequestAfterJobFlag;
 
     private void Start()
     {
         SetupVariables();
 
         monsterKI.BehaviourTreeManager = this;
-        monsterKI.RequestSpecificBehaviourEvent += RequestSpecificSpecificBehaviour;
+        monsterKI.RequestSpecificBehaviourEvent += RequestSpecificBehaviour;
 
         CreateNodeImplDict();
         
@@ -52,13 +65,40 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         comparableDataMapRef = new NativeMultiHashMap<int, ComparableData>(0, Allocator.Persistent);
 
         waitUntilBehaviourIsInactive = new WaitUntil(() => !IsAnyBehaviourActive);
+        backupBehaviourCheckIntervalWait = new WaitForSeconds(backupBehaviourCheckInterval);
     }
 
-    private void StopCurrentBehaviour() => StopCurrentBehaviour(-1, false);
-
-    private void StopCurrentBehaviour(int nextBehaviourIndex, bool requestNewBehaviourAfter = true)
+    private void RequestSpecificBehaviour(int nextBehaviourIndex)
     {
-        stopCurrentBehaviourRoutine = StartCoroutine(StopCurrentBehaviourRoutine(nextBehaviourIndex, requestNewBehaviourAfter));
+        void AfterBehaviourStopAction()
+        {
+            TryResetCurrentBehaviour();
+
+            if (nextBehaviourIndex >= 0)
+            {
+                SetCurrentBehaviour(nextBehaviourIndex);
+                monsterKI.ForwardActionRequest(nextBehaviourIndex);
+                return;
+            }
+
+            RequestNextBehaviour();
+        }
+
+        StopCurrentBehaviourAndStartNextBehaviour(AfterBehaviourStopAction);
+    }
+    
+    private void SetCurrentBehaviour(int behaviourIndex) => CurrentBehaviour = nodeImplDict[behaviourIndex];
+
+    private void StopCurrentBehaviourAndStartNextBehaviour(Action afterBehaviourStopAction = null)
+    {
+        stopCurrentBehaviourRoutine = StartCoroutine(StopCurrentBehaviourRoutine(afterBehaviourStopAction));
+    }
+
+    private IEnumerator StopCurrentBehaviourRoutine(Action afterBehaviourStoppedAction = null)
+    {
+        yield return waitUntilBehaviourIsInactive;
+        
+        afterBehaviourStoppedAction?.Invoke();
     }
 
     private void CreateNodeImplDict()
@@ -79,6 +119,14 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     {
         yield return new WaitForSeconds(delayBeforeFirstBehaviour);
 
+        #if UNITY_EDITOR
+        if (startWithSpecificBehaviour)
+        {
+            RequestSpecificBehaviour(behaviourToStartWith.NodeIndex);
+            yield break;
+        }
+        #endif
+        
         RequestNextBehaviour();
     }
 
@@ -114,23 +162,6 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
             return;
         
         CurrentBehaviour = null;
-    }
-
-    private IEnumerator StopCurrentBehaviourRoutine(int nextBehaviourIndex, bool requestNewBehaviourAfter)
-    {
-        yield return waitUntilBehaviourIsInactive;
-        
-        TryResetCurrentBehaviour();
-        
-        if(!requestNewBehaviourAfter) yield break;
-
-        if(nextBehaviourIndex >= 0)
-        {
-            monsterKI.ForwardActionRequest(nextBehaviourIndex);
-            yield break;
-        }
-        
-        RequestNextBehaviour();
     }
 
     private void ScheduleBehaviourTreeJobs()
@@ -177,20 +208,62 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     private void ScheduleStartOfNextBehaviour()
     {
         var behaviourIndex = nextBehaviourID[0];
+
+        if (behaviourIndex == -1)
+        {
+            backupBehaviourRoutine ??= StartCoroutine(StartBackupBehaviourRoutine());
+            return;
+        }
         
-        monsterKI.ForwardActionRequest(behaviourIndex);
-        CurrentBehaviour = nodeImplDict[behaviourIndex];
+        StopBackupRoutineIfActive();
         
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Debug.Log(CurrentBehaviour.NodeToRepresent.BehaviourName);
-        #endif
+#endif
+
+        if (useDirectBehaviourRequestAfterJobFlag)
+        {
+            RequestSpecificBehaviour(behaviourIndex);
+            useDirectBehaviourRequestAfterJobFlag = false;
+            
+            return;
+        }
+
+        SetCurrentBehaviour(behaviourIndex);
+        monsterKI.ForwardActionRequest(behaviourIndex);
     }
 
-    private void RequestSpecificSpecificBehaviour(int behaviourIndex) => StopCurrentBehaviour(behaviourIndex);
+    private IEnumerator StartBackupBehaviourRoutine()
+    {
+        var backupBehaviourIndex = backupBehaviour.NodeIndex;
+        
+        while (true)
+        {
+            var isBackupBehaviourAlreadyActive = CurrentBehaviour != null && CurrentBehaviour.NodeIndex == backupBehaviourIndex;
+            
+            if(!isBackupBehaviourAlreadyActive) 
+                monsterKI.ForwardActionRequest(backupBehaviourIndex);
+            
+            yield return backupBehaviourCheckIntervalWait;
+            
+            useDirectBehaviourRequestAfterJobFlag = true;
+            RequestNextBehaviour();
+        }
+    }
+
+    private void StopBackupRoutineIfActive()
+    {
+        if (backupBehaviourRoutine == null) return;
+        
+        StopCoroutine(backupBehaviourRoutine);
+        backupBehaviourRoutine = null;
+    }
+
+    public void StopCurrentBehaviour() => StopCurrentBehaviourAndStartNextBehaviour();
 
     private void OnDestroy()
     {
-        monsterKI.RequestSpecificBehaviourEvent -= RequestSpecificSpecificBehaviour;
+        monsterKI.RequestSpecificBehaviourEvent -= RequestSpecificBehaviour;
 
         DisposeOfJobData();
     }

@@ -37,6 +37,8 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
         
         FightMonsterState.CurrentState = BehaviourState;
         
+        MakeSureTreeManagerIsAssigned();
+
         behaviourRoutine = StartCoroutine(BehaviourRoutine());
     }
     

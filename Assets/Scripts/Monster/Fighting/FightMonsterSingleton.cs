@@ -3,6 +3,7 @@ using UnityEngine;
 public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 {
     [SerializeField] private Transform monsterTransform;
+    [SerializeField] private Transform reelingTarget;
     
     [Header("Components to provide")]
     [SerializeField] private FightMonsterState fightState;
@@ -16,7 +17,13 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
     [SerializeField] private SwipeAttack swipeAttack;
 
     public override bool AddToDontDestroy => false;
+    
     public Transform MonsterTransform => monsterTransform;
+    public Transform ReelingTarget => reelingTarget;
+
+    public FightMonsterBehaviourTreeManager BehaviourTreeManager { get; private set; }
+
+    private void Start() => BehaviourTreeManager = monsterKI.BehaviourTreeManager;
 
     public void WeakPointWasHit()
     {
@@ -31,8 +38,19 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 
     public void CannonBallMissed()
     {
-        if (fightState.CurrentState == MonsterState.Stunned) return;
-        
+        if (!CanMonsterReactionBeTriggered()) return;
+
+        TriggerMonsterReaction();
+    }
+
+    private bool CanMonsterReactionBeTriggered()
+    {
+        return fightState.CurrentState != MonsterState.Stunned 
+               && !BehaviourTreeManager.IsAnyBehaviourActive;
+    }
+
+    private void TriggerMonsterReaction()
+    {
         swipeAttack.TriggerBehaviourDirectly();
     }
 }

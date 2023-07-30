@@ -162,8 +162,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fbb34038084e86980baea929b4e0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startWithSpecificBehaviour: 0
+  behaviourToStartWith: {fileID: 0}
   delayBeforeFirstBehaviour: 1
+  backupBehaviourCheckInterval: 5
   rootNode: {fileID: 6137612744942522549}
+  backupBehaviour: {fileID: 6534159792365875524}
 --- !u!114 &6137612744942522549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +384,8 @@ MonoBehaviour:
   priority: 2
   nodeToRepresent: {fileID: 11400000, guid: cd99292290e438b4ab7e4aad4ecacb99, type: 2}
   timeout: 1
-  maxNumberAttacksNeededUntilNextReeling: 3
+  minNumberAttacksNeededUntilNextReeling: 3
+  baseReelingExecutability: 55
   moveDownTarget: -14
   monsterTransform: {fileID: 9035737599552490425}
   moveDownDuration: 0.5
@@ -425,6 +430,7 @@ Transform:
   m_Children:
   - {fileID: 7401965266302255570}
   - {fileID: 3642292289840995531}
+  - {fileID: 1987691372647871361}
   m_Father: {fileID: 6795495756083538006}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -507,6 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterTransform: {fileID: 9035737599552490425}
+  reelingTarget: {fileID: 1987691372647871361}
   fightState: {fileID: 2538198034605590219}
   monsterKI: {fileID: 4962728429640281786}
   fightMonsterStunned: {fileID: 821713467539200915}
@@ -743,6 +750,37 @@ MonoBehaviour:
   priority: 3
   nodeToRepresent: {fileID: 11400000, guid: 82f45f08d7f1e8e4a84dacbe5c3942d4, type: 2}
   timeout: 5
+--- !u!1 &8662826990857140306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987691372647871361}
+  m_Layer: 0
+  m_Name: ReelingTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1987691372647871361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8662826990857140306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.68, y: 20.07, z: 45.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9035737599552490425}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9128519014903644445
 GameObject:
   m_ObjectHideFlags: 0

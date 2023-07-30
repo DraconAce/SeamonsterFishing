@@ -35,7 +35,7 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         var callCreated = _instance == null;
 
         //attempt to find the instance of this singleton
-        var instance = FindObjectOfType<T>();
+        var instance = FindObjectOfType<T>(true);
 
         //if the instance is found return it
         if(instance != null)

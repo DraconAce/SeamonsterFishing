@@ -93,7 +93,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         if(MovingController.BoatIsNotMoving(moveDirection)) 
         {
             //movingController.currentSpeed = 0;
-            if (lastMoveDirection != 0f && !rotatingController.MovingLocked)
+            if (lastMoveDirection != 0f && !RotatingController.MovingLocked)
             {
                 float rememberlastMoveDirection = lastMoveDirection;
                 lastMoveDirection = 0f;
