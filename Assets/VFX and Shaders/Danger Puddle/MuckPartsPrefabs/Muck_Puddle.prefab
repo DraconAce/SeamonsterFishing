@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4292917477697465368}
   - component: {fileID: 6987756396379685089}
+  - component: {fileID: 8051616867474262336}
   m_Layer: 0
   m_Name: Muck_Puddle
-  m_TagString: Untagged
+  m_TagString: MuckPuddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,9 +30,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4774491982951140018}
-  - {fileID: 2304557494804636980}
   - {fileID: 757873231999184019}
+  - {fileID: 2304557494804636980}
+  - {fileID: 4774491982951140018}
   - {fileID: 1210956999128121440}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -63,6 +64,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 96
   m_CollisionDetection: 0
+--- !u!65 &8051616867474262336
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5573448365167268521}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 2, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7232106197423270300
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,7 +100,7 @@ GameObject:
   - component: {fileID: 2657316033648410019}
   m_Layer: 0
   m_Name: GooParticles
-  m_TagString: MuckPuddle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

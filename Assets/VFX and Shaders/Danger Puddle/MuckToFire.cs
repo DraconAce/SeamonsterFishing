@@ -14,10 +14,10 @@ public class MuckToFire : MonoBehaviour
     {
         //Fetch the Material from the Renderer of the GameObject
         mat_Muck = GetComponent<Renderer>().material;
+        FireCheck();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FireCheck()
     {
         if (isburning)
         {

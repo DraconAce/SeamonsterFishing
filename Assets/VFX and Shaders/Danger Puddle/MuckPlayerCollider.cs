@@ -20,6 +20,11 @@ public class MuckPlayerCollider : MonoBehaviour
         {
             //slow down player
             DriveScript.SetBoatInMuck(true);
+            //damage player?
+            if (other.transform.GetChild(3).gameObject.activeSelf) //child3 is FireParticles
+            {
+                Debug.Log("Destroy Player because of Fire");
+            }
             
         }
     }

@@ -8,6 +8,7 @@ public class CreateMuck : MonoBehaviour
     [SerializeField] private GameObject Muck_Spew_Gameobject;
     [SerializeField] private GameObject Muck_Explosion_Gameobject;
     private ParticleSystem Muck_Explosion;
+    private BoxCollider MuckCollider;
     [SerializeField] private GameObject GooParticles_Gameobject;
     [SerializeField] private GameObject FireParticles_Gameobject;
     private Transform playerTransform;
@@ -16,6 +17,7 @@ public class CreateMuck : MonoBehaviour
     {
         Muck_Explosion = Muck_Explosion_Gameobject.GetComponent<ParticleSystem>();
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        MuckCollider = Muck_Explosion_Gameobject.transform.GetChild(0).GetComponent<BoxCollider>();
         StartCoroutine(MuckTimeTracker());
     }
     
@@ -38,8 +40,16 @@ public class CreateMuck : MonoBehaviour
         GooParticles_Gameobject.SetActive(true);
         
         //Testing fire after 2s
-        yield return new WaitForSeconds(2f);
-        FireParticles_Gameobject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        StartFire();
     }
     
+    //after Monster creates MuckOrigin: save a reference to MuckOrigin and call StartFire when it should burn
+    public void StartFire()
+    {
+        FireParticles_Gameobject.SetActive(true);
+        //Reset Trigger to cause "OnTriggerEnter" to hurt player if they are already inside the goo
+        MuckCollider.enabled = false;
+        MuckCollider.enabled = true;
+    }
 }
