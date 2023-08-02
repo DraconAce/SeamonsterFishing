@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1103a7708f0cf4989271d6986b7dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Muck_Explosion_Gameobject: {fileID: 2763425282672884101}
+  GooParticles_Gameobject: {fileID: 4767096319710360396}
+  FireParticles_Gameobject: {fileID: 5569261402276344428}
 --- !u!1001 &2771326327330495184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61,11 +64,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4292917477697465368, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.911581
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4292917477697465368, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.42
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 4292917477697465368, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -103,6 +106,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Muck_Puddle
       objectReference: {fileID: 0}
+    - target: {fileID: 5573448365167268521, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727129265149405372, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -111,6 +122,16 @@ PrefabInstance:
 --- !u!4 &2154474548769191624 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4292917477697465368, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
+  m_PrefabInstance: {fileID: 2771326327330495184}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4767096319710360396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7232106197423270300, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
+  m_PrefabInstance: {fileID: 2771326327330495184}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5569261402276344428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7727129265149405372, guid: 5b2bdaa3bc2071a43a01150f2dfb77e9, type: 3}
   m_PrefabInstance: {fileID: 2771326327330495184}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4506209678787163550
@@ -127,15 +148,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 998205745674158271, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.58
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 998205745674158271, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.42
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 998205745674158271, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.019891
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 998205745674158271, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
       propertyPath: m_LocalRotation.w
@@ -174,6 +195,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
+--- !u!1 &2763425282672884101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1788190137533189147, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
+  m_PrefabInstance: {fileID: 4506209678787163550}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3698320634152006945 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 998205745674158271, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
