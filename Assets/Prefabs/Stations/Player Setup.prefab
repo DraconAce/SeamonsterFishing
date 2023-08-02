@@ -679,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8174264737662843666}
   - component: {fileID: 5424608271463893098}
+  - component: {fileID: 3523187064740353086}
   m_Layer: 0
   m_Name: PlayerCollider
   m_TagString: Player
@@ -722,6 +723,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3523187064740353086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4711474900865713466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ccd6eacad923e45ac6f7b3da061199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DriveStation: {fileID: 0}
+  BoatFireHitSound:
+    Guid:
+      Data1: 895132880
+      Data2: 1153479305
+      Data3: -183337800
+      Data4: -181631749
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Fire Hit Boat
 --- !u!1 &5026676654438774077
 GameObject:
   m_ObjectHideFlags: 0
