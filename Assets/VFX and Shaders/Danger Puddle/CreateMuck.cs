@@ -16,6 +16,8 @@ public class CreateMuck : MonoBehaviour
     [SerializeField] private GameObject FireParticles_Gameobject;
     private Transform playerTransform;
     
+    private Vector3 savedPosition_Player;
+    
     [SerializeField] private FMODUnity.EventReference MuckExplosionSound;
     [SerializeField] private FMODUnity.EventReference MuckFireBreathSound;
     
@@ -34,10 +36,11 @@ public class CreateMuck : MonoBehaviour
     
     IEnumerator MuckTimeTracker()
     {
-        RotateMuckSpewTowardsPlayer();
+        savedPosition_Player = playerTransform.position;
+        RotateMuckSpewTowardsSavedPlayerPos();
         
         //set Transform of Muck_Explosion (and Puddle) to current player position
-        Muck_Explosion_Gameobject.transform.position = playerTransform.position;
+        Muck_Explosion_Gameobject.transform.position = savedPosition_Player;
         
         //wait for play MuckExplosion
         yield return new WaitForSeconds(0.9f);
@@ -48,27 +51,42 @@ public class CreateMuck : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         GooParticles_Gameobject.SetActive(true);
         
-        //Testing fire after 3s
-        yield return new WaitForSeconds(3f);
+        //Testing fire after 5s
+        yield return new WaitForSeconds(5f);
         
         //after Monster creates MuckOrigin: save a reference to MuckOrigin 
-        //and call StartFireBreath, then a short delay into StartFireMuck when the goo should burn
-        StartFireBreath();
+        //and call StartFireBreath with its (new) origin(Vector3), then a short delay into StartFireMuck when the goo should burn
+        StartFireBreathFromPosition(Muck_Spew_Gameobject.transform.position);
         yield return new WaitForSeconds(0.2f);
         StartFireMuck();
     }
     
-    private void RotateMuckSpewTowardsPlayer()
+    private void RotateMuckSpewTowardsSavedPlayerPos()
     {
         //rotate Muck_Spew towards player
-        var direction = (playerTransform.position - pos_MuckSpew).normalized;
+        var direction = (savedPosition_Player - pos_MuckSpew).normalized;
         var targetRotation = Quaternion.LookRotation(direction, Vector3.forward);
         Muck_Spew_Gameobject.transform.rotation = targetRotation;
+        
+        AdjustMuckSpewStrength();
     }
     
-    public void StartFireBreath()
+    private void AdjustMuckSpewStrength()
     {
+        //Adjust the Muck Spew initial Speed -> to defy Gravity of the spew if the player is further away
+        //TODO
+        var distance = savedPosition_Player - pos_MuckSpew;
+    }
+    
+    public void StartFireBreathFromPosition(Vector3 fireOrigin)
+    {
+        //set firespew origin
+        pos_MuckSpew = fireOrigin;
+        Muck_Spew_Gameobject.transform.position = fireOrigin;
         //Muck Spews towards old player position -> the Muck that is supposed to burn
+        //also automatically adjusts Strength
+        RotateMuckSpewTowardsSavedPlayerPos();
+        
         mat_MuckSpew.EnableKeyword("_EMISSION");
         Muck_Spew.Play();
         FMODUnity.RuntimeManager.PlayOneShot(MuckFireBreathSound, pos_MuckSpew);
