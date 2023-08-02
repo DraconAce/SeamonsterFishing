@@ -6,6 +6,8 @@ public class CreateMuck : MonoBehaviour
 {
     
     [SerializeField] private GameObject Muck_Spew_Gameobject;
+    private ParticleSystem Muck_Spew;
+    private Material mat_MuckSpew;
     [SerializeField] private GameObject Muck_Explosion_Gameobject;
     private ParticleSystem Muck_Explosion;
     private BoxCollider MuckCollider;
@@ -18,17 +20,18 @@ public class CreateMuck : MonoBehaviour
     void Start()
     {
         Muck_Explosion = Muck_Explosion_Gameobject.GetComponent<ParticleSystem>();
+        Muck_Spew = Muck_Spew_Gameobject.GetComponent<ParticleSystem>();
+        mat_MuckSpew = Muck_Spew_Gameobject.GetComponent<Renderer>().material;
+        
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         MuckCollider = Muck_Explosion_Gameobject.transform.GetChild(0).GetComponent<BoxCollider>();
+        
         StartCoroutine(MuckTimeTracker());
     }
     
     IEnumerator MuckTimeTracker()
     {
-        //rotate Muck_Spew towards player
-        var direction = (playerTransform.position - Muck_Spew_Gameobject.transform.position).normalized;
-        var targetRotation = Quaternion.LookRotation(direction, Vector3.forward);
-        Muck_Spew_Gameobject.transform.rotation = targetRotation;
+        RotateMuckSpewTowardsPlayer();
         
         //set Transform of Muck_Explosion (and Puddle) to current player position
         Muck_Explosion_Gameobject.transform.position = playerTransform.position;
@@ -42,13 +45,32 @@ public class CreateMuck : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         GooParticles_Gameobject.SetActive(true);
         
-        //Testing fire after 2s
+        //Testing fire after 3s
         yield return new WaitForSeconds(3f);
-        StartFire();
+        
+        //after Monster creates MuckOrigin: save a reference to MuckOrigin 
+        //and call StartFireBreath, then a short delay into StartFireMuck when the goo should burn
+        StartFireBreath();
+        yield return new WaitForSeconds(0.2f);
+        StartFireMuck();
     }
     
-    //after Monster creates MuckOrigin: save a reference to MuckOrigin and call StartFire when it should burn
-    public void StartFire()
+    private void RotateMuckSpewTowardsPlayer()
+    {
+        //rotate Muck_Spew towards player
+        var direction = (playerTransform.position - Muck_Spew_Gameobject.transform.position).normalized;
+        var targetRotation = Quaternion.LookRotation(direction, Vector3.forward);
+        Muck_Spew_Gameobject.transform.rotation = targetRotation;
+    }
+    
+    public void StartFireBreath()
+    {
+        //Muck Spews towards old player position -> the Muck that is supposed to burn
+        mat_MuckSpew.EnableKeyword("_EMISSION");
+        Muck_Spew.Play();
+    }
+    
+    public void StartFireMuck()
     {
         FireParticles_Gameobject.SetActive(true);
         //Reset Trigger to cause "OnTriggerEnter" to hurt player if they are already inside the goo
