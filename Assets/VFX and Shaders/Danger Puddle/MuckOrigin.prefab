@@ -267,10 +267,6 @@ PrefabInstance:
       propertyPath: InitialModule.startSpeed.scalar
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 5305917735355246084, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
-      propertyPath: InitialModule.gravityModifier.scalar
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7873830607554734853, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
       propertyPath: m_Name
       value: Muck_Spew

@@ -63,7 +63,7 @@ public class CreateMuck : MonoBehaviour
     
     private void RotateMuckSpewTowardsSavedPlayerPos()
     {
-        //rotate Muck_Spew towards player
+        //rotate Muck_Spew towards where the player used to be
         var direction = (savedPosition_Player - pos_MuckSpew).normalized;
         var targetRotation = Quaternion.LookRotation(direction, Vector3.forward);
         Muck_Spew_Gameobject.transform.rotation = targetRotation;
@@ -73,9 +73,12 @@ public class CreateMuck : MonoBehaviour
     
     private void AdjustMuckSpewStrength()
     {
-        //Adjust the Muck Spew initial Speed -> to defy Gravity of the spew if the player is further away
-        //TODO
+        //Adjust the Muck Spew initial Speed -> speed up the spew if the player is further away
         var distance = savedPosition_Player - pos_MuckSpew;
+        Debug.Log("Spew distance: " + distance);
+        float bonusSpeed = distance[0] - distance[1] - distance[2]; //positive x, negative y and z = further away
+        var main = Muck_Spew.main;
+        main.startSpeed = bonusSpeed;
     }
     
     public void StartFireBreathFromPosition(Vector3 fireOrigin)
