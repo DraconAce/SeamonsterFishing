@@ -34,7 +34,7 @@ Transform:
   - {fileID: 757873231999184019}
   - {fileID: 1210956999128121440}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6987756396379685089
 Rigidbody:
@@ -73,15 +73,16 @@ GameObject:
   m_Component:
   - component: {fileID: 4774491982951140018}
   - component: {fileID: 740823536732842889}
+  - component: {fileID: 5512835613475547775}
   - component: {fileID: 3828027836905437762}
   - component: {fileID: 2657316033648410019}
   m_Layer: 0
   m_Name: GooParticles
-  m_TagString: Untagged
+  m_TagString: MuckPuddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4774491982951140018
 Transform:
   m_ObjectHideFlags: 0
@@ -4820,6 +4821,27 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!65 &5512835613475547775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7232106197423270300}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 2, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!199 &3828027836905437762
 ParticleSystemRenderer:
   serializedVersion: 6

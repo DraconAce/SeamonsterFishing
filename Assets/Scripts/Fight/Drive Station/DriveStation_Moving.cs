@@ -5,6 +5,8 @@ public class DriveStation_Moving : AbstractStationSegment
     [SerializeField] private float maxDriveSpeed = 5.0f;
     [SerializeField] private float driveSpeedincrease = 0.025f;
     public float currentSpeed = 0f;
+    //private bool boatIsInMuck;
+    private float muckSpeedMultiplier = 1f;
 
     [SerializeField] private MinMaxLimit moveLimit;
 
@@ -37,7 +39,7 @@ public class DriveStation_Moving : AbstractStationSegment
     }
     
     private Vector3 CalculateMoveAmount(float driveDirection) 
-        => boatForwardDirection * (currentSpeed * driveDirection * Time.deltaTime);
+        => boatForwardDirection * (currentSpeed * driveDirection * muckSpeedMultiplier * Time.deltaTime);
     
     private Vector3 ClampToMovementLimits(Vector3 newBoatPosWorld)
     {
@@ -57,12 +59,35 @@ public class DriveStation_Moving : AbstractStationSegment
     {
         //increase current speed
         if (currentSpeed < maxDriveSpeed) {
+            // if (boatIsInMuck)
+            // {
+            //     currentSpeed += 0.3f * driveSpeedincrease;
+            // }
+            // else
+            // {
+            //     currentSpeed += driveSpeedincrease;
+            // }
             currentSpeed += driveSpeedincrease;
         }
         else 
         {
             currentSpeed = maxDriveSpeed;
         }
+    }
+    
+    public void SetBoatInMuck(bool boatIsInMuck)
+    {
+        if (boatIsInMuck)
+        {
+            //is in Muck
+            muckSpeedMultiplier = 0.5f;
+        }
+        else
+        {
+            //left Muck
+            muckSpeedMultiplier = 1f;
+        }
+        //boatIsInMuck = newState;
     }
 
     public bool BoatIsNotMoving (float newDirection) => Mathf.Approximately(0, newDirection);
