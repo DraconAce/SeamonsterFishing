@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{01554cb6-6347-4059-972e-34cee51d0e18}">
-		<property name="note" />
 		<property name="name">
 			<value>Muck Spew</value>
 		</property>

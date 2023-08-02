@@ -8,6 +8,7 @@ public class CreateMuck : MonoBehaviour
     [SerializeField] private GameObject Muck_Spew_Gameobject;
     private ParticleSystem Muck_Spew;
     private Material mat_MuckSpew;
+    private Vector3 pos_MuckSpew;
     [SerializeField] private GameObject Muck_Explosion_Gameobject;
     private ParticleSystem Muck_Explosion;
     private BoxCollider MuckCollider;
@@ -16,12 +17,14 @@ public class CreateMuck : MonoBehaviour
     private Transform playerTransform;
     
     [SerializeField] private FMODUnity.EventReference MuckExplosionSound;
+    [SerializeField] private FMODUnity.EventReference MuckFireBreathSound;
     
     void Start()
     {
         Muck_Explosion = Muck_Explosion_Gameobject.GetComponent<ParticleSystem>();
         Muck_Spew = Muck_Spew_Gameobject.GetComponent<ParticleSystem>();
         mat_MuckSpew = Muck_Spew_Gameobject.GetComponent<Renderer>().material;
+        pos_MuckSpew = Muck_Spew_Gameobject.transform.position;
         
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         MuckCollider = Muck_Explosion_Gameobject.transform.GetChild(0).GetComponent<BoxCollider>();
@@ -58,7 +61,7 @@ public class CreateMuck : MonoBehaviour
     private void RotateMuckSpewTowardsPlayer()
     {
         //rotate Muck_Spew towards player
-        var direction = (playerTransform.position - Muck_Spew_Gameobject.transform.position).normalized;
+        var direction = (playerTransform.position - pos_MuckSpew).normalized;
         var targetRotation = Quaternion.LookRotation(direction, Vector3.forward);
         Muck_Spew_Gameobject.transform.rotation = targetRotation;
     }
@@ -68,6 +71,7 @@ public class CreateMuck : MonoBehaviour
         //Muck Spews towards old player position -> the Muck that is supposed to burn
         mat_MuckSpew.EnableKeyword("_EMISSION");
         Muck_Spew.Play();
+        FMODUnity.RuntimeManager.PlayOneShot(MuckFireBreathSound, pos_MuckSpew);
     }
     
     public void StartFireMuck()

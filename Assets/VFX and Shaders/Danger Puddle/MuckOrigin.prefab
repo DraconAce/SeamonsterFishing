@@ -57,6 +57,13 @@ MonoBehaviour:
       Data3: -69804111
       Data4: -209889295
     Path: event:/Monster/Muck (Danger Puddle)/Muck Explosion
+  MuckFireBreathSound:
+    Guid:
+      Data1: 104112567
+      Data2: 1170109557
+      Data3: 694932372
+      Data4: -1077017170
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Fire Breath
 --- !u!1001 &2771326327330495184
 PrefabInstance:
   m_ObjectHideFlags: 0
