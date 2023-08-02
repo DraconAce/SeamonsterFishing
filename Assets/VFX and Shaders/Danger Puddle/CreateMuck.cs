@@ -13,6 +13,8 @@ public class CreateMuck : MonoBehaviour
     [SerializeField] private GameObject FireParticles_Gameobject;
     private Transform playerTransform;
     
+    [SerializeField] private FMODUnity.EventReference MuckExplosionSound;
+    
     void Start()
     {
         Muck_Explosion = Muck_Explosion_Gameobject.GetComponent<ParticleSystem>();
@@ -34,6 +36,7 @@ public class CreateMuck : MonoBehaviour
         //wait for play MuckExplosion
         yield return new WaitForSeconds(0.9f);
         Muck_Explosion.Play();
+        FMODUnity.RuntimeManager.PlayOneShot(MuckExplosionSound, Muck_Explosion_Gameobject.transform.position);
         
         //short wait for activate Muck_Puddle
         yield return new WaitForSeconds(0.1f);

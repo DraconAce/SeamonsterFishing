@@ -735,6 +735,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ccd6eacad923e45ac6f7b3da061199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DriveStation: {fileID: 0}
+  BoatFireHitSound:
+    Guid:
+      Data1: 895132880
+      Data2: 1153479305
+      Data3: -183337800
+      Data4: -181631749
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Fire Hit Boat
 --- !u!1 &5026676654438774077
 GameObject:
   m_ObjectHideFlags: 0

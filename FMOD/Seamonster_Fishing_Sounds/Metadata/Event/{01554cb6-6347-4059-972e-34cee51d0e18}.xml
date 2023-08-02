@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="Event" id="{01554cb6-6347-4059-972e-34cee51d0e18}">
+		<property name="note" />
+		<property name="name">
+			<value>Muck Spew</value>
+		</property>
+		<property name="outputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="folder">
+			<destination>{467847d3-c632-426f-a511-6a6589378337}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{5a24821d-130d-4695-a5cb-c5167b511376}</destination>
+		</relationship>
+		<relationship name="masterTrack">
+			<destination>{fc4f98ca-4188-4b15-b9cd-c1a27ea960d9}</destination>
+		</relationship>
+		<relationship name="mixerInput">
+			<destination>{053e7dd3-f743-4969-9f31-5111f7cc2294}</destination>
+		</relationship>
+		<relationship name="automatableProperties">
+			<destination>{34520b20-607b-46bf-883d-27f8218ac6c4}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{b3852726-74d2-4be4-9843-56a253aa0160}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{c7503a75-29ca-4be2-bc6a-a74b649b04a3}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{31684f9c-e2d3-4348-af23-c1dff4081c0e}</destination>
+		</relationship>
+	</object>
+	<object class="EventMixer" id="{5a24821d-130d-4695-a5cb-c5167b511376}">
+		<relationship name="masterBus">
+			<destination>{519cce42-2f2c-4afb-bf78-3f767e4f768e}</destination>
+		</relationship>
+	</object>
+	<object class="MasterTrack" id="{fc4f98ca-4188-4b15-b9cd-c1a27ea960d9}">
+		<relationship name="mixerGroup">
+			<destination>{519cce42-2f2c-4afb-bf78-3f767e4f768e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerInput" id="{053e7dd3-f743-4969-9f31-5111f7cc2294}">
+		<relationship name="effectChain">
+			<destination>{e69a83e0-4ad0-4ead-84fb-85665b1eadf6}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{dd40eedd-2f09-4fa7-bd72-cb8a854a6f9d}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{f1e45ae9-952a-445f-9554-53ac40d2a222}</destination>
+		</relationship>
+	</object>
+	<object class="EventAutomatableProperties" id="{34520b20-607b-46bf-883d-27f8218ac6c4}" />
+	<object class="MarkerTrack" id="{b3852726-74d2-4be4-9843-56a253aa0160}" />
+	<object class="Timeline" id="{c7503a75-29ca-4be2-bc6a-a74b649b04a3}" />
+	<object class="EventMixerMaster" id="{519cce42-2f2c-4afb-bf78-3f767e4f768e}">
+		<relationship name="effectChain">
+			<destination>{2854effb-750f-42e1-92a1-048aecc15f36}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{b4932589-aced-47cf-af03-9c19d194c5f3}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{5a24821d-130d-4695-a5cb-c5167b511376}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{e69a83e0-4ad0-4ead-84fb-85665b1eadf6}">
+		<relationship name="effects">
+			<destination>{d8705bdd-8dde-425e-b458-65806c3ab4b4}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{dd40eedd-2f09-4fa7-bd72-cb8a854a6f9d}" />
+	<object class="MixerBusEffectChain" id="{2854effb-750f-42e1-92a1-048aecc15f36}">
+		<relationship name="effects">
+			<destination>{6e7c784b-cdc5-4533-b90b-6d734057ef2f}</destination>
+			<destination>{d4663188-a698-44cb-a827-f2dc70a35f11}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{b4932589-aced-47cf-af03-9c19d194c5f3}" />
+	<object class="MixerBusFader" id="{d8705bdd-8dde-425e-b458-65806c3ab4b4}" />
+	<object class="MixerBusFader" id="{6e7c784b-cdc5-4533-b90b-6d734057ef2f}" />
+	<object class="SpatialiserEffect" id="{d4663188-a698-44cb-a827-f2dc70a35f11}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="minimumDistance">
+			<value>7</value>
+		</property>
+		<property name="maximumDistance">
+			<value>250</value>
+		</property>
+		<property name="soundSize">
+			<value>14</value>
+		</property>
+		<property name="minimumExtent">
+			<value>64</value>
+		</property>
+	</object>
+</objects>
