@@ -25,6 +25,7 @@ public class MuckPlayerCollider : MonoBehaviour
     void Start()
     {
         DriveScript = DriveStation.GetComponent<DriveStation_Moving>();
+        boatBurningSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(boatBurningSound, this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +59,9 @@ public class MuckPlayerCollider : MonoBehaviour
                 Destroy(FirstBoatBurn);
                 Destroy(SecondBoatBurn);
                 Destroy(ThirdBoatBurn);
+                
+                //stop sound
+                boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
         }
     }
@@ -65,10 +69,13 @@ public class MuckPlayerCollider : MonoBehaviour
     private IEnumerator DoBoatBurning() 
     { 
         //Debug.Log("Boat is burning");
-        boatBurningSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(boatBurningSound, this.gameObject);
+        
         //instant fire
         FirstBoatBurn = (GameObject)Instantiate(FireParticles, transform.position + new Vector3(0, fireHeight, 0), Quaternion.identity);
         FirstBoatBurn.transform.parent = transform;
+        
+        boatBurningSoundInstance.setParameterByName("BurnState", (int) 1);
+        boatBurningSoundInstance.start();
         
         yield return new WaitForSeconds(0.6f);
         
@@ -76,6 +83,8 @@ public class MuckPlayerCollider : MonoBehaviour
         //Debug.Log("Burning State 2");
         SecondBoatBurn = (GameObject)Instantiate(FireParticles, transform.position + new Vector3(0, 2*fireHeight, 0), Quaternion.identity);
         SecondBoatBurn.transform.parent = transform;
+        //make fire louder
+        boatBurningSoundInstance.setParameterByName("BurnState", (int) 2);
         
         yield return new WaitForSeconds(0.6f);
         
@@ -83,10 +92,18 @@ public class MuckPlayerCollider : MonoBehaviour
         //Debug.Log("Burning State 3");
         ThirdBoatBurn = (GameObject)Instantiate(FireParticles, transform.position + new Vector3(0, 3*fireHeight, 0), Quaternion.identity);
         ThirdBoatBurn.transform.parent = transform;
+        //more fire
+        boatBurningSoundInstance.setParameterByName("BurnState", (int) 3);
         
         yield return new WaitForSeconds(0.8f);
         //Debug.Log("Boat is DEAD");
         GameStateManager.instance.ChangeGameState(GameState.Dead);
+        boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        boatBurningSoundInstance.release();
     }
     
+    void OnDestroy() {
+        boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        boatBurningSoundInstance.release();
+    }
 }

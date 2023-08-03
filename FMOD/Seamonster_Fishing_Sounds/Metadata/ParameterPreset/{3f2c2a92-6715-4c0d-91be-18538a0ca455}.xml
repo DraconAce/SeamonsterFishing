@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{3f2c2a92-6715-4c0d-91be-18538a0ca455}">
+		<property name="name">
+			<value>BurnState</value>
+		</property>
+		<relationship name="folder">
+			<destination>{e6591d29-7da2-4b30-96b1-22553d21bc4a}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d363b686-587b-4b37-8e51-ecd1b0d302af}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d363b686-587b-4b37-8e51-ecd1b0d302af}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>4</value>
+		</property>
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>
