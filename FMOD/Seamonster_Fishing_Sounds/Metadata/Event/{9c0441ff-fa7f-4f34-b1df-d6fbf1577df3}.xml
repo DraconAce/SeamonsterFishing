@@ -38,6 +38,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{b69c1cc3-f71e-439c-9bdc-66d7f7a2022a}">
+		<relationship name="modules">
+			<destination>{95237bc4-12a4-4b88-8ff1-95f603ede7ab}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{d8b68496-a241-466c-b087-25aba08db859}</destination>
 		</relationship>
@@ -56,9 +59,9 @@
 	<object class="EventAutomatableProperties" id="{9ad781a1-6dde-4f34-9982-84a0c7158b3c}" />
 	<object class="MarkerTrack" id="{6d4e806e-2830-4fa5-a228-36bb16612ceb}" />
 	<object class="Timeline" id="{986a1e2e-c82c-4569-bd60-cd0c7b337a0f}">
-		<property name="isProxyEnabled">
-			<value>false</value>
-		</property>
+		<relationship name="modules">
+			<destination>{95237bc4-12a4-4b88-8ff1-95f603ede7ab}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{d8b68496-a241-466c-b087-25aba08db859}">
 		<relationship name="effectChain">
@@ -69,6 +72,17 @@
 		</relationship>
 		<relationship name="mixer">
 			<destination>{5bc1833e-0a91-4567-b23f-d509d027a478}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{95237bc4-12a4-4b88-8ff1-95f603ede7ab}">
+		<property name="length">
+			<value>2.8258958333333335</value>
+		</property>
+		<property name="pitch">
+			<value>7</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{113c21b5-8334-464e-92a1-ba547131a9fd}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{59d1bf3a-7095-4b01-8f56-8f7aaf42f2f5}">
@@ -88,13 +102,16 @@
 	<object class="MixerBusFader" id="{49705db7-43ea-42b7-ba3e-22b0066cfd00}" />
 	<object class="SpatialiserEffect" id="{d8e372f0-f366-4431-90e2-1ee1cf18d3dc}">
 		<property name="distanceRolloffType">
-			<value>1</value>
+			<value>4</value>
 		</property>
 		<property name="minimumDistance">
 			<value>7</value>
 		</property>
 		<property name="maximumDistance">
 			<value>250</value>
+		</property>
+		<property name="extentMode">
+			<value>2</value>
 		</property>
 		<property name="soundSize">
 			<value>14</value>
