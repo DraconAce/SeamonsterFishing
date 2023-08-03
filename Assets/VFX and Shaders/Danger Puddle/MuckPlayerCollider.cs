@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public class MuckPlayerCollider : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class MuckPlayerCollider : MonoBehaviour
     private GameObject SecondBoatBurn;
     private GameObject ThirdBoatBurn;
     [SerializeField] private float fireHeight = 0.5f;
+    [SerializeField] private EventReference boatBurningSound;
+    private EventInstance boatBurningSoundInstance;
     
     private IEnumerator boatBurningCoroutine;
     
@@ -61,7 +65,7 @@ public class MuckPlayerCollider : MonoBehaviour
     private IEnumerator DoBoatBurning() 
     { 
         //Debug.Log("Boat is burning");
-        
+        boatBurningSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(boatBurningSound, this.gameObject);
         //instant fire
         FirstBoatBurn = (GameObject)Instantiate(FireParticles, transform.position + new Vector3(0, fireHeight, 0), Quaternion.identity);
         FirstBoatBurn.transform.parent = transform;

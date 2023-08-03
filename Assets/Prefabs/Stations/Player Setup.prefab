@@ -744,6 +744,14 @@ MonoBehaviour:
       Data4: -181631749
     Path: event:/Monster/Muck (Danger Puddle)/Muck Fire Hit Boat
   FireParticles: {fileID: 4190706937469431750, guid: a604fa66e2a91a646a9efbf40c4da483, type: 3}
+  fireHeight: 0.5
+  boatBurningSound:
+    Guid:
+      Data1: 513329945
+      Data2: 1331331086
+      Data3: -392124483
+      Data4: 1150154648
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Boat Burning (Loop)
 --- !u!1 &5026676654438774077
 GameObject:
   m_ObjectHideFlags: 0
