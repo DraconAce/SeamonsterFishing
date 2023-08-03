@@ -82,7 +82,7 @@
 			<value>2.5</value>
 		</property>
 		<property name="pitch">
-			<value>8.5</value>
+			<value>9.5</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{84a0f986-c386-46ac-ad4c-0d381a2811fb}</destination>

@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4774491982951140018}
   - {fileID: 1210956999128121440}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6987756396379685089
 Rigidbody:
@@ -5225,10 +5225,49 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4190706937469431750, guid: a604fa66e2a91a646a9efbf40c4da483, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 816415495816027797}
   m_SourcePrefab: {fileID: 100100000, guid: a604fa66e2a91a646a9efbf40c4da483, type: 3}
 --- !u!4 &1210956999128121440 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4745114058442540826, guid: a604fa66e2a91a646a9efbf40c4da483, type: 3}
   m_PrefabInstance: {fileID: 5842337368633247610}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7727129265149405372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4190706937469431750, guid: a604fa66e2a91a646a9efbf40c4da483, type: 3}
+  m_PrefabInstance: {fileID: 5842337368633247610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &816415495816027797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7727129265149405372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 2050075237
+      Data2: 1263940284
+      Data3: 1314183870
+      Data4: -945271030
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Puddle burn (Loop)
+  Event: 
+  PlayEvent: 11
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

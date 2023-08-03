@@ -75,7 +75,7 @@ public class CreateMuck : MonoBehaviour
     {
         //Adjust the Muck Spew initial Speed -> speed up the spew if the player is further away
         var distance = savedPosition_Player - pos_MuckSpew;
-        Debug.Log("Spew distance: " + distance);
+        //Debug.Log("Spew distance: " + distance);
         float bonusSpeed = distance[0] - distance[1] - distance[2]; //positive x, negative y and z = further away
         var main = Muck_Spew.main;
         main.startSpeed = bonusSpeed;

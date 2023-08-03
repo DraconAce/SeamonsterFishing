@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6041145209692838008}
   - component: {fileID: 6874510744971728428}
   - component: {fileID: 3789782671304602149}
-  - component: {fileID: 4457234396412295355}
   m_Layer: 0
   m_Name: FireParticles
   m_TagString: Untagged
@@ -33,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &6041145209692838008
 ParticleSystem:
@@ -4844,34 +4843,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isburning: 1
   isAlternativeFireLook: 0
---- !u!114 &4457234396412295355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4190706937469431750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 2050075237
-      Data2: 1263940284
-      Data3: 1314183870
-      Data4: -945271030
-    Path: event:/Monster/Muck (Danger Puddle)/Muck Puddle burn (Loop)
-  Event: 
-  PlayEvent: 11
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20

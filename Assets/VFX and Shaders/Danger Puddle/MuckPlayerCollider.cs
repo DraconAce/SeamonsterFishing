@@ -18,6 +18,7 @@ public class MuckPlayerCollider : MonoBehaviour
     [SerializeField] private float fireHeight = 0.5f;
     [SerializeField] private EventReference boatBurningSound;
     private EventInstance boatBurningSoundInstance;
+    private Collider remember_Muck_Puddle;
     
     private IEnumerator boatBurningCoroutine;
     
@@ -37,6 +38,8 @@ public class MuckPlayerCollider : MonoBehaviour
             //damage player?
             if (other.transform.GetChild(3).gameObject.activeSelf) //child3 is FireParticles
             {
+                //remember Puddle to destroy when GameOver
+                remember_Muck_Puddle = other;
                 //Debug.Log("Destroy Player because of Fire");
                 FMODUnity.RuntimeManager.PlayOneShot(BoatFireHitSound, other.ClosestPoint(transform.position));
                 boatBurningCoroutine = DoBoatBurning();
@@ -97,9 +100,16 @@ public class MuckPlayerCollider : MonoBehaviour
         
         yield return new WaitForSeconds(0.8f);
         //Debug.Log("Boat is DEAD");
+        
         GameStateManager.instance.ChangeGameState(GameState.Dead);
+
         boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         boatBurningSoundInstance.release();
+        //Destroy Muck_Puddle Sound to destroy looping sounds after Game-Over
+        Destroy(remember_Muck_Puddle.gameObject);
+        //Alternatively Stop the sound-loops directly
+        //remember_Muck_Puddle.gameObject.transform.GetChild(2).gameObject.GetComponent<StudioEventEmitter>().Stop();
+        //remember_Muck_Puddle.gameObject.transform.GetChild(3).gameObject.GetComponent<StudioEventEmitter>().Stop();
     }
     
     void OnDestroy() {
