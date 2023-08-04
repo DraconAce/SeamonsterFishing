@@ -9,6 +9,7 @@ public class DriveStation_Moving : AbstractStationSegment
     private float muckSpeedMultiplier = 1f;
 
     [SerializeField] private MinMaxLimit moveLimit;
+    public MinMaxLimit MoveLimit => moveLimit;
 
     private Vector3 boatForwardDirection;
     private Transform boatParent;

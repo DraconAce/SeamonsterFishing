@@ -8,7 +8,7 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
 {
     [SerializeField] private Transform monster;
     [SerializeField] private Vector3 upMovement = new(0,1,0);
-    [SerializeField] private MinMaxLimit loopLimits = new MinMaxLimit { MinLimit = 10, MaxLimit = 25 };
+    [SerializeField] private MinMaxLimit loopLimits = new (){ MinLimit = 10, MaxLimit = 25 };
     
     [Header("Animation")]
     [SerializeField] private float idleAnimationDuration = 1;
@@ -16,11 +16,8 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
 
     private Vector3 originalPosition;
     private Sequence idleSequence;
-    
-    public override bool ChangeMonsterStateOnStartBehaviour => true;
-    public override MonsterState MonsterStateOnBehaviourStart => MonsterState.Idle;
 
-    public bool IsInNeutralPosition { get; private set; } = true;
+    protected override MonsterState BehaviourState => MonsterState.Idle;
 
     protected override void Start()
     {
@@ -29,18 +26,14 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
         originalPosition = monster.position;
     }
 
-    protected override IEnumerator StartBehaviourImpl()
+    protected override IEnumerator BehaviourRoutineImpl()
     {
         yield return StartCoroutine(StartIdle());
-        
-        yield return base.StartBehaviourImpl();
     }
 
     private IEnumerator StartIdle()
     {
         idleSequence = DOTween.Sequence();
-
-        IsInNeutralPosition = false;
 
         var numberOfLoops = GenerateEvenNumberOfLoops();
 
@@ -51,8 +44,6 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
             );
 
         idleSequence.SetLoops(numberOfLoops, LoopType.Yoyo);
-
-        idleSequence.OnStepComplete(() => { IsInNeutralPosition = idleSequence.CompletedLoops() % 2 == 0; });
 
         yield return idleSequence.WaitForCompletion();
     }
@@ -67,7 +58,7 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
         return generatedNumber;
     }
 
-    protected override IEnumerator StartInterruptedRoutineImpl()
+    protected override IEnumerator StopBehaviourRoutineImpl()
     {
         idleSequence?.Kill();
 
@@ -77,9 +68,9 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
             .SetEase(idleEase);
 
         yield return returnToOriginalPosTween.WaitForCompletion();
-
-        yield return base.StartInterruptedRoutineImpl();
     }
+
+    public override float GetExecutability() => 0.1f;
 
     protected override void OnDestroy() => idleSequence?.Kill();
 }

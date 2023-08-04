@@ -13,4 +13,15 @@ public static class SoundHelper
 
         return soundInstance;
     }
+
+    public static float GetSoundLength(EventReference eventRef)
+    {
+        var eventDescription = eventRef.Guid == default ? default : RuntimeManager.GetEventDescription(eventRef);
+
+        if (!eventDescription.isValid()) return 2f;
+
+        eventDescription.getLength(out var timeInMillis);
+
+        return timeInMillis / 1000f;
+    }
 }

@@ -6,9 +6,8 @@ public class FightMonsterStunned : AbstractMonsterBehaviour
     [SerializeField] private float stunnedTime = 5f;
 
     private WaitForSeconds waitStunned;
-    
-    public override bool ChangeMonsterStateOnStartBehaviour => true;
-    public override MonsterState MonsterStateOnBehaviourStart => MonsterState.Stunned;
+
+    protected override MonsterState BehaviourState => MonsterState.Stunned;
 
     protected override void Start()
     {
@@ -17,13 +16,18 @@ public class FightMonsterStunned : AbstractMonsterBehaviour
         waitStunned = new(stunnedTime);
     }
 
-    protected override IEnumerator StartBehaviourImpl()
+    public override float GetExecutability() => IsNodeExecutable ? 100f : 0f;
+
+    protected override IEnumerator BehaviourRoutineImpl()
     {
         Debug.Log("Started Stun");
 
         yield return StartCoroutine(StunnedRoutine());
-        
-        yield return base.StartBehaviourImpl();
+    }
+
+    protected override IEnumerator StopBehaviourRoutineImpl()
+    {
+        yield break;
     }
 
     private IEnumerator StunnedRoutine()

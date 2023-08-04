@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 {
     [SerializeField] protected string[] menuInputActions;
+    [SerializeField] private GameObject firstSelectedOnMenuOpen;
     [SerializeField] private GameObject menuContainer;
     [SerializeField] private UnityEvent onMenuOpened;
     [SerializeField] private UnityEvent onMenuClosed;
@@ -13,7 +15,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
     private InputManager inputManager;
 
     private bool initialCloseExecuted;
-    protected bool menuIsOpen;
+    protected bool menuIsOpen = true;
 
     protected virtual bool UseInputActions => true;
     
@@ -25,13 +27,14 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 
     protected virtual void Start()
     {
+        inputManager = InputManager.instance;
+        
         TryGetComponent(out menuGroup);
         CloseMenu(false);
 
         initialCloseExecuted = true;
-
+        
         if (!UseInputActions) return;
-        inputManager = InputManager.instance;
         inputManager.SubscribeToActions(this);
     }
 
@@ -44,6 +47,9 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         if(menuIsOpen) return;
         
         menuIsOpen = true;
+        
+        inputManager.EventSystem.SetSelectedGameObject(null);
+        inputManager.EventSystem.SetSelectedGameObject(firstSelectedOnMenuOpen);
         
         ToggleMenuCanvas(true);
         OpenMenuImpl();
@@ -65,6 +71,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         
         menuIsOpen = false;
         
+        inputManager.EventSystem.SetSelectedGameObject(null);
         ToggleMenuCanvas(false);
         
         if(initialCloseExecuted) CloseMenuImpl();
