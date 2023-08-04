@@ -11,6 +11,9 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 
     [SerializeField] private MonsterKI monsterKI;
     public MonsterKI MonsterKI => monsterKI;
+    
+    [SerializeField] private MonsterAnimationController monsterAnimationController;
+    public MonsterAnimationController MonsterAnimationController => monsterAnimationController;
 
     [Header("Behaviours With Direct Start")]
     [SerializeField] private FightMonsterStunned fightMonsterStunned;
