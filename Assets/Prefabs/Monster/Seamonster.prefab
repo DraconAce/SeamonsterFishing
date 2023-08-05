@@ -2417,6 +2417,7 @@ MonoBehaviour:
   - MuckBuildUp
   - Spew
   - EndSpewMuck
+  - Stun
 --- !u!1 &7724038263010882314
 GameObject:
   m_ObjectHideFlags: 0

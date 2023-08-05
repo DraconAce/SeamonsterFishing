@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class MuckAttack : AbstractAttackNode
 {
-    [SerializeField] private float rotationDuration = 1f;
-    [SerializeField] private Ease rotationEase = Ease.InOutSine;
     [SerializeField] private MuckSpewController muckSpewController;
     
-    public override MonsterAttackType AttackType => MonsterAttackType.LongRange;
-
-    private readonly WaitForSeconds stopBehaviourBufferWait = new(0.5f);
+    [Header("Face Player Rotation")]
+    [SerializeField] private float rotationDuration = 1f;
+    [SerializeField] private Ease rotationEase = Ease.InOutSine;
 
     private bool muckAttackEnded;
-    private WaitUntil muckAttackEndedWait;
 
-    private readonly WaitForSeconds muckEndedBuffer = new(1f);
-    
     private Quaternion originalRotation;
     private Tween monsterRotationTween;
-    
     private Transform playerPos;
     private Transform monsterPivot;
+
+    private WaitUntil muckAttackEndedWait;
+    private readonly WaitForSeconds muckEndedBuffer = new(1f);
+
+    public override MonsterAttackType AttackType => MonsterAttackType.LongRange;
 
     protected override void Start()
     {
@@ -45,8 +44,12 @@ public class MuckAttack : AbstractAttackNode
         yield return muckAttackEndedWait;
         
         yield return muckEndedBuffer;
+
+        StartIdleAnimation();
         
-        monsterAnimationController.SetTrigger(idleAnimationTrigger);
+        StartReturnToOriginalRotationTween();
+        
+        yield return monsterRotationTween.WaitForCompletion();
     }
 
     private void StartFacePlayerTween()
@@ -63,17 +66,19 @@ public class MuckAttack : AbstractAttackNode
 
     protected override IEnumerator StopBehaviourRoutineImpl()
     {
-        muckSpewController.StopMuckRoutine();
-        
-        monsterRotationTween?.Kill();
-        
+        StopRotationAndMuckRoutine();
+
         StartReturnToOriginalRotationTween();
 
-        monsterAnimationController.SetTrigger(idleAnimationTrigger);
+        StartIdleAnimation();
         
         yield return monsterRotationTween.WaitForCompletion();
+    }
 
-        yield return stopBehaviourBufferWait;
+    private void StopRotationAndMuckRoutine()
+    {
+        muckSpewController.StopMuckRoutine();
+        monsterRotationTween?.Kill();
     }
 
     private void StartReturnToOriginalRotationTween()
@@ -84,5 +89,5 @@ public class MuckAttack : AbstractAttackNode
     
     public override float GetExecutability() => 100f;
     
-    public void TriggerMuckEnd() => muckAttackEnded = true;
+    public void TriggerMuckAttackEnd() => muckAttackEnded = true;
 }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MonsterKI : MonoBehaviour
 {
-    public FightMonsterBehaviourTreeManager BehaviourTreeManager { get; set; }
+    public FightMonsterBehaviourTreeManager BehaviourTreeManager { get; private set; }
+
+    private void Awake() => BehaviourTreeManager = GetComponent<FightMonsterBehaviourTreeManager>();
 
     public event Action<int> StartBehaviourEvent;
     public event Action<int> RequestSpecificBehaviourEvent;

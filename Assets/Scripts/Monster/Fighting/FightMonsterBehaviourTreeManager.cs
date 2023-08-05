@@ -19,10 +19,11 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     [SerializeField] private float backupBehaviourCheckInterval = 5f;
     [SerializeField] private AbstractMonsterNodeImpl rootNode;
     [SerializeField] private AbstractMonsterBehaviour backupBehaviour;
-    
-    private readonly Dictionary<int, INodeImpl> nodeImplDict = new();
-    private NativeHashMap<int, NodeData> nodeDataMap;
 
+    private bool blockBehaviourExecution;
+    private bool useDirectBehaviourRequestAfterJobFlag;
+
+    private NativeHashMap<int, NodeData> nodeDataMap;
     private JobHandle chooseBehaviourJobHandle;
     private NativeArray<int> nextBehaviourID;
     private NativeMultiHashMap<int, ComparableData> comparableDataMapRef;
@@ -31,21 +32,20 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     private UpdateManager updateManager;
     private MonsterKI monsterKI;
     
-    public INodeImpl CurrentBehaviour { get; private set; }
-    public bool IsAnyBehaviourActive => CurrentBehaviour != null;
-    
     private WaitUntil waitUntilBehaviourIsInactive;
     private WaitForSeconds backupBehaviourCheckIntervalWait;
     private Coroutine stopCurrentBehaviourRoutine;
     private Coroutine backupBehaviourRoutine;
-    
-    private bool useDirectBehaviourRequestAfterJobFlag;
+
+    private readonly Dictionary<int, INodeImpl> nodeImplDict = new();
+
+    public INodeImpl CurrentBehaviour { get; private set; }
+    public bool IsAnyBehaviourActive => CurrentBehaviour != null;
 
     private void Start()
     {
         SetupVariables();
 
-        monsterKI.BehaviourTreeManager = this;
         monsterKI.RequestSpecificBehaviourEvent += RequestSpecificBehaviour;
 
         CreateNodeImplDict();
@@ -70,6 +70,8 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private void RequestSpecificBehaviour(int nextBehaviourIndex)
     {
+        if(blockBehaviourExecution) return;
+        
         void AfterBehaviourStopAction()
         {
             TryResetCurrentBehaviour();
@@ -96,7 +98,11 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private IEnumerator StopCurrentBehaviourRoutine(Action afterBehaviourStoppedAction = null)
     {
-        yield return waitUntilBehaviourIsInactive;
+        if (IsAnyBehaviourActive)
+        {
+            CurrentBehaviour.Stop();
+            yield return waitUntilBehaviourIsInactive;
+        }
         
         afterBehaviourStoppedAction?.Invoke();
     }
@@ -108,6 +114,8 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
         foreach (var nodeImpl in allNodeImplementation) 
             nodeImplDict.Add(nodeImpl.NodeIndex, nodeImpl);
+        
+        nodeImplDict.Add(-1, backupBehaviour);
     }
 
     private void CreateNodeDataMap()
@@ -139,6 +147,8 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     public void RequestNextBehaviour()
     {
+        if(blockBehaviourExecution) return;
+        
         TryResetCurrentBehaviour();
 
         UpdateNodeData();
@@ -260,6 +270,8 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     }
 
     public void StopCurrentBehaviour() => StopCurrentBehaviourAndStartNextBehaviour();
+    
+    public void ToggleBlockBehaviour(bool blockBehaviour) => blockBehaviourExecution = blockBehaviour;
 
     private void OnDestroy()
     {

@@ -283,8 +283,8 @@ MonoBehaviour:
   priority: 5
   nodeToRepresent: {fileID: 11400000, guid: 60d64c66cb01b814eab776e913c58bf9, type: 2}
   timeout: 1
+  idleAnimationTrigger: Idle
   animationClipsToListenForEnd: []
-  idleAnimationTrigger: 
 --- !u!1 &987786277029470399
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +402,90 @@ MonoBehaviour:
   mouthRotationDuration: 0.35
   headRotationEase: 7
   mouthRotationEase: 7
+--- !u!1 &2848066449763312957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7773939530073990484}
+  m_Layer: 0
+  m_Name: MoveBackTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7773939530073990484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2848066449763312957}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -54.9, y: -19.4, z: -0.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9015344169713451826}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2941715133174795460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6243965572207175486}
+  - component: {fileID: 4660440704667249562}
+  m_Layer: 7
+  m_Name: MonsterHitCollider
+  m_TagString: Damage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6243965572207175486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941715133174795460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8592532869741442579}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4660440704667249562
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941715133174795460}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.08
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3182096668490710535
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +514,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7401965266302255570}
   - {fileID: 3642292289840995531}
   - {fileID: 1987691372647871361}
   - {fileID: 3636272552602437849}
@@ -522,7 +605,7 @@ MonoBehaviour:
   monsterKI: {fileID: 4962728429640281786}
   monsterAnimationController: {fileID: 5731981856698064586}
   fightMonsterStunned: {fileID: 821713467539200915}
-  swipeAttack: {fileID: 6646519548069146983}
+  swipeAttack: {fileID: 4222803033399372668}
 --- !u!1 &5074897822258045224
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,11 +653,11 @@ MonoBehaviour:
   priority: 2
   nodeToRepresent: {fileID: 11400000, guid: 099613440867bd9488c2997c52936cea, type: 2}
   timeout: 10
-  animationClipsToListenForEnd: []
   idleAnimationTrigger: Idle
+  animationClipsToListenForEnd: []
+  muckSpewController: {fileID: 8182205290990519902}
   rotationDuration: 1
   rotationEase: 4
-  muckSpewController: {fileID: 8182205290990519902}
 --- !u!1 &6543329888222596868
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,109 +693,6 @@ Transform:
   m_Father: {fileID: 8065992250933780961}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6881338408507313173
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7401965266302255570}
-  - component: {fileID: 3021539160073648070}
-  - component: {fileID: 1775172950484668861}
-  - component: {fileID: 6203120716810810270}
-  m_Layer: 0
-  m_Name: '(For Physical Hits) PlayerHitChecker '
-  m_TagString: monster
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &7401965266302255570
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6881338408507313173}
-  m_LocalRotation: {x: 0.056016777, y: -0.71136594, z: 0.057068378, w: 0.6982576}
-  m_LocalPosition: {x: 17.978504, y: -9.082161, z: 10.236116}
-  m_LocalScale: {x: 14.10958, y: 32.061394, z: 14.10958}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9035737599552490425}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 9.173, y: 0, z: 0}
---- !u!136 &3021539160073648070
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6881338408507313173}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1775172950484668861
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6881338408507313173}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &6203120716810810270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6881338408507313173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5403306fc6c4d3cb129df85b107573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoatIsHitSound:
-    Guid:
-      Data1: -426714516
-      Data2: 1129044293
-      Data3: -2009891420
-      Data4: 1783340351
-    Path: event:/Boat/Hit Boat
 --- !u!1 &7050935868487139833
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,8 +740,8 @@ MonoBehaviour:
   priority: 3
   nodeToRepresent: {fileID: 11400000, guid: 82f45f08d7f1e8e4a84dacbe5c3942d4, type: 2}
   timeout: 5
+  idleAnimationTrigger: Idle
   animationClipsToListenForEnd: []
-  idleAnimationTrigger: 
 --- !u!1 &8662826990857140306
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9015344169713451826}
+  - component: {fileID: 4222803033399372668}
   m_Layer: 0
   m_Name: BigSwipeAttack
   m_TagString: Untagged
@@ -820,10 +801,35 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7773939530073990484}
   m_Father: {fileID: 2341415134138790852}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4222803033399372668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9113927127635783973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6311a9c1344f8fa369f7332859d23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 1
+  nodeToRepresent: {fileID: 11400000, guid: d67ae252c302adc43bf959e37b23c477, type: 2}
+  timeout: 10
+  idleAnimationTrigger: Idle
+  animationClipsToListenForEnd:
+  - {fileID: 7400000, guid: fab8ba56600949f4ca558f91534c9d10, type: 2}
+  - {fileID: 7400000, guid: 00e17a08b1a4cba458687ae447594fbb, type: 2}
+  bigSwipeTriggerL: BigTailLtoR
+  bigSwipeTriggerR: BigTailRtoL
+  movementDuration: 2
+  movementEase: 4
+  moveTarget: {fileID: 7773939530073990484}
 --- !u!1 &9128519014903644445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,6 +1052,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2870018352129732178, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6243965572207175486}
     - targetCorrespondingSourceObject: {fileID: 3295230591814429495, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4240075042702861083}
@@ -1104,6 +1113,11 @@ Transform:
 --- !u!4 &8359620032408802376 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2659871744460999689, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
+  m_PrefabInstance: {fileID: 5830636918211418177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8592532869741442579 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2870018352129732178, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
   m_PrefabInstance: {fileID: 5830636918211418177}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &9030165446579221366 stripped

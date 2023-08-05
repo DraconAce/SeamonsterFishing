@@ -4,25 +4,23 @@ using UnityEngine;
 
 public abstract class AbstractAttackNode : AbstractMonsterBehaviour, IMonsterAnimationClient
 {
+    [SerializeField] protected string idleAnimationTrigger = "Idle";
     [SerializeField] private List<AnimationClip> animationClipsToListenForEnd;
-    [SerializeField] protected string idleAnimationTrigger;
 
+    protected MonsterAnimationController MonsterAnimationController { get; private set; }
+    private readonly List<string> animationClipNamesList = new ();
+    
     public abstract MonsterAttackType AttackType { get; }
-    
     protected override MonsterState BehaviourState => MonsterState.Attacking;
-    
-    protected MonsterAnimationController monsterAnimationController;
-    
-    protected readonly List<string> animationClipNamesList= new ();
 
     protected override void Start()
     {
         base.Start();
-        monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
+        MonsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
 
         CreateAnimationClipNamesList();
 
-        monsterAnimationController.AnimationFinishedEvent += OnAnimationFinished;
+        MonsterAnimationController.AnimationFinishedEvent += OnAnimationFinished;
     }
 
     private void CreateAnimationClipNamesList()
@@ -41,17 +39,24 @@ public abstract class AbstractAttackNode : AbstractMonsterBehaviour, IMonsterAni
 
     public void OnAnimationFinished(string finishedAnimationName)
     {
-        if (!animationClipNamesList.Contains(finishedAnimationName)) return;
+        if (!IsAttackListeningToAnimationEnd(finishedAnimationName)) return;
 
         OnAnimationFinishedImpl();
     }
-    
+
+    private bool IsAttackListeningToAnimationEnd(string animationName)
+    {
+        return animationClipNamesList.Contains(animationName);
+    }
+
     protected virtual void OnAnimationFinishedImpl(){}
+
+    protected void StartIdleAnimation() => MonsterAnimationController.SetTrigger(idleAnimationTrigger);
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
         
-        monsterAnimationController.AnimationFinishedEvent -= OnAnimationFinished;
+        MonsterAnimationController.AnimationFinishedEvent -= OnAnimationFinished;
     }
 }
