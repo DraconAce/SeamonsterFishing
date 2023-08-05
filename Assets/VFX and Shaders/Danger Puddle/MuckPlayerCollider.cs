@@ -55,7 +55,10 @@ public class MuckPlayerCollider : MonoBehaviour
             
             if (other.transform.GetChild(3).gameObject.activeSelf) //child3 is FireParticles
             {
-                StopCoroutine(boatBurningCoroutine);
+                if (boatBurningCoroutine != null) 
+                {
+                    StopCoroutine(boatBurningCoroutine);
+                }
                 Destroy(FirstBoatBurn);
                 Destroy(SecondBoatBurn);
                 Destroy(ThirdBoatBurn);
