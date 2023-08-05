@@ -218,7 +218,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         StopBackupRoutineIfActive();
         
 #if UNITY_EDITOR
-        Debug.Log(CurrentBehaviour.NodeToRepresent.BehaviourName);
+        Debug.Log(nodeImplDict[behaviourIndex].NodeToRepresent.BehaviourName);
 #endif
 
         if (useDirectBehaviourRequestAfterJobFlag)

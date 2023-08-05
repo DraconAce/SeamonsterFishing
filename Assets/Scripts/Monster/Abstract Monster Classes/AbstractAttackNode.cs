@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class AbstractAttackNode : AbstractMonsterBehaviour, IMonsterAnimationClient
 {
     [SerializeField] private List<AnimationClip> animationClipsToListenForEnd;
-    [SerializeField] private string idleAnimationTrigger;
+    [SerializeField] protected string idleAnimationTrigger;
 
     public abstract MonsterAttackType AttackType { get; }
     
@@ -15,16 +15,12 @@ public abstract class AbstractAttackNode : AbstractMonsterBehaviour, IMonsterAni
     
     protected readonly List<string> animationClipNamesList= new ();
 
-    protected int idleAnimationTriggerID;
-
     protected override void Start()
     {
         base.Start();
         monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
 
         CreateAnimationClipNamesList();
-
-        idleAnimationTriggerID = Animator.StringToHash(idleAnimationTrigger);
 
         monsterAnimationController.AnimationFinishedEvent += OnAnimationFinished;
     }
@@ -34,7 +30,7 @@ public abstract class AbstractAttackNode : AbstractMonsterBehaviour, IMonsterAni
         #if UNITY_EDITOR
         if (animationClipsToListenForEnd.Count == 0)
         {
-            Debug.LogError("Animation clips to listen for end are not assigned!", gameObject);
+            Debug.LogWarning("Animation clips to listen for end are not assigned!", gameObject);
             return;
         }
         #endif

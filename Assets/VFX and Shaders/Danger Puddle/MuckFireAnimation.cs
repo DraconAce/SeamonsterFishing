@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MuckToFire : MonoBehaviour
+public class MuckFireAnimation : MonoBehaviour
 {
     
     [SerializeField] private bool isburning = false;
@@ -10,14 +10,14 @@ public class MuckToFire : MonoBehaviour
     private Material mat_Muck;
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //Fetch the Material from the Renderer of the GameObject
         mat_Muck = GetComponent<Renderer>().material;
-        FireCheck();
+        ChangeMatIfMuckBurning();
     }
 
-    void FireCheck()
+    public void ChangeMatIfMuckBurning()
     {
         if (isburning)
         {
