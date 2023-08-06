@@ -1,157 +1,189 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MonsterReelingBehaviour : AbstractMonsterBehaviour
 {
-    [Header("Body Animations")]
-    [SerializeField] private float moveDownTarget = 3f;
-    [SerializeField] private Transform monsterTransform;
-    
-    [SerializeField] private float moveDownDuration = 1f;
-    [SerializeField] private float turnDuration = 1f;
-    
-    [SerializeField] private Ease turnEase = Ease.InOutQuad;
-    [SerializeField] private Ease moveDownEase = Ease.InOutQuad;
+    [Header("Reeling Implementation")] 
+    [SerializeField] private int minNumberAttacksNeededUntilNextReeling = 3;
+    [SerializeField] private float baseReelingExecutability = 55f;
 
-    [Header("Head Animations")] 
-    [SerializeField] private Transform headPivot;
-    [SerializeField] private Transform mouthPivot;
+    [Header("Animations")] 
+    
+    [Header("Start Reeling")]
+    [SerializeField] private string reelingStartedTrigger;
+    [SerializeField] private float triggerReelingStartAnimationDelay = 1.5f;
+    [SerializeField] private float triggerReelingGameStateChangeDelay = 1.5f;
+    [SerializeField] private float diveDuration = 2f;
+    [SerializeField] private Ease diveEase = Ease.InOutSine;
+    [SerializeField] private Transform[] diveUnderPath;
 
-    [SerializeField] private float headXRotationTarget;
-    [SerializeField] private float mouthXRotationTarget;
-    
-    [SerializeField] private float headRotationDuration = 1f;
-    [SerializeField] private float mouthRotationDuration = 1f;
-    
-    [SerializeField] private Ease headRotationEase = Ease.InOutQuad;
-    [SerializeField] private Ease mouthRotationEase = Ease.InOutQuad;
+    [Header("End Reeling")]
+    [SerializeField] private string reelingEndedTrigger;
+    [SerializeField] private float startEndAnimationDelay = 1.5f;
+    [SerializeField] private float triggerIdleDelay;
+    [SerializeField] private float surfaceDuration = 0.75f;
+    [SerializeField] private float diveEndDuration = 2f;
+    [SerializeField] private float endReelingDiveUnderY;
+    [SerializeField] private float stayUnderWaterDuration = 3f;
+    [SerializeField] private Transform reelingEndedUnderwaterPos;
 
-    private WaitUntil waitForReelingStopped;
-    private GameStateManager gameStateManager;
-    private PlayerSingleton playerSingleton;
-    
-    public override bool ChangeMonsterStateOnStartBehaviour => true;
-    public override MonsterState MonsterStateOnBehaviourStart => MonsterState.Reeling;
+    private bool arrivedAtInitialPosition;
+    private int numberOfAttackUsagesSinceLastReeling;
     
     private Vector3 positionBeforeReeling;
-    private Quaternion rotationBeforeReeling;
+    private Vector3[] diveUnderPathPositions;
+
+    private Transform monsterTransform;
+    private MonsterAnimationController monsterAnimationController;
+    private GameStateManager gameStateManager;
     
-    private Quaternion headRotationBeforeReeling;
-    private Quaternion mouthRotationBeforeReeling;
-    
-    private Sequence moveAndTurnSequence;
+    private WaitUntil waitForReelingStopped;
+    private WaitUntil waitForReachedInitialPosition;
+    private WaitForSeconds triggerIdleWait;
+
+    private Tween delayedAnimationChangeTween;
+    private Tween delayedGameStateChangeTween;
+    private Tween reelingStartTween;
+    private Sequence reelingEndedSequence;
+
+    private const string IdleTrigger = "Idle";
+
+    protected override MonsterState BehaviourState => MonsterState.Reeling;
 
     protected override void Start()
     {
         base.Start();
         
         gameStateManager = GameStateManager.instance;
-        playerSingleton = PlayerSingleton.instance;
+        monsterTransform = FightMonsterSingleton.instance.MonsterTransform;
+        monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
         
         waitForReelingStopped = new(() 
             => gameStateManager.CurrentGameState != GameState.FightReelingStation);
+        
+        waitForReachedInitialPosition = new(() => arrivedAtInitialPosition);
+        
+        triggerIdleWait = new WaitForSeconds(triggerIdleDelay);
+
+        CreateDiveUnderPathPositionsArray();
+    }
+    
+    private void CreateDiveUnderPathPositionsArray()
+    {
+        diveUnderPathPositions = new Vector3[diveUnderPath.Length + 1];
+        
+        for (var i = 1; i < diveUnderPathPositions.Length; i++) 
+            diveUnderPathPositions[i] = diveUnderPath[i - 1].position;
+    }
+    
+    public override float GetExecutability()
+    {
+        var numberOfAttackUsages = FightMonsterState.GetUsageOfMonsterState(MonsterState.Attacking);
+        
+        var diffCurrentAndLastReelingUsages = numberOfAttackUsages - numberOfAttackUsagesSinceLastReeling;
+
+        return diffCurrentAndLastReelingUsages < minNumberAttacksNeededUntilNextReeling ? 0f : baseReelingExecutability;
     }
 
-    protected override IEnumerator StartBehaviourImpl()
+    protected override IEnumerator BehaviourRoutineImpl()
     {
-        gameStateManager.ChangeGameState(GameState.FightReelingStation);
+        delayedGameStateChangeTween?.Kill();
+        delayedAnimationChangeTween?.Kill();
         
-        StartMoveAndTurnSequence(true);
-        AttachHeadMovementToSequence(true);
+        behaviourTreeManager.ToggleBlockBehaviour(true);
         
-        moveAndTurnSequence.Play();
+        arrivedAtInitialPosition = false;
+        positionBeforeReeling = monsterTransform.position;
         
+        diveUnderPathPositions[0] = positionBeforeReeling;
+        
+        numberOfAttackUsagesSinceLastReeling = FightMonsterState.GetUsageOfMonsterState(MonsterState.Attacking);
+        
+        StartReelingEntrySequence();
+        
+        delayedAnimationChangeTween = DOVirtual.DelayedCall(triggerReelingStartAnimationDelay,
+            () => TriggerReelingAnimation(reelingStartedTrigger));
+        
+        delayedGameStateChangeTween = DOVirtual.DelayedCall(triggerReelingGameStateChangeDelay,
+            () => gameStateManager.ChangeGameState(GameState.FightReelingStation));
+
+        yield return delayedGameStateChangeTween.WaitForCompletion();
         yield return waitForReelingStopped;
         
-        StartMoveAndTurnSequence(false);
-        AttachHeadMovementToSequence(false);
+        StartEndReelingAnimation();
+        
+        yield return triggerIdleWait;
+        monsterAnimationController.SetTrigger(IdleTrigger);
 
-        yield return moveAndTurnSequence.WaitForCompletion();
-
-        yield return base.StartBehaviourImpl();
+        yield return waitForReachedInitialPosition;
+        
+        behaviourTreeManager.ToggleBlockBehaviour(false);
     }
 
-    private void StartMoveAndTurnSequence(bool startReeling)
+    private void StartReelingEntrySequence()
     {
-        var targetPos = monsterTransform.position;
-        var targetRotation = monsterTransform.rotation;
+        reelingStartTween?.Kill();
         
-        if(startReeling)
-        {
-            positionBeforeReeling = monsterTransform.position;
-            rotationBeforeReeling = monsterTransform.rotation;
-            
-            targetRotation = CalculateLookAtMonsterRotation(targetPos);
-            
-            targetPos.y += moveDownTarget;
-        }
-        else
-        {
-            targetPos = positionBeforeReeling;
-            targetRotation = rotationBeforeReeling;
-        }
+        reelingStartTween = DOTween.Sequence();
+        
+        reelingStartTween = monsterTransform.DOPath(diveUnderPathPositions, diveDuration, PathType.CatmullRom)
+            .SetEase(diveEase)
+            .SetOptions(false, AxisConstraint.None,AxisConstraint.X | AxisConstraint.Z)
+            .SetLookAt(0.01f);
 
-        moveAndTurnSequence = DOTween.Sequence().Append
-        (
-            monsterTransform.DOMove(targetPos, moveDownDuration)
-                .SetEase(moveDownEase)
-        ).Join
-        (
-            monsterTransform.DORotateQuaternion(targetRotation, turnDuration)
-                .SetEase(turnEase)
-        );
+        reelingStartTween.Play();
     }
+    
+    private void TriggerReelingAnimation(string triggerName) => monsterAnimationController.SetTrigger(triggerName);
 
-    private Quaternion CalculateLookAtMonsterRotation(Vector3 targetPos)
+    private void StartEndReelingAnimation()
     {
-        var targetEuler = Quaternion.LookRotation(playerSingleton.PlayerTransform.position - targetPos).eulerAngles;
+        reelingEndedSequence?.Kill();
+        reelingStartTween?.Kill();
+        delayedGameStateChangeTween?.Kill();
+        delayedAnimationChangeTween?.Kill();
 
-        targetEuler.x = 0;
-        targetEuler.z = 0;
+        TriggerReelingAnimation(reelingEndedTrigger);
         
-        return Quaternion.Euler(targetEuler);
+        reelingEndedSequence = DOTween.Sequence();
+
+        reelingEndedSequence.AppendInterval(startEndAnimationDelay);
+
+        reelingEndedSequence.Append(
+            monsterTransform.DOMoveY(endReelingDiveUnderY, diveEndDuration)
+                .SetEase(diveEase)
+                .SetRelative(true));
+        
+        reelingEndedSequence.Append(DOVirtual.DelayedCall(0.01f, 
+            SetMonsterPositionToUnderwaterPosition));
+        
+        reelingEndedSequence.AppendInterval(stayUnderWaterDuration);
+        
+        reelingEndedSequence.Append(monsterTransform.DOMove(positionBeforeReeling, surfaceDuration)
+            .SetEase(diveEase)
+            .OnComplete(() => arrivedAtInitialPosition = true));
+
+        reelingEndedSequence.Play();
     }
 
-    private void AttachHeadMovementToSequence(bool startedReeling)
-    {
-        var targetHeadRotation = headPivot.localRotation;
-        var targetMouthRotation = mouthPivot.localRotation;
-        
-        if (startedReeling)
-        {
-            headRotationBeforeReeling = targetHeadRotation;
-            mouthRotationBeforeReeling = targetMouthRotation;
-            
-            targetHeadRotation *= Quaternion.Euler(headXRotationTarget, 0, 0);
-            targetMouthRotation *= Quaternion.Euler(mouthXRotationTarget, 0, 0);
-        }
-        else
-        {
-            targetHeadRotation = headRotationBeforeReeling;
-            targetMouthRotation = mouthRotationBeforeReeling;
-        }
-        
-        moveAndTurnSequence.Join
-        (
-            headPivot.DOLocalRotateQuaternion(targetHeadRotation, headRotationDuration)
-                .SetEase(headRotationEase)
-        );
-        
-        moveAndTurnSequence.Join
-        (
-            mouthPivot.DOLocalRotateQuaternion(targetMouthRotation, mouthRotationDuration)
-                .SetEase(mouthRotationEase)
-        );
-    }
+    private void SetMonsterPositionToUnderwaterPosition() => monsterTransform.position = reelingEndedUnderwaterPos.position;
 
-    protected override IEnumerator StartInterruptedRoutineImpl()
+    protected override IEnumerator StopBehaviourRoutineImpl()
     {
         gameStateManager.ChangeGameState(GameState.FightOverview);
         
-        moveAndTurnSequence?.Kill();
+        arrivedAtInitialPosition = false;
         
-        StartMoveAndTurnSequence(false);
-        yield return moveAndTurnSequence.WaitForCompletion();
+        reelingEndedSequence?.Kill();
+        reelingStartTween?.Kill();
+        delayedGameStateChangeTween?.Kill();
+        delayedAnimationChangeTween?.Kill();
+
+        StartEndReelingAnimation();
+        
+        yield return waitForReachedInitialPosition;
+        behaviourTreeManager.ToggleBlockBehaviour(false);
     }
 }

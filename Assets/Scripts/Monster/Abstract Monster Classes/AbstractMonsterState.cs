@@ -19,4 +19,6 @@ public abstract class AbstractMonsterState : MonoBehaviour
         currentState = requestedChange;
         MonsterStateChangedEvent?.Invoke(currentState);
     }
+
+    public bool MonsterCanAttack() => CurrentState is not (MonsterState.Stunned or MonsterState.Reeling or MonsterState.Dead);
 }

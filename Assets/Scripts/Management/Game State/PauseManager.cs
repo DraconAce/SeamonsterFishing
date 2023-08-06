@@ -6,11 +6,16 @@ public class PauseManager : Singleton<PauseManager>
     public bool GameIsPaused { get; private set; }
 
     private GameStateManager gameStateManager;
+    private SceneController sceneController;
 
     public override bool AddToDontDestroy => false;
 
-    private void Start() => gameStateManager = GameStateManager.instance;
-    
+    private void Start()
+    {
+        gameStateManager = GameStateManager.instance;
+        sceneController = SceneController.instance;
+    }
+
     public event Action<bool> GamePausedStateChangedEvent;
 
     public void ToggleGamePause()
@@ -18,8 +23,8 @@ public class PauseManager : Singleton<PauseManager>
         if (gameStateManager.CurrentGameState is GameState.Dead or GameState.Won) return;
         
         SetGamePausedAndTimeScale(!GameIsPaused);
-        
-        SceneController.ToggleCursorForLevel(GameIsPaused);
+
+        CheckCursorVisibleState();
 
         if (GameIsPaused)
         {
@@ -33,6 +38,12 @@ public class PauseManager : Singleton<PauseManager>
             gameStateManager.BlockGameStateChange = GameIsPaused;
             gameStateManager.ChangeToPreviousGameState();
         }
+    }
+
+    private void CheckCursorVisibleState()
+    {
+        var showCursor = GameIsPaused || !sceneController.CurrentLevelRepresentation.HideCursorOnLoad;
+        sceneController.ToggleCursorForLevel(showCursor);
     }
 
     private void SetGamePausedAndTimeScale(bool isPaused)

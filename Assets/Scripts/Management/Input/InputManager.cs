@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public enum PlayerDevice
 {
     Gamepad = 0,
-    Keyboard = 1,
+    KeyboardMouse = 1,
     Other = 2
 }
 
@@ -55,7 +55,9 @@ public class InputManager : Singleton<InputManager>
     private Dictionary<GameState, string> inputMapsLookup = new();
     private readonly Dictionary<string, ActionEvent> inputActionAndActionEvents = new();
 
-    public PlayerDevice LatestDevice { get; private set; } = PlayerDevice.Keyboard;
+    public PlayerDevice LatestDevice { get; private set; } = PlayerDevice.KeyboardMouse;
+    
+    public event Action InputDeviceChangedEvent;
 
     private void Awake()
     {
@@ -77,13 +79,20 @@ public class InputManager : Singleton<InputManager>
     private void DetermineUsedDevice(InputAction.CallbackContext callbackContext)
     {
         var usedDevice = callbackContext.control.device;
+        
+        var formerDevice = LatestDevice;
 
         LatestDevice = usedDevice switch
         {
             Gamepad => PlayerDevice.Gamepad,
-            Keyboard => PlayerDevice.Keyboard,
+            Keyboard => PlayerDevice.KeyboardMouse,
+            Mouse => PlayerDevice.KeyboardMouse,
             _ => PlayerDevice.Other
         };
+        
+        if (formerDevice == LatestDevice) return;
+        
+        InputDeviceChangedEvent?.Invoke();
     }
 
     private void NotifySubscribers(InputAction.CallbackContext callbackContext, ActionEvent triggeredActionEvent)

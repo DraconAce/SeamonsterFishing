@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using DG.Tweening;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class GameStateManager : Singleton<GameStateManager>
     [SerializeField] private GameState currentGameState = GameState.FightOverview;
     
     private SceneController sceneController;
+    
+    private readonly List<GameState> blockChangeExceptionList = new(){GameState.Pause, GameState.Dead, GameState.Won, GameState.MainMenu};
     
     public bool BlockGameStateChange { get; set; }
     public bool GameIsPaused => CurrentGameState == GameState.Pause;
@@ -33,22 +36,21 @@ public class GameStateManager : Singleton<GameStateManager>
         sceneController = SceneController.instance;
         
         sceneController.SceneStarted(currentGameState);
-        
-        //Todo: Remove this
-        DOVirtual.DelayedCall(1f, () => GameStateChangedEvent?.Invoke(currentGameState));
     }
 
     public event Action<GameState> GameStateChangedEvent;
 
     public void ChangeGameState(GameState newGameState)
     {
-        if (newGameState == CurrentGameState || BlockGameStateChange) return;
+        if (newGameState == CurrentGameState || BlockGameStateChange && !IsNewStateInExceptionList(newGameState)) return;
 
         PreviousGameState = CurrentGameState;
         CurrentGameState = newGameState;
         
         GameStateChangedEvent?.Invoke(newGameState);
     }
+    
+    private bool IsNewStateInExceptionList(GameState newGameState) => blockChangeExceptionList.Contains(newGameState);
 
     public void ChangeToPreviousGameState() => ChangeGameState(PreviousGameState);
 }
