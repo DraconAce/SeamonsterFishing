@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MuckAttack : AbstractAttackNode
 {
+    [Header("Muck Attack Implementation")]
     [SerializeField] private MuckSpewController muckSpewController;
     
     [Header("Face Player Rotation")]

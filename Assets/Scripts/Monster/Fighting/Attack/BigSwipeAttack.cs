@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BigSwipeAttack : AbstractAttackNode
 {
+    [Header("Big Swipe Implementation")]
     [SerializeField] private string bigSwipeTriggerL;
     [SerializeField] private string bigSwipeTriggerR;
 

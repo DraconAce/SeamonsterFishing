@@ -689,6 +689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6877120052767214739}
+  - component: {fileID: 1376900125517864321}
   m_Layer: 0
   m_Name: ReelingPivot
   m_TagString: Untagged
@@ -712,6 +713,29 @@ Transform:
   m_Father: {fileID: 8790332009883055501}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!895512359 &1376900125517864321
+AimConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026676654438774077}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 180, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AimVector: {x: 0, y: 0, z: 1}
+  m_UpVector: {x: 0, y: 1, z: 0}
+  m_WorldUpVector: {x: 0, y: 1, z: 0}
+  m_WorldUpObject: {fileID: 0}
+  m_UpType: 0
+  m_AffectRotationX: 0
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 0
+  m_Active: 0
+  m_IsLocked: 0
+  m_Sources: []
 --- !u!1 &7305416509532914252
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class ReelingStation_Animation : AbstractStationSegment
 {
@@ -26,6 +27,7 @@ public class ReelingStation_Animation : AbstractStationSegment
 
     private Tween moveBoatForReelTween;
     private GameStateManager gameStateManager;
+    private AimConstraint lookAtConstraint;
 
     private ReelingStation reelingStation => (ReelingStation) ControllerStation;
 
@@ -38,13 +40,10 @@ public class ReelingStation_Animation : AbstractStationSegment
 
         reelingTarget = FightMonsterSingleton.instance.ReelingTarget;
         
+        lookAtConstraint = reelingPivotTransform.GetComponent<AimConstraint>();
+        
         SetupBoatVariables();
-    }
-
-    private void SetupBoatVariables()
-    {
-        initialBoatRotation = reelingPivotTransform.rotation;
-        oppositeBoatRotation = Quaternion.Euler(initialBoatRotation.eulerAngles + Vector3.up * 180);
+        SetupLookConstraint();
     }
 
     private void OnReelingStarted()
@@ -64,7 +63,8 @@ public class ReelingStation_Animation : AbstractStationSegment
         var lookAtRotation = Quaternion.LookRotation(reelingTargetPos - reelingPivotTransform.position);
         
         reelingPivotTransform.DORotateQuaternion(lookAtRotation, reelEntryDuration)
-            .SetEase(reelEntryEase);
+            .SetEase(reelEntryEase)
+            .OnComplete(() => lookAtConstraint.constraintActive = true);
     }
 
     private Quaternion DetermineCloserBoatRotation(Quaternion currentBoatRotation)
@@ -81,18 +81,6 @@ public class ReelingStation_Animation : AbstractStationSegment
         return angle;
     }
 
-    private void StartMoveTowardsMonsterTween()
-    {
-        var reelingTargetPos = GetReelingTargetPositionOnBoatHeight();
-
-        var toMonsterVector = reelingTargetPos - positionBeforeReeling;
-        
-        var targetPosition = positionBeforeReeling + toMonsterVector;
-
-        moveBoatForReelTween = reelingPivotTransform.DOMove(targetPosition, reelingStation.MaxTimeToReel)
-            .SetEase(Ease.InQuad);
-    }
-
     private Vector3 GetReelingTargetPositionOnBoatHeight()
     {
         var reelingTargetPos = reelingTarget.position;
@@ -100,8 +88,27 @@ public class ReelingStation_Animation : AbstractStationSegment
         return reelingTargetPos;
     }
 
+    private void StartMoveTowardsMonsterTween() => moveBoatForReelTween = CreateMoveToMonsterTween();
+
+    private Tween CreateMoveToMonsterTween()
+    {
+        return DOVirtual.Float(0, 1, reelingStation.MaxTimeToReel, value =>
+        {
+            var reelingTargetPos = GetReelingTargetPositionOnBoatHeight();
+
+            var toMonsterVector = reelingTargetPos - positionBeforeReeling;
+        
+            var targetPosition = positionBeforeReeling + toMonsterVector * value;
+            
+            reelingPivotTransform.position = targetPosition;
+        })
+            .SetEase(Ease.InQuad);
+    }
+
     private void OnReelingCompleted()
     {
+        lookAtConstraint.constraintActive = false;
+        
         ReelingExitAnimation();
         
         StartReturnToOriginalPositionTween();
@@ -120,6 +127,25 @@ public class ReelingStation_Animation : AbstractStationSegment
         
         moveBoatForReelTween = reelingPivotTransform.DOMove(positionBeforeReeling, returnToPositionDuration)
             .SetEase(returnToPositionEase);
+    }
+
+    private void SetupBoatVariables()
+    {
+        initialBoatRotation = reelingPivotTransform.rotation;
+        oppositeBoatRotation = Quaternion.Euler(initialBoatRotation.eulerAngles + Vector3.up * 180);
+    }
+
+    private void SetupLookConstraint()
+    {
+        lookAtConstraint.constraintActive = false;
+        
+        var lookConstrainSource = new ConstraintSource()
+        {
+            sourceTransform = reelingTarget,
+            weight = 1
+        };
+
+        lookAtConstraint.AddSource(lookConstrainSource);
     }
 
     protected override void OnDestroy()

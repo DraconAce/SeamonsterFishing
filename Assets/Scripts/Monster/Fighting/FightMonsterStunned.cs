@@ -43,6 +43,7 @@ public class FightMonsterStunned : AbstractMonsterBehaviour
 
     protected override IEnumerator StopBehaviourRoutineImpl()
     {
+        behaviourTreeManager.ToggleBlockBehaviour(false);
         yield break;
     }
 }

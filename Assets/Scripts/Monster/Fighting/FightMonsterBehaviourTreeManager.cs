@@ -8,10 +8,11 @@ using UnityEngine;
 
 public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubscriber
 {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [Header("Debug Stuff")] 
     [SerializeField] private bool startWithSpecificBehaviour;
-    [SerializeField] private AbstractMonsterBehaviour behaviourToStartWith;
+    [SerializeField] private List<AbstractMonsterBehaviour> initialBehaviourList;
+    private Queue<AbstractMonsterBehaviour> initialBehaviourQueue;
 #endif
     
     [Header("Behaviour Tree Setup")]
@@ -44,6 +45,11 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private void Start()
     {
+#if UNITY_EDITOR
+        if (startWithSpecificBehaviour)
+            initialBehaviourQueue = new Queue<AbstractMonsterBehaviour>(initialBehaviourList);
+#endif
+        
         SetupVariables();
 
         monsterKI.RequestSpecificBehaviourEvent += RequestSpecificBehaviour;
@@ -75,6 +81,14 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         void AfterBehaviourStopAction()
         {
             TryResetCurrentBehaviour();
+            
+#if UNITY_EDITOR
+            if (startWithSpecificBehaviour && initialBehaviourQueue.Count > 0)
+            {
+                var behaviour = initialBehaviourQueue.Dequeue();
+                nextBehaviourIndex = behaviour.NodeIndex;
+            }
+#endif
 
             if (nextBehaviourIndex >= 0)
             {
@@ -128,9 +142,10 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         yield return new WaitForSeconds(delayBeforeFirstBehaviour);
 
         #if UNITY_EDITOR
-        if (startWithSpecificBehaviour)
+        if (startWithSpecificBehaviour && initialBehaviourQueue.Count > 0)
         {
-            RequestSpecificBehaviour(behaviourToStartWith.NodeIndex);
+            var behaviour = initialBehaviourQueue.Peek();
+            RequestSpecificBehaviour(behaviour.NodeIndex);
             yield break;
         }
         #endif
@@ -238,6 +253,14 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
             
             return;
         }
+        
+#if UNITY_EDITOR
+        if (startWithSpecificBehaviour && initialBehaviourQueue.Count > 0)
+        {
+            var behaviour = initialBehaviourQueue.Dequeue();
+            behaviourIndex = behaviour.NodeIndex;
+        }
+#endif
 
         SetCurrentBehaviour(behaviourIndex);
         monsterKI.ForwardActionRequest(behaviourIndex);

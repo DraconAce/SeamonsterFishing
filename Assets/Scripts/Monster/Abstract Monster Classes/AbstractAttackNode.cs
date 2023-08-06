@@ -51,7 +51,9 @@ public abstract class AbstractAttackNode : AbstractMonsterBehaviour, IMonsterAni
 
     protected virtual void OnAnimationFinishedImpl(){}
 
-    protected void StartIdleAnimation() => MonsterAnimationController.SetTrigger(idleAnimationTrigger);
+    protected void StartIdleAnimation() => TriggerAnimation(idleAnimationTrigger);
+    
+    protected void TriggerAnimation(string trigger) => MonsterAnimationController.SetTrigger(trigger);
 
     protected override void OnDestroy()
     {
