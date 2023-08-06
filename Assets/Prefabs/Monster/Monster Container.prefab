@@ -522,7 +522,7 @@ MonoBehaviour:
   minNumberAttacksNeededUntilNextReeling: 3
   baseReelingExecutability: 55
   reelingStartedTrigger: StartReeling
-  triggerReelingStartAnimationDelay: 2
+  triggerReelingStartAnimationDelay: 0.25
   triggerReelingGameStateChangeDelay: 4.5
   diveDuration: 7
   diveEase: 7
@@ -1369,7 +1369,7 @@ MonoBehaviour:
   rushTarget: {fileID: 4246540993646248384}
   underWaterPosition: {fileID: 3208111209883361421}
   rushStartTrigger: StartBiteRush
-  delayForRushAnimation: 3
+  delayForRushAnimation: 0.5
   rushWindupDuration: 7
   rushWindupEase: 4
   rushDuration: 2

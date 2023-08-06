@@ -51,6 +51,10 @@ public class SwipeAttack : AbstractAttackNode
 
             yield return waitForSwipeFinished;
         }
+        
+        ReturnToOriginalPositionAndStartIdle();
+        
+        yield return monsterRotationTween.WaitForCompletion();
     }
 
     private void TriggerRandomSwipe()
@@ -73,13 +77,18 @@ public class SwipeAttack : AbstractAttackNode
             .SetEase(Ease.InOutSine);
     }
 
+    private void ReturnToOriginalPositionAndStartIdle()
+    {
+        StartIdleAnimation();
+
+        StartMonsterRotationTween(0);
+    }
+
     protected override void OnAnimationFinishedImpl() => swipeFinished = true;
 
     protected override IEnumerator StopBehaviourRoutineImpl()
     {
-        StartIdleAnimation();
-        
-        StartMonsterRotationTween(0);
+        ReturnToOriginalPositionAndStartIdle();
 
         yield return monsterRotationTween.WaitForCompletion();
     }
