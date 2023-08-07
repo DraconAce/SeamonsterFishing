@@ -53,6 +53,7 @@ public class Lightning_Manager : MonoBehaviour
             //Debug.Log("Lightning wait:" + waitTime);
             yield return new WaitForSeconds(waitTime);
             createLightning();
+            RuntimeManager.PlayOneShot(LightningSound); //only play lightningSound once
             for (int i = 1; i < maxConsecutiveLightnings; i++)
             {
                 int randomMoreLightning = Random.Range(0, 100);
@@ -78,7 +79,6 @@ public class Lightning_Manager : MonoBehaviour
         Vector3 lightningPositionVector = new Vector3(-125f,30f,z);
         LightningParticleSystem.transform.position = lightningPositionVector;
         LightningParticleSystem.Play();
-        RuntimeManager.PlayOneShot(LightningSound, lightningPositionVector);
         //put Spotlight at Lightning location
         spotLight.transform.position = new Vector3(-125f,80f,z);
     }
