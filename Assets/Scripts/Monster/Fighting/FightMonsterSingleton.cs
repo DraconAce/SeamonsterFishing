@@ -17,16 +17,26 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 
     [Header("Behaviours With Direct Start")]
     [SerializeField] private FightMonsterStunned fightMonsterStunned;
-    [SerializeField] private SwipeAttack swipeAttack;
+    [SerializeField] private AbstractAttackNode swipeAttack;
 
     public override bool AddToDontDestroy => false;
     
     public Transform MonsterTransform => monsterTransform;
     public Transform ReelingTarget => reelingTarget;
 
-    public FightMonsterBehaviourTreeManager BehaviourTreeManager { get; private set; }
+    private FightMonsterBehaviourTreeManager behaviourTreeManager;
 
-    private void Start() => BehaviourTreeManager = monsterKI.BehaviourTreeManager;
+    public FightMonsterBehaviourTreeManager BehaviourTreeManager
+    {
+        get
+        {
+            if(behaviourTreeManager != null)
+                return behaviourTreeManager;
+            
+            behaviourTreeManager = monsterKI.BehaviourTreeManager;
+            return behaviourTreeManager;
+        }
+    }
 
     public void WeakPointWasHit()
     {

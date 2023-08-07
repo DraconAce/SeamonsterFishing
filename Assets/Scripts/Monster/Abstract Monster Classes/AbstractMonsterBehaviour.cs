@@ -58,6 +58,7 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
     {
         if (timeout <= 0) return;
         
+        timeoutTween?.Kill();
         IsTimedOut = true;
         
         timeoutTween = DOVirtual.DelayedCall(timeout, () => IsTimedOut = false);

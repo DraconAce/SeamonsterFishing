@@ -985,6 +985,61 @@ Transform:
   m_Father: {fileID: 5941708678844611789}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3295228742679756195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6255175090458412873}
+  - component: {fileID: 2648748893867015637}
+  m_Layer: 7
+  m_Name: MonsterHitCollider
+  m_TagString: Damage
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6255175090458412873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3295228742679756195}
+  m_LocalRotation: {x: -0.00000020693328, y: 0.99946845, z: -0.032600712, w: 0.0000025216182}
+  m_LocalPosition: {x: 0, y: 0.0298, z: -0.0019}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8806633380095729990}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2648748893867015637
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3295228742679756195}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.02
+  m_Height: 0.07
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.04, z: 0}
 --- !u!1 &3379193377778915436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,6 +2386,7 @@ Transform:
   - {fileID: 5929290378072872726}
   - {fileID: 5520163682209218603}
   - {fileID: 5364125625974166302}
+  - {fileID: 6255175090458412873}
   m_Father: {fileID: 5792982807177114956}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2417,6 +2473,7 @@ MonoBehaviour:
   - MuckBuildUp
   - Spew
   - EndSpewMuck
+  - Stun
 --- !u!1 &7724038263010882314
 GameObject:
   m_ObjectHideFlags: 0

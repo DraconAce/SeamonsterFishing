@@ -2,43 +2,29 @@ using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
-using UnityEngine.Animations;
+using UnityEngine.Serialization;
 
 public class MuckSpewController : MonoBehaviour
 {
     [SerializeField] private MuckAttack muckAttack;
 
+    [FormerlySerializedAs("Muck_Spew_Gameobject")] [SerializeField] private GameObject muckSpewOb;
+    [SerializeField] private GameObject muckExplosionPrefab;
+     
+    [Header("Sound")]
+    [SerializeField] private EventReference MuckFireBreathSound;
+    [SerializeField] private EventReference MuckSpewSound;
+    private EventInstance muckFireBreathSoundInstance;
+    private EventInstance muckSpewSoundInstance;
+    
+    [Header("Routine delays for animation sync")]
     [SerializeField] private float delayForMuckBuildUp = 1.5f;
     [SerializeField] private float delayForSpewReady = 3.5f;
     [SerializeField] private float delayForSpewEnd = 1f;
     [SerializeField] private float delayForFireSpew = 6f;
     [SerializeField] private float delayForMuckFire = 0.2f;
     [SerializeField] private float delayForMuckEnd = 1.5f;
-
-    [SerializeField] private GameObject Muck_Spew_Gameobject;
-    [SerializeField] private GameObject muckExplosionPrefab;
-     
-    [SerializeField] private EventReference MuckFireBreathSound;
-    [SerializeField] private EventReference MuckSpewSound;
     
-    [Header("Animation Triggers")]
-    [SerializeField] private string buildUpTrigger = "MuckBuildUp";
-    [SerializeField] private string spewTrigger = "SpewMuck";
-    [SerializeField] private string endSpewTrigger = "EndSpewMuck";
-
-    private Vector3 savedPosition_Player;
-    private EventInstance muckFireBreathSoundInstance;
-    private EventInstance muckSpewSoundInstance;
-
-    private Transform playerTransform;
-    private Transform spewTransform;
-
-    private Material mat_MuckSpew;
-    private ParticleSystem Muck_Spew;
-
-    private PrefabPool muckExplosionPool;
-    private MuckGoo currentGoo;
-
     private WaitForSeconds waitForMuckBuildUp;
     private WaitForSeconds waitForSpewReady;
     private WaitForSeconds waitForSpewEnd;
@@ -46,24 +32,54 @@ public class MuckSpewController : MonoBehaviour
     private WaitForSeconds waitForMuckOnFire;
     private WaitForSeconds waitForEndMuck;
 
-    private Coroutine muckRoutine;
+    [Header("Animation Triggers")]
+    [SerializeField] private string buildUpTrigger = "MuckBuildUp";
+    [SerializeField] private string spewTrigger = "SpewMuck";
+    [SerializeField] private string endSpewTrigger = "EndSpewMuck";
+
+    private Vector3 cachedPlayerPos;
     
+    private Transform playerTransform;
+    private Transform spewTransform;
+
+    private Material muckSpewMat;
+    private ParticleSystem muckSpewParticles;
+
+    private PrefabPool muckExplosionPool;
+    private MuckGoo currentGoo;
     private MonsterAnimationController monsterAnimationController;
+
+    private Coroutine muckRoutine;
 
     private void Start()
     {
-        monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
         playerTransform = PlayerSingleton.instance.PhysicalPlayerRepresentation;
-        spewTransform = Muck_Spew_Gameobject.transform;
-        
+        monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
+
         muckExplosionPool = PrefabPoolFactory.instance.RequestNewPool(gameObject, muckExplosionPrefab);
 
-        muckFireBreathSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MuckFireBreathSound, Muck_Spew_Gameobject);
-        muckSpewSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MuckSpewSound, Muck_Spew_Gameobject);
+        CreateMuckSoundInstances();
 
-        Muck_Spew = Muck_Spew_Gameobject.GetComponent<ParticleSystem>();
-        mat_MuckSpew = Muck_Spew_Gameobject.GetComponent<Renderer>().material;
+        SetupMuckSpewVariables();
 
+        CreateYieldInstructionsForAnimationDelays();
+    }
+
+    private void CreateMuckSoundInstances()
+    {
+        muckFireBreathSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MuckFireBreathSound, muckSpewOb);
+        muckSpewSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MuckSpewSound, muckSpewOb);
+    }
+
+    private void SetupMuckSpewVariables()
+    {
+        spewTransform = muckSpewOb.transform;
+        muckSpewMat = muckSpewOb.GetComponent<Renderer>().material;
+        muckSpewParticles = muckSpewOb.GetComponent<ParticleSystem>();
+    }
+
+    private void CreateYieldInstructionsForAnimationDelays()
+    {
         waitForMuckBuildUp = new WaitForSeconds(delayForMuckBuildUp);
         waitForSpewReady = new WaitForSeconds(delayForSpewReady);
         waitForSpewEnd = new WaitForSeconds(delayForSpewEnd);
@@ -76,41 +92,44 @@ public class MuckSpewController : MonoBehaviour
 
     private IEnumerator MuckTimeTracker()
     {
-        monsterAnimationController.SetTrigger(buildUpTrigger);
+        monsterAnimationController.SetTrigger(buildUpTrigger); //build up
+        
         yield return waitForMuckBuildUp;
+        monsterAnimationController.SetTrigger(spewTrigger); //get ready for spew
         
-        monsterAnimationController.SetTrigger(spewTrigger);
         yield return waitForSpewReady;
-        
-        savedPosition_Player = playerTransform.position;
-        Debug.Log(savedPosition_Player);
-        StartSpew();
-
-        currentGoo = RequestNewMuckExplosionAndPlace(savedPosition_Player);
+        cachedPlayerPos = playerTransform.position;
+        SpewAndPlaceNewGoo();
 
         yield return waitForSpewEnd;
-        monsterAnimationController.SetTrigger(endSpewTrigger);
+        monsterAnimationController.SetTrigger(endSpewTrigger); //get ready for fire spew
 
         yield return waitForFireSpew;
-        monsterAnimationController.SetTrigger(spewTrigger);
+        monsterAnimationController.SetTrigger(spewTrigger); //get ready for fire spew
 
         yield return waitForSpewReady;
-        
         StartFireBreath();
         
         yield return waitForMuckOnFire;
         SetMuckOnFire();
 
         yield return waitForEndMuck;
-        
-        TriggerMuckEnd();
+        TriggerAttackEndAndEndAnimation();
     }
 
-    private void StartSpew()
+    private void SpewAndPlaceNewGoo()
     {
-        muckSpewSoundInstance.start();
-        
+        StartSpewAndAdjustStrength();
+
+        currentGoo = RequestNewMuckExplosionAndPlace(cachedPlayerPos);
+    }
+
+    private void StartSpewAndAdjustStrength()
+    {
         AdjustMuckSpewStrength();
+
+        muckSpewSoundInstance.start();
+        muckSpewParticles.Play();
     }
 
     private void AdjustMuckSpewStrength()
@@ -118,14 +137,12 @@ public class MuckSpewController : MonoBehaviour
         var spewPos = spewTransform.position;
         
         //Adjust the Muck Spew initial Speed -> speed up the spew if the player is further away
-        var distance = savedPosition_Player - spewPos;
+        var distance = cachedPlayerPos - spewPos;
         
         //Debug.Log("Spew distance: " + distance);
         var bonusSpeed = distance[0] - distance[1] - distance[2]; //positive x, negative y and z = further away
-        var main = Muck_Spew.main;
+        var main = muckSpewParticles.main;
         main.startSpeed = bonusSpeed;
-        
-        Muck_Spew.Play();
     }
 
     private MuckGoo RequestNewMuckExplosionAndPlace(Vector3 muckPosition)
@@ -138,12 +155,10 @@ public class MuckSpewController : MonoBehaviour
 
     private void StartFireBreath()
     {
-        //Muck Spews towards old player position -> the Muck that is supposed to burn
-        //also automatically adjusts Strength
-        StartSpew();
+        StartSpewAndAdjustStrength();
         
-        mat_MuckSpew.EnableKeyword("_EMISSION");
-        Muck_Spew.Play();
+        muckSpewMat.EnableKeyword("_EMISSION");
+        muckSpewParticles.Play();
         muckFireBreathSoundInstance.start();
     }
 
@@ -154,9 +169,9 @@ public class MuckSpewController : MonoBehaviour
         currentGoo.StartMuckFire();
     }
 
-    private void TriggerMuckEnd()
+    private void TriggerAttackEndAndEndAnimation()
     {
-        muckAttack.TriggerMuckEnd();
+        muckAttack.TriggerMuckAttackEnd();
         monsterAnimationController.SetTrigger(endSpewTrigger);
     }
 
@@ -169,6 +184,9 @@ public class MuckSpewController : MonoBehaviour
 
     private void OnDestroy()
     {
+        SoundHelper.StopAndReleaseInstance(muckFireBreathSoundInstance);
+        SoundHelper.StopAndReleaseInstance(muckSpewSoundInstance);
+
         if (muckRoutine == null) return;
         
         StopCoroutine(muckRoutine);

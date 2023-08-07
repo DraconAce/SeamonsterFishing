@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using FMODUnity;
 using UnityEngine;
@@ -20,17 +19,17 @@ public class MuckGoo : MonoBehaviour, IPoolObject
 
     private Transform gooTransform;
     private Transform fireTransform;
-    private Sequence fireEndSequence;
-
-    public PoolObjectContainer ContainerOfObject { get; set; }
-    public bool IsGooOnFire { get; private set; }
 
     private Tween emitterSizeTween;
     private Tween backupMuckDisappearTween;
+    private Sequence endFireSequence;
 
-    private const float emitterSizeTweenDuration = 0.5f;
-    private const float startEmitterDelay = 0.75f;
-
+    private const float EmitterSizeTweenDuration = 0.5f;
+    private const float StartEmitterDelay = 0.75f;
+    
+    public bool IsGooOnFire { get; private set; }
+    public PoolObjectContainer ContainerOfObject { get; set; }
+    
     private void Start()
     {
         gooTransform = gooParticles.transform;
@@ -41,7 +40,7 @@ public class MuckGoo : MonoBehaviour, IPoolObject
     {
         DOVirtual.DelayedCall(0.5f, PlayMuckExplosion);
         
-        DOVirtual.DelayedCall(startEmitterDelay, PlayGooParticles);
+        DOVirtual.DelayedCall(StartEmitterDelay, PlayGooParticles);
 
         backupMuckDisappearTween = DOVirtual.DelayedCall(backupMuckDisappearTime, () => ContainerOfObject.ReturnToPool());
     }
@@ -51,8 +50,10 @@ public class MuckGoo : MonoBehaviour, IPoolObject
         gooParticles.Play();
         gooSoundEmitter.Play();
         
-        emitterSizeTween = gooTransform.DOScale(Vector3.one, emitterSizeTweenDuration);
+        emitterSizeTween = StartScaleToOneTween(gooTransform);
     }
+
+    private Tween StartScaleToOneTween(Transform target) => target.DOScale(Vector3.one, EmitterSizeTweenDuration);
 
     private void PlayMuckExplosion()
     {
@@ -62,23 +63,32 @@ public class MuckGoo : MonoBehaviour, IPoolObject
 
     public void StartMuckFire()
     {
-        gooSoundEmitter.Stop();
-        
         emitterSizeTween?.Kill(true);
+        emitterSizeTween = StartScaleToOneTween(fireTransform);
         
-        emitterSizeTween = fireTransform.DOScale(Vector3.one, emitterSizeTweenDuration);
-        
-        DOVirtual.DelayedCall(startEmitterDelay, () =>
+        DOVirtual.DelayedCall(StartEmitterDelay, () =>
         {
-            gooParticles.Stop();
-            fireParticles.Play();
-            fireSoundEmitter.Play();
-            
-            IsGooOnFire = true;
+            StopParticlesAndSound(gooSoundEmitter, gooParticles);
+
+            StartGooFireParticles();
             ToggleMuckCollider();
         });
 
         StartFireEndSequence();
+    }
+    
+    private void StopParticlesAndSound(StudioEventEmitter sound, ParticleSystem particles)
+    {
+        sound.Stop();
+        particles.Stop();
+    }
+
+    private void StartGooFireParticles()
+    {
+        fireParticles.Play();
+        fireSoundEmitter.Play();
+
+        IsGooOnFire = true;
     }
 
     private void ToggleMuckCollider()
@@ -90,15 +100,15 @@ public class MuckGoo : MonoBehaviour, IPoolObject
 
     private void StartFireEndSequence()
     {
-        fireEndSequence = DOTween.Sequence();
+        endFireSequence = DOTween.Sequence();
         
-        fireEndSequence.AppendInterval(5);
+        endFireSequence.AppendInterval(5);
         
-        fireEndSequence.AppendCallback(StopFireParticleEmission);
+        endFireSequence.AppendCallback(StopFireParticleEmission);
         
-        fireEndSequence.AppendInterval(3);
+        endFireSequence.AppendInterval(3);
         
-        fireEndSequence.AppendCallback(() => ContainerOfObject.ReturnToPool());
+        endFireSequence.AppendCallback(() => ContainerOfObject.ReturnToPool());
     }
 
     private void StopFireParticleEmission()
@@ -121,12 +131,13 @@ public class MuckGoo : MonoBehaviour, IPoolObject
 
     private void StopParticles()
     {
-        muckExplosion.Stop();
-        gooParticles.Stop();
-        fireParticles.Stop();
-        
-        fireEndSequence?.Kill();
+        endFireSequence?.Kill();
         emitterSizeTween?.Kill();
+        
+        StopParticlesAndSound(gooSoundEmitter, gooParticles);
+        StopParticlesAndSound(fireSoundEmitter, fireParticles);
+
+        muckExplosion.Stop();
     }
 
     private void OnDestroy() => StopParticles();
