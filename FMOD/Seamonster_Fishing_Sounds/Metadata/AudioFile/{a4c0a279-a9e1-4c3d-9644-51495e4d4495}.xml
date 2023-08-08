@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{17a4b5f6-e428-4a11-9499-27144b98024a}">
+	<object class="AudioFile" id="{a4c0a279-a9e1-4c3d-9644-51495e4d4495}">
 		<property name="assetPath">
-			<value>Attack Indicator.wav</value>
+			<value>Attack/Spit Attack/zapsplat_nature_flames_fireball_pass_by_big_slow_002_89780.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
@@ -11,7 +14,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>7.0848125</value>
+			<value>12.288</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>

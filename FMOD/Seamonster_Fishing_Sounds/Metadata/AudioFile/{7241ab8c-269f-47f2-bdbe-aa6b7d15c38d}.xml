@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{1cfa760f-a211-4c9d-8bfc-75a31a411781}">
+	<object class="AudioFile" id="{7241ab8c-269f-47f2-bdbe-aa6b7d15c38d}">
 		<property name="assetPath">
-			<value>Atmo/Thunder/Thunder 2.wav</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
+			<value>Attack/Spit Attack/Muck Puddle.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
@@ -14,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>17.4375</value>
+			<value>8.2232083333333339</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
