@@ -3,6 +3,8 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using FMOD.Studio;
+using FMODUnity;
 
 public class SwipeAttack : AbstractAttackNode
 {
@@ -12,9 +14,15 @@ public class SwipeAttack : AbstractAttackNode
         public string SwipeTrigger;
         public float SwipeYRotation;
     }
-
+    
+    [Header("Down Swipe Sound")]
+    [SerializeField] private EventReference DownSwipeSound;
+    [SerializeField] private GameObject SoundOrigin;
+    private EventInstance DownSwipeSoundInstance;
+    
     [Header("Swipe Implementation")]
     [SerializeField] private float rotationDuration = 0.75f;
+    [SerializeField] private float delayForTailAnimation = 0.5f;
     [SerializeField] private MinMaxLimit numberSwipesLimit;
     [SerializeField] private SwipeSetting[] swipeTriggers;
 
@@ -23,6 +31,7 @@ public class SwipeAttack : AbstractAttackNode
 
     private Transform monsterPivot;
     private Tween monsterRotationTween;
+    private Tween tailDelayTween;
     
     public override MonsterAttackType AttackType => MonsterAttackType.MidRange;
 
@@ -30,7 +39,10 @@ public class SwipeAttack : AbstractAttackNode
     {
         base.Start();
         
+        DownSwipeSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(DownSwipeSound, SoundOrigin);
+        
         waitForSwipeFinished = new WaitUntil(() => swipeFinished);
+        
         monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
     }
 
@@ -47,7 +59,12 @@ public class SwipeAttack : AbstractAttackNode
         {
             swipeFinished = false;
             
+            //play monster sound
+            DownSwipeSoundInstance.start();
+            
             TriggerRandomSwipe();
+            
+            yield return monsterRotationTween.WaitForCompletion();
 
             yield return waitForSwipeFinished;
         }
@@ -62,9 +79,10 @@ public class SwipeAttack : AbstractAttackNode
         var randomIndex = Random.Range(0, swipeTriggers.Length);
         var swipeSetting = swipeTriggers[randomIndex];
         
-        MonsterAnimationController.SetTrigger(swipeSetting.SwipeTrigger);
-        
         StartMonsterRotationTween(swipeSetting.SwipeYRotation);
+
+        tailDelayTween = DOVirtual.DelayedCall(delayForTailAnimation, 
+            () => MonsterAnimationController.SetTrigger(swipeSetting.SwipeTrigger));
     }
 
     private void StartMonsterRotationTween(float yRotation)
@@ -73,7 +91,9 @@ public class SwipeAttack : AbstractAttackNode
         
         monsterRotationTween?.Kill();
         
-        monsterRotationTween = monsterPivot.DOLocalRotate(targetRotation, rotationDuration)
+        var duration = Mathf.Approximately(monsterPivot.localEulerAngles.y, yRotation) ? 0.05f : rotationDuration;
+        
+        monsterRotationTween = monsterPivot.DOLocalRotate(targetRotation, duration)
             .SetEase(Ease.InOutSine);
     }
 
@@ -88,8 +108,20 @@ public class SwipeAttack : AbstractAttackNode
 
     protected override IEnumerator StopBehaviourRoutineImpl()
     {
+        tailDelayTween?.Kill();
+        monsterRotationTween?.Kill();
+        
+        DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
         ReturnToOriginalPositionAndStartIdle();
 
         yield return monsterRotationTween.WaitForCompletion();
+    }
+    
+    private void OnDestroy()
+    {
+        //Destroy sound after Reset
+        DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        DownSwipeSoundInstance.release();
     }
 }

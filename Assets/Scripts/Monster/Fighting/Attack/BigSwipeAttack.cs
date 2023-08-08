@@ -1,9 +1,16 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public class BigSwipeAttack : AbstractAttackNode
 {
+    [Header("Big/Side Swipe Sound")]
+    [SerializeField] private EventReference SideSwipeSound;
+    [SerializeField] private GameObject SoundOrigin;
+    private EventInstance SideSwipeSoundInstance;
+    
     [Header("Big Swipe Implementation")]
     [SerializeField] private string bigSwipeTriggerL;
     [SerializeField] private string bigSwipeTriggerR;
@@ -29,6 +36,8 @@ public class BigSwipeAttack : AbstractAttackNode
     protected override void Start()
     {
         base.Start();
+        
+        SideSwipeSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(SideSwipeSound, SoundOrigin);
 
         targetPosition = moveTarget.position;
         
@@ -44,6 +53,9 @@ public class BigSwipeAttack : AbstractAttackNode
     protected override IEnumerator BehaviourRoutineImpl()
     {
         bigSwipeAttackEnded = false;
+        
+        //play side-swipe
+        SideSwipeSoundInstance.start();
         
         TriggerLeftOrRightSwipe();
         
@@ -82,12 +94,22 @@ public class BigSwipeAttack : AbstractAttackNode
     {
         movementDelayTween?.Kill();
         
+        //Debug.Log("interrupt Tail Sound");
+        SideSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
         StartIdleAnimation();
 
         StartMovementTween(originalPosition, movementDuration / 2f);
 
         yield return movementTween.WaitForCompletion();
     }
-
+    
     protected override void OnAnimationFinishedImpl() => bigSwipeAttackEnded = true;
+    
+    private void OnDestroy()
+    {
+        //Destroy sound after Reset
+        SideSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        SideSwipeSoundInstance.release();
+    }
 }
