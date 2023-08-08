@@ -3,6 +3,8 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using FMOD.Studio;
+using FMODUnity;
 
 public class SwipeAttack : AbstractAttackNode
 {
@@ -12,7 +14,12 @@ public class SwipeAttack : AbstractAttackNode
         public string SwipeTrigger;
         public float SwipeYRotation;
     }
-
+    
+    [Header("Down Swipe Sound")]
+    [SerializeField] private EventReference DownSwipeSound;
+    [SerializeField] private GameObject SoundOrigin;
+    private EventInstance DownSwipeSoundInstance;
+    
     [Header("Swipe Implementation")]
     [SerializeField] private float rotationDuration = 0.75f;
     [SerializeField] private float delayForTailAnimation = 0.5f;
@@ -32,6 +39,8 @@ public class SwipeAttack : AbstractAttackNode
     {
         base.Start();
         
+        DownSwipeSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(DownSwipeSound, SoundOrigin);
+        
         waitForSwipeFinished = new WaitUntil(() => swipeFinished);
         
         monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
@@ -49,6 +58,9 @@ public class SwipeAttack : AbstractAttackNode
         for(var i = 0; i < numberSwipes; i++)
         {
             swipeFinished = false;
+            
+            //play monster sound
+            DownSwipeSoundInstance.start();
             
             TriggerRandomSwipe();
             
@@ -99,8 +111,17 @@ public class SwipeAttack : AbstractAttackNode
         tailDelayTween?.Kill();
         monsterRotationTween?.Kill();
         
+        DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
         ReturnToOriginalPositionAndStartIdle();
 
         yield return monsterRotationTween.WaitForCompletion();
+    }
+    
+    private void OnDestroy()
+    {
+        //Destroy sound after Reset
+        DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        DownSwipeSoundInstance.release();
     }
 }
