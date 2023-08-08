@@ -37,7 +37,7 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
     public int NumberDepthThresholds => depthThresholds.Length;
 
     private int currentDepthThresholdIndex;
-    private int lastFullDepth;
+    public int LastFullDepth { get; private set; }
     
     private float timer;
 
@@ -71,10 +71,10 @@ public class DepthHandler : MonoBehaviour, IManualUpdateSubscriber, IMovePerSeco
     {
         var newDepth = (int) Mathf.Round(timer * meterPerSecond + depthOffset);
 
-        if (newDepth > lastFullDepth)
+        if (newDepth > LastFullDepth)
         {
             DepthUpdatedEvent?.Invoke(newDepth);
-            lastFullDepth = newDepth;
+            LastFullDepth = newDepth;
         }
 
         return newDepth;

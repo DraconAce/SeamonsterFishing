@@ -14,7 +14,24 @@ public class PlayerSingleton : Singleton<PlayerSingleton>
 
     public Transform PhysicalPlayerRepresentation => physicalPlayerRepresentation;
     
-    public bool DisableMovementControls { get; set; }
-    
+    private bool disableMovementControls;
+
+    public bool DisableMovementControls
+    {
+        get => disableMovementControls;
+        set
+        {
+            var formerValue = disableMovementControls;
+            
+            disableMovementControls = value;
+            
+            if(formerValue == disableMovementControls) return;
+            
+            MovementEnabledStateChanged?.Invoke(disableMovementControls);
+        }
+    }
+
     public DriveStation DriveStation { get; set; }
+    
+    public event Action<bool> MovementEnabledStateChanged;
 }

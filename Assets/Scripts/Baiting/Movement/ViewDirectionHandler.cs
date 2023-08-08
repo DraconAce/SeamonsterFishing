@@ -26,6 +26,7 @@ public class ViewDirectionHandler : MonoBehaviour
     private int lookDirection;
     private Vector3 lastTargetRotation;
     private Tween leftRightTween;
+    private PlayerSingleton playerSingleton;
 
     private const float rightRotation = 90;
 
@@ -34,6 +35,19 @@ public class ViewDirectionHandler : MonoBehaviour
     private const float MaxViewRotation = 180.0f;
     
     public event Action<ViewRotationSettings> OnTransmitTargetRotation;
+
+    private void Start()
+    {
+        playerSingleton = PlayerSingleton.instance;
+        playerSingleton.MovementEnabledStateChanged += OnMovementEnabledStateChanged;
+    }
+
+    private void OnMovementEnabledStateChanged(bool isDisabled)
+    {
+        if (!isDisabled) return;
+        
+        leftRightTween?.Kill();
+    }
 
     public void RotateView(RotationDirection direction)
     {
@@ -102,5 +116,12 @@ public class ViewDirectionHandler : MonoBehaviour
 
     private bool RotationTweenIsPlaying() => leftRightTween != null && leftRightTween.IsPlaying();
 
-    private void OnDestroy() => leftRightTween?.Kill();
+    private void OnDestroy()
+    {
+        leftRightTween?.Kill();
+
+        if (playerSingleton == null) return;
+        
+        playerSingleton.MovementEnabledStateChanged -= OnMovementEnabledStateChanged;
+    }
 }

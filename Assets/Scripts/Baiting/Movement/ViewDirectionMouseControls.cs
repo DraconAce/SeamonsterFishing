@@ -115,9 +115,9 @@ public class ViewDirectionMouseControls : AbstractViewDirectionControls, IManual
 
     private void RequestViewChangeBasedOnInput(float mouseXPosition)
     {
-        (userIsStillInEdgeZoneAfterViewChange, viewCanBeChanged) = (true, false);
-        
         ResetTimer();
+        
+        (userIsStillInEdgeZoneAfterViewChange, viewCanBeChanged) = (true, false);
 
         var requestedDirection = GetRequestedViewDirection(mouseXPosition);
 

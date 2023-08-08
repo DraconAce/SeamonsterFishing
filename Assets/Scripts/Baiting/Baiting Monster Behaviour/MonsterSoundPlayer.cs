@@ -157,7 +157,7 @@ public class MonsterSoundPlayer : MonoBehaviour
     private float GenerateAdditionalWaitTimeForNextSound()
     {
         return Random.Range(waitBetweenSoundsLimit.MinLimit, 
-            waitBetweenSoundsLimit.MaxLimit * difficultyManager.DifficultyFraction);
+            waitBetweenSoundsLimit.MaxLimit);
     }
 
     public void StopMonsterApproachSounds()

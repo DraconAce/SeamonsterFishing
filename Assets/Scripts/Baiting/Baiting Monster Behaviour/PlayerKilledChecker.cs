@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerKilledChecker : MonoBehaviour
 {
+    [SerializeField] private float distancePercentageCloserPosition = 0.85f;
+    [SerializeField] private float distancePercentageKillPosition = 0.5f;
+    [SerializeField] private float getCloserDuration = 1.5f;
+    [SerializeField] private Ease getCloserEase = Ease.InQuint;
+    [SerializeField] private float waitBeforeKillDuration = 2f;
     [SerializeField] private float moveInToKillDuration = 0.75f;
     [SerializeField] private Ease moveInToKillEase = Ease.InQuint;
     [SerializeField] private MaterialSwitcher matSwitcher;
@@ -40,21 +45,31 @@ public class PlayerKilledChecker : MonoBehaviour
         
         soundPlayer.PlayKillSound();
 
-        var attackTargetPos = GetAttackTargetPos();
+        var getCloserPosition = GetMonsterTargetPos(distancePercentageCloserPosition);
+        var killTargetPos = GetMonsterTargetPos(distancePercentageKillPosition);
         
-        transform.DOMove(attackTargetPos, moveInToKillDuration)
+        var sequence = DOTween.Sequence();
+
+        sequence.Append(transform.DOMove(getCloserPosition, getCloserDuration)
+            .SetEase(getCloserEase));
+        
+        sequence.AppendInterval(waitBeforeKillDuration);
+        
+        sequence.Append(transform.DOMove(killTargetPos, moveInToKillDuration)
             .SetEase(moveInToKillEase)
-            .OnComplete(() => gameStateManager.ChangeGameState(GameState.Dead));
+            .OnComplete(() => gameStateManager.ChangeGameState(GameState.Dead)));
+        
+        sequence.Play();
     }
 
     private void SwitchToAttackMat() => matSwitcher.SwitchMaterial(1);
 
-    private Vector3 GetAttackTargetPos()
+    private Vector3 GetMonsterTargetPos(float distanceToPlayerPercentage)
     {
         var playerPos = playerTransform.position;
         
         var directionPlayerToMonster = (transform.position - playerPos).normalized;
         
-        return playerPos + directionPlayerToMonster * 0.5f;
+        return playerPos + directionPlayerToMonster * distanceToPlayerPercentage;
     }
 }

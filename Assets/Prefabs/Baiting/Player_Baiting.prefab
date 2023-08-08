@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 752591339991555711}
-  playerRepresentation: {fileID: 8432969242579965097}
+  physicalPlayerRepresentation: {fileID: 8432969242579965097}
 --- !u!65 &706682325437420274
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   completelyDrainedPercentage: 0.2
-  drainPerSecond: 0.01
+  drainPerSecond: 0.05
   spotIntensityLimits:
     MinLimit: 0.0001
     MaxLimit: 10
@@ -484,7 +484,7 @@ MonoBehaviour:
       Data4: 184931629
     Path: event:/Baiting/Diver/FlashlightEmpty
   maxTimeBetweenChargeInput: 0.5
-  chargePerInput: 0.05
+  chargePerInput: 0.015
   chargeSound:
     Guid:
       Data1: 1595060766

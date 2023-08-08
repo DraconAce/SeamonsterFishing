@@ -155,21 +155,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterProxy: {fileID: 8112896167923530534}
   numberOfPointsLimits:
-    MinLimit: 7
-    MaxLimit: 25
+    MinLimit: 4
+    MaxLimit: 10
   distanceStepLimits:
-    MinLimit: 1.3
-    MaxLimit: 5
+    MinLimit: 3
+    MaxLimit: 7
   rotationAroundSpawnerLimits:
     MinLimit: -90
     MaxLimit: 90
-  waitAtWaypointChance: 0.3
+  waitAtWaypointChance: 0.2
   waitLimits:
-    MinLimit: 3
-    MaxLimit: 10
+    MinLimit: 1.5
+    MaxLimit: 3
   durationLimits:
-    MinLimit: 60
-    MaxLimit: 210
+    MinLimit: 20
+    MaxLimit: 70
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +185,27 @@ MonoBehaviour:
   delayBeforeAttack:
     MinLimit: 0.5
     MaxLimit: 3
+  moveTowardsPlayerDistance: 6.5
+  moveAwayDistance: 7
+  moveTowardsPlayerSettings:
+    Duration: 1.5
+    TweenEase: 5
+    OnStartAction:
+      m_PersistentCalls:
+        m_Calls: []
+    OnCompleteAction:
+      m_PersistentCalls:
+        m_Calls: []
+  monsterWaitTime: 1
+  moveAwaySettings:
+    Duration: 1
+    TweenEase: 11
+    OnStartAction:
+      m_PersistentCalls:
+        m_Calls: []
+    OnCompleteAction:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &2770388103404711760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef180b10c5d24262b3ad823938513f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayBeforeDespawn: 5
 --- !u!114 &4146503280141272089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +289,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3cd7ffd2d144cebb98948cbcb3ebfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveInToKillDuration: 0.75
+  distancePercentageCloserPosition: 1.75
+  distancePercentageKillPosition: 0.3
+  getCloserDuration: 0.75
+  getCloserEase: 6
+  waitBeforeKillDuration: 0.75
+  moveInToKillDuration: 0.2
   moveInToKillEase: 14
   matSwitcher: {fileID: 4438122261592848291}
 --- !u!54 &5881421570666721864
@@ -310,8 +337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitBetweenSoundsLimit:
-    MinLimit: 6
-    MaxLimit: 13
+    MinLimit: 4
+    MaxLimit: 10
   monsterSoundsList:
   - MonsterRange: 0
     monsterSoundRefList:
@@ -340,6 +367,7 @@ MonoBehaviour:
           Data3: -1024259163
           Data4: -1386984086
         Path: event:/Baiting/Monster/MonsterApproach_Far
+  maxAttenuationDistanceForApproach: 40
   approachSoundEmitter: {fileID: 7971904250638264494}
   lurkSoundEmitter: {fileID: 4713329607241235055}
   repelledSoundEmitter: {fileID: 419608736329854840}

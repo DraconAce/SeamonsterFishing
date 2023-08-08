@@ -44,7 +44,7 @@ public class PrefabPool : MonoBehaviour
 
                 TryParentObject(dequeuedObject.transform, parent);
                 
-                dequeuedObject.transform.position = newPosition;
+                TryPositionObject(dequeuedObject.transform, newPosition);
 
                 TrySetupPoolObject(newObjectContainer);
 
@@ -59,7 +59,7 @@ public class PrefabPool : MonoBehaviour
 
         TryParentObject(container.Ob.transform, parent);
         
-        newOb.transform.position = newPosition;
+        TryPositionObject(newOb.transform, newPosition);
         
         return container;
     }
@@ -70,6 +70,14 @@ public class PrefabPool : MonoBehaviour
             rectTrans.SetParent(parent, false);
         else
             obTrans.parent = parent;
+    }
+
+    private void TryPositionObject(Transform obTrans, Vector3 newPosition)
+    {
+        if (obTrans.TryGetComponent<RectTransform>(out var rectTrans))
+            rectTrans.anchoredPosition = newPosition;
+        else
+            obTrans.position = newPosition;
     }
 
     private void TryInitializePoolObject(PoolObjectContainer container)
