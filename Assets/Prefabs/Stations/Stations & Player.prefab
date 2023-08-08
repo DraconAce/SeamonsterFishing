@@ -418,6 +418,10 @@ PrefabInstance:
       propertyPath: m_TranslationOffsets.Array.data[0].z
       value: -1.9485118
       objectReference: {fileID: 0}
+    - target: {fileID: 3523187064740353086, guid: aa96e1e513c477b4da068c757d069584, type: 3}
+      propertyPath: DriveStation
+      value: 
+      objectReference: {fileID: 9194721994731441995}
     - target: {fileID: 4297550818994296561, guid: aa96e1e513c477b4da068c757d069584, type: 3}
       propertyPath: m_Targets.Array.data[0].target
       value: 
@@ -753,5 +757,10 @@ PrefabInstance:
 --- !u!4 &1350595157042270468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8019039673613632958, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
+  m_PrefabInstance: {fileID: 9076755713419596986}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9194721994731441995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 174844112677051377, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
   m_PrefabInstance: {fileID: 9076755713419596986}
   m_PrefabAsset: {fileID: 0}
