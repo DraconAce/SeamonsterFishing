@@ -319,6 +319,14 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 5f3073bf8d1ed3140b969d0898b45195, type: 2}
   - {fileID: 7400000, guid: cd22b76c77ccdcb4d9a0579cfc617cd4, type: 2}
   - {fileID: 7400000, guid: 6e8b79bb94fdd624a874c00a7243bfb5, type: 2}
+  DownSwipeSound:
+    Guid:
+      Data1: -360729412
+      Data2: 1113191980
+      Data3: -60443220
+      Data4: -1751225909
+    Path: event:/Monster/Fin Swipe Downwards
+  SoundOrigin: {fileID: 1072689982468905632}
   rotationDuration: 0.75
   delayForTailAnimation: 0.65
   numberSwipesLimit:
@@ -1565,6 +1573,14 @@ MonoBehaviour:
   animationClipsToListenForEnd:
   - {fileID: 7400000, guid: fab8ba56600949f4ca558f91534c9d10, type: 2}
   - {fileID: 7400000, guid: 00e17a08b1a4cba458687ae447594fbb, type: 2}
+  SideSwipeSound:
+    Guid:
+      Data1: -139609683
+      Data2: 1227748243
+      Data3: -1794871875
+      Data4: -1259569768
+    Path: event:/Monster/Fin Swipe Sidewards
+  SoundOrigin: {fileID: 1072689982468905632}
   bigSwipeTriggerL: BigTailLtoR
   bigSwipeTriggerR: BigTailRtoL
   movementDelay: 1.5
