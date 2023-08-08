@@ -320,6 +320,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: cd22b76c77ccdcb4d9a0579cfc617cd4, type: 2}
   - {fileID: 7400000, guid: 6e8b79bb94fdd624a874c00a7243bfb5, type: 2}
   rotationDuration: 0.75
+  delayForTailAnimation: 0.65
   numberSwipesLimit:
     MinLimit: 2
     MaxLimit: 6

@@ -221,8 +221,6 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     public void ManualLateUpdate()
     {
-        if(chooseBehaviourJobHandle == default) return;
-        
         chooseBehaviourJobHandle.Complete();
 
         ScheduleStartOfNextBehaviour();
