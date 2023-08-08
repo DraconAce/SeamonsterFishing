@@ -15,6 +15,7 @@ public class SwipeAttack : AbstractAttackNode
 
     [Header("Swipe Implementation")]
     [SerializeField] private float rotationDuration = 0.75f;
+    [SerializeField] private float delayForTailAnimation = 0.5f;
     [SerializeField] private MinMaxLimit numberSwipesLimit;
     [SerializeField] private SwipeSetting[] swipeTriggers;
 
@@ -23,6 +24,7 @@ public class SwipeAttack : AbstractAttackNode
 
     private Transform monsterPivot;
     private Tween monsterRotationTween;
+    private Tween tailDelayTween;
     
     public override MonsterAttackType AttackType => MonsterAttackType.MidRange;
 
@@ -31,6 +33,7 @@ public class SwipeAttack : AbstractAttackNode
         base.Start();
         
         waitForSwipeFinished = new WaitUntil(() => swipeFinished);
+        
         monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
     }
 
@@ -48,6 +51,8 @@ public class SwipeAttack : AbstractAttackNode
             swipeFinished = false;
             
             TriggerRandomSwipe();
+            
+            yield return monsterRotationTween.WaitForCompletion();
 
             yield return waitForSwipeFinished;
         }
@@ -62,9 +67,10 @@ public class SwipeAttack : AbstractAttackNode
         var randomIndex = Random.Range(0, swipeTriggers.Length);
         var swipeSetting = swipeTriggers[randomIndex];
         
-        MonsterAnimationController.SetTrigger(swipeSetting.SwipeTrigger);
-        
         StartMonsterRotationTween(swipeSetting.SwipeYRotation);
+
+        tailDelayTween = DOVirtual.DelayedCall(delayForTailAnimation, 
+            () => MonsterAnimationController.SetTrigger(swipeSetting.SwipeTrigger));
     }
 
     private void StartMonsterRotationTween(float yRotation)
@@ -73,7 +79,9 @@ public class SwipeAttack : AbstractAttackNode
         
         monsterRotationTween?.Kill();
         
-        monsterRotationTween = monsterPivot.DOLocalRotate(targetRotation, rotationDuration)
+        var duration = Mathf.Approximately(monsterPivot.localEulerAngles.y, yRotation) ? 0.05f : rotationDuration;
+        
+        monsterRotationTween = monsterPivot.DOLocalRotate(targetRotation, duration)
             .SetEase(Ease.InOutSine);
     }
 
@@ -88,6 +96,9 @@ public class SwipeAttack : AbstractAttackNode
 
     protected override IEnumerator StopBehaviourRoutineImpl()
     {
+        tailDelayTween?.Kill();
+        monsterRotationTween?.Kill();
+        
         ReturnToOriginalPositionAndStartIdle();
 
         yield return monsterRotationTween.WaitForCompletion();
