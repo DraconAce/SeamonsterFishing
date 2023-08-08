@@ -37,6 +37,9 @@ public class ReelingStation_ProgressController : AbstractStationSegment
     {
         base.OnDestroy();
         
+        reelingSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        reelingSoundInstance.release();
+        
         if(reelingStation == null) return;
         
         reelingStation.OnReelingStartedEvent -= OnReelingStarted;

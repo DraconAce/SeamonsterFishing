@@ -1369,6 +1369,14 @@ MonoBehaviour:
   - {fileID: 5316379940855789412}
   rushTarget: {fileID: 4246540993646248384}
   underWaterPosition: {fileID: 3208111209883361421}
+  BiteRushSound:
+    Guid:
+      Data1: -1852714361
+      Data2: 1109119141
+      Data3: -1781820268
+      Data4: 1936307426
+    Path: event:/Monster/Bite Rush
+  SoundOrigin: {fileID: 1072689982468905632}
   rushStartTrigger: StartBiteRush
   delayForRushAnimation: 0.5
   rushWindupDuration: 7
