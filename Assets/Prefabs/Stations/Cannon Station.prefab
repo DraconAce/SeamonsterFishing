@@ -108,34 +108,11 @@ MonoBehaviour:
   stationGameState: 1
   onEnterStation:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerRepMovement, Assembly-CSharp
-        m_MethodName: MovePlayerToTargetLocalPos
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onLeaveStation:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerRepMovement, Assembly-CSharp
-        m_MethodName: MovePlayerToTargetLocalPos
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  cannonPivot: {fileID: 0}
 --- !u!114 &4080558271220990675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c7a06facc546f69dcea4a73a2b93db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fuse: {fileID: 0}
   reloadTime: 3
   reloadCannonSound:
     Guid:

@@ -5,30 +5,45 @@ public class FightMonsterStunned : AbstractMonsterBehaviour
 {
     [SerializeField] private float stunnedTime = 5f;
 
+    private FightMonsterBehaviourTreeManager behaviourTreeManager;
+    private MonsterAnimationController monsterAnimationController;
     private WaitForSeconds waitStunned;
     
-    public override bool ChangeMonsterStateOnStartBehaviour => true;
-    public override MonsterState MonsterStateOnBehaviourStart => MonsterState.Stunned;
+    private const string IdleTrigger = "Idle";
+    private const string StunTrigger = "Stun";
+
+    protected override MonsterState BehaviourState => MonsterState.Stunned;
 
     protected override void Start()
     {
         base.Start();
 
+        behaviourTreeManager = FightMonsterSingleton.instance.BehaviourTreeManager;
+        monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
+        
         waitStunned = new(stunnedTime);
     }
 
-    protected override IEnumerator StartBehaviourImpl()
-    {
-        Debug.Log("Started Stun");
+    public override float GetExecutability() => IsNodeExecutable ? 100f : 0f;
 
-        yield return StartCoroutine(StunnedRoutine());
+    protected override IEnumerator BehaviourRoutineImpl()
+    {
+        Debug.Log("Started Stunned Behaviour");
         
-        yield return base.StartBehaviourImpl();
+        behaviourTreeManager.ToggleBlockBehaviour(true);
+        monsterAnimationController.SetTrigger(StunTrigger);
+
+        yield return waitStunned;
+        
+        behaviourTreeManager.ToggleBlockBehaviour(false);
+        
+        monsterAnimationController.SetTrigger(IdleTrigger);
+        Debug.Log("Ended Stunned Behaviour");
     }
 
-    private IEnumerator StunnedRoutine()
+    protected override IEnumerator StopBehaviourRoutineImpl()
     {
-        yield return waitStunned;
-        Debug.Log("Stun Done");
+        behaviourTreeManager.ToggleBlockBehaviour(false);
+        yield break;
     }
 }

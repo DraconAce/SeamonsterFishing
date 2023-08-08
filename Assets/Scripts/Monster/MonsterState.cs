@@ -13,6 +13,7 @@ public enum MonsterState
     Reeling = 6,
     PreparingAttack = 7,
     Cooldown = 8,
+    Dead = 10,
 
     //Baiting
     Approaching = 9,

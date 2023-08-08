@@ -10,7 +10,7 @@ public class PlayerRepMovement : MonoBehaviour
     private Transform playerRepTransform;
     private Tween movementTween;
 
-    private void Start() => playerRepTransform = PlayerSingleton.instance.PlayerRepresentation;
+    private void Start() => playerRepTransform = PlayerSingleton.instance.PhysicalPlayerRepresentation;
 
     public void MovePlayerToTargetPos(Transform targetPosition)
     {

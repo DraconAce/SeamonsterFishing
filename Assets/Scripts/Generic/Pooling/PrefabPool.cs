@@ -22,7 +22,7 @@ public class PrefabPool : MonoBehaviour
         
         for(var i = 0; i < numberToPool; i++)
         {
-            var instance = RequestInstance(parent);
+            var instance = RequestInstance(default, parent);
             
             poolObList.Add(instance);
         }
@@ -30,15 +30,7 @@ public class PrefabPool : MonoBehaviour
         return poolObList;
     }
 
-    public PoolObjectContainer RequestInstance(Vector3 newPosition, Transform parent = null)
-    {
-        var newOb = RequestInstance(parent);
-        newOb.Ob.transform.position = newPosition;
-
-        return newOb;
-    }
-
-    public PoolObjectContainer RequestInstance(Transform parent = null)
+    public PoolObjectContainer RequestInstance(Vector3 newPosition = default, Transform parent = null)
     {
         parent ??= poolParent;
         
@@ -51,6 +43,8 @@ public class PrefabPool : MonoBehaviour
                 dequeuedObject.SetActive(true);
 
                 TryParentObject(dequeuedObject.transform, parent);
+                
+                dequeuedObject.transform.position = newPosition;
 
                 TrySetupPoolObject(newObjectContainer);
 
@@ -64,6 +58,8 @@ public class PrefabPool : MonoBehaviour
         TryInitializePoolObject(container);
 
         TryParentObject(container.Ob.transform, parent);
+        
+        newOb.transform.position = newPosition;
         
         return container;
     }
