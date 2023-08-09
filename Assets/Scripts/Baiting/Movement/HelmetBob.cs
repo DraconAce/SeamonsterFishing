@@ -1,10 +1,12 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class HelmetBob : MonoBehaviour
 {
-    [SerializeField] private float moveDistance = 0.05f;
+    [FormerlySerializedAs("moveDistance")] [SerializeField] private float verticalMoveDistance = 0.05f;
+    [SerializeField] private float horizontalMoveDistance = 0.05f;
     [SerializeField] private float helmetBobDuration = 0.5f;
     [SerializeField] private Ease helmetBobEase = Ease.InOutSine;
     
@@ -12,9 +14,22 @@ public class HelmetBob : MonoBehaviour
 
     private void StartHelmetBobAnimation()
     {
-        transform.DOMove(new Vector3(0,moveDistance, 0), helmetBobDuration)
-            .SetRelative(true)
+        var position = transform.position;
+        
+        var upPosition = position + new Vector3(0, verticalMoveDistance, 0);
+        var downPosition = position + new Vector3(0, -verticalMoveDistance, 0);
+        var leftPosition = position + new Vector3(-horizontalMoveDistance, 0, 0);
+        var rightPosition = position + new Vector3(horizontalMoveDistance, 0, 0);
+        
+        var path = new [] {upPosition, rightPosition, downPosition, leftPosition};
+
+        transform.DOMove(leftPosition, helmetBobDuration/4)
             .SetEase(helmetBobEase)
-            .SetLoops(-1, LoopType.Yoyo);
+            .OnComplete(() =>
+            {
+                transform.DOPath(path, helmetBobDuration, PathType.CatmullRom)
+                    .SetEase(helmetBobEase)
+                    .SetLoops(-1, LoopType.Restart);
+            });
     }
 }

@@ -461,8 +461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37c24961a83310408eb31dfef839520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 0.015
-  helmetBobDuration: 2
+  verticalMoveDistance: 0.01
+  horizontalMoveDistance: 0.004
+  helmetBobDuration: 8
   helmetBobEase: 4
 --- !u!1 &6490229537957793650
 GameObject:
