@@ -174,7 +174,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     private void StopCoroutineIfItExists()
     {
         //deactivate Water displacement VFX behind boat after driving-fadeout stopped
-        VfxDrivingWaterInteractionObject.SetActive(false);
+        SetWaterDisplacementVfxWhileDriving(false);
         
         if (stoppingBoatMoveCoroutine != null) 
         {
