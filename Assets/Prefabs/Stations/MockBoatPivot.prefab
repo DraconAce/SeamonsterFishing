@@ -404,7 +404,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -2322909715820737869, guid: 32bdbf462124f974aa4719a57cb7db05, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -740,6 +740,9 @@ MonoBehaviour:
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
+  Lamp: {fileID: 3654353987216104677}
+  LampOffEmissionColor: {r: 0.2830189, g: 0.07880134, b: 0, a: 0}
+  LampEmissionStrength: 8
   flashSound:
     Guid:
       Data1: 40835706

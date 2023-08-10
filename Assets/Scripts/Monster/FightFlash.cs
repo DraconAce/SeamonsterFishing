@@ -1,8 +1,14 @@
+using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
 
 public class FightFlash : SpotFlash
 {
+    [SerializeField] private GameObject Lamp;
+    [SerializeField] private Color LampOffEmissionColor;
+    [SerializeField] private float LampEmissionStrength = 8f;
+    private Material lampMat;
+    
     public EventReference flashSound;
     public EventReference reloadFlashSound;
 
@@ -19,6 +25,10 @@ public class FightFlash : SpotFlash
         reloadFlashSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(reloadFlashSound, gameObject);
         
         base.Start();
+        
+        //get Lamp Material
+        lampMat = Lamp.GetComponent<Renderer>().material;
+        lampMat.SetColor("_EmissionColor", LampOffEmissionColor*LampEmissionStrength);
     }
 
     protected override void FlashActivatedImpl()
@@ -27,6 +37,9 @@ public class FightFlash : SpotFlash
         flashSoundInstance.start();
 
         monsterSingleton.FlashWasUsed();
+        
+        //turn on lamp cooldown glow
+        lampMat.EnableKeyword("_EMISSION");
     }
 
     protected override void FlashIsRecharged()
@@ -36,6 +49,9 @@ public class FightFlash : SpotFlash
 
         //play sound to signal that flash is reloaded
         reloadFlashSoundInstance.start();
+        
+        //turn off lamp cooldown glow
+        lampMat.DisableKeyword("_EMISSION");
         
         base.FlashIsRecharged();
     }
