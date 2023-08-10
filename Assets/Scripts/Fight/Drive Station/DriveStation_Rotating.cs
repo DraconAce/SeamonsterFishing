@@ -14,6 +14,12 @@ public class DriveStation_Rotating : AbstractStationSegment
     private Transform boatTransform;
 
     public bool MovingLocked { get; private set; }
+    
+    [Header("Water Interaction VFX")] 
+    [SerializeField] private GameObject VfxLeftRotationWaterInteractionObject;
+    [SerializeField] private GameObject VfxRightRotationWaterInteractionObject;
+    private ParticleSystem BoatLeftMist;
+    private ParticleSystem BoatRightMist;
 
     #region Rotation Animation
     [Header("Cannon Rotation")] 
@@ -50,6 +56,9 @@ public class DriveStation_Rotating : AbstractStationSegment
 
         forwardLampRotation = lampPivot.localEulerAngles[(int)lampRotationAxis];
         backwardsLampRotation = CalculateBackwardsLocalRotation(lampPivot.parent); //0f - forwardLampRotation;
+        
+        BoatLeftMist = VfxLeftRotationWaterInteractionObject.GetComponent<ParticleSystem>();
+        BoatRightMist = VfxRightRotationWaterInteractionObject.GetComponent<ParticleSystem>();
     }
 
     private float CalculateBackwardsLocalRotation(Transform fixParent)
@@ -95,6 +104,21 @@ public class DriveStation_Rotating : AbstractStationSegment
         CreateAndPlayRotationSequence(newDirection);
 
         driveStation.LastDriveDirection = newDirection;
+        
+        if (newDirection > 0)
+        {
+            //play left
+            SetActivationParticleSystem(true, BoatLeftMist);
+            //deactivate right
+            SetActivationParticleSystem(false, BoatRightMist);
+        }
+        else if (newDirection < 0)
+        {
+            //play right
+            SetActivationParticleSystem(true, BoatRightMist);
+            //deactivate left
+            SetActivationParticleSystem(false, BoatLeftMist);
+        }
     }
 
     private void CreateAndPlayRotationSequence(float newDirection)
@@ -112,6 +136,9 @@ public class DriveStation_Rotating : AbstractStationSegment
             MovingLocked = false;
             driveStation.GameStateManager.BlockGameStateChange = false;
             driveStation.TurnRotationComplete(); //to stop the turning-sound
+            //deactivate Mist-Rotation-Particles
+            SetActivationParticleSystem(false, BoatRightMist);
+            SetActivationParticleSystem(false, BoatLeftMist);
         });
 
         rotationSequence.Play();
@@ -178,6 +205,24 @@ public class DriveStation_Rotating : AbstractStationSegment
     
     private float DetermineTargetLampRotation(float newDirection) => newDirection >= 0 ? forwardLampRotation : backwardsLampRotation;
     #endregion
+    
+    private void SetActivationParticleSystem(bool newState, ParticleSystem ps)
+    {
+        //if the effect is already emitting and gets activated again, do nothing
+        if (newState && ps.isEmitting) return;
+        //if the effect is not emitting and gets deactivated again, do nothing
+        if (!newState && !(ps.isEmitting)) return;
+        
+        if (newState)
+        {
+            ps.Play(true);
+        }
+        else
+        {
+            ps.Stop();
+        }
+        
+    }
     
     protected override void OnDestroy()
     {
