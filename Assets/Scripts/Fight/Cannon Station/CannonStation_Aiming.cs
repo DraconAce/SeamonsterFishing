@@ -30,7 +30,9 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
 
     private void GetAndEnableAimAction()
     {
-        aimAction = cannonStation.CustomPlayerInputs.Fight_Cannon.Aim;
+        var customPlayerInput = cannonStation.GetPlayerInputs();
+        
+        aimAction = customPlayerInput.Fight_Cannon.Aim;
         aimAction.Enable();
     }
 
