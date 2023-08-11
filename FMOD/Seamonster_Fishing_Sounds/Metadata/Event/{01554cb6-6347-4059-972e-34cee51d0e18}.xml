@@ -58,7 +58,11 @@
 			<destination>{f1e45ae9-952a-445f-9554-53ac40d2a222}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{34520b20-607b-46bf-883d-27f8218ac6c4}" />
+	<object class="EventAutomatableProperties" id="{34520b20-607b-46bf-883d-27f8218ac6c4}">
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{b3852726-74d2-4be4-9843-56a253aa0160}" />
 	<object class="GroupTrack" id="{0dc650f8-c773-4e19-90a9-ba8279868e78}">
 		<relationship name="modules">
@@ -157,7 +161,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{9b028aed-f5b6-4831-95d3-c3f677ff1d78}">
 		<property name="volume">
-			<value>1</value>
+			<value>-5</value>
 		</property>
 		<property name="name">
 			<value>Mud Spray</value>
@@ -288,8 +292,8 @@
 		<property name="distanceRolloffType">
 			<value>4</value>
 		</property>
-		<property name="extentMode">
-			<value>2</value>
+		<property name="maximumDistance">
+			<value>200</value>
 		</property>
 		<property name="soundSize">
 			<value>14</value>

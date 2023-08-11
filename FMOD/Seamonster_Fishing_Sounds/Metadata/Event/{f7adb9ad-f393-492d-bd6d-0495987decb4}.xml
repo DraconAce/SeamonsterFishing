@@ -59,9 +59,6 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{8322a57b-ba74-40e4-a37e-d81e3b5cab9c}">
-		<property name="minimumDistance">
-			<value>60</value>
-		</property>
 		<property name="maximumDistance">
 			<value>250</value>
 		</property>
@@ -185,7 +182,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{d6693efb-7e55-460e-8afa-c6857f5e74a7}">
 		<property name="volume">
-			<value>-11.5</value>
+			<value>-8</value>
 		</property>
 		<property name="name">
 			<value>Sweep High</value>
@@ -334,9 +331,6 @@
 	<object class="MixerBusPanner" id="{559c167c-7d0f-4e8b-b9b7-371cca05a6a6}" />
 	<object class="MixerBusFader" id="{4a5a856e-3c1b-49f8-9fe6-4ab2693e4a48}" />
 	<object class="ObjectSpatialiserEffect" id="{d38c00f9-a5a8-4256-87dc-e4268e9ea09d}">
-		<property name="minimumDistance">
-			<value>60</value>
-		</property>
 		<property name="maximumDistance">
 			<value>250</value>
 		</property>
