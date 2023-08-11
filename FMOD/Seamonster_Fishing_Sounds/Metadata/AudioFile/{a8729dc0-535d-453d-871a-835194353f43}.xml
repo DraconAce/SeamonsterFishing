@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{367c8919-ceb2-44ce-82ee-a2d82dc61778}">
+	<object class="AudioFile" id="{a8729dc0-535d-453d-871a-835194353f43}">
 		<property name="assetPath">
-			<value>Flood Light/Flash Shot.wav</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
+			<value>Attack/Bite Rush/Rush Hiss 3.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
@@ -14,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>14.5401875</value>
+			<value>5.1116041666666669</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>

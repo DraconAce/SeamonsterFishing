@@ -14,8 +14,10 @@ public class RushAttack : AbstractAttackNode
     
     [Header("Rush Sound")]
     [SerializeField] private EventReference BiteRushSound;
+    [SerializeField] private EventReference InitBiteRushSound;
     [SerializeField] private GameObject SoundOrigin;
     private EventInstance BiteRushSoundInstance;
+    private EventInstance InitBiteRushSoundInstance;
     
     #region Animation Variables
     [Header("Animation")]
@@ -55,6 +57,7 @@ public class RushAttack : AbstractAttackNode
     {
         base.Start();
         
+        InitBiteRushSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(InitBiteRushSound, SoundOrigin);
         BiteRushSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(BiteRushSound, SoundOrigin);
         
         monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
@@ -94,7 +97,7 @@ public class RushAttack : AbstractAttackNode
         windupPositions[0] = positionBeforeRush;
         
         //Debug.Log("Rush Sequence1");
-        //BiteRushSoundInstance.start(); //immediate start of the sound
+        InitBiteRushSoundInstance.start(); //immediate start of the sound
         
         rushSequence?.Kill();
         
@@ -111,7 +114,7 @@ public class RushAttack : AbstractAttackNode
         rushSequence.AppendInterval(rushDuration);
         
         //stop sound after Monster is behind you
-        rushSequence.AppendCallback(() => { BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); });
+        //rushSequence.AppendCallback(() => { BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); });
         
         rushSequence.AppendInterval(underWaterTime);
         
@@ -172,7 +175,7 @@ public class RushAttack : AbstractAttackNode
         rushToPlayerSequence?.Kill();
         
         //stop sound when interrupted
-        BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        //BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         
         rushSequence = DOTween.Sequence();
         
@@ -204,5 +207,7 @@ public class RushAttack : AbstractAttackNode
         //Destroy sound after Reset
         BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         BiteRushSoundInstance.release();
+        InitBiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        InitBiteRushSoundInstance.release();
     }
 }

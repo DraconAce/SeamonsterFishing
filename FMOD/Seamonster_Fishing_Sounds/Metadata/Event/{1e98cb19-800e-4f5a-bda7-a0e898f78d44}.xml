@@ -25,6 +25,9 @@
 		<relationship name="markerTracks">
 			<destination>{97849273-a2a2-4626-be8a-cac6c3180cae}</destination>
 		</relationship>
+		<relationship name="groupTracks">
+			<destination>{2c896f3f-52ec-449d-a4df-22c4ba239781}</destination>
+		</relationship>
 		<relationship name="timeline">
 			<destination>{187e1663-8042-41a0-8058-f0f2d067e951}</destination>
 		</relationship>
@@ -40,9 +43,6 @@
 	<object class="MasterTrack" id="{32c8d33c-fb80-426d-bfef-26231d8168ff}">
 		<relationship name="automationTracks">
 			<destination>{bbc79643-98f9-4fac-815c-6678c2281ad4}</destination>
-		</relationship>
-		<relationship name="modules">
-			<destination>{fc087a52-604f-4b7b-8e9a-d7a6a18032a2}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{87c5cfec-16b1-4216-b04f-e7d71352f539}</destination>
@@ -61,6 +61,14 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{99fa9b50-1713-452f-81be-5dbf615ed89c}" />
 	<object class="MarkerTrack" id="{97849273-a2a2-4626-be8a-cac6c3180cae}" />
+	<object class="GroupTrack" id="{2c896f3f-52ec-449d-a4df-22c4ba239781}">
+		<relationship name="modules">
+			<destination>{fc087a52-604f-4b7b-8e9a-d7a6a18032a2}</destination>
+		</relationship>
+		<relationship name="mixerGroup">
+			<destination>{706974cf-61b8-4fa8-8dc0-275faf49da69}</destination>
+		</relationship>
+	</object>
 	<object class="Timeline" id="{187e1663-8042-41a0-8058-f0f2d067e951}">
 		<relationship name="modules">
 			<destination>{fc087a52-604f-4b7b-8e9a-d7a6a18032a2}</destination>
@@ -88,6 +96,12 @@
 			<destination>{5ea8019f-ce95-4f29-9f22-9bf8330e26d5}</destination>
 		</relationship>
 	</object>
+	<object class="MixerBusEffectChain" id="{4d7eedd3-8dca-4271-a3b6-0d2a8233d567}">
+		<relationship name="effects">
+			<destination>{f004b30d-297a-4e82-9f50-504b957c5214}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{69a01a86-9a93-4519-aa49-a7ebc0707bd0}" />
 	<object class="SingleSound" id="{fc087a52-604f-4b7b-8e9a-d7a6a18032a2}">
 		<property name="length">
 			<value>3.2000000000000002</value>
@@ -99,12 +113,20 @@
 			<destination>{ce13c173-5a4a-4554-8391-9b82f4ddd151}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusEffectChain" id="{4d7eedd3-8dca-4271-a3b6-0d2a8233d567}">
-		<relationship name="effects">
-			<destination>{f004b30d-297a-4e82-9f50-504b957c5214}</destination>
+	<object class="EventMixerGroup" id="{706974cf-61b8-4fa8-8dc0-275faf49da69}">
+		<property name="name">
+			<value>Audio 1</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{5fb32d86-c368-4386-a503-5ed8b94bc3f5}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{e7a856fb-b94c-4fcd-aa96-e1ee5bd881c1}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{87c5cfec-16b1-4216-b04f-e7d71352f539}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{69a01a86-9a93-4519-aa49-a7ebc0707bd0}" />
 	<object class="LoopRegion" id="{cdd58988-d3cd-4914-9494-142924ebe8f9}">
 		<property name="position">
 			<value>0</value>
@@ -135,6 +157,12 @@
 	</object>
 	<object class="MixerBusPanner" id="{358f0b8a-c628-4b44-bb62-1f94aabccbea}" />
 	<object class="MixerBusFader" id="{f004b30d-297a-4e82-9f50-504b957c5214}" />
+	<object class="MixerBusEffectChain" id="{5fb32d86-c368-4386-a503-5ed8b94bc3f5}">
+		<relationship name="effects">
+			<destination>{f2318d97-baf5-477c-bc78-dbfdeec41ee3}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{e7a856fb-b94c-4fcd-aa96-e1ee5bd881c1}" />
 	<object class="AutomationCurve" id="{83bcb621-0bb7-49c2-80f8-4216e26908f2}">
 		<relationship name="parameter">
 			<destination>{d363b686-587b-4b37-8e51-ecd1b0d302af}</destination>
@@ -157,6 +185,7 @@
 			<value>64</value>
 		</property>
 	</object>
+	<object class="MixerBusFader" id="{f2318d97-baf5-477c-bc78-dbfdeec41ee3}" />
 	<object class="AutomationPoint" id="{bfab15f4-0a0a-43c3-8c8f-def57e287aff}">
 		<property name="position">
 			<value>1</value>
