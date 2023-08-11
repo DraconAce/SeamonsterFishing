@@ -111,7 +111,7 @@ public class RushAttack : AbstractAttackNode
         rushSequence.AppendInterval(rushDuration);
         
         //stop sound after Monster is behind you
-        rushSequence.AppendCallback(() => { BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); });
+        //rushSequence.AppendCallback(() => { BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); });
         
         rushSequence.AppendInterval(underWaterTime);
         
