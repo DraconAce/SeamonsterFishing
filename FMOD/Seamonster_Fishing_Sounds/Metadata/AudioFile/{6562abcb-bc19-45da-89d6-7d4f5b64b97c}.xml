@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{7d92e0c9-a1b7-4dfc-8c34-62a0b9ddd312}">
+	<object class="AudioFile" id="{6562abcb-bc19-45da-89d6-7d4f5b64b97c}">
 		<property name="assetPath">
-			<value>Hits/Weakpoint No Hit.wav</value>
+			<value>Attack/Bite Rush/Rush Hiss 2.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
@@ -11,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>7.964291666666667</value>
+			<value>5.03125</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>

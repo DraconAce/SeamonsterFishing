@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="EncodableAsset" id="{44fa384d-14bc-4ddf-86fd-412594ec9f5e}">
+	<object class="EncodableAsset" id="{19fadb4e-89c6-41f9-a9e7-556ef0513e80}">
 		<property name="assetPath">
-			<value>Boat/Reeling/</value>
+			<value>Attack/Bite Rush/</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
