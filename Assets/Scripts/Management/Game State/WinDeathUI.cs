@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class WinDeathUI : AbstractMenu
 {
+    [SerializeField] private float deathDelay = 1f;
+    
     [Header("Events")]
     [SerializeField] private UnityEvent playerIsDeadEvent;
     [SerializeField] private UnityEvent playerWonEvent;
@@ -40,7 +43,16 @@ public class WinDeathUI : AbstractMenu
 
         sceneController.ToggleCursorForLevel(true);
 
+        //prevent player from acting in anticipation of Death-Menu
         OpenMenu();
+        //wait for Death-Animation
+        StartCoroutine(DoDeathAfterDelay());
+    }
+    
+    private IEnumerator DoDeathAfterDelay()
+    {
+        yield return new WaitForSeconds(deathDelay);
+        //End Run after Death-Animation
         OnRunEnded(playerIsDeadEvent);
     }
 

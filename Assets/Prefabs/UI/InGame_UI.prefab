@@ -1276,6 +1276,7 @@ MonoBehaviour:
   onMenuClosed:
     m_PersistentCalls:
       m_Calls: []
+  deathDelay: 1.5
   playerIsDeadEvent:
     m_PersistentCalls:
       m_Calls:
