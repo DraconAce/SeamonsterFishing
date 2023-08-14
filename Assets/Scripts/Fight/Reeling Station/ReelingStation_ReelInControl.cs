@@ -12,8 +12,10 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     private ReelingStation reelingStation => (ReelingStation) ControllerStation;
     public bool PlayerInputEnabled { get; set; }
 
-    private void Start()
+    protected override void OnControllerSetup()
     {
+        base.OnControllerSetup();
+        
         GetAndEnableReelAction();
 
         reelingStation.OnReelingStartedEvent += OnReelingStarted;
@@ -22,7 +24,9 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     private void GetAndEnableReelAction()
     {
-        reelAction = reelingStation.CustomPlayerInputs.Fight_Reeling.Reel;
+        var customPlayerInput = reelingStation.GetPlayerInputs();
+        
+        reelAction = customPlayerInput.Fight_Reeling.Reel;
         reelAction.Enable();
     }
 
