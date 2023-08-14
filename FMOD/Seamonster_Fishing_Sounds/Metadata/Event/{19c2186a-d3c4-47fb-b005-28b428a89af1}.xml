@@ -5,7 +5,7 @@
 			<value>Boat Movement</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{dcf8921f-7e58-4875-aaf2-a1525d0ab733}</destination>
@@ -60,6 +60,9 @@
 		<property name="maxVoices">
 			<value>1</value>
 		</property>
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
 	</object>
 	<object class="MarkerTrack" id="{a0fbb73c-e608-49a5-9a98-12b3afd062a4}" />
 	<object class="GroupTrack" id="{a1beb106-aa27-4fd1-a6c1-c0d828e505d2}">
@@ -105,7 +108,7 @@
 	</object>
 	<object class="SingleSound" id="{617a4941-f160-4122-8b5b-45d0257f40ae}">
 		<property name="length">
-			<value>38.5</value>
+			<value>6</value>
 		</property>
 		<property name="timelockedOffset">
 			<value>17.906403940886701</value>
@@ -113,17 +116,11 @@
 		<relationship name="automators">
 			<destination>{890b8206-87eb-4029-a7b1-607331797282}</destination>
 		</relationship>
-		<relationship name="fadeOutCurve">
-			<destination>{4f99442d-1113-4580-8a42-c9962890e206}</destination>
-		</relationship>
 		<relationship name="audioFile">
 			<destination>{8a732aa8-e85b-4647-ae4b-7609e478f956}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{d00359e6-090b-473d-b3e3-f8a94cf48b77}">
-		<property name="volume">
-			<value>-5</value>
-		</property>
 		<property name="name">
 			<value>Boat Engine</value>
 		</property>
@@ -139,10 +136,10 @@
 	</object>
 	<object class="LoopRegion" id="{5730f81a-0148-40b7-93c4-bdb13d164224}">
 		<property name="position">
-			<value>4</value>
+			<value>3</value>
 		</property>
 		<property name="length">
-			<value>32.300000000000004</value>
+			<value>3</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{1d2e257e-7d98-49d2-9da2-bf93662953a6}</destination>
@@ -155,6 +152,7 @@
 		<relationship name="effects">
 			<destination>{12c158a5-1f77-4716-976c-fe0800797854}</destination>
 			<destination>{e20e9976-4993-4d70-8ff2-dbb2f6b25a6e}</destination>
+			<destination>{063d739a-6218-4429-8315-7678b41f9644}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e66de83a-264c-4193-a554-9c33e4ef5cee}" />
@@ -165,14 +163,6 @@
 		</property>
 		<relationship name="automationCurves">
 			<destination>{4b353cad-a783-4161-a9a3-ab56abc92f25}</destination>
-		</relationship>
-	</object>
-	<object class="FadeCurve" id="{4f99442d-1113-4580-8a42-c9962890e206}">
-		<relationship name="startPoint">
-			<destination>{3653c1c7-b2cf-4b65-993d-e9b6c30d3ec3}</destination>
-		</relationship>
-		<relationship name="endPoint">
-			<destination>{9e858a6f-3761-465c-bbfd-07a5ac41f491}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{dcce3373-95e1-49e9-8e2e-df568c7c8213}">
@@ -208,6 +198,11 @@
 			<value>1.55172586</value>
 		</property>
 	</object>
+	<object class="SpatialiserEffect" id="{063d739a-6218-4429-8315-7678b41f9644}">
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+	</object>
 	<object class="AutomationCurve" id="{4b353cad-a783-4161-a9a3-ab56abc92f25}">
 		<relationship name="parameter">
 			<destination>{1d2e257e-7d98-49d2-9da2-bf93662953a6}</destination>
@@ -218,25 +213,6 @@
 			<destination>{8d7d9d2e-88dc-4c12-ad92-07ae4fc71ba8}</destination>
 			<destination>{62c6b973-31fd-4f3d-b972-8c0ccc99f9c3}</destination>
 		</relationship>
-	</object>
-	<object class="AutomationPoint" id="{3653c1c7-b2cf-4b65-993d-e9b6c30d3ec3}">
-		<property name="position">
-			<value>38</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
-		<property name="curveShape">
-			<value>0.25471893</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{9e858a6f-3761-465c-bbfd-07a5ac41f491}">
-		<property name="position">
-			<value>38.5</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
 	</object>
 	<object class="MixerBusFader" id="{4e08e64d-ef1a-4832-8478-d34c71218f3b}" />
 	<object class="AutomationPoint" id="{a024aaf2-9f7e-4203-90e3-89b48e4db138}">

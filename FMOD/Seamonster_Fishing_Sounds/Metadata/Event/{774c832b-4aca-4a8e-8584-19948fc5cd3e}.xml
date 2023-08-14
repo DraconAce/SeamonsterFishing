@@ -5,7 +5,7 @@
 			<value>Cannon Shot</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{646fdcdc-23c1-41f1-96d3-3793420a0d84}</destination>
@@ -59,6 +59,9 @@
 	<object class="EventAutomatableProperties" id="{bdd080a9-81df-43fd-9f16-98abf6fb62dc}">
 		<property name="maxVoices">
 			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>200</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{50460270-57b2-4013-bdaf-e76ccd2be0b0}" />
@@ -123,6 +126,7 @@
 	<object class="MixerBusEffectChain" id="{cf2ef089-c054-4bad-892f-91a9e4ee2e07}">
 		<relationship name="effects">
 			<destination>{b5e8bc94-caf3-4343-8c84-8f46fd557a3a}</destination>
+			<destination>{30b47d16-fa6c-462c-9084-f0de5e062be7}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{975842d8-8bc4-4e87-bfe8-909620cf0723}" />
@@ -162,6 +166,11 @@
 	</object>
 	<object class="MixerBusPanner" id="{247843fe-279e-438b-ae9f-ec079b48e00d}" />
 	<object class="MixerBusFader" id="{b5e8bc94-caf3-4343-8c84-8f46fd557a3a}" />
+	<object class="SpatialiserEffect" id="{30b47d16-fa6c-462c-9084-f0de5e062be7}">
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{1258a78c-bb48-4d73-8fe4-9dc416fd1f61}">
 		<property name="position">
 			<value>1.6000000000000005</value>

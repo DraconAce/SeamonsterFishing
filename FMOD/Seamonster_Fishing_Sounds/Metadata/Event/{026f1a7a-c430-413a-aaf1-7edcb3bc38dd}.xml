@@ -5,7 +5,7 @@
 			<value>Flash Shot</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{646fdcdc-23c1-41f1-96d3-3793420a0d84}</destination>
@@ -61,6 +61,9 @@
 	<object class="EventAutomatableProperties" id="{9f1c3d2e-1883-496c-884b-641ec8f3dca0}">
 		<property name="maxVoices">
 			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>200</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{5a88e241-6324-46d9-a6ee-bf074ae95857}" />
@@ -124,6 +127,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{ed410b46-51a0-4eb2-be23-6cbc427cb56f}">
+		<property name="volume">
+			<value>-2</value>
+		</property>
 		<property name="name">
 			<value>Flash Shot</value>
 		</property>
@@ -146,6 +152,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{016ace92-1318-48ca-9227-5b635ec3d402}">
+		<property name="volume">
+			<value>-7</value>
+		</property>
 		<property name="name">
 			<value>Recharging</value>
 		</property>
@@ -190,6 +199,7 @@
 	<object class="MixerBusEffectChain" id="{c716ccc8-af32-4767-988f-1db9f1090c98}">
 		<relationship name="effects">
 			<destination>{b6b6ca14-55e4-4b53-b6c4-d5bc54005ae3}</destination>
+			<destination>{c46f510a-24db-44c1-b2dc-0e21779cb046}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{46eb6afb-34e4-4858-9a70-b0cf4a01e0cf}" />
@@ -222,6 +232,11 @@
 	</object>
 	<object class="MixerBusPanner" id="{67a59176-d7e8-40cd-a3e6-55e902116788}" />
 	<object class="MixerBusFader" id="{b6b6ca14-55e4-4b53-b6c4-d5bc54005ae3}" />
+	<object class="SpatialiserEffect" id="{c46f510a-24db-44c1-b2dc-0e21779cb046}">
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{727dda77-00b0-4bff-935a-ec89fd3ad222}">
 		<property name="position">
 			<value>0</value>
