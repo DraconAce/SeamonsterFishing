@@ -4,7 +4,10 @@ using System.Collections;
 
 public class WinDeathUI : AbstractMenu
 {
+    [Header("Death Explosion")]
     [SerializeField] private float deathDelay = 1f;
+    [SerializeField] private GameObject BoatExplosion;
+    [SerializeField] private Vector3 explosionOffset;
     
     [Header("Events")]
     [SerializeField] private UnityEvent playerIsDeadEvent;
@@ -51,6 +54,9 @@ public class WinDeathUI : AbstractMenu
     
     private IEnumerator DoDeathAfterDelay()
     {
+        //Find Player (without scene-changes) DO MINUS 2 X
+        Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position + explosionOffset;
+        Instantiate(BoatExplosion, playerPos, Quaternion.identity);
         yield return new WaitForSeconds(deathDelay);
         //End Run after Death-Animation
         OnRunEnded(playerIsDeadEvent);
