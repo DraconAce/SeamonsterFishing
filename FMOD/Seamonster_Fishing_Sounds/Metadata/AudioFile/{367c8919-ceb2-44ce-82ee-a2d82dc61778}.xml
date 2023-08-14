@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{367c8919-ceb2-44ce-82ee-a2d82dc61778}">
 		<property name="assetPath">
-			<value>Flash Shot.wav</value>
+			<value>Flood Light/Flash Shot.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

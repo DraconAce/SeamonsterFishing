@@ -1,8 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class WinDeathUI : AbstractMenu
 {
+    [Header("Death Explosion")]
+    [SerializeField] private float deathDelay = 1f;
+    [SerializeField] private GameObject BoatExplosion;
+    [SerializeField] private Vector3 explosionOffset;
+    
     [Header("Events")]
     [SerializeField] private UnityEvent playerIsDeadEvent;
     [SerializeField] private UnityEvent playerWonEvent;
@@ -40,7 +46,19 @@ public class WinDeathUI : AbstractMenu
 
         sceneController.ToggleCursorForLevel(true);
 
+        //prevent player from acting in anticipation of Death-Menu
         OpenMenu();
+        //wait for Death-Animation
+        StartCoroutine(DoDeathAfterDelay());
+    }
+    
+    private IEnumerator DoDeathAfterDelay()
+    {
+        //Find Player (without scene-changes)
+        Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position + explosionOffset;
+        Instantiate(BoatExplosion, playerPos, Quaternion.identity);
+        yield return new WaitForSeconds(deathDelay);
+        //End Run after Death-Animation
         OnRunEnded(playerIsDeadEvent);
     }
 

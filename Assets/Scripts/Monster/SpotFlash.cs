@@ -96,6 +96,11 @@ public class SpotFlash : MonoBehaviour, IInputEventSubscriber
         
         flashSequence?.Kill();
     }
+    
+    protected float GetCoolDownTimer()
+    {
+        return coolDownTimer;
+    }
 
     public void UnsubscribeOnDestroy()
     {

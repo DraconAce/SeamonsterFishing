@@ -1276,6 +1276,9 @@ MonoBehaviour:
   onMenuClosed:
     m_PersistentCalls:
       m_Calls: []
+  deathDelay: 0.5
+  BoatExplosion: {fileID: 7538927511214077866, guid: 6dcc090de23c49f46bcc761e5552ac41, type: 3}
+  explosionOffset: {x: 0.5, y: 0.5, z: 0}
   playerIsDeadEvent:
     m_PersistentCalls:
       m_Calls:

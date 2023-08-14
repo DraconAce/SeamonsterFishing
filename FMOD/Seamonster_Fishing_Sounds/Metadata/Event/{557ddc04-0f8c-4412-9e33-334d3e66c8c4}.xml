@@ -57,11 +57,8 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{1e1bbb83-9474-455d-8b02-820b4fc79a9a}">
-		<property name="minimumDistance">
-			<value>7</value>
-		</property>
 		<property name="maximumDistance">
-			<value>300</value>
+			<value>200</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{0ddc23e7-3656-4493-ae8a-45af29da20e6}" />
@@ -183,11 +180,8 @@
 		<property name="distanceRolloffType">
 			<value>1</value>
 		</property>
-		<property name="minimumDistance">
-			<value>7</value>
-		</property>
 		<property name="maximumDistance">
-			<value>300</value>
+			<value>200</value>
 		</property>
 		<property name="soundSize">
 			<value>14</value>
