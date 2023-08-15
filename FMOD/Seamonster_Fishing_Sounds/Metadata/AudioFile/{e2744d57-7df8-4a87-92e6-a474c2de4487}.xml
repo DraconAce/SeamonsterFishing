@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e2744d57-7df8-4a87-92e6-a474c2de4487}">
+		<property name="assetPath">
+			<value>Attack/Swipe/Swipe Hiss 2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.3303541666666669</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
+		</relationship>
+	</object>
+</objects>

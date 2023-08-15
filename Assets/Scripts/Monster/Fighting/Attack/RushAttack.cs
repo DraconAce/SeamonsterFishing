@@ -2,6 +2,8 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Animations;
+using FMOD.Studio;
+using FMODUnity;
 
 public class RushAttack : AbstractAttackNode
 {
@@ -9,6 +11,13 @@ public class RushAttack : AbstractAttackNode
     [SerializeField] private Transform[] rushWindupPath;
     [SerializeField] private Transform rushTarget;
     [SerializeField] private Transform underWaterPosition;
+    
+    [Header("Rush Sound")]
+    [SerializeField] private EventReference BiteRushSound;
+    [SerializeField] private EventReference InitBiteRushSound;
+    [SerializeField] private GameObject SoundOrigin;
+    private EventInstance BiteRushSoundInstance;
+    private EventInstance InitBiteRushSoundInstance;
     
     #region Animation Variables
     [Header("Animation")]
@@ -48,6 +57,9 @@ public class RushAttack : AbstractAttackNode
     {
         base.Start();
         
+        InitBiteRushSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(InitBiteRushSound, SoundOrigin);
+        BiteRushSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(BiteRushSound, SoundOrigin);
+        
         monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
         
         CreateWindupPathPositionsList();
@@ -84,6 +96,9 @@ public class RushAttack : AbstractAttackNode
         positionBeforeRush = monsterPivot.position;
         windupPositions[0] = positionBeforeRush;
         
+        //Debug.Log("Rush Sequence1");
+        InitBiteRushSoundInstance.start(); //immediate start of the sound
+        
         rushSequence?.Kill();
         
         rushSequence = DOTween.Sequence();
@@ -93,9 +108,16 @@ public class RushAttack : AbstractAttackNode
 
         rushSequence.Append(DOVirtual.DelayedCall(0.01f, CreateRushToPlayerSequence));
         
+        //start sound before actual rush
+        rushSequence.AppendCallback(() => { BiteRushSoundInstance.start(); });
+        
         rushSequence.AppendInterval(rushDuration);
+        
+        //stop sound after Monster is behind you
+        //rushSequence.AppendCallback(() => { BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); });
+        
         rushSequence.AppendInterval(underWaterTime);
-
+        
         rushSequence.Append(CreateSurfaceToOriginalPositionTween());
         rushSequence.Join(DOVirtual.DelayedCall(delayForRushEndAnimation, StartIdleAnimation));
 
@@ -152,6 +174,9 @@ public class RushAttack : AbstractAttackNode
         rushSequence?.Kill();
         rushToPlayerSequence?.Kill();
         
+        //stop sound when interrupted
+        //BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
         rushSequence = DOTween.Sequence();
         
         rushSequence.Append(CreateInterruptingDiveUnderTween()
@@ -176,4 +201,13 @@ public class RushAttack : AbstractAttackNode
     }
     
     public override float GetExecutability() => 100f;
+    
+    private void OnDestroy()
+    {
+        //Destroy sound after Reset
+        BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        BiteRushSoundInstance.release();
+        InitBiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        InitBiteRushSoundInstance.release();
+    }
 }

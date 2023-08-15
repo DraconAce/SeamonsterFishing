@@ -9,6 +9,7 @@ public class MuckPlayerCollider : MonoBehaviour
     [SerializeField] private GameObject DriveStation;
     private DriveStation_Moving DriveScript;
     [SerializeField] private FMODUnity.EventReference BoatFireHitSound;
+    [SerializeField] private FMODUnity.EventReference BoatBurnDeathSound;
     
     //Boat burning particles
     [SerializeField] private GameObject FireParticles;
@@ -102,7 +103,10 @@ public class MuckPlayerCollider : MonoBehaviour
         //Debug.Log("Boat is DEAD");
         
         GameStateManager.instance.ChangeGameState(GameState.Dead);
-
+        
+        //Play Death Sound at player location
+        RuntimeManager.PlayOneShot(BoatBurnDeathSound, this.transform.position);
+        
         boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         boatBurningSoundInstance.release();
         //Destroy Muck_Puddle Sound to destroy looping sounds after Game-Over

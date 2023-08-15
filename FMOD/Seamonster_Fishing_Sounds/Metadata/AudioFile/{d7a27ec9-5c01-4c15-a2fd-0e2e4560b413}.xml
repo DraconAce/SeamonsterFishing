@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d7a27ec9-5c01-4c15-a2fd-0e2e4560b413}">
+		<property name="assetPath">
+			<value>Music/Seamonster Fishing Battle Layer 3.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>197.85599999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
+		</relationship>
+	</object>
+</objects>

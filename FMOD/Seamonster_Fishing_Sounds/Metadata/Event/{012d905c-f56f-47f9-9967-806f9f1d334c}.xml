@@ -34,6 +34,9 @@
 		<relationship name="timeline">
 			<destination>{fb640cf9-e100-4d80-a10b-f40ff9269cdf}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{31684f9c-e2d3-4348-af23-c1dff4081c0e}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{927449a9-833d-4428-af74-d99540001a73}">
 		<relationship name="masterBus">
@@ -110,6 +113,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{76137cfa-a28b-46ca-9bd3-80269b86cc29}">
+		<property name="volume">
+			<value>-2.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{599eef4f-8e41-4b53-9b90-7cb25c46f721}</destination>
 		</relationship>
@@ -162,7 +168,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{590f6180-0fae-4c3b-8a8a-25d44300d7ce}">
 		<property name="volume">
-			<value>-4.5</value>
+			<value>-6</value>
 		</property>
 		<property name="name">
 			<value>Anchor 1</value>
@@ -213,7 +219,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{ca85707e-8e78-4a8f-a593-c0297cab6403}">
 		<property name="volume">
-			<value>-9</value>
+			<value>-11</value>
 		</property>
 		<property name="name">
 			<value>Anchor 2</value>
@@ -243,6 +249,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{a6e3e3d7-7ab4-491d-8352-3db44181dec6}">
+		<property name="volume">
+			<value>1</value>
+		</property>
 		<property name="name">
 			<value>Wind</value>
 		</property>
@@ -271,6 +280,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e1dfc7fc-af52-4c8c-b421-2c698afbb110}">
+		<property name="volume">
+			<value>1</value>
+		</property>
 		<property name="name">
 			<value>Water</value>
 		</property>

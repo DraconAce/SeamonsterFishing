@@ -212,7 +212,6 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{bea88ac4-4318-44b7-ad16-9a886e786f48}">
-		<property name="name" />
 		<property name="volume">
 			<value>6</value>
 		</property>
@@ -310,7 +309,7 @@
 			<value>1</value>
 		</property>
 		<property name="curveShape">
-			<value>0.25471893</value>
+			<value>-0.236348882</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{20b5381b-216b-4282-98fb-8650eced06d3}">

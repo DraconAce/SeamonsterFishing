@@ -33,6 +33,10 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     
     public EventReference TurnBoatSound;
     private EventInstance TurnBoatSoundInstance;
+    
+    [SerializeField] private GameObject VfxDrivingWaterInteractionObject;
+    private ParticleSystem BoatTrailMist;
+    private ParticleSystem BoatTrailWake;
 
     private void Awake()
     {
@@ -47,6 +51,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
         MoveBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MoveBoatSound, PlayerTransform.gameObject);
         TurnBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(TurnBoatSound, PlayerTransform.gameObject);
+        
+        BoatTrailMist = VfxDrivingWaterInteractionObject.GetComponent<ParticleSystem>();
+        BoatTrailWake = VfxDrivingWaterInteractionObject.transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     protected override void GameStateMatches()
@@ -74,7 +81,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
     private void GetAndEnableDriveAction()
     {
-        driveAction = CustomPlayerInputs.Fight_Overview.Drive;
+        var customPlayerInput = GetPlayerInputs();
+        
+        driveAction = customPlayerInput.Fight_Overview.Drive;
         driveAction.Enable();
     }
 
@@ -117,6 +126,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         MoveBoatSoundInstance.getPlaybackState(out var playbackState);
         if (playbackState == PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
         
+        //activate Water displacement VFX behind boat
+        SetWaterDisplacementVfxWhileDriving(true);
+        
         if (stoppingBoatMoveCoroutingIsRunning)
         {
             //stop move-fadeout coroutine while driving 
@@ -157,10 +169,15 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         stoppingBoatMoveCoroutingIsRunning = true;
         stoppingBoatMoveCoroutine = DoBoatStop(directionToStopIn);
         StartCoroutine(stoppingBoatMoveCoroutine);
+        //deactivate Emission of Water displacement VFX behind boat when driving-fadeout starts, so the particles naturally fade out
+        SetWaterDisplacementVfxWhileDriving(false);
     }
     
     private void StopCoroutineIfItExists()
     {
+        //deactivate Water displacement VFX behind boat after driving-fadeout stopped
+        SetWaterDisplacementVfxWhileDriving(false);
+        
         if (stoppingBoatMoveCoroutine != null) 
         {
             StopCoroutine(stoppingBoatMoveCoroutine);
@@ -178,12 +195,33 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
             {
                 MovingController.currentSpeed = 0f;
                 stoppingBoatMoveCoroutingIsRunning = false;
+                //deactivate Water displacement VFX behind boat after driving-fadeout stopped
+                //SetWaterDisplacementVfxWhileDriving(false);
                 yield return null;
             }
             MovingController.MoveBoat(moveDirection);
             yield return new WaitForFixedUpdate();
         } 
         //Debug.Log("Coroutine stop over time");
+    }
+    
+    private void SetWaterDisplacementVfxWhileDriving(bool newState)
+    {
+        //if the effect is already emitting and gets activated again, do nothing
+        if (newState && BoatTrailMist.isEmitting) return;
+        
+        if (newState) {
+            //activate Emission of particles
+            BoatTrailMist.Play(true);
+            BoatTrailWake.Play(true);
+        }
+        else 
+        {
+            //deactivate Emission of Water displacement VFX behind boat
+            BoatTrailMist.Stop();
+            BoatTrailWake.Stop();
+        }
+        
     }
     
 }

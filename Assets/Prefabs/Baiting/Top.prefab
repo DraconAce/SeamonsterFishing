@@ -1,0 +1,776 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3585293704197760704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2400620382796993767}
+  m_Layer: 13
+  m_Name: Top
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2400620382796993767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585293704197760704}
+  m_LocalRotation: {x: 0.7071071, y: -0, z: -0, w: -0.70710653}
+  m_LocalPosition: {x: 0, y: 0.453, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5621478446075817897}
+  - {fileID: 6810808927372918688}
+  - {fileID: 4025819104959715082}
+  - {fileID: 558570077724641607}
+  - {fileID: 3289489911949904391}
+  - {fileID: 8684154410116059367}
+  - {fileID: 2130190475992929781}
+  - {fileID: 5506648024459804865}
+  - {fileID: 3066603133375777919}
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &395972151078998902
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27253762
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8327565
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.805896
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.422
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1336
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9238796
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000025331974
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.38268346
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00000043213367
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &558570077724641607 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 395972151078998902}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2247651252555534276
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35226035
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2849963
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8032436
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.85517955
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.14807282
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.35124233
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.35124233
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &2130190475992929781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 2247651252555534276}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2895943586199950926
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35226035
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2849963
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8032436
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.35355076
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.3535529
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.14644723
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.85355455
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -135
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &3066603133375777919 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 2895943586199950926}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3393510358583021622
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35226035
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2849963
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8032436
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8535538
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.14644642
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.35355335
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.35355276
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 35.264
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 35.264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &3289489911949904391 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 3393510358583021622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3846112775267454267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27253765
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.83275616
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.80589616
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.422
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1336
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0000018179417
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.38268346
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.9238796
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &4025819104959715082 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 3846112775267454267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5529636152588334488
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Top
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &5621478446075817897 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 5529636152588334488}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5680513745394785008
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35226035
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2849963
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8032436
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.3563385
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.35306883
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.14366348
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.8530686
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 29.784
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -35.177
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -144.295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &5506648024459804865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 5680513745394785008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6645743729815414161
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27074972
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.84196675
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.80060977
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.422
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1336
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.65327936
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.2705976
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.27059796
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6532839
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &6810808927372918688 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 6645743729815414161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8807605426820369110
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400620382796993767}
+    m_Modifications:
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27074987
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.84196675
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.80060893
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.422
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1336
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6532814
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.27059832
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.27059832
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6532814
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_Name
+      value: Taucherglocke_Wall_Transition (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959037821292060240, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+--- !u!4 &8684154410116059367 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 197795632662075953, guid: 66f526a0f14ce0d4e836607600a92a6b, type: 3}
+  m_PrefabInstance: {fileID: 8807605426820369110}
+  m_PrefabAsset: {fileID: 0}

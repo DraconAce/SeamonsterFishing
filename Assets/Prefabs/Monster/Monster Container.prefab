@@ -319,6 +319,14 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 5f3073bf8d1ed3140b969d0898b45195, type: 2}
   - {fileID: 7400000, guid: cd22b76c77ccdcb4d9a0579cfc617cd4, type: 2}
   - {fileID: 7400000, guid: 6e8b79bb94fdd624a874c00a7243bfb5, type: 2}
+  DownSwipeSound:
+    Guid:
+      Data1: -360729412
+      Data2: 1113191980
+      Data3: -60443220
+      Data4: -1751225909
+    Path: event:/Monster/Fin Swipe Downwards
+  SoundOrigin: {fileID: 1072689982468905632}
   rotationDuration: 0.75
   delayForTailAnimation: 0.65
   numberSwipesLimit:
@@ -326,9 +334,9 @@ MonoBehaviour:
     MaxLimit: 6
   swipeTriggers:
   - SwipeTrigger: TailRight
-    SwipeYRotation: 33
+    SwipeYRotation: 45
   - SwipeTrigger: TailLeft
-    SwipeYRotation: -33
+    SwipeYRotation: -36
   - SwipeTrigger: TailMiddle
     SwipeYRotation: 0
 --- !u!1 &987786277029470399
@@ -584,7 +592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6243965572207175486}
-  - component: {fileID: 593094253621578792}
+  - component: {fileID: 3030879680380492476}
   m_Layer: 7
   m_Name: MonsterHitCollider
   m_TagString: Damage
@@ -600,15 +608,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2941715133174795460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.0407, z: 0.0099}
+  m_LocalScale: {x: 0.081597544, y: 0.16090366, z: 0.025758272}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8592532869741442579}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &593094253621578792
-CapsuleCollider:
+--- !u!65 &3030879680380492476
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -625,11 +633,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.05
-  m_Height: 0.21
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.04, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3006272977244827432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,6 +1375,21 @@ MonoBehaviour:
   - {fileID: 5316379940855789412}
   rushTarget: {fileID: 4246540993646248384}
   underWaterPosition: {fileID: 3208111209883361421}
+  BiteRushSound:
+    Guid:
+      Data1: -1852714361
+      Data2: 1109119141
+      Data3: -1781820268
+      Data4: 1936307426
+    Path: event:/Monster/Bite Rush
+  InitBiteRushSound:
+    Guid:
+      Data1: -844434923
+      Data2: 1190484942
+      Data3: -586390857
+      Data4: -672767549
+    Path: event:/Monster/Initialize Bite Rush
+  SoundOrigin: {fileID: 1072689982468905632}
   rushStartTrigger: StartBiteRush
   delayForRushAnimation: 0.5
   rushWindupDuration: 7
@@ -1467,7 +1488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8662826990857140306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.68, y: 20.07, z: 42}
+  m_LocalPosition: {x: -1, y: 20.07, z: 48.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1557,6 +1578,14 @@ MonoBehaviour:
   animationClipsToListenForEnd:
   - {fileID: 7400000, guid: fab8ba56600949f4ca558f91534c9d10, type: 2}
   - {fileID: 7400000, guid: 00e17a08b1a4cba458687ae447594fbb, type: 2}
+  SideSwipeSound:
+    Guid:
+      Data1: -139609683
+      Data2: 1227748243
+      Data3: -1794871875
+      Data4: -1259569768
+    Path: event:/Monster/Fin Swipe Sidewards
+  SoundOrigin: {fileID: 1072689982468905632}
   bigSwipeTriggerL: BigTailLtoR
   bigSwipeTriggerR: BigTailRtoL
   movementDelay: 1.5
@@ -1753,6 +1782,14 @@ PrefabInstance:
     - target: {fileID: 7090513992339735690, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
       propertyPath: m_RootOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090513992339735690, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090513992339735690, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7090513992339735690, guid: 19d2ac38cbfe7884489934b0b91d1113, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2103,7 +2140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5184000598860777460, guid: 67c78d8e5e0c0034a8e1b9daacc17e34, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.043022692
+      value: -0.34302247
       objectReference: {fileID: 0}
     - target: {fileID: 5184000598860777460, guid: 67c78d8e5e0c0034a8e1b9daacc17e34, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2111,7 +2148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5184000598860777460, guid: 67c78d8e5e0c0034a8e1b9daacc17e34, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.720727
+      value: 18.92073
       objectReference: {fileID: 0}
     - target: {fileID: 5184000598860777460, guid: 67c78d8e5e0c0034a8e1b9daacc17e34, type: 3}
       propertyPath: m_LocalRotation.w
