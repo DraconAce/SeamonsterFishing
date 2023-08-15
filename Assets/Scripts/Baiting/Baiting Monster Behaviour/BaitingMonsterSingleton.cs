@@ -13,6 +13,7 @@ public class BaitingMonsterSingleton : Singleton<BaitingMonsterSingleton>
     public bool PlayerIsBeingKilled { get; set; }
     public Dictionary<MonsterRange, float> MonsterRangesDict { get; private set; } = new();
 
+    public event Action MonsterFinishedLurkingApproachEvent;
     public event Action MonsterWasRepelledEvent;
     public event Action<Transform> MonsterStartedKillEvent;
 
@@ -38,4 +39,7 @@ public class BaitingMonsterSingleton : Singleton<BaitingMonsterSingleton>
     
     public void InvokeMonsterStartedKill(Transform playerAttackRepTrans) 
         => MonsterStartedKillEvent?.Invoke(playerAttackRepTrans);
+    
+    public void InvokeMonsterStartedLurkingApproach() 
+        => MonsterFinishedLurkingApproachEvent?.Invoke();
 }

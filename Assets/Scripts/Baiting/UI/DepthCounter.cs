@@ -7,11 +7,11 @@ public class DepthCounter : MonoBehaviour
     [SerializeField] private int numberOfCardColumns = 4;
     [SerializeField] private float cardSpacing = 0.1f;
     [SerializeField] private Vector2 firstCardPosition;
-    
-    [SerializeField] private DepthHandler depthHandler;
+
     [SerializeField] private GameObject depthCardPrefab;
     [SerializeField] private Transform poolParent;
 
+    private DepthHandler depthHandler;
     private PrefabPool depthCardPool;
 
     private readonly List<DepthCounterCard> counterColumns = new();
@@ -31,6 +31,8 @@ public class DepthCounter : MonoBehaviour
             
             counterColumns.Add(depthCard);
         }
+
+        depthHandler = FindFirstObjectByType<DepthHandler>();
         
         depthHandler.DepthUpdatedEvent += OnDepthUpdated;
     }

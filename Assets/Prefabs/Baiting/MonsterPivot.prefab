@@ -158,8 +158,8 @@ MonoBehaviour:
     MinLimit: 4
     MaxLimit: 10
   distanceStepLimits:
-    MinLimit: 3
-    MaxLimit: 7
+    MinLimit: 2
+    MaxLimit: 5.5
   rotationAroundSpawnerLimits:
     MinLimit: -90
     MaxLimit: 90
@@ -169,7 +169,7 @@ MonoBehaviour:
     MaxLimit: 3
   durationLimits:
     MinLimit: 20
-    MaxLimit: 70
+    MaxLimit: 55
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,15 +187,7 @@ MonoBehaviour:
     MaxLimit: 3
   moveTowardsPlayerDistance: 6.5
   moveAwayDistance: 7
-  moveTowardsPlayerSettings:
-    Duration: 1.5
-    TweenEase: 5
-    OnStartAction:
-      m_PersistentCalls:
-        m_Calls: []
-    OnCompleteAction:
-      m_PersistentCalls:
-        m_Calls: []
+  moveTowardsPlayerEase: 5
   monsterWaitTime: 1
   moveAwaySettings:
     Duration: 1
@@ -206,6 +198,7 @@ MonoBehaviour:
     OnCompleteAction:
       m_PersistentCalls:
         m_Calls: []
+  killDelay: 2
 --- !u!114 &2770388103404711760
 MonoBehaviour:
   m_ObjectHideFlags: 0

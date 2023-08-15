@@ -11,6 +11,7 @@ public class MonsterAttackManager : MonoBehaviour
     [SerializeField] private MinMaxLimit delayBeforeAttack = new(0.5f, 3f);
 
     private float lurkSoundLength;
+    private Vector3 positionBeforeAttack;
     
     private Sequence lurkSequence;
     
@@ -41,15 +42,18 @@ public class MonsterAttackManager : MonoBehaviour
         soundPlayer.PlayLurkSound();
         monsterState.CurrentState = MonsterState.Attacking;
         
+        positionBeforeAttack = transform.position;
+        
         StartAttackAnnouncementSequence();
     }
 
     [Header("Lurk Animation")] 
     [SerializeField] private float moveTowardsPlayerDistance = 6f;
     [SerializeField] private float moveAwayDistance = 7f;
-    [SerializeField] private TweenSettings moveTowardsPlayerSettings;
+    [SerializeField] private Ease moveTowardsPlayerEase = Ease.InQuad;
     [SerializeField] private float monsterWaitTime = 0.5f;
     [SerializeField] private TweenSettings moveAwaySettings;
+    [SerializeField] private float killDelay = 2f;
 
     private Tween repelledTween;
 
@@ -68,18 +72,22 @@ public class MonsterAttackManager : MonoBehaviour
         
         lurkSequence.Append(CreateMoveAwayFromPlayerTween(monsterTrans));
         
-        lurkSequence.Append(CreateKillDelayTween());
+        lurkSequence.Append(TriggerKillTween());
 
         lurkSequence.Play();
     }
 
     private Tween CreateMoveTowardsPlayerTween(Transform monsterTrans)
     {
+        var towardsPlayerDuration = delayBeforeAttack.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction) +
+                        lurkSoundLength;
+        
         var towardsPlayerPos = CreateTowardsPlayerPosition(monsterTrans);
         
-        return monsterTrans.DOLocalMove(towardsPlayerPos, moveTowardsPlayerSettings.Duration)
+        return monsterTrans.DOLocalMove(towardsPlayerPos, towardsPlayerDuration)
             .SetRelative(true)
-            .SetEase(moveTowardsPlayerSettings.TweenEase);
+            .SetEase(moveTowardsPlayerEase)
+            .OnStart(() => monsterSingleton.InvokeMonsterStartedLurkingApproach());
     }
 
     private Vector3 CreateTowardsPlayerPosition(Transform monsterTrans)
@@ -93,7 +101,7 @@ public class MonsterAttackManager : MonoBehaviour
 
     private Tween CreateMoveAwayFromPlayerTween(Transform monsterTrans)
     {
-        var originalPosition = monsterTrans.position;
+        var originalPosition = positionBeforeAttack;
         
         var moveAwayPosition = CreateMoveAwayPosition(monsterTrans);
         
@@ -119,11 +127,8 @@ public class MonsterAttackManager : MonoBehaviour
         return monsterNormal.normalized * (direction * moveAwayDistance);
     }
 
-    private Tween CreateKillDelayTween()
+    private Tween TriggerKillTween()
     {
-        var killDelay = delayBeforeAttack.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction) +
-                        lurkSoundLength;
-        
         return DOVirtual.DelayedCall(killDelay,
             () => killedChecker.StartKillingPlayer(), false);
     }
