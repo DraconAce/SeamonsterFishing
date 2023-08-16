@@ -119,6 +119,8 @@ public class MuckSpewController : MonoBehaviour
 
     private void SpewAndPlaceNewGoo()
     {
+        muckSpewMat.DisableKeyword("_EMISSION"); //if this is the second muck spew, no longer fire
+        
         StartSpewAndAdjustStrength();
 
         currentGoo = RequestNewMuckExplosionAndPlace(cachedPlayerPos);
