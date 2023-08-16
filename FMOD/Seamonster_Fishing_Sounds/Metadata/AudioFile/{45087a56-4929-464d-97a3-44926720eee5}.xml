@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{846fdd05-5355-438a-ba56-1f361af21735}">
+	<object class="AudioFile" id="{45087a56-4929-464d-97a3-44926720eee5}">
 		<property name="assetPath">
-			<value>Flood Light/Flash Recharge.wav</value>
+			<value>Music/Seamonster Fishing Battle Layer 3.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
@@ -14,7 +14,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>15.3035625</value>
+			<value>197.85599999999999</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>

@@ -5,7 +5,7 @@
 			<value>Hit Boat</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6cc6c0e9-211d-4f0d-b20a-5bd6df23b7da}</destination>
@@ -56,12 +56,15 @@
 			<destination>{6a0b9685-6d3d-45b7-884c-d1108478c2d4}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{60db47c3-90a0-4f67-a980-7ac9c55fe570}</destination>
+			<destination>{f1e45ae9-952a-445f-9554-53ac40d2a222}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{97e29bb1-6e20-471c-aa72-97dd217387ad}">
 		<property name="maxVoices">
 			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>200</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{8170823c-82fb-4933-a107-fdb3b09becfd}" />
@@ -100,6 +103,7 @@
 	<object class="MixerBusEffectChain" id="{35366d78-b6e3-49df-a4ea-952bde292a8f}">
 		<relationship name="effects">
 			<destination>{ff3df451-592b-418b-9026-6a3d750078dd}</destination>
+			<destination>{7b1ccf8d-af93-44bb-8345-55d641b93446}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{bbf18380-ab5f-4d91-a568-e507ff3a4199}" />
@@ -110,4 +114,9 @@
 	</object>
 	<object class="MixerBusFader" id="{dd2d3086-4f38-4372-9f2c-60a243c99a34}" />
 	<object class="MixerBusFader" id="{ff3df451-592b-418b-9026-6a3d750078dd}" />
+	<object class="SpatialiserEffect" id="{7b1ccf8d-af93-44bb-8345-55d641b93446}">
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+	</object>
 </objects>

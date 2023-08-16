@@ -5,7 +5,7 @@
 			<value>Boat Motor Idle</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6cc6c0e9-211d-4f0d-b20a-5bd6df23b7da}</destination>
@@ -60,6 +60,9 @@
 		<property name="maxVoices">
 			<value>1</value>
 		</property>
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
 	</object>
 	<object class="MarkerTrack" id="{7b24b083-9107-417c-b19d-8eee2c858f94}" />
 	<object class="GroupTrack" id="{3e148813-81f6-4f4a-beaa-a802c8382ff8}">
@@ -79,6 +82,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f1956c19-b9d9-4737-b635-868603d9e778}">
+		<property name="volume">
+			<value>-80</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{ee15a92c-20af-409e-977b-6d7ad8f4298a}</destination>
 		</relationship>
@@ -137,6 +143,7 @@
 	<object class="MixerBusEffectChain" id="{ee15a92c-20af-409e-977b-6d7ad8f4298a}">
 		<relationship name="effects">
 			<destination>{906ac54e-d03d-4df7-9aaa-0fb7afb9bf6a}</destination>
+			<destination>{6df0d6fb-e1d6-4ff7-83c7-2416a3df8c99}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{0150c67b-aed5-4661-97ce-25f2e99b7bb8}" />
@@ -148,5 +155,10 @@
 	</object>
 	<object class="MixerBusPanner" id="{2b0ac2df-7bcf-40a4-bedc-b05c81bb2d38}" />
 	<object class="MixerBusFader" id="{906ac54e-d03d-4df7-9aaa-0fb7afb9bf6a}" />
+	<object class="SpatialiserEffect" id="{6df0d6fb-e1d6-4ff7-83c7-2416a3df8c99}">
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{c672a876-8f00-4b5a-8f91-3f54dd6c2119}" />
 </objects>
