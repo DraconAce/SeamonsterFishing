@@ -180,6 +180,9 @@
 		</property>
 	</object>
 	<object class="SpatialiserEffect" id="{e8b6daa2-1771-4e9b-86fa-73c07ed73e4d}">
+		<property name="bypass">
+			<value>true</value>
+		</property>
 		<property name="maximumDistance">
 			<value>200</value>
 		</property>
