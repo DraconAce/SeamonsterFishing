@@ -106,15 +106,16 @@ public class MuckGoo : MonoBehaviour, IPoolObject
         
         endFireSequence.AppendCallback(StopFireParticleEmission);
         
-        endFireSequence.AppendInterval(3);
+        endFireSequence.AppendInterval(1);
         
         endFireSequence.AppendCallback(() => ContainerOfObject.ReturnToPool());
     }
 
     private void StopFireParticleEmission()
     {
-        var fireEmission = fireParticles.emission;
-        fireEmission.rateOverTimeMultiplier = 0;
+        //var fireEmission = fireParticles.emission;
+        //fireEmission.rateOverTimeMultiplier = 0;
+        fireParticles.Stop();
     }
 
     public void OnReturnInstance()
