@@ -181,6 +181,7 @@ MonoBehaviour:
   outlineWidth: 3
   AppearOutlineDuration: 0.5
   DisappearOutlineDuration: 0.2
+  OutlineAlpha: 0.1
   spotLight: {fileID: 3925946616873160712}
   LightningSound:
     Guid:
