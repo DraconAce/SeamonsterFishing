@@ -382,6 +382,15 @@
 		<property name="maximumDistance">
 			<value>200</value>
 		</property>
+		<property name="extentMode">
+			<value>1</value>
+		</property>
+		<property name="soundSize">
+			<value>2</value>
+		</property>
+		<property name="minimumExtent">
+			<value>100</value>
+		</property>
 	</object>
 	<object class="AutomationPoint" id="{4d7478cd-a576-40c7-9b69-ccf61d364645}">
 		<property name="position">
