@@ -193,8 +193,8 @@ MonoBehaviour:
   chanceMultipleLightning: 75
   delayMultipleLightning: 1
   maxConsecutiveLightnings: 4
-  minCooldown: 20
-  maxCooldown: 30
+  minCooldown: 10
+  maxCooldown: 20
   targetIntensity: 40
   keepLightningOnDuration: 0.2
   lightningSettings:
