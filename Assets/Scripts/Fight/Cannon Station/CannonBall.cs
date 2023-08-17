@@ -103,7 +103,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
     {
         var collidedGameOb = other.gameObject;
 
-        if (!collidedGameOb.CompareTag("water")) return;
+        if (!collidedGameOb.CompareTag(waterTag)) return;
         
         ((IPoolObject)this).ReturnInstanceToPool();
         
