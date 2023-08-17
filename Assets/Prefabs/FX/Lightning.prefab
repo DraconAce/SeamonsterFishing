@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6032665501180739555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -179,6 +179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Monster: {fileID: 0}
   outlineWidth: 3
+  AppearOutlineDuration: 0.5
+  DisappearOutlineDuration: 0.2
   spotLight: {fileID: 3925946616873160712}
   LightningSound:
     Guid:
@@ -239,6 +241,10 @@ PrefabInstance:
     - target: {fileID: 2720867950172609960, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
       propertyPath: m_Name
       value: LightningCloud Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720867950172609960, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3353394263176562450, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
       propertyPath: m_RootOrder
@@ -318,6 +324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightningCloud Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2720867950172609960, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3353394263176562450, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -395,6 +405,10 @@ PrefabInstance:
     - target: {fileID: 2720867950172609960, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
       propertyPath: m_Name
       value: LightningCloud Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720867950172609960, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3353394263176562450, guid: 2bc76f42c0b55cf4fa639f568941e463, type: 3}
       propertyPath: m_RootOrder
