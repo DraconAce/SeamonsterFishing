@@ -92,7 +92,7 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         IsReloading = false;
         
         //stop sound
-        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        turnOffReloadSound();
 
         //turn fuse back on
         resetFuse();
@@ -146,6 +146,14 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
 
         if (inputManager == null) return;
         UnsubscribeOnDestroy();
+    }
+    
+    public void turnOffReloadSound()
+    {
+        FMOD.Studio.PLAYBACK_STATE state;
+        reloadCannonSoundInstance.getPlaybackState(out state);
+        if (state == PLAYBACK_STATE.STOPPED) return;
+        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
