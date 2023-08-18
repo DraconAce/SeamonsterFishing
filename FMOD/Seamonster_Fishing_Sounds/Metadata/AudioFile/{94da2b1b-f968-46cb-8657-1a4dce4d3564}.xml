@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{4743646d-dc65-4097-9905-9310f165abeb}">
+<<<<<<<< HEAD:FMOD/Seamonster_Fishing_Sounds/Metadata/AudioFile/{94da2b1b-f968-46cb-8657-1a4dce4d3564}.xml
+	<object class="AudioFile" id="{94da2b1b-f968-46cb-8657-1a4dce4d3564}">
+========
+	<object class="AudioFile" id="{00d5b4d2-f11b-42e5-96d3-b83f7e3fbff1}">
+>>>>>>>> development:FMOD/Seamonster_Fishing_Sounds/Metadata/AudioFile/{00d5b4d2-f11b-42e5-96d3-b83f7e3fbff1}.xml
 		<property name="assetPath">
-			<value>Hits/Cannon No Hit/Cannon No Hit 2.wav</value>
+			<value>Music/Seamonster Fishing Battle Layer 2.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
@@ -14,7 +18,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>4.183041666666667</value>
+			<value>202.00800000000001</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>

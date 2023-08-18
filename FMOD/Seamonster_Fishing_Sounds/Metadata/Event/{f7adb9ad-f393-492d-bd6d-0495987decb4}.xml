@@ -137,7 +137,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{27583710-6ab6-4956-a5a0-69036c6a772b}">
 		<property name="volume">
-			<value>-4</value>
+			<value>-3</value>
 		</property>
 		<property name="name">
 			<value>Monster</value>
@@ -182,7 +182,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{d6693efb-7e55-460e-8afa-c6857f5e74a7}">
 		<property name="volume">
-			<value>-8</value>
+			<value>-4</value>
 		</property>
 		<property name="name">
 			<value>Sweep High</value>
@@ -224,7 +224,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{06eb7ae7-e894-4cd9-9ebb-edba36b5e2ed}">
 		<property name="volume">
-			<value>-24.5</value>
+			<value>-24</value>
 		</property>
 		<property name="name">
 			<value>Sweep Low</value>
@@ -333,6 +333,15 @@
 	<object class="ObjectSpatialiserEffect" id="{d38c00f9-a5a8-4256-87dc-e4268e9ea09d}">
 		<property name="maximumDistance">
 			<value>250</value>
+		</property>
+		<property name="extentMode">
+			<value>1</value>
+		</property>
+		<property name="soundSize">
+			<value>2</value>
+		</property>
+		<property name="minimumExtent">
+			<value>104</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{768ada7d-afad-4aa2-b868-edbaf3230eb0}">

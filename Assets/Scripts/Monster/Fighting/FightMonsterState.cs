@@ -8,14 +8,18 @@ public class FightMonsterState : AbstractMonsterState
     
     private int weakPointHits;
     private GameStateManager gameStateManager;
+    private FightMonsterSingleton fightMonsterSingleton;
 
     private readonly Dictionary<MonsterState, int> monsterStateUsageDict = new(); //monsterstate to usage count
 
     private void Start()
     {
         gameStateManager = GameStateManager.instance;
+        fightMonsterSingleton = FightMonsterSingleton.instance;
         
         MonsterStateChangedEvent += OnMonsterStateChanged;
+        
+        fightMonsterSingleton.MonsterWeakpointWasHitEvent += WeakPointHit;
     }
 
     private void OnMonsterStateChanged(MonsterState newState)
@@ -33,7 +37,7 @@ public class FightMonsterState : AbstractMonsterState
 
     public void WeakPointHit()
     {
-        weakPointHits--;
+        weakPointHits++;
 
         if (!MonsterIsDefeated()) return;
         
@@ -42,4 +46,11 @@ public class FightMonsterState : AbstractMonsterState
     }
 
     public bool MonsterIsDefeated() => weakPointHits >= weakPointsHitsToKill;
+
+    private void OnDestroy()
+    {
+        if(fightMonsterSingleton == null) return;
+        
+        fightMonsterSingleton.MonsterWeakpointWasHitEvent -= WeakPointHit;
+    }
 }
