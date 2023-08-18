@@ -7,14 +7,12 @@ public class FightMonsterState : AbstractMonsterState
     [SerializeField] private int weakPointsHitsToKill = 3;
     
     private int weakPointHits;
-    private GameStateManager gameStateManager;
     private FightMonsterSingleton fightMonsterSingleton;
 
     private readonly Dictionary<MonsterState, int> monsterStateUsageDict = new(); //monsterstate to usage count
 
     private void Start()
     {
-        gameStateManager = GameStateManager.instance;
         fightMonsterSingleton = FightMonsterSingleton.instance;
         
         MonsterStateChangedEvent += OnMonsterStateChanged;
@@ -42,7 +40,6 @@ public class FightMonsterState : AbstractMonsterState
         if (!MonsterIsDefeated()) return;
         
         CurrentState = MonsterState.Dead;
-        gameStateManager.ChangeGameState(GameState.Won);
     }
 
     public bool MonsterIsDefeated() => weakPointHits >= weakPointsHitsToKill;

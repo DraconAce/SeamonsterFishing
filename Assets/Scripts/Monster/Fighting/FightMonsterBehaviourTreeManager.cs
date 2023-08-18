@@ -40,8 +40,8 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     private readonly Dictionary<int, INodeImpl> nodeImplDict = new();
 
-    public INodeImpl CurrentBehaviour { get; private set; }
-    public bool IsAnyBehaviourActive => CurrentBehaviour != null;
+    private INodeImpl currentBehaviour;
+    public bool IsAnyBehaviourActive => currentBehaviour != null;
 
     private void Start()
     {
@@ -80,7 +80,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         
         void AfterBehaviourStopAction()
         {
-            TryResetCurrentBehaviour();
+            TryResetCurrentBehaviour(currentBehaviour);
             
 #if UNITY_EDITOR
             if (startWithSpecificBehaviour && initialBehaviourQueue.Count > 0)
@@ -103,7 +103,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         StopCurrentBehaviourAndStartNextBehaviour(AfterBehaviourStopAction);
     }
     
-    private void SetCurrentBehaviour(int behaviourIndex) => CurrentBehaviour = nodeImplDict[behaviourIndex];
+    private void SetCurrentBehaviour(int behaviourIndex) => currentBehaviour = nodeImplDict[behaviourIndex];
 
     private void StopCurrentBehaviourAndStartNextBehaviour(Action afterBehaviourStopAction = null)
     {
@@ -114,7 +114,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
     {
         if (IsAnyBehaviourActive)
         {
-            CurrentBehaviour.Stop();
+            currentBehaviour.Stop();
             yield return waitUntilBehaviourIsInactive;
         }
         
@@ -183,10 +183,10 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     public void TryResetCurrentBehaviour(INodeImpl behaviourToEndIfActive = null)
     {
-        if(behaviourToEndIfActive == null || CurrentBehaviour != behaviourToEndIfActive)
+        if(behaviourToEndIfActive == null || currentBehaviour != behaviourToEndIfActive)
             return;
         
-        CurrentBehaviour = null;
+        currentBehaviour = null;
     }
 
     private void ScheduleBehaviourTreeJobs()
@@ -270,7 +270,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         
         while (true)
         {
-            var isBackupBehaviourAlreadyActive = CurrentBehaviour != null && CurrentBehaviour.NodeIndex == backupBehaviourIndex;
+            var isBackupBehaviourAlreadyActive = currentBehaviour != null && currentBehaviour.NodeIndex == backupBehaviourIndex;
             
             if(!isBackupBehaviourAlreadyActive) 
                 monsterKI.ForwardActionRequest(backupBehaviourIndex);
@@ -290,8 +290,13 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         backupBehaviourRoutine = null;
     }
 
-    public void StopCurrentBehaviour() => StopCurrentBehaviourAndStartNextBehaviour();
-    
+    public void TryForceStopCurrentBehaviour()
+    {
+        if (currentBehaviour is not AbstractMonsterBehaviour abstractMonsterBehaviour) return;
+        
+        abstractMonsterBehaviour.ForceStopBehaviour();
+    }
+
     public void ToggleBlockBehaviour(bool blockBehaviour) => blockBehaviourExecution = blockBehaviour;
 
     private void OnDestroy()

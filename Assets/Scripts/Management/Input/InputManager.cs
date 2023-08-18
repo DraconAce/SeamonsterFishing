@@ -56,6 +56,7 @@ public class InputManager : Singleton<InputManager>
     private readonly Dictionary<string, ActionEvent> inputActionAndActionEvents = new();
 
     public PlayerDevice LatestDevice { get; private set; } = PlayerDevice.KeyboardMouse;
+    private bool blockPlayerInput;
     
     public event Action InputDeviceChangedEvent;
 
@@ -69,6 +70,8 @@ public class InputManager : Singleton<InputManager>
 
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
     {
+        if(blockPlayerInput) return;
+        
         DetermineUsedDevice(callbackContext);
         
         if (!inputActionAndActionEvents.TryGetValue(callbackContext.action.name, out var actionEvent)) return;
@@ -172,6 +175,8 @@ public class InputManager : Singleton<InputManager>
         if (subscriber.SubscribedToStarted)
             actionEvent.CanceledAction -= subscriber.InputCanceled;
     }
+    
+    public void SetInputBlocked(bool isBlocked) => blockPlayerInput = isBlocked;
 
     protected override void OnDestroy()
     {

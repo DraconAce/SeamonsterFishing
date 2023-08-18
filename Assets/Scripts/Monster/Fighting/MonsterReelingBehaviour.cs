@@ -186,4 +186,6 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         yield return waitForReachedInitialPosition;
         behaviourTreeManager.ToggleBlockBehaviour(false);
     }
+
+    protected override void ForceStopBehaviourImpl(){}
 }

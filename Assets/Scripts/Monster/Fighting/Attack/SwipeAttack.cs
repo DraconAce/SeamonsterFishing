@@ -117,9 +117,20 @@ public class SwipeAttack : AbstractAttackNode
 
         yield return monsterRotationTween.WaitForCompletion();
     }
-    
-    private void OnDestroy()
+
+    protected override void ForceStopBehaviourImpl()
     {
+        tailDelayTween?.Kill();
+        monsterRotationTween?.Kill();
+        
+        DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        DownSwipeSoundInstance.release();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
         //Destroy sound after Reset
         DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         DownSwipeSoundInstance.release();

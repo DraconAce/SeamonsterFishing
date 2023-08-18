@@ -105,11 +105,26 @@ public class BigSwipeAttack : AbstractAttackNode
     }
     
     protected override void OnAnimationFinishedImpl() => bigSwipeAttackEnded = true;
-    
-    private void OnDestroy()
+
+    protected override void ForceStopBehaviourImpl()
     {
-        //Destroy sound after Reset
+        movementTween?.Kill();
+        movementDelayTween?.Kill();
+        
+        StopSound();
+    }
+
+    private void StopSound()
+    {
         SideSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         SideSwipeSoundInstance.release();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        //Destroy sound after Reset
+        StopSound();
     }
 }

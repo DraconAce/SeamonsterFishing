@@ -91,4 +91,6 @@ public class MuckAttack : AbstractAttackNode
     public override float GetExecutability() => 100f;
     
     public void TriggerMuckAttackEnd() => muckAttackEnded = true;
+
+    protected override void ForceStopBehaviourImpl() => StopRotationAndMuckRoutine();
 }

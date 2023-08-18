@@ -32,7 +32,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     private void OnReelingStarted()
     {
-        reelingStation.GameStateManager.BlockGameStateChange = true;
+        reelingStation.GameStateManager.BlockGameStateChangeWithExceptions = true;
         
         ControllerStation.UpdateManager.SubscribeToManualUpdate(this);
         
@@ -211,7 +211,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         if (currentNumberOfRotations < numberOfRotationsNeeded) return;
         
-        reelingStation.GameStateManager.BlockGameStateChange = false;
+        reelingStation.GameStateManager.BlockGameStateChangeWithExceptions = false;
 
         reelingStation.TriggerReelingCompletedEvent();
 
@@ -222,7 +222,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         if (!reelingStation.IsReelingTimeUp) return;
         
-        reelingStation.GameStateManager.BlockGameStateChange = false;
+        reelingStation.GameStateManager.BlockGameStateChangeWithExceptions = false;
 
         PlayerInputEnabled = false;
         

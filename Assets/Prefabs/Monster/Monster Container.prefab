@@ -135,6 +135,7 @@ Transform:
   m_Children:
   - {fileID: 7424695602816712109}
   - {fileID: 8750247297685662503}
+  - {fileID: 170945591962296633}
   m_Father: {fileID: 3084973681076121263}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -386,6 +387,67 @@ MonoBehaviour:
   priority: 1
   nodeToRepresent: {fileID: 11400000, guid: 7e82cf610621c904787f3e073c320e4e, type: 2}
   timeout: 1
+--- !u!1 &1231504457635959560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 170945591962296633}
+  - component: {fileID: 2831191372216600841}
+  m_Layer: 0
+  m_Name: DeathSequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &170945591962296633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231504457635959560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8065992250933780961}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2831191372216600841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231504457635959560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d6bb0c8aabe884fb8f181ff012e6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathTriggerName: Death
+  monsterDeathSound:
+    Guid:
+      Data1: -948089745
+      Data2: 1254127406
+      Data3: 1870342808
+      Data4: 367378158
+    Path: event:/Monster/Hit Weakpoint
+  initialDelay: 1
+  moveDownTime: 4
+  rotateBackwardsTime: 2
+  moveDownDistance: -100
+  rotateBackwardsAngle: {x: -90, y: -15, z: 0}
+  moveDownEase: 5
+  rotateBackwardsEase: 5
+  moveDownDelay: 0.5
+  rotateBackwardsDelay: 1
 --- !u!1 &1423409202745293654
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +1012,7 @@ MonoBehaviour:
   monsterAnimationController: {fileID: 5731981856698064586}
   fightMonsterStunned: {fileID: 821713467539200915}
   swipeAttack: {fileID: 4222803033399372668}
+  triggerMonsterWasHit: 0
 --- !u!1 &4482178479765556704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,6 +1703,8 @@ MonoBehaviour:
   nodeToRepresent: {fileID: 11400000, guid: 9491d26e5f86067469da152de0653bf3, type: 2}
   timeout: 1
   stunnedTime: 5
+  returnToOriginalTime: 3
+  returnToOriginalEase: 4
 --- !u!1 &9141332037842208467
 GameObject:
   m_ObjectHideFlags: 0
