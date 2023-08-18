@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
@@ -38,9 +39,22 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
         }
     }
 
+    public event Action MonsterWeakpointWasHitEvent;
+    
+
+    //[SerializeField] private bool triggerMonsterWasHit;
+    //
+    //private void Update()
+    //{
+    //    if (!triggerMonsterWasHit) return;
+    //    
+    //    triggerMonsterWasHit = false;
+    //    WeakPointWasHit();
+    //}
+
     public void WeakPointWasHit()
     {
-        fightState.WeakPointHit();
+        MonsterWeakpointWasHitEvent?.Invoke();
 
         TriggerMonsterStunnedBehaviour();
     }
@@ -62,8 +76,5 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
                && !BehaviourTreeManager.IsAnyBehaviourActive;
     }
 
-    private void TriggerMonsterReaction()
-    {
-        swipeAttack.TriggerBehaviourDirectly();
-    }
+    private void TriggerMonsterReaction() => swipeAttack.TriggerBehaviourDirectly();
 }

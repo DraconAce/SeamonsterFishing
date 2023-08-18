@@ -46,7 +46,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5458768519335323582}
   - component: {fileID: 7626252162711910279}
-  - component: {fileID: 8368617525849544642}
+  - component: {fileID: 5095283545887462500}
   m_Layer: 0
   m_Name: Ambience_Sound
   m_TagString: Untagged
@@ -100,7 +100,7 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!114 &8368617525849544642
+--- !u!114 &5095283545887462500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,28 +109,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 2645873544624235474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: ebab78fafe393114ba0031131c2b5752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 274005976
-      Data2: 1077470545
-      Data3: -848102990
-      Data4: 873633946
-    Path: event:/Music/Battle Theme
-  Event: 
-  PlayEvent: 11
-  StopEvent: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  mainThemeParts:
+  - eventRef:
+      Guid:
+        Data1: 274005976
+        Data2: 1077470545
+        Data3: -848102990
+        Data4: 873633946
+      Path: event:/Music/Battle Theme 1
+  - eventRef:
+      Guid:
+        Data1: 1899338423
+        Data2: 1205687073
+        Data3: 1208052407
+        Data4: -1555202207
+      Path: event:/Music/Battle Theme 2
+  - eventRef:
+      Guid:
+        Data1: -1894129635
+        Data2: 1152390622
+        Data3: 539960763
+        Data4: 1869487147
+      Path: event:/Music/Battle Theme 3
+  fadeInTime: 1
+  fadeInEase: 2
+  fadeOutTime: 0.5
+  fadeOutEase: 3
 --- !u!1001 &1745741877090407386
 PrefabInstance:
   m_ObjectHideFlags: 0

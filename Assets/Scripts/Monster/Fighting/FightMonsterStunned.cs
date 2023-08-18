@@ -5,7 +5,6 @@ public class FightMonsterStunned : AbstractMonsterBehaviour
 {
     [SerializeField] private float stunnedTime = 5f;
 
-    private FightMonsterBehaviourTreeManager behaviourTreeManager;
     private MonsterAnimationController monsterAnimationController;
     private WaitForSeconds waitStunned;
     
