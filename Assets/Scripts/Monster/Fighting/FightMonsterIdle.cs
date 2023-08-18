@@ -30,4 +30,6 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
     }
 
     public override float GetExecutability() => 0.1f;
+
+    protected override void ForceStopBehaviourImpl(){}
 }

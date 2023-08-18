@@ -201,13 +201,28 @@ public class RushAttack : AbstractAttackNode
     }
     
     public override float GetExecutability() => 100f;
-    
-    private void OnDestroy()
+
+    protected override void ForceStopBehaviourImpl()
     {
-        //Destroy sound after Reset
+        rushSequence?.Kill();
+        rushToPlayerSequence?.Kill();
+        
+        StopSounds();
+    }
+
+    private void StopSounds()
+    {
         BiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         BiteRushSoundInstance.release();
         InitBiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         InitBiteRushSoundInstance.release();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        //Destroy sound after Reset
+        StopSounds();
     }
 }

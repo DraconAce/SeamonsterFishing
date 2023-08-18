@@ -99,7 +99,7 @@ public class DriveStation_Rotating : AbstractStationSegment
     private void StartRotationToChangeDirection(float newDirection)
     {
         MovingLocked = true;
-        driveStation.GameStateManager.BlockGameStateChange = true;
+        driveStation.GameStateManager.BlockGameStateChangeWithExceptions = true;
 
         CreateAndPlayRotationSequence(newDirection);
 
@@ -134,7 +134,7 @@ public class DriveStation_Rotating : AbstractStationSegment
         rotationSequence.OnComplete(() =>
         {
             MovingLocked = false;
-            driveStation.GameStateManager.BlockGameStateChange = false;
+            driveStation.GameStateManager.BlockGameStateChangeWithExceptions = false;
             driveStation.TurnRotationComplete(); //to stop the turning-sound
             //deactivate Mist-Rotation-Particles
             SetActivationParticleSystem(false, BoatRightMist);

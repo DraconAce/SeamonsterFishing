@@ -80,6 +80,16 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
     }
 
     protected abstract IEnumerator StopBehaviourRoutineImpl();
+
+    public void ForceStopBehaviour()
+    {
+        if(behaviourRoutine != null) StopCoroutine(behaviourRoutine);
+        if(stopBehaviourRoutine != null) StopCoroutine(stopBehaviourRoutine);
+        
+        ForceStopBehaviourImpl();
+    }
+    
+    protected abstract void ForceStopBehaviourImpl();
     
     protected override NodeData CollectNodeData()
     {

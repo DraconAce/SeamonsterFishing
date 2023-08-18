@@ -12,7 +12,9 @@ public class GameStateManager : Singleton<GameStateManager>
     
     private readonly List<GameState> blockChangeExceptionList = new(){GameState.Pause, GameState.Dead, GameState.Won, GameState.MainMenu};
     
-    public bool BlockGameStateChange { get; set; }
+    public bool BlockGameStateChangeWithExceptions { get; set; }
+    public bool BlockGameStateChangeWithoutExceptions { get; set; }
+    
     public bool GameIsPaused => CurrentGameState == GameState.Pause;
     public GameState PreviousGameState { get; private set; }
 
@@ -42,7 +44,8 @@ public class GameStateManager : Singleton<GameStateManager>
 
     public void ChangeGameState(GameState newGameState)
     {
-        if (newGameState == CurrentGameState || BlockGameStateChange && !IsNewStateInExceptionList(newGameState)) return;
+        if (newGameState == CurrentGameState || BlockGameStateChangeWithExceptions && !IsNewStateInExceptionList(newGameState) 
+                                             || BlockGameStateChangeWithoutExceptions) return;
 
         PreviousGameState = CurrentGameState;
         CurrentGameState = newGameState;

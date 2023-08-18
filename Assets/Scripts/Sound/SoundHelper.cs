@@ -31,4 +31,9 @@ public static class SoundHelper
         instance.stop(stopMode);
         instance.release();
     }
+    
+    public static void SetEventVolume(EventInstance instance, float volume)
+    {
+        instance.setVolume(volume);
+    }
 }
