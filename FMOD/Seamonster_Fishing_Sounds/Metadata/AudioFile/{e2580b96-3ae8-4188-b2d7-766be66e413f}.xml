@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-<<<<<<<< HEAD:FMOD/Seamonster_Fishing_Sounds/Metadata/AudioFile/{94da2b1b-f968-46cb-8657-1a4dce4d3564}.xml
-	<object class="AudioFile" id="{94da2b1b-f968-46cb-8657-1a4dce4d3564}">
-========
-	<object class="AudioFile" id="{00d5b4d2-f11b-42e5-96d3-b83f7e3fbff1}">
->>>>>>>> development:FMOD/Seamonster_Fishing_Sounds/Metadata/AudioFile/{00d5b4d2-f11b-42e5-96d3-b83f7e3fbff1}.xml
+	<object class="AudioFile" id="{e2580b96-3ae8-4188-b2d7-766be66e413f}">
 		<property name="assetPath">
 			<value>Music/Seamonster Fishing Battle Layer 2.mp3</value>
 		</property>

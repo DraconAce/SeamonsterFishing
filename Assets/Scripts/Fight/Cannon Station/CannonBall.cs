@@ -52,16 +52,7 @@ public class CannonBall : MonoBehaviour, IPoolObject
     {
         var collidedGameOb = other.gameObject;
 
-        if (collidedGameOb.CompareTag(monsterTag))
-        {
-            CannonBallRecordedValidHit();
-
-            monsterSingleton.CannonBallMissed();
-
-            //play sound Hit No Weakpoint
-            FMODUnity.RuntimeManager.PlayOneShot(regularHit, this.transform.position);
-        }
-        else if (collidedGameOb.CompareTag(weakPointTag))
+        if (collidedGameOb.CompareTag(weakPointTag))
         {
             CannonBallRecordedValidHit();
 
@@ -99,11 +90,24 @@ public class CannonBall : MonoBehaviour, IPoolObject
 
     private void InstantiateExplosion() => explosionPool.RequestInstance(transform.position);
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var collidedGameOb = other.gameObject;
+
+        if (!collidedGameOb.CompareTag(monsterTag)) return;
+        CannonBallRecordedValidHit();
+
+        monsterSingleton.CannonBallMissed();
+
+        //play sound Hit No Weakpoint
+        FMODUnity.RuntimeManager.PlayOneShot(regularHit, this.transform.position);
+    }
+
     private void OnTriggerExit(Collider other)
     {
         var collidedGameOb = other.gameObject;
 
-        if (!collidedGameOb.CompareTag("water")) return;
+        if (!collidedGameOb.CompareTag(waterTag)) return;
         
         ((IPoolObject)this).ReturnInstanceToPool();
         

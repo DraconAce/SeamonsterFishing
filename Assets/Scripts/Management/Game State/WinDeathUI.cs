@@ -54,7 +54,7 @@ public class WinDeathUI : AbstractMenu
     
     private IEnumerator DoDeathAfterDelay()
     {
-        //Find Player (without scene-changes) DO MINUS 2 X
+        //Find Player (without scene-changes)
         Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position + explosionOffset;
         Instantiate(BoatExplosion, playerPos, Quaternion.identity);
         yield return new WaitForSeconds(deathDelay);

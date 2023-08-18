@@ -81,7 +81,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
     private void GetAndEnableDriveAction()
     {
-        driveAction = CustomPlayerInputs.Fight_Overview.Drive;
+        var customPlayerInput = GetPlayerInputs();
+        
+        driveAction = customPlayerInput.Fight_Overview.Drive;
         driveAction.Enable();
     }
 

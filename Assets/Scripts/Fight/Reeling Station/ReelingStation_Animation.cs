@@ -34,9 +34,6 @@ public class ReelingStation_Animation : AbstractStationSegment
     private void Start()
     {
         gameStateManager = GameStateManager.instance;
-        
-        reelingStation.OnReelingStartedEvent += OnReelingStarted;
-        reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
 
         reelingTarget = FightMonsterSingleton.instance.ReelingTarget;
         
@@ -44,6 +41,14 @@ public class ReelingStation_Animation : AbstractStationSegment
         
         SetupBoatVariables();
         SetupLookConstraint();
+    }
+
+    protected override void OnControllerSetup()
+    {
+        base.OnControllerSetup();
+        
+        reelingStation.OnReelingStartedEvent += OnReelingStarted;
+        reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
     }
 
     private void OnReelingStarted()
