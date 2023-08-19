@@ -332,6 +332,9 @@ MonoBehaviour:
       Data4: -1751225909
     Path: event:/Monster/Fin Swipe Downwards
   SoundOrigin: {fileID: 1072689982468905632}
+  moveBackAmount: 10
+  moveBackDuration: 1
+  moveBackEase: 4
   rotationDuration: 0.75
   delayForTailAnimation: 0.65
   numberSwipesLimit:
@@ -339,9 +342,9 @@ MonoBehaviour:
     MaxLimit: 6
   swipeTriggers:
   - SwipeTrigger: TailRight
-    SwipeYRotation: 45
+    SwipeYRotation: 40
   - SwipeTrigger: TailLeft
-    SwipeYRotation: -36
+    SwipeYRotation: -29
   - SwipeTrigger: TailMiddle
     SwipeYRotation: 0
   numberBodyHitsNeededForFullExecutability: 3
@@ -680,8 +683,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2941715133174795460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0407, z: 0.0099}
-  m_LocalScale: {x: 0.081597544, y: 0.16090366, z: 0.025758272}
+  m_LocalPosition: {x: -0, y: 0.016, z: 0.0099}
+  m_LocalScale: {x: 0.0630753, y: 0.14273281, z: 0.025758272}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8592532869741442579}
