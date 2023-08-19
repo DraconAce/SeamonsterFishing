@@ -5,6 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using FMOD.Studio;
 using FMODUnity;
+using UnityEngine.Serialization;
 
 public class SwipeAttack : AbstractAttackNode
 {
@@ -33,6 +34,8 @@ public class SwipeAttack : AbstractAttackNode
     private Tween monsterRotationTween;
     private Tween tailDelayTween;
     
+    private FightMonsterSingleton fightMonsterSingleton;
+    
     public override MonsterAttackType AttackType => MonsterAttackType.MidRange;
 
     protected override void Start()
@@ -43,16 +46,14 @@ public class SwipeAttack : AbstractAttackNode
         
         waitForSwipeFinished = new WaitUntil(() => swipeFinished);
         
-        monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
-    }
-
-    public override float GetExecutability()
-    {
-        return 100f;
+        fightMonsterSingleton = FightMonsterSingleton.instance;
+        monsterPivot = fightMonsterSingleton.MonsterTransform;
     }
 
     protected override IEnumerator BehaviourRoutineImpl()
     {
+        //set body hits since last attack
+        
         var numberSwipes = numberSwipesLimit.GetRandomBetweenLimits();
         
         for(var i = 0; i < numberSwipes; i++)
@@ -126,6 +127,24 @@ public class SwipeAttack : AbstractAttackNode
         DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         DownSwipeSoundInstance.release();
     }
+
+    #region Executability Calculations
+    [Header("Executeability")]
+    [SerializeField] private int numberBodyHitsNeededForFullExecutability = 3;
+    
+    private int bodyHitsOnLastAttack;
+    
+    public override float GetExecutability()
+    {
+        var bodyHits = fightMonsterSingleton.NumberOfBodyHits;
+        var hitsSinceLastAttack = bodyHits - bodyHitsOnLastAttack;
+        
+        var executeabilityPercentage = Mathf.Clamp01((float) hitsSinceLastAttack 
+                                                    / numberBodyHitsNeededForFullExecutability);
+        
+        return executability.GetRandomBetweenLimits() * executeabilityPercentage;
+    }
+    #endregion
 
     protected override void OnDestroy()
     {

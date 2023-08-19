@@ -15,17 +15,15 @@ public class FightMonsterState : AbstractMonsterState
     {
         fightMonsterSingleton = FightMonsterSingleton.instance;
         
-        MonsterStateChangedEvent += OnMonsterStateChanged;
-        
         fightMonsterSingleton.MonsterWeakpointWasHitEvent += WeakPointHit;
     }
 
-    private void OnMonsterStateChanged(MonsterState newState)
+    protected override void OnStateChangeRequest(MonsterState requestedChange)
     {
-        if (monsterStateUsageDict.TryAdd(newState, 1)) return;
+        if (monsterStateUsageDict.TryAdd(requestedChange, 1)) return;
         
-        var currentStateUsage = monsterStateUsageDict[newState];
-        monsterStateUsageDict[newState] = currentStateUsage + 1;
+        var currentStateUsage = monsterStateUsageDict[requestedChange];
+        monsterStateUsageDict[requestedChange] = currentStateUsage + 1;
     }
 
     public int GetUsageOfMonsterState(MonsterState state)

@@ -189,7 +189,29 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ab6b10e6-79d8-4449-8329-b6e8f42a292c"",
-                    ""path"": ""<Keyboard>/#(1)"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Station_Cannon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85206d5d-358d-40f2-a528-252e200cbe90"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Station_Cannon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c965ea6c-e965-4022-bee8-7dd7b9debb2e"",
+                    ""path"": ""<Keyboard>/v"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -288,15 +310,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Reload"",
-                    ""type"": ""Button"",
-                    ""id"": ""47c1fbb1-feed-40d7-a6c0-2f43653c255b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Return"",
                     ""type"": ""Button"",
                     ""id"": ""811c7da7-7e1d-4827-94aa-15313a357878"",
@@ -373,23 +386,23 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ebc6fce7-8fc6-40d9-afba-25c182d5a50d"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""id"": ""9652d8fb-de4e-4753-8bd8-a52bdc635c73"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Reload"",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""66a8b04f-26da-4fe7-a1d1-fe54caadda36"",
-                    ""path"": ""<Keyboard>/#(R)"",
+                    ""id"": ""ebb4e906-8e14-4b07-b74c-83aa41dfdb19"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Reload"",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1536,7 +1549,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Fight_Cannon = asset.FindActionMap("Fight_Cannon", throwIfNotFound: true);
         m_Fight_Cannon_Aim = m_Fight_Cannon.FindAction("Aim", throwIfNotFound: true);
         m_Fight_Cannon_Fire = m_Fight_Cannon.FindAction("Fire", throwIfNotFound: true);
-        m_Fight_Cannon_Reload = m_Fight_Cannon.FindAction("Reload", throwIfNotFound: true);
         m_Fight_Cannon_Return = m_Fight_Cannon.FindAction("Return", throwIfNotFound: true);
         m_Fight_Cannon_ToggleMenu = m_Fight_Cannon.FindAction("ToggleMenu", throwIfNotFound: true);
         // Fight_Reeling
@@ -1701,7 +1713,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<IFight_CannonActions> m_Fight_CannonActionsCallbackInterfaces = new List<IFight_CannonActions>();
     private readonly InputAction m_Fight_Cannon_Aim;
     private readonly InputAction m_Fight_Cannon_Fire;
-    private readonly InputAction m_Fight_Cannon_Reload;
     private readonly InputAction m_Fight_Cannon_Return;
     private readonly InputAction m_Fight_Cannon_ToggleMenu;
     public struct Fight_CannonActions
@@ -1710,7 +1721,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public Fight_CannonActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Aim => m_Wrapper.m_Fight_Cannon_Aim;
         public InputAction @Fire => m_Wrapper.m_Fight_Cannon_Fire;
-        public InputAction @Reload => m_Wrapper.m_Fight_Cannon_Reload;
         public InputAction @Return => m_Wrapper.m_Fight_Cannon_Return;
         public InputAction @ToggleMenu => m_Wrapper.m_Fight_Cannon_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Cannon; }
@@ -1728,9 +1738,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @Reload.started += instance.OnReload;
-            @Reload.performed += instance.OnReload;
-            @Reload.canceled += instance.OnReload;
             @Return.started += instance.OnReturn;
             @Return.performed += instance.OnReturn;
             @Return.canceled += instance.OnReturn;
@@ -1747,9 +1754,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @Reload.started -= instance.OnReload;
-            @Reload.performed -= instance.OnReload;
-            @Reload.canceled -= instance.OnReload;
             @Return.started -= instance.OnReturn;
             @Return.performed -= instance.OnReturn;
             @Return.canceled -= instance.OnReturn;
@@ -2127,7 +2131,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     {
         void OnAim(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnReload(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
         void OnToggleMenu(InputAction.CallbackContext context);
     }

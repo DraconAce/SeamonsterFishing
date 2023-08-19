@@ -9,8 +9,10 @@ using UnityEngine;
 public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubscriber
 {
 #if UNITY_EDITOR
+
     [Header("Debug Stuff")] 
     [SerializeField] private bool startWithSpecificBehaviour;
+    [SerializeField] private bool blockStart;
     [SerializeField] private List<AbstractMonsterBehaviour> initialBehaviourList;
     private Queue<AbstractMonsterBehaviour> initialBehaviourQueue;
 #endif
@@ -57,6 +59,11 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         CreateNodeImplDict();
         
         CreateNodeDataMap();
+        
+#if UNITY_EDITOR
+
+        if (blockStart) return;
+#endif
         
         StartCoroutine(StartFirstBehaviourRoutine());
     }
@@ -179,6 +186,8 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
         foreach (var nodeImpl in nodeImplArray) 
             nodeDataMap[nodeImpl.NodeIndex] = nodeImpl.RefreshNodeData();
+        
+        nodeDataMap[-1] = backupBehaviour.RefreshNodeData();
     }
 
     public void TryResetCurrentBehaviour(INodeImpl behaviourToEndIfActive = null)
@@ -234,6 +243,9 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
         if (behaviourIndex == -1)
         {
+            #if UNITY_EDITOR
+            Debug.Log("Backup");
+            #endif
             backupBehaviourRoutine ??= StartCoroutine(StartBackupBehaviourRoutine());
             return;
         }

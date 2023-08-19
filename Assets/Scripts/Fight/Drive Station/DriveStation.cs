@@ -99,7 +99,7 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         
         //Debug.Log("currentBoatSpeed: "+ movingController.currentSpeed);
         
-        if(MovingController.BoatIsNotMoving(moveDirection)) 
+        if(MovingController.BoatIsStanding(moveDirection)) 
         {
             //movingController.currentSpeed = 0;
             if (lastMoveDirection != 0f && !RotatingController.MovingLocked)
@@ -190,10 +190,10 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         //Debug.Log("Coroutine started");
         while (stoppingBoatMoveCoroutingIsRunning) 
         {
-            MovingController.currentSpeed -= stoppingBoatSpeedReduction;
-            if (MovingController.currentSpeed <= stoppingBoatSpeedReduction) 
+            MovingController.CurrentSpeed -= stoppingBoatSpeedReduction;
+            if (MovingController.CurrentSpeed <= stoppingBoatSpeedReduction) 
             {
-                MovingController.currentSpeed = 0f;
+                MovingController.CurrentSpeed = 0f;
                 stoppingBoatMoveCoroutingIsRunning = false;
                 //deactivate Water displacement VFX behind boat after driving-fadeout stopped
                 //SetWaterDisplacementVfxWhileDriving(false);

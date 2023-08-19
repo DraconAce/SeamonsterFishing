@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7715984262588308219}
   - component: {fileID: 7319890064879404910}
   - component: {fileID: 8566517290471475889}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cannon Ball
   m_TagString: cannonBall
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &8566517290471475889
 MonoBehaviour:
   m_ObjectHideFlags: 0

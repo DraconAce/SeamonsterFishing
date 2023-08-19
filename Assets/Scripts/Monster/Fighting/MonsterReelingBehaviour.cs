@@ -1,13 +1,11 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class MonsterReelingBehaviour : AbstractMonsterBehaviour
 {
     [Header("Reeling Implementation")] 
     [SerializeField] private int minNumberAttacksNeededUntilNextReeling = 3;
-    [SerializeField] private float baseReelingExecutability = 55f;
 
     [Header("Animations")] 
     
@@ -84,7 +82,9 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         
         var diffCurrentAndLastReelingUsages = numberOfAttackUsages - numberOfAttackUsagesSinceLastReeling;
 
-        return diffCurrentAndLastReelingUsages < minNumberAttacksNeededUntilNextReeling ? 0f : baseReelingExecutability;
+        var reelingExecutability = diffCurrentAndLastReelingUsages < minNumberAttacksNeededUntilNextReeling ? 0f : executability.GetRandomBetweenLimits();
+        
+        return reelingExecutability;
     }
 
     protected override IEnumerator BehaviourRoutineImpl()
@@ -187,5 +187,14 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         behaviourTreeManager.ToggleBlockBehaviour(false);
     }
 
-    protected override void ForceStopBehaviourImpl(){}
+    protected override void ForceStopBehaviourImpl()
+    {
+        if(gameStateManager.CurrentGameState == GameState.FightReelingStation)
+            gameStateManager.ChangeGameState(GameState.FightOverview);
+        
+        reelingEndedSequence?.Kill();
+        reelingStartTween?.Kill();
+        delayedGameStateChangeTween?.Kill();
+        delayedAnimationChangeTween?.Kill();
+    }
 }

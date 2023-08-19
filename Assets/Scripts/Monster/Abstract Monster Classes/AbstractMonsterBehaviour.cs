@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
 {
     [SerializeField] private float timeout = 1f;
+    [SerializeField] protected MinMaxLimit executability;
 
     private float currentTimer;
 
@@ -14,13 +15,14 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
 
     protected FightMonsterState FightMonsterState { get; private set; }
 
-    protected bool IsTimedOut { get; private set; }
+    private bool IsTimedOut { get; set; }
     protected abstract MonsterState BehaviourState { get; }
 
+    protected bool isNodeExecutable = true;
     public override bool IsNodeExecutable
     {
-        get => !IsTimedOut; 
-        set => IsTimedOut = !value;
+        get => isNodeExecutable && !IsTimedOut;
+        set => isNodeExecutable = value;
     }
 
     protected override void Start()
@@ -98,6 +100,11 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
             NodeIndex = this.NodeIndex,
             NodeComparisonData = new NodeComparisonData { NodeType = NodeType.Action }
         };
+    }
+
+    public override float GetExecutability()
+    {
+        return executability.GetRandomBetweenLimits();
     }
 
     protected override void OnDestroy()

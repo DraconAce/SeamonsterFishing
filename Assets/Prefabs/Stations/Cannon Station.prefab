@@ -126,9 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonBarrelMovementPivot: {fileID: 0}
+  driveStation: {fileID: 0}
   aimLimit:
-    MinLimit: {x: -45, y: -20, z: 0}
-    MaxLimit: {x: 0, y: 20, z: 0}
+    MinLimit: {x: -55, y: -30, z: 0}
+    MaxLimit: {x: 10, y: 30, z: 0}
   aimSpeed: 10
 --- !u!114 &6935723897159092324
 MonoBehaviour:
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootDelay: 3
-  fireForce: 150
+  fireForce: 300
   barrelOpening: {fileID: 0}
   reloadSegment: {fileID: 6565113176275434114}
   cannonBallParent: {fileID: 3945572250696685381}
@@ -154,6 +155,18 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6565113176275434114}
+        m_TargetAssemblyTypeName: CannonStation_Reload, Assembly-CSharp
+        m_MethodName: AutoReload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -189,15 +202,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c7a06facc546f69dcea4a73a2b93db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoReloadDelay: 2
   fuse: {fileID: 0}
-  reloadTime: 3
-  reloadCannonSound:
-    Guid:
-      Data1: -1749684422
-      Data2: 1251605997
-      Data3: -2076297561
-      Data4: -354503960
-    Path: event:/Boat/Boat Attack/Cannon Reload
+  reloadSound:
+    eventRef:
+      Guid:
+        Data1: 2039942316
+        Data2: 1204514834
+        Data3: -1342893656
+        Data4: -848009069
+      Path: event:/Boat/Boat Attack/Cannon Reload Temp
 --- !u!114 &1746360987460174724
 MonoBehaviour:
   m_ObjectHideFlags: 0

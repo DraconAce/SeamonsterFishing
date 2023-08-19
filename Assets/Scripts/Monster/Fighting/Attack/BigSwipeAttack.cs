@@ -45,11 +45,6 @@ public class BigSwipeAttack : AbstractAttackNode
         bigSwipeAttackEndedWait = new WaitUntil(() => bigSwipeAttackEnded);
     }
 
-    public override float GetExecutability()
-    {
-        return 100f;
-    }
-
     protected override IEnumerator BehaviourRoutineImpl()
     {
         bigSwipeAttackEnded = false;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,22 +7,39 @@ using UnityEngine.Serialization;
 public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscriber
 {
     [FormerlySerializedAs("cannonBarrel")] [SerializeField] private Transform cannonBarrelMovementPivot;
+    [SerializeField] private DriveStation driveStation;
     [SerializeField] private RotationLimit aimLimit;
     [SerializeField] private float aimSpeed = 10f;
+    [SerializeField] private float playerAimInfluence = 0.4f;
     
+    private RotationLimit invertedXAimLimit;
+    private RotationLimit currentAimLimit;
     private InputAction aimAction;
     private Vector3 targetAimAngle;
     private readonly WaitForSeconds deferredSubscriptionTime = new(0.25f);
 
-    private CannonStation cannonStation => (CannonStation) ControllerStation;
+    private CannonStation CannonStation => (CannonStation) ControllerStation;
     private UpdateManager updateManager;
-    private DriveStation driveStation;
+
+    private void Start()
+    {
+        var minVector = aimLimit.MinLimit;
+        minVector.x *= -1;
+        
+        var maxVector = aimLimit.MaxLimit;
+        maxVector.x *= -1;
+
+        if (maxVector.x < minVector.x) 
+            (maxVector.x, minVector.x) = (minVector.x, maxVector.x);
+
+        invertedXAimLimit = new RotationLimit{ MinLimit = minVector, MaxLimit = maxVector };
+    }
 
     protected override void OnControllerSetup()
     {
         base.OnControllerSetup();
         
-        updateManager = cannonStation.UpdateManager;
+        updateManager = CannonStation.UpdateManager;
         
         GetAndEnableAimAction();
 
@@ -30,7 +48,7 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
 
     private void GetAndEnableAimAction()
     {
-        var customPlayerInput = cannonStation.GetPlayerInputs();
+        var customPlayerInput = CannonStation.GetPlayerInputs();
         
         aimAction = customPlayerInput.Fight_Cannon.Aim;
         aimAction.Enable();
@@ -40,10 +58,8 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
     {
         yield return deferredSubscriptionTime;
         
-        if(cannonStation.GameStateMatchesStationGameState())
+        if(CannonStation.GameStateMatchesStationGameState())
             updateManager.SubscribeToManualUpdate(this);
-
-        driveStation = StationManager.instance.GetStationOfGameState(GameState.FightOverview) as DriveStation;
     }
 
     protected override void OnGameStateMatchesCannonStation() => updateManager.SubscribeToManualUpdate(this);
@@ -60,25 +76,20 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
 
     private void CalculateNewAimRotation()
     {
-        var aimInput = aimAction.ReadValue<Vector2>() * 0.4f;
-        //aimInput *= driveStation.InfluencedDrivingDirection * 0.4f; //also reduce cannon movement by player
-        
-        //Debug.Log("drivingDirection: "+driveStation.InfluencedDrivingDirection);
+        var aimInput = aimAction.ReadValue<Vector2>() * playerAimInfluence;
+
         if (driveStation.InfluencedDrivingDirection < 0)
-        {
-            //rotation of the cannonbarrel to show the fuse inverts left/right- and up/down-movement of the player
-            //-> so we invert it again here:
-            aimInput = -aimInput;
-        }
-        //Debug.Log("aiminput: "+aimInput);
-        
+            currentAimLimit = invertedXAimLimit;
+        else
+            currentAimLimit = aimLimit;
+
         targetAimAngle += InputBasedRotationProvider.CalculateRotationBasedOnInput(aimInput, aimSpeed);
     }
     
     private Quaternion ClampAimRotation()
     {
         var directionAdjustmentFactor = new Vector3(driveStation.InfluencedDrivingDirection, 1, 1);
-        var clampedQuaternion = InputBasedRotationProvider.ClampGivenRotationToLimits(aimLimit, targetAimAngle, Vector3.zero, directionAdjustmentFactor);
+        var clampedQuaternion = InputBasedRotationProvider.ClampGivenRotationToLimits(currentAimLimit, targetAimAngle, Vector3.zero, directionAdjustmentFactor);
 
         targetAimAngle = clampedQuaternion.eulerAngles;
 

@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfRotationsNeeded: 40
   progressDecreasePercentagePerSecond: 0.005
-  inputBuffer: 0.45
+  inputBuffer: 0.73
 --- !u!114 &9001025296299548414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,6 +597,10 @@ PrefabInstance:
       value: Cannon Station
       objectReference: {fileID: 0}
     - target: {fileID: 4080558271220990675, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
+      propertyPath: driveStation
+      value: 
+      objectReference: {fileID: 6813095172235865126}
+    - target: {fileID: 4080558271220990675, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: cannonBarrelMovementPivot
       value: 
       objectReference: {fileID: 9026873623968928799}
@@ -761,6 +765,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8019039673613632958, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
   m_PrefabInstance: {fileID: 9076755713419596986}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6813095172235865126 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2556888783409871004, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}
+  m_PrefabInstance: {fileID: 9076755713419596986}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194721994731441995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fbf9614219f4ebcae419edf90cb394c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9194721994731441995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 174844112677051377, guid: 83bd458f5d6a1d0469b091f85315e19e, type: 3}

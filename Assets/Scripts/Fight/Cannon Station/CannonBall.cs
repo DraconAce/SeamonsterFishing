@@ -59,19 +59,29 @@ public class CannonBall : MonoBehaviour, IPoolObject
             monsterSingleton.WeakPointWasHit();
 
             //play sound Hit Weakpoint
-            FMODUnity.RuntimeManager.PlayOneShot(weakpointHit, this.transform.position);
+            FMODUnity.RuntimeManager.PlayOneShot(weakpointHit, transform.position);
+            return;
         }
-        else
+
+        if (collidedGameOb.CompareTag(monsterTag))
         {
-            //Cannon Ball missed the monster
-            monsterSingleton.CannonBallMissed();
-            //but could have still hit the water -
-            //technically we need an additional case after this with a generic explosion sound for hitting objects with collider, but the cannonball can only hit the monster or water in our scene
-            if (collidedGameOb.CompareTag(waterTag))
-            {
-                //play sound Hit Ocean
-                FMODUnity.RuntimeManager.PlayOneShot(oceanHit, this.transform.position);
-            }
+            CannonBallRecordedValidHit();
+
+            monsterSingleton.IncreaseNumberOfBodyHits();
+
+            //play sound Hit No Weakpoint
+            FMODUnity.RuntimeManager.PlayOneShot(regularHit, transform.position);
+            return;
+        }
+
+        //Cannon Ball missed the monster
+        monsterSingleton.CannonBallMissed();
+        //but could have still hit the water -
+        //technically we need an additional case after this with a generic explosion sound for hitting objects with collider, but the cannonball can only hit the monster or water in our scene
+        if (collidedGameOb.CompareTag(waterTag))
+        {
+            //play sound Hit Ocean
+            FMODUnity.RuntimeManager.PlayOneShot(oceanHit, this.transform.position);
         }
     }
 
@@ -90,19 +100,6 @@ public class CannonBall : MonoBehaviour, IPoolObject
 
     private void InstantiateExplosion() => explosionPool.RequestInstance(transform.position);
 
-    private void OnTriggerEnter(Collider other)
-    {
-        var collidedGameOb = other.gameObject;
-
-        if (!collidedGameOb.CompareTag(monsterTag)) return;
-        CannonBallRecordedValidHit();
-
-        monsterSingleton.CannonBallMissed();
-
-        //play sound Hit No Weakpoint
-        FMODUnity.RuntimeManager.PlayOneShot(regularHit, this.transform.position);
-    }
-
     private void OnTriggerExit(Collider other)
     {
         var collidedGameOb = other.gameObject;
@@ -116,11 +113,5 @@ public class CannonBall : MonoBehaviour, IPoolObject
 
     public void ResetInstance() => MakeSureRigidbodyIsNotInMovement();
 
-    private void MakeSureRigidbodyIsNotInMovement()
-    {
-        rigidbody.isKinematic = true;
-        
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
-    }
+    private void MakeSureRigidbodyIsNotInMovement() => rigidbody.isKinematic = true;
 }
