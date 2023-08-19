@@ -86,6 +86,7 @@ MonoBehaviour:
   numberOfRotationsNeeded: 40
   progressDecreasePercentagePerSecond: 0.005
   inputBuffer: 0.73
+  controllerBooster: 2
 --- !u!114 &9001025296299548414
 MonoBehaviour:
   m_ObjectHideFlags: 0

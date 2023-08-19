@@ -8,7 +8,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     [SerializeField] private float progressDecreasePercentagePerSecond = 0.01f;
 
     private InputAction reelAction;
-
+    private InputManager inputManager;
     private ReelingStation reelingStation => (ReelingStation) ControllerStation;
     public bool PlayerInputEnabled { get; set; }
 
@@ -17,6 +17,8 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         base.OnControllerSetup();
         
         GetAndEnableReelAction();
+        
+        inputManager = InputManager.instance;
 
         reelingStation.OnReelingStartedEvent += OnReelingStarted;
         reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
@@ -27,7 +29,6 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         var customPlayerInput = reelingStation.GetPlayerInputs();
         
         reelAction = customPlayerInput.Fight_Reeling.Reel;
-        reelAction.Enable();
     }
 
     private void OnReelingStarted()
@@ -36,16 +37,18 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         
         ControllerStation.UpdateManager.SubscribeToManualUpdate(this);
         
+        reelAction.Enable();
+
         PlayerInputEnabled = true;
     }
 
     private void OnReelingCompleted()
     {
         ControllerStation.UpdateManager.UnsubscribeFromManualUpdate(this);
-        
-        //Debug.LogFormat("Timer: {0}", reelingStation.ReelingTimer);
 
         DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, ResetReeling);
+        
+        reelAction.Disable();
     }
 
     private void ResetReeling()
@@ -84,7 +87,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     [Header("Reeling Input")] 
     [SerializeField] private float inputBuffer = 0.2f;
-
+    [SerializeField] private float controllerBooster;
 
     private float currentNumberOfRotations;
     private float lastAngleToOrigin = -1;
@@ -99,8 +102,8 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     private void DoReeling()
     {
-        var reelInput = reelAction.ReadValue<Vector2>();
-
+        var reelInput = reelAction.ReadValue<Vector2>() * GetControlsBoost();
+        
         if (!IsOneInputAxisInBuffer(reelInput))
         {
             if(reelInput == Vector2.zero)
@@ -144,6 +147,11 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         
         (passedRotationFinishedDeg, passedRotationStartedDeg) = (false, false);
         currentNumberOfRotations++;
+    }
+
+    private float GetControlsBoost()
+    {
+        return inputManager.LatestDevice == PlayerDevice.Gamepad ? controllerBooster : 1;
     }
 
     private void DetermineWhetherInputAngleMarksWerePassed(float currentInputAngle)

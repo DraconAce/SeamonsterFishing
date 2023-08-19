@@ -10,6 +10,7 @@ public class BaseMenuNavigation : MonoBehaviour
     public void ReturnToMenu()
     {
         GameStateManager.instance.BlockGameStateChangeWithExceptions = false;
+        GameStateManager.instance.BlockGameStateChangeWithoutExceptions = false;
         
         SceneController.instance.SwitchToScene(Level.MainMenu);
     }
@@ -17,6 +18,7 @@ public class BaseMenuNavigation : MonoBehaviour
     public void RestartRun()
     {
         GameStateManager.instance.BlockGameStateChangeWithExceptions = false;
+        GameStateManager.instance.BlockGameStateChangeWithoutExceptions = false;
 
         SceneController.instance.SwitchToScene(reloadScene);
     }

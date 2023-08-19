@@ -31,12 +31,14 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
     private int numberOfAttackUsagesSinceLastReeling;
     
     private Vector3 positionBeforeReeling;
+    private Quaternion rotationBeforeReeling;
     private Vector3[] diveUnderPathPositions;
 
     private Transform monsterTransform;
     private MonsterAnimationController monsterAnimationController;
     private GameStateManager gameStateManager;
     
+    private WaitUntil waitForReelingStarted;
     private WaitUntil waitForReelingStopped;
     private WaitUntil waitForReachedInitialPosition;
     private WaitForSeconds triggerIdleWait;
@@ -57,6 +59,9 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         gameStateManager = GameStateManager.instance;
         monsterTransform = FightMonsterSingleton.instance.MonsterTransform;
         monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
+        
+        waitForReelingStarted = new(() 
+            => gameStateManager.CurrentGameState == GameState.FightReelingStation);
         
         waitForReelingStopped = new(() 
             => gameStateManager.CurrentGameState != GameState.FightReelingStation);
@@ -96,6 +101,7 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         
         arrivedAtInitialPosition = false;
         positionBeforeReeling = monsterTransform.position;
+        rotationBeforeReeling = monsterTransform.rotation;
         
         diveUnderPathPositions[0] = positionBeforeReeling;
         
@@ -107,9 +113,16 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
             () => TriggerReelingAnimation(reelingStartedTrigger));
         
         delayedGameStateChangeTween = DOVirtual.DelayedCall(triggerReelingGameStateChangeDelay,
-            () => gameStateManager.ChangeGameState(GameState.FightReelingStation));
+            () =>
+            {
+                gameStateManager.BlockGameStateChangeWithExceptions = false;
+                gameStateManager.ChangeGameState(GameState.FightReelingStation);
+            });
 
         yield return delayedGameStateChangeTween.WaitForCompletion();
+        yield return waitForReelingStarted;
+
+        yield return null;
         yield return waitForReelingStopped;
         
         StartEndReelingAnimation();
@@ -164,6 +177,9 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         reelingEndedSequence.Append(monsterTransform.DOMove(positionBeforeReeling, surfaceDuration)
             .SetEase(diveEase)
             .OnComplete(() => arrivedAtInitialPosition = true));
+
+        reelingEndedSequence.Join(monsterTransform.DORotateQuaternion(rotationBeforeReeling, surfaceDuration)
+            .SetEase(diveEase));
 
         reelingEndedSequence.Play();
     }

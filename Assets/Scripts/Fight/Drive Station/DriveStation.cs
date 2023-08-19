@@ -65,7 +65,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     protected override void GameStateDoesNotMatch()
     {
         base.GameStateDoesNotMatch();
+        
         UpdateManager.UnsubscribeFromManualUpdate(this);
+        RotatingController.StopRotationSequence();
     }
 
     protected override void Start()

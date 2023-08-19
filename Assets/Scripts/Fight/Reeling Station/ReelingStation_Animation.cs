@@ -21,9 +21,6 @@ public class ReelingStation_Animation : AbstractStationSegment
     private Vector3 positionBeforeReeling;
     
     private Quaternion initialBoatRotation;
-    private Quaternion oppositeBoatRotation;
-    
-    private Quaternion rotationAfterReeling;
 
     private Tween moveBoatForReelTween;
     private GameStateManager gameStateManager;
@@ -61,8 +58,6 @@ public class ReelingStation_Animation : AbstractStationSegment
 
     private void ReelingEntryAnimation()
     {
-        rotationAfterReeling = DetermineCloserBoatRotation(reelingPivotTransform.rotation);
-        
         var reelingTargetPos = GetReelingTargetPositionOnBoatHeight();
 
         var lookAtRotation = Quaternion.LookRotation(reelingTargetPos - reelingPivotTransform.position);
@@ -70,20 +65,6 @@ public class ReelingStation_Animation : AbstractStationSegment
         reelingPivotTransform.DORotateQuaternion(lookAtRotation, reelEntryDuration)
             .SetEase(reelEntryEase)
             .OnComplete(() => lookAtConstraint.constraintActive = true);
-    }
-
-    private Quaternion DetermineCloserBoatRotation(Quaternion currentBoatRotation)
-    {
-        var angleInitial = CalculateAngleBetweenRotations(initialBoatRotation, currentBoatRotation);
-        var angleOpposite = CalculateAngleBetweenRotations(oppositeBoatRotation, currentBoatRotation);
-        
-        return angleInitial < angleOpposite ? initialBoatRotation : oppositeBoatRotation;
-    }
-
-    private float CalculateAngleBetweenRotations(Quaternion rotation1, Quaternion rotation2)
-    {
-        var angle = Quaternion.Angle(rotation1, rotation2);
-        return angle;
     }
 
     private Vector3 GetReelingTargetPositionOnBoatHeight()
@@ -121,7 +102,7 @@ public class ReelingStation_Animation : AbstractStationSegment
 
     private void ReelingExitAnimation()
     {
-        reelingPivotTransform.DORotateQuaternion(rotationAfterReeling, reelExitDuration)
+        reelingPivotTransform.DOLocalRotateQuaternion(initialBoatRotation, reelExitDuration)
             .SetEase(reelExitEase)
             .OnComplete(() => gameStateManager.ChangeGameState(GameState.FightOverview));
     }
@@ -134,11 +115,7 @@ public class ReelingStation_Animation : AbstractStationSegment
             .SetEase(returnToPositionEase);
     }
 
-    private void SetupBoatVariables()
-    {
-        initialBoatRotation = reelingPivotTransform.rotation;
-        oppositeBoatRotation = Quaternion.Euler(initialBoatRotation.eulerAngles + Vector3.up * 180);
-    }
+    private void SetupBoatVariables() => initialBoatRotation = reelingPivotTransform.localRotation;
 
     private void SetupLookConstraint()
     {
