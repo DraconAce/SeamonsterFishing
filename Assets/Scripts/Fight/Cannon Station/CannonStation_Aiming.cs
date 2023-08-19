@@ -11,6 +11,7 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
     [SerializeField] private RotationLimit aimLimit;
     [SerializeField] private float aimSpeed = 10f;
     [SerializeField] private float playerAimInfluence = 0.4f;
+    [SerializeField] private float controllerBoost = 2f;
     
     private RotationLimit invertedXAimLimit;
     private RotationLimit currentAimLimit;
@@ -20,6 +21,7 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
 
     private CannonStation CannonStation => (CannonStation) ControllerStation;
     private UpdateManager updateManager;
+    private InputManager inputManager;
 
     private void Start()
     {
@@ -40,6 +42,7 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
         base.OnControllerSetup();
         
         updateManager = CannonStation.UpdateManager;
+        inputManager = InputManager.instance;
         
         GetAndEnableAimAction();
 
@@ -76,7 +79,7 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
 
     private void CalculateNewAimRotation()
     {
-        var aimInput = aimAction.ReadValue<Vector2>() * playerAimInfluence;
+        var aimInput = aimAction.ReadValue<Vector2>() * (playerAimInfluence * GetControllerBoost());
 
         if (driveStation.InfluencedDrivingDirection < 0)
             currentAimLimit = invertedXAimLimit;
@@ -84,6 +87,11 @@ public class CannonStation_Aiming : AbstractStationSegment, IManualUpdateSubscri
             currentAimLimit = aimLimit;
 
         targetAimAngle += InputBasedRotationProvider.CalculateRotationBasedOnInput(aimInput, aimSpeed);
+    }
+
+    private float GetControllerBoost()
+    {
+        return inputManager.IsPlayerUsingController ? controllerBoost : 1f;
     }
     
     private Quaternion ClampAimRotation()

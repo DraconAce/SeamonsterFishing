@@ -5,13 +5,26 @@ using UnityEngine;
 public class BoatRotationMaintainer : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 5f;
+
+    private float yRotationToKeep;
     
     private void Start()
     {
-        var currentRotation = transform.localEulerAngles;
+        yRotationToKeep = transform.localEulerAngles.y;
         
-        transform.DOLocalRotate(currentRotation, rotationSpeed, RotateMode.FastBeyond360)
+        DOVirtual.Float(0, 1, rotationSpeed, DynamicYRotationLock)
             .SetEase(Ease.Linear)
-            .SetLoops(-1, LoopType.Restart);
+            .SetLoops(-1, LoopType.Restart)
+            .SetSpeedBased(true);
+    }
+
+    private void DynamicYRotationLock(float interpolationValue)
+    {
+        var currentLocalRotation = transform.localEulerAngles;
+        
+        var targetRotation = currentLocalRotation;
+        targetRotation.y = yRotationToKeep;
+
+        transform.localEulerAngles = Vector3.Lerp(currentLocalRotation, targetRotation, interpolationValue);
     }
 }

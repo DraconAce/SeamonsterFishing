@@ -131,6 +131,8 @@ MonoBehaviour:
     MinLimit: {x: -55, y: -30, z: 0}
     MaxLimit: {x: 10, y: 30, z: 0}
   aimSpeed: 10
+  playerAimInfluence: 0.4
+  controllerBoost: 25
 --- !u!114 &6935723897159092324
 MonoBehaviour:
   m_ObjectHideFlags: 0

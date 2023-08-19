@@ -151,7 +151,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     private float GetControlsBoost()
     {
-        return inputManager.LatestDevice == PlayerDevice.Gamepad ? controllerBooster : 1;
+        return inputManager.IsPlayerUsingController ? controllerBooster : 1;
     }
 
     private void DetermineWhetherInputAngleMarksWerePassed(float currentInputAngle)
