@@ -30,12 +30,12 @@ public class PauseManager : Singleton<PauseManager>
         {
             GamePausedStateChangedEvent?.Invoke(true);
             gameStateManager.ChangeGameState(GameState.Pause);
-            gameStateManager.BlockGameStateChange = GameIsPaused;
+            gameStateManager.BlockGameStateChangeWithoutExceptions = GameIsPaused;
         }
         else
         {
             GamePausedStateChangedEvent?.Invoke(false);
-            gameStateManager.BlockGameStateChange = GameIsPaused;
+            gameStateManager.BlockGameStateChangeWithoutExceptions = GameIsPaused;
             gameStateManager.ChangeToPreviousGameState();
         }
     }
@@ -56,7 +56,7 @@ public class PauseManager : Singleton<PauseManager>
     {
         base.OnDestroy();
         
-        gameStateManager.BlockGameStateChange = false;
+        gameStateManager.BlockGameStateChangeWithExceptions = false;
         GameIsPaused = false;
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4292917477697465368}
   - component: {fileID: 6987756396379685089}
   - component: {fileID: 8051616867474262336}
+  - component: {fileID: 6699910122903231099}
   m_Layer: 0
   m_Name: Muck_Puddle
   m_TagString: MuckPuddle
@@ -85,6 +86,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 2, z: 4.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6699910122903231099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5573448365167268521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068ee4f21a1d38f41ab25ecd597d4cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7232106197423270300
 GameObject:
   m_ObjectHideFlags: 0

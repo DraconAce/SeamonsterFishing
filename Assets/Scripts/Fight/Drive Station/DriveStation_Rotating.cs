@@ -45,6 +45,7 @@ public class DriveStation_Rotating : AbstractStationSegment
 
     public float forwardLampRotation = 95f;
     private float backwardsLampRotation;
+    private bool blockOnSequenceComplete;
     #endregion
 
     private void Start()
@@ -85,11 +86,11 @@ public class DriveStation_Rotating : AbstractStationSegment
 
     public void CalculateLeftRotation() => localLeftRotation = localRightRotation - 180.0f;
 
-    private bool MoveDirectionHasChanged(float newDirection) => newDirection != driveStation.LastDriveDirection;
+    private bool MoveDirectionHasChanged(float newDirection) => !Mathf.Approximately(Mathf.Sign(newDirection), Mathf.Sign(driveStation.LastDriveDirection));
 
     public bool StartRotatingIfDirectionHasChanged(float moveDirection)
     {
-        if (!MoveDirectionHasChanged(Mathf.Sign(moveDirection))) return false;
+        if (!MoveDirectionHasChanged(moveDirection)) return false;
         
         StartRotationToChangeDirection(moveDirection);
         return true;
@@ -99,7 +100,7 @@ public class DriveStation_Rotating : AbstractStationSegment
     private void StartRotationToChangeDirection(float newDirection)
     {
         MovingLocked = true;
-        driveStation.GameStateManager.BlockGameStateChange = true;
+        driveStation.GameStateManager.BlockGameStateChangeWithExceptions = true;
 
         CreateAndPlayRotationSequence(newDirection);
 
@@ -123,6 +124,7 @@ public class DriveStation_Rotating : AbstractStationSegment
 
     private void CreateAndPlayRotationSequence(float newDirection)
     {
+        blockOnSequenceComplete = false;
         rotationSequence?.Kill();
         
         rotationSequence = DOTween.Sequence();
@@ -131,17 +133,30 @@ public class DriveStation_Rotating : AbstractStationSegment
         rotationSequence.Join(CreateCannonBaseMoveTween(newDirection));
         rotationSequence.Join(CreateCannonBarrelRotationTween(newDirection));
         rotationSequence.Join(CreateLampRotationTween(newDirection));
-        rotationSequence.OnComplete(() =>
-        {
-            MovingLocked = false;
-            driveStation.GameStateManager.BlockGameStateChange = false;
-            driveStation.TurnRotationComplete(); //to stop the turning-sound
-            //deactivate Mist-Rotation-Particles
-            SetActivationParticleSystem(false, BoatRightMist);
-            SetActivationParticleSystem(false, BoatLeftMist);
-        });
+        rotationSequence.OnComplete(OnRotationSequenceComplete);
 
         rotationSequence.Play();
+    }
+
+    private void OnRotationSequenceComplete()
+    {
+        if(blockOnSequenceComplete)
+        {
+            blockOnSequenceComplete = false;
+            return;
+        }
+        
+        driveStation.GameStateManager.BlockGameStateChangeWithExceptions = false;
+        OnRotationEnded();
+    }
+
+    private void OnRotationEnded()
+    {
+        MovingLocked = false;
+        driveStation.TurnRotationComplete(); //to stop the turning-sound
+        //deactivate Mist-Rotation-Particles
+        SetActivationParticleSystem(false, BoatRightMist);
+        SetActivationParticleSystem(false, BoatLeftMist);
     }
 
     private Tween CreateBoatRotationTween(float newDirection)
@@ -223,7 +238,13 @@ public class DriveStation_Rotating : AbstractStationSegment
         }
         
     }
-    
+
+    public void StopRotationSequence()
+    {
+        blockOnSequenceComplete = true;
+        OnRotationEnded();
+    }
+
     protected override void OnDestroy()
     {
         base.OnDestroy();

@@ -82,8 +82,8 @@ public class SliderController : MonoBehaviour
     
     private SliderThreshold GetCurrentThreshold(float value)
     {
-        var currentThreshold = sliderThresholds.Aggregate((x, y) 
-            => value < x.Threshold ? x : y);
+        var currentThreshold = sliderThresholds.Aggregate((currentThreshold, nextThreshold) 
+            => value < nextThreshold.Threshold ? currentThreshold : nextThreshold);
 
         return currentThreshold;
     }

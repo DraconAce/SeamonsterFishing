@@ -49,27 +49,31 @@ public class MuckPlayerCollider : MonoBehaviour
     
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "MuckPuddle")
-        {
-            //stop slowing down player
-            DriveScript.SetBoatInMuck(false);
-            
-            if (other.transform.GetChild(3).gameObject.activeSelf) //child3 is FireParticles
-            {
-                if (boatBurningCoroutine != null) 
-                {
-                    StopCoroutine(boatBurningCoroutine);
-                }
-                Destroy(FirstBoatBurn);
-                Destroy(SecondBoatBurn);
-                Destroy(ThirdBoatBurn);
-                
-                //stop sound
-                boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            }
-        }
+        if (!other.gameObject.CompareTag("MuckPuddle")) return;
+        
+        InterruptMuckEffects();
     }
-    
+
+    public void InterruptMuckEffects()
+    {
+        //stop slowing down player
+        DriveScript.SetBoatInMuck(false);
+
+        StopBoatBurn();
+    }
+
+    private void StopBoatBurn()
+    {
+        if (boatBurningCoroutine != null) StopCoroutine(boatBurningCoroutine);
+
+        if(FirstBoatBurn != null) Destroy(FirstBoatBurn);
+        if(SecondBoatBurn != null) Destroy(SecondBoatBurn);
+        if(ThirdBoatBurn != null) Destroy(ThirdBoatBurn);
+
+        //stop sound
+        boatBurningSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
     private IEnumerator DoBoatBurning() 
     { 
         //Debug.Log("Boat is burning");

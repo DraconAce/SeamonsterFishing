@@ -88,7 +88,9 @@ public class MuckAttack : AbstractAttackNode
             .SetEase(rotationEase);
     }
     
-    public override float GetExecutability() => 100f;
+    public override float GetExecutability() => executability.GetRandomBetweenLimits();
     
     public void TriggerMuckAttackEnd() => muckAttackEnded = true;
+
+    protected override void ForceStopBehaviourImpl() => StopRotationAndMuckRoutine();
 }

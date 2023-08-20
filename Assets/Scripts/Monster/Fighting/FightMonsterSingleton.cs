@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
@@ -37,15 +38,35 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
             return behaviourTreeManager;
         }
     }
+    
+    public int NumberOfBodyHits { get; private set; }
+
+    public event Action MonsterWeakpointWasHitEvent;
+    
+#if UNITY_EDITOR
+    [SerializeField] private bool triggerMonsterWasHit;
+    
+    private void Update()
+    {
+        if (!triggerMonsterWasHit) return;
+        
+        triggerMonsterWasHit = false;
+        WeakPointWasHit();
+    }
+#endif
 
     public void WeakPointWasHit()
     {
-        fightState.WeakPointHit();
+        MonsterWeakpointWasHitEvent?.Invoke();
 
         TriggerMonsterStunnedBehaviour();
     }
 
-    private void TriggerMonsterStunnedBehaviour() => fightMonsterStunned.TriggerBehaviourDirectly();
+    private void TriggerMonsterStunnedBehaviour()
+    {
+        behaviourTreeManager.TryForceStopCurrentBehaviour();
+        fightMonsterStunned.TriggerBehaviourDirectly();
+    }
 
     public void FlashWasUsed() => TriggerMonsterStunnedBehaviour();
 
@@ -62,8 +83,7 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
                && !BehaviourTreeManager.IsAnyBehaviourActive;
     }
 
-    private void TriggerMonsterReaction()
-    {
-        swipeAttack.TriggerBehaviourDirectly();
-    }
+    private void TriggerMonsterReaction() => swipeAttack.TriggerBehaviourDirectly();
+    
+    public void IncreaseNumberOfBodyHits() => NumberOfBodyHits++;
 }
