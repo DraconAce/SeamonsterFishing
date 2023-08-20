@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class PlayerKilledChecker : MonoBehaviour
 {
-    [SerializeField] private float distancePercentageCloserPosition = 0.85f;
     [SerializeField] private float distancePercentageKillPosition = 0.5f;
-    [SerializeField] private float getCloserDuration = 1.5f;
-    [SerializeField] private Ease getCloserEase = Ease.InQuint;
-    [SerializeField] private float waitBeforeKillDuration = 2f;
-    [SerializeField] private float moveInToKillDuration = 0.75f;
-    [SerializeField] private Ease moveInToKillEase = Ease.InQuint;
+    [SerializeField] private float killDuration;
+    [SerializeField] private AnimationCurve killCurve;
+    [SerializeField] private string attackMatName = "Kraken_Mat";
     [SerializeField] private MaterialSwitcher matSwitcher;
     
     private Transform playerTransform;
@@ -45,24 +42,14 @@ public class PlayerKilledChecker : MonoBehaviour
         
         soundPlayer.PlayKillSound();
 
-        var getCloserPosition = GetMonsterTargetPos(distancePercentageCloserPosition);
         var killTargetPos = GetMonsterTargetPos(distancePercentageKillPosition);
         
-        var sequence = DOTween.Sequence();
-
-        sequence.Append(transform.DOMove(getCloserPosition, getCloserDuration)
-            .SetEase(getCloserEase));
-        
-        sequence.AppendInterval(waitBeforeKillDuration);
-        
-        sequence.Append(transform.DOMove(killTargetPos, moveInToKillDuration)
-            .SetEase(moveInToKillEase)
-            .OnComplete(() => gameStateManager.ChangeGameState(GameState.Dead)));
-        
-        sequence.Play();
+        transform.DOMove(killTargetPos, killDuration)
+            .SetEase(killCurve)
+            .OnComplete(() => gameStateManager.ChangeGameState(GameState.Dead));
     }
 
-    private void SwitchToAttackMat() => matSwitcher.SwitchMaterial(1);
+    private void SwitchToAttackMat() => matSwitcher.SwitchMaterial(attackMatName);
 
     private Vector3 GetMonsterTargetPos(float distanceToPlayerPercentage)
     {

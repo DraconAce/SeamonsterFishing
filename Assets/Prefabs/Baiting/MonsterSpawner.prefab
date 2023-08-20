@@ -47,8 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c59a9e5d086482492ca24de69f59330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCircleRadius: 4
+  spawnCircleRadius: 4.5
   spawnCircleCenter: {fileID: 3077607351696524622}
+  spawnSectionLimits:
+  - 0
+  - 30
+  - 70
+  - 90
+  - 90
+  - 110
+  - 160
+  - 180
 --- !u!114 &4859553733012079114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenSpawningChecks:
-    MinLimit: 3
+    MinLimit: 1
     MaxLimit: 10
   monsterPrefabs:
   - {fileID: 1803277403338532531, guid: b65bf86c5a48d134099091591b55d8b8, type: 3}

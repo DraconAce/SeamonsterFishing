@@ -12,7 +12,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
     [SerializeField] private UnityEvent onMenuClosed;
     
     private CanvasGroup menuGroup;
-    private InputManager inputManager;
+    protected InputManager inputManager;
 
     private bool initialCloseExecuted;
     protected bool menuIsOpen = true;

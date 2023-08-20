@@ -3,11 +3,13 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(BaitingMonsterState))]
 
 public class MonsterAttackManager : MonoBehaviour
 {
+    [SerializeField] private MaterialSwitcher matSwitcher;
     [SerializeField] private MinMaxLimit delayBeforeAttack = new(0.5f, 3f);
 
     private float lurkSoundLength;
@@ -61,6 +63,8 @@ public class MonsterAttackManager : MonoBehaviour
     {
         var monsterTrans = transform;
         
+        SetRandomLurkMat();
+        
         repelledTween?.Kill();
         lurkSequence?.Kill();
         
@@ -75,6 +79,12 @@ public class MonsterAttackManager : MonoBehaviour
         lurkSequence.Append(TriggerKillTween());
 
         lurkSequence.Play();
+    }
+
+    private void SetRandomLurkMat()
+    {
+        var randomMatIndex = Random.Range(0, matSwitcher.NumberOfAvailableMaterials - 1);
+        matSwitcher.SwitchMaterial(randomMatIndex);
     }
 
     private Tween CreateMoveTowardsPlayerTween(Transform monsterTrans)

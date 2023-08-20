@@ -7,6 +7,8 @@ public class MaterialSwitcher : MonoBehaviour
     [SerializeField] private int defaultMaterialIndex;
     [SerializeField] private Material defaultMat;
     [SerializeField] private List<Materials> availableMaterials;
+    
+    public int NumberOfAvailableMaterials => availableMaterials.Count;
 
     private void Awake()
     {

@@ -5,16 +5,16 @@ using Random = UnityEngine.Random;
 public class MonsterSpawner_PositionGenerator : MonoBehaviour
 {
     [SerializeField] private float spawnCircleRadius = 3f;
-    
+
     [SerializeField] private Transform spawnCircleCenter;
     public Transform SpawnCircleCenter => spawnCircleCenter;
+    [SerializeField] private float[] spawnSectionLimits = {0, 35, 70, 90, 90, 120, 155, 180 };
 
     private Vector3 spawnCenter;
     private Vector3 spawnCircleStart;
-    
+
     private MinMaxLimit[] spawnSectors;
 
-    private readonly float[] spawnSectionLimits = {0, 35, 60, 90, 90, 120, 155, 180 };
 
     private void Awake()
     {

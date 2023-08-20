@@ -158,18 +158,18 @@ MonoBehaviour:
     MinLimit: 4
     MaxLimit: 10
   distanceStepLimits:
-    MinLimit: 2
-    MaxLimit: 5.5
+    MinLimit: 1
+    MaxLimit: 4.5
   rotationAroundSpawnerLimits:
     MinLimit: -90
     MaxLimit: 90
-  waitAtWaypointChance: 0.2
+  waitAtWaypointChance: 0.05
   waitLimits:
-    MinLimit: 1.5
-    MaxLimit: 3
+    MinLimit: 0.5
+    MaxLimit: 2
   durationLimits:
     MinLimit: 20
-    MaxLimit: 55
+    MaxLimit: 35
 --- !u!114 &1234562819948588407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,11 +182,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae81666d68c442968c8689e2bf29607f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matSwitcher: {fileID: 4438122261592848291}
   delayBeforeAttack:
     MinLimit: 0.5
     MaxLimit: 3
-  moveTowardsPlayerDistance: 6.5
-  moveAwayDistance: 7
+  moveTowardsPlayerDistance: 7.5
+  moveAwayDistance: 8
   moveTowardsPlayerEase: 5
   monsterWaitTime: 1
   moveAwaySettings:
@@ -255,8 +256,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.62, y: 0.55, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.7, y: 0.7, z: 0.1}
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!114 &8086199271232993806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,13 +283,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3cd7ffd2d144cebb98948cbcb3ebfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distancePercentageCloserPosition: 1.75
-  distancePercentageKillPosition: 0.3
-  getCloserDuration: 0.75
-  getCloserEase: 6
-  waitBeforeKillDuration: 0.75
-  moveInToKillDuration: 0.2
-  moveInToKillEase: 14
+  distancePercentageKillPosition: 0.25
+  killDuration: 4
+  killCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.9946117
+      outSlope: 0.9946117
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.753093
+      value: 0.7490351
+      inSlope: 0.029686248
+      outSlope: 0.029686248
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.596556
+    - serializedVersion: 3
+      time: 0.97836673
+      value: 0.7489648
+      inSlope: 0.012222496
+      outSlope: 0.012222496
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.34954908
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 11.604129
+      outSlope: 11.604129
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  attackMatName: Kraken_Mat
   matSwitcher: {fileID: 4438122261592848291}
 --- !u!54 &5881421570666721864
 Rigidbody:
@@ -530,6 +569,7 @@ MonoBehaviour:
   defaultMat: {fileID: 2100000, guid: 0cef3597f3a6a0546bb6377e25d68590, type: 2}
   availableMaterials:
   - mat: {fileID: 2100000, guid: 0cef3597f3a6a0546bb6377e25d68590, type: 2}
+  - mat: {fileID: 2100000, guid: ffdea8a37beae82479fe8569390855e9, type: 2}
   - mat: {fileID: 2100000, guid: da089e272f19860488a26306fea83922, type: 2}
 --- !u!1 &4641255824985591926
 GameObject:
@@ -556,7 +596,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4641255824985591926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 0.096, z: -0.134}
+  m_LocalPosition: {x: 0, y: 0, z: -0.134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -572,12 +612,12 @@ Light:
   m_GameObject: {fileID: 4641255824985591926}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 2
+  m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2.72
   m_Range: 20
-  m_SpotAngle: 30
+  m_SpotAngle: 155.2
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
