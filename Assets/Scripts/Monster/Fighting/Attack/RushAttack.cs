@@ -61,6 +61,8 @@ public class RushAttack : AbstractAttackNode
         BiteRushSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(BiteRushSound, SoundOrigin);
         
         monsterPivot = FightMonsterSingleton.instance.MonsterTransform;
+
+        boatMovingController = FindFirstObjectByType<DriveStation_Moving>();
         
         CreateWindupPathPositionsList();
         SetupPositionConstraintForRushTarget();
@@ -199,8 +201,6 @@ public class RushAttack : AbstractAttackNode
         return monsterPivot.DOMove(diagonalForwardDownPosition,diveUnderDuration)
             .SetEase(diveUnderEase);
     }
-    
-    public override float GetExecutability() => 100f;
 
     protected override void ForceStopBehaviourImpl()
     {
@@ -217,6 +217,18 @@ public class RushAttack : AbstractAttackNode
         InitBiteRushSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         InitBiteRushSoundInstance.release();
     }
+
+    #region Executability Calculations
+
+    private DriveStation_Moving boatMovingController;
+    public override float GetExecutability()
+    {
+        var isBoatStationary = boatMovingController.PlayerIsStationary;
+        
+        return executability.GetRandomBetweenLimits() * (isBoatStationary ? 1f : 0f);
+    }
+
+    #endregion
 
     protected override void OnDestroy()
     {

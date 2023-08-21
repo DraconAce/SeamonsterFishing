@@ -753,6 +753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3424384871129960480}
   - component: {fileID: 7045397031554442706}
+  - component: {fileID: 8445346891685311492}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -814,6 +815,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 32
   m_CollisionDetection: 0
+--- !u!114 &8445346891685311492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7305416509532914252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b35f44c56717cb4bb4bc6538aefe541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 5
 --- !u!1 &7900949226873236963
 GameObject:
   m_ObjectHideFlags: 0

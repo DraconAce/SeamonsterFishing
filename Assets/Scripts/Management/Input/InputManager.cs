@@ -177,6 +177,8 @@ public class InputManager : Singleton<InputManager>
     }
     
     public void SetInputBlocked(bool isBlocked) => blockPlayerInput = isBlocked;
+    
+    public bool IsPlayerUsingController => LatestDevice == PlayerDevice.Gamepad;
 
     protected override void OnDestroy()
     {

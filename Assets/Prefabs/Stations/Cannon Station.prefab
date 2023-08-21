@@ -90,7 +90,7 @@ Transform:
   - {fileID: 5048971351588916184}
   - {fileID: 423409634534850192}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1140069061896769200
 MonoBehaviour:
@@ -126,10 +126,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonBarrelMovementPivot: {fileID: 0}
+  driveStation: {fileID: 0}
   aimLimit:
-    MinLimit: {x: -45, y: -20, z: 0}
-    MaxLimit: {x: 0, y: 20, z: 0}
+    MinLimit: {x: -55, y: -30, z: 0}
+    MaxLimit: {x: 10, y: 30, z: 0}
   aimSpeed: 10
+  playerAimInfluence: 0.4
+  controllerBoost: 25
 --- !u!114 &6935723897159092324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootDelay: 3
-  fireForce: 150
+  fireForce: 300
   barrelOpening: {fileID: 0}
   reloadSegment: {fileID: 6565113176275434114}
   cannonBallParent: {fileID: 3945572250696685381}
@@ -154,6 +157,18 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6565113176275434114}
+        m_TargetAssemblyTypeName: CannonStation_Reload, Assembly-CSharp
+        m_MethodName: AutoReload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -189,15 +204,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c7a06facc546f69dcea4a73a2b93db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoReloadDelay: 2
   fuse: {fileID: 0}
-  reloadTime: 3
-  reloadCannonSound:
-    Guid:
-      Data1: -1749684422
-      Data2: 1251605997
-      Data3: -2076297561
-      Data4: -354503960
-    Path: event:/Boat/Boat Attack/Cannon Reload
+  reloadSound:
+    eventRef:
+      Guid:
+        Data1: 2039942316
+        Data2: 1204514834
+        Data3: -1342893656
+        Data4: -848009069
+      Path: event:/Boat/Boat Attack/Cannon Reload Temp
 --- !u!114 &1746360987460174724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +341,6 @@ GameObject:
   - component: {fileID: 1286671441009285459}
   - component: {fileID: 328492439966552910}
   - component: {fileID: 607454115643877105}
-  - component: {fileID: 4989029370240723236}
   m_Layer: 0
   m_Name: Cannon Cam
   m_TagString: Untagged
@@ -408,18 +423,6 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 1
---- !u!114 &4989029370240723236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7646216110464541722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a1d7bba17884742abf2d04b8dc4660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7784110465953857866
 GameObject:
   m_ObjectHideFlags: 0

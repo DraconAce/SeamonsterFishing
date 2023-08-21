@@ -36,7 +36,7 @@ public struct ComparableData : IComparableNode
     public ComparableData(int nodeIndexRep, bool isExecutable, int priority, float executability)
     {
         this.executability = executability;
-        this.IsNodeExecutable = isExecutable;
+        IsNodeExecutable = isExecutable;
         
         NodeIndexRep = nodeIndexRep;
         Priority = priority;

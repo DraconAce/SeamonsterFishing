@@ -93,12 +93,12 @@ public class MuckSpewController : MonoBehaviour
     private IEnumerator MuckTimeTracker()
     {
         monsterAnimationController.SetTrigger(buildUpTrigger); //build up
-        
+        cachedPlayerPos = playerTransform.position;
+
         yield return waitForMuckBuildUp;
         monsterAnimationController.SetTrigger(spewTrigger); //get ready for spew
-        
+
         yield return waitForSpewReady;
-        cachedPlayerPos = playerTransform.position;
         SpewAndPlaceNewGoo();
 
         yield return waitForSpewEnd;
@@ -119,8 +119,8 @@ public class MuckSpewController : MonoBehaviour
 
     private void SpewAndPlaceNewGoo()
     {
-        muckSpewMat.DisableKeyword("_EMISSION"); //if this is the second muck spew, no longer fire
-        
+        muckSpewMat.DisableKeyword("_EMISSION");
+
         StartSpewAndAdjustStrength();
 
         currentGoo = RequestNewMuckExplosionAndPlace(cachedPlayerPos);

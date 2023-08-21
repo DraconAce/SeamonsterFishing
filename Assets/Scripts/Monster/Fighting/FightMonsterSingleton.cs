@@ -38,19 +38,22 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
             return behaviourTreeManager;
         }
     }
+    
+    public int NumberOfBodyHits { get; private set; }
 
     public event Action MonsterWeakpointWasHitEvent;
     
-
-    //[SerializeField] private bool triggerMonsterWasHit;
-    //
-    //private void Update()
-    //{
-    //    if (!triggerMonsterWasHit) return;
-    //    
-    //    triggerMonsterWasHit = false;
-    //    WeakPointWasHit();
-    //}
+#if UNITY_EDITOR
+    [SerializeField] private bool triggerMonsterWasHit;
+    
+    private void Update()
+    {
+        if (!triggerMonsterWasHit) return;
+        
+        triggerMonsterWasHit = false;
+        WeakPointWasHit();
+    }
+#endif
 
     public void WeakPointWasHit()
     {
@@ -81,4 +84,6 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
     }
 
     private void TriggerMonsterReaction() => swipeAttack.TriggerBehaviourDirectly();
+    
+    public void IncreaseNumberOfBodyHits() => NumberOfBodyHits++;
 }

@@ -15,6 +15,6 @@ public class SoundTurnOffReloadWhenCamIsOff : MonoBehaviour
     void OnDisable()
     {
         //turn off reload sound if it is valid
-        reloadScript.turnOffReloadSound();
+        //reloadScript.turnOffReloadSound();
     }
 }

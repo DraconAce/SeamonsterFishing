@@ -70,6 +70,7 @@ MonoBehaviour:
       Data3: 2074554247
       Data4: -2118906339
     Path: event:/Boat/Boat Movement/Boat Movement Change Direction
+  VfxDrivingWaterInteractionObject: {fileID: 0}
 --- !u!114 &8275002602943678508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,11 +84,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDriveSpeed: 8
-  driveSpeedincrease: 0.025
-  currentSpeed: 0
+  driveSpeedincrease: 0.065
   moveLimit:
-    MinLimit: -7.5
-    MaxLimit: 7.5
+    MinLimit: -9.5
+    MaxLimit: 9.5
 --- !u!114 &4036470185025516150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardIsRight: 1
   localRightRotation: 180
+  VfxLeftRotationWaterInteractionObject: {fileID: 0}
+  VfxRightRotationWaterInteractionObject: {fileID: 0}
   cannonBaseMovementAxis: 0
   cannonBarrelRotationAxis: 0
   cannonBaseTransform: {fileID: 0}

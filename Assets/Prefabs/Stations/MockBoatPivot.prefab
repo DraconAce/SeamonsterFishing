@@ -690,7 +690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionsToSubscribeTo:
   - ActivateSpot
-  coolDownTimer: 10
+  coolDownTimer: 30
   autoChargeAfterUse: 1
   onFlashReady:
     m_PersistentCalls:

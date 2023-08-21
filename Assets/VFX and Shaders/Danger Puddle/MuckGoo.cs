@@ -19,6 +19,7 @@ public class MuckGoo : MonoBehaviour, IPoolObject
 
     private Transform gooTransform;
     private Transform fireTransform;
+    private PlayerEnteredMuckTracker playerEnteredMuckTracker;
 
     private Tween emitterSizeTween;
     private Tween backupMuckDisappearTween;
@@ -34,10 +35,14 @@ public class MuckGoo : MonoBehaviour, IPoolObject
     {
         gooTransform = gooParticles.transform;
         fireTransform = fireParticles.transform;
+
+        playerEnteredMuckTracker = GetComponentInChildren<PlayerEnteredMuckTracker>();
     }
 
     public void ResetInstance()
     {
+        muckCollider.enabled = true;
+        
         DOVirtual.DelayedCall(0.5f, PlayMuckExplosion);
         
         DOVirtual.DelayedCall(StartEmitterDelay, PlayGooParticles);
@@ -106,16 +111,19 @@ public class MuckGoo : MonoBehaviour, IPoolObject
         
         endFireSequence.AppendCallback(StopFireParticleEmission);
         
-        endFireSequence.AppendInterval(1);
+        endFireSequence.AppendInterval(3);
         
         endFireSequence.AppendCallback(() => ContainerOfObject.ReturnToPool());
     }
 
     private void StopFireParticleEmission()
     {
-        //var fireEmission = fireParticles.emission;
-        //fireEmission.rateOverTimeMultiplier = 0;
-        fireParticles.Stop();
+        muckCollider.enabled = false;
+        
+        playerEnteredMuckTracker.InterruptMuckEffects();
+        
+        var fireEmission = fireParticles.emission;
+        fireEmission.rateOverTimeMultiplier = 0;
     }
 
     public void OnReturnInstance()
@@ -128,6 +136,8 @@ public class MuckGoo : MonoBehaviour, IPoolObject
         backupMuckDisappearTween?.Kill();
         
         StopParticles();
+        
+        playerEnteredMuckTracker.InterruptMuckEffects();
     }
 
     private void StopParticles()

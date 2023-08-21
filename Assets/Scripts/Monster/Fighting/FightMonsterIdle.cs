@@ -29,7 +29,7 @@ public class FightMonsterIdle : AbstractMonsterBehaviour
         yield break;
     }
 
-    public override float GetExecutability() => 0.1f;
+    public override float GetExecutability() => executability.GetRandomBetweenLimits();
 
     protected override void ForceStopBehaviourImpl(){}
 }
