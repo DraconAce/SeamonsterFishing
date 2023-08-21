@@ -2476,6 +2476,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5360156059822767208}
     m_Modifications:
+    - target: {fileID: 878802717788813301, guid: 0c6928d7fecd0304c8b6af212cde439d, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 550
+      objectReference: {fileID: 0}
     - target: {fileID: 3886414882015738646, guid: 0c6928d7fecd0304c8b6af212cde439d, type: 3}
       propertyPath: m_Name
       value: BG with Text
@@ -2834,6 +2838,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5360156059822767208}
     m_Modifications:
+    - target: {fileID: 878802717788813301, guid: 0c6928d7fecd0304c8b6af212cde439d, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 550
+      objectReference: {fileID: 0}
     - target: {fileID: 3886414882015738646, guid: 0c6928d7fecd0304c8b6af212cde439d, type: 3}
       propertyPath: m_Name
       value: BG with Text
