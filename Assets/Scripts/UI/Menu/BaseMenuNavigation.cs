@@ -22,6 +22,11 @@ public class BaseMenuNavigation : MonoBehaviour
 
         SceneController.instance.SwitchToScene(reloadScene);
     }
+    
+    public void ShowControls()
+    {
+        Debug.Log("Show Controls");
+    }
 
     public void QuitGame() => Application.Quit();
 }
