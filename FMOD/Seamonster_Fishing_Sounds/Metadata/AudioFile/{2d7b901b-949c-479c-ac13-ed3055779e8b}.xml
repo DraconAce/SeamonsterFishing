@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{1c0a7467-b4bc-44a3-87ad-526ead5a79b7}">
+	<object class="AudioFile" id="{2d7b901b-949c-479c-ac13-ed3055779e8b}">
 		<property name="assetPath">
-			<value>Attack/Big Swipe/Big Swipe Hiss 4.wav</value>
+			<value>Attack/Big Swipe/Big Swipe Hiss 2.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
@@ -11,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>7.151791666666667</value>
+			<value>5.8258958333333331</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{c7fa1a32-825a-4ace-8201-d7dd365bcd38}</destination>
