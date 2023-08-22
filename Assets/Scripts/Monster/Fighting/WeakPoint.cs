@@ -5,35 +5,29 @@ using UnityEngine;
 public class WeakPoint : MonoBehaviour
 {
     [SerializeField] private Material hitMat;
-    private Material normalMat;
-
+    
     private MeshRenderer renderer;
-
-    private readonly WaitForSeconds changeMatWait = new(1.5f);
+    private Collider collider;
 
     private readonly string cannonBallTag = "cannonBall";
 
     private void Start()
     {
         TryGetComponent(out renderer);
-
-        normalMat = renderer.material;
+        TryGetComponent(out collider);
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (!other.gameObject.CompareTag(cannonBallTag)) return;
 
-        StartCoroutine(WeakPointHitRoutine());
+        WeakPointWasHit();
     }
 
-    private IEnumerator WeakPointHitRoutine()
+    private void WeakPointWasHit()
     {
+        collider.enabled = false;
         ChangeMaterial(hitMat);
-        
-        yield return changeMatWait;
-        
-        ChangeMaterial(normalMat);
     }
 
     private void ChangeMaterial(Material newMat) => renderer.material = newMat;

@@ -27,6 +27,13 @@ public class SoundEventRep
         
         soundInstance.start();
     }
+
+    public void StopInstance(STOP_MODE stopMode = STOP_MODE.ALLOWFADEOUT)
+    {
+        if (!soundInstance.isValid()) return;
+
+        soundInstance.stop(stopMode);
+    }
     
     public void StopAndReleaseInstance(STOP_MODE stopMode = STOP_MODE.ALLOWFADEOUT)
     {

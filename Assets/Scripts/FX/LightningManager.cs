@@ -12,6 +12,7 @@ public class Lightning_Manager : MonoBehaviour
     [SerializeField] private float outlineWidth;
     [SerializeField] private float AppearOutlineDuration = 0.5f;
     [SerializeField] private float DisappearOutlineDuration = 0.2f;
+    [SerializeField] private float OutlineAlpha = 0.1f;
 
     [SerializeField] private Light spotLight;
     
@@ -91,7 +92,7 @@ public class Lightning_Manager : MonoBehaviour
             {
                 targetSettings.OnStartAction?.Invoke();
                 //outlineComponent.OutlineWidth = 3;
-                DOVirtual.Color(new Color(1,1,1,0), new Color(1,1,1,0.2f), AppearOutlineDuration, (colorValue) =>
+                DOVirtual.Color(new Color(1,1,1,0), new Color(1,1,1,OutlineAlpha), AppearOutlineDuration, (colorValue) =>
                 {
                     outlineComponent.OutlineColor = colorValue;
                 });
@@ -106,7 +107,7 @@ public class Lightning_Manager : MonoBehaviour
             { 
                 targetSettings.OnCompleteAction?.Invoke();
                 //outlineComponent.OutlineWidth = 0;
-                DOVirtual.Color(new Color(1,1,1,0.2f), new Color(1,1,1,0), DisappearOutlineDuration, (colorValue) =>
+                DOVirtual.Color(new Color(1,1,1,OutlineAlpha), new Color(1,1,1,0), DisappearOutlineDuration, (colorValue) =>
                 {
                     outlineComponent.OutlineColor = colorValue;
                 });

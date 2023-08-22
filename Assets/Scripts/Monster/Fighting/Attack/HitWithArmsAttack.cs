@@ -127,4 +127,9 @@ public class HitWithArmsAttack : AbstractAttackNode
     }
     
     private bool TweenCompletedOrIsDead(Tween tween) => tween.IsComplete() || !tween.IsActive();
+
+    protected override void ForceStopBehaviourImpl()
+    {
+        
+    }
 }

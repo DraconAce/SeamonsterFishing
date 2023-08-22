@@ -45,7 +45,6 @@ public class CannonStation_Shooting : AbstractStationSegment, IInputEventSubscri
     
     private CannonStation cannonStation => (CannonStation) ControllerStation;
 
-
     private void Start()
     {
         CannonShotSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(CannonShotSound, barrelOpening.gameObject);

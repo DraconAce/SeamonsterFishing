@@ -15,7 +15,9 @@ public class MainSoundThemeManager : MonoBehaviour
     [SerializeField] private Ease fadeOutEase = Ease.Linear;
 
     private int themePartIndex;
+    
     private FightMonsterSingleton monsterSingleton;
+    private FightMonsterState fightMonsterState;
     
     private readonly List<Tween> fadeTweens = new(3);
 
@@ -24,8 +26,10 @@ public class MainSoundThemeManager : MonoBehaviour
         CreateInstanceForThemePartsAndSetVolume0();
         
         monsterSingleton = FightMonsterSingleton.instance;
+        fightMonsterState = monsterSingleton.FightState;
         
         monsterSingleton.MonsterWeakpointWasHitEvent += OnWeakPointWasHit;
+        fightMonsterState.MonsterStateChangedEvent += OnMonsterStateChanged;
         
         StartNextThemePart();
     }
@@ -60,7 +64,12 @@ public class MainSoundThemeManager : MonoBehaviour
         fadeTweens.Add(fadeTween);
     }
     
-    //fade out all three themes when won sequence is playing
+    private void OnMonsterStateChanged(MonsterState newState)
+    {
+        if (newState != MonsterState.Dead) return;
+        
+        StartFadeOutAllParts();
+    }
 
     private void StartFadeOutAllParts()
     {
@@ -86,6 +95,9 @@ public class MainSoundThemeManager : MonoBehaviour
     {
         foreach (var themePart in mainThemeParts) 
             themePart.StopAndReleaseInstance(STOP_MODE.IMMEDIATE);
+        
+        if(fightMonsterState != null)
+            fightMonsterState.MonsterStateChangedEvent -= OnMonsterStateChanged;
 
         if(monsterSingleton == null) return;
         
