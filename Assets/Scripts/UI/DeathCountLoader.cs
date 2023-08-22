@@ -7,7 +7,6 @@ public class DeathCountLoader : MonoBehaviour
 {
     void OnEnable()
     {
-        Debug.Log("Load OnEnable");
         GetComponent<TMP_Text>().text = PlayerPrefs.GetInt("Deaths", 0).ToString();
     }
     

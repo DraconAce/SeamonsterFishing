@@ -15,7 +15,6 @@ public class DeathCountSaver : MonoBehaviour
     */
     public void countDeath()
     {
-        Debug.Log("counting Death");
         localDeathcounter = PlayerPrefs.GetInt("Deaths", 0);
         localDeathcounter++;
         PlayerPrefs.SetInt("Deaths", localDeathcounter);
