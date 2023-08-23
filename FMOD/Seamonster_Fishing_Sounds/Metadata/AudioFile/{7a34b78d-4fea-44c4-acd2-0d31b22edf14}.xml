@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{d7a27ec9-5c01-4c15-a2fd-0e2e4560b413}">
+	<object class="AudioFile" id="{7a34b78d-4fea-44c4-acd2-0d31b22edf14}">
 		<property name="assetPath">
-			<value>Music/Seamonster Fishing Battle Layer 3.mp3</value>
+			<value>Music/Seamonster Fishing Battle Layer 3 V2.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
