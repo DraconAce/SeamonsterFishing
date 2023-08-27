@@ -3,7 +3,11 @@ public class ViewDirectionGamepadControls : AbstractViewDirectionControls
     private string leftString;
     public override PlayerDevice ControlDevice => PlayerDevice.Gamepad;
 
-    private void Start() => leftString = ViewDirectionHandler.RotationDirection.Left.ToString();
+    protected override void Start()
+    {
+        base.Start();
+        leftString = ViewDirectionHandler.RotationDirection.Left.ToString();
+    }
 
     protected override void ChangeViewBasedOnInput(string actionName)
     {

@@ -11,9 +11,7 @@ public class HighscoreHandler : MonoBehaviour
     private GameStateManager gameStateManager;
     
     private const string HighscoreKey = "Highscore";
-    private const string NewHighscoreText = "New Highscore: ";
-    private const string OldHighscoreText = "Highscore: ";
-    private const string ScoreText = "Score: ";
+    private const string DepthText = " Fathoms";
 
     private void Start()
     {
@@ -41,7 +39,7 @@ public class HighscoreHandler : MonoBehaviour
 
     private void SetCurrentDepthText(int currentDepth)
     {
-        currentDepthText.text = ScoreText + currentDepth;
+        currentDepthText.text = currentDepth + DepthText;
     }
 
     private void CheckForHighscoreAndSetTexts(int currentDepth)
@@ -56,7 +54,7 @@ public class HighscoreHandler : MonoBehaviour
         
         if (currentDepth <= formerHighscore)
         {
-            SetHighscoreText(OldHighscoreText, formerHighscore);
+            SetHighscoreText(formerHighscore);
             return;
         }
         
@@ -66,7 +64,7 @@ public class HighscoreHandler : MonoBehaviour
     private void SetNewHighscore(int currentDepth)
     {
         SetHighscore(currentDepth);
-        SetHighscoreText(NewHighscoreText, currentDepth);
+        SetHighscoreText(currentDepth);
     }
 
     private static void SetHighscore(int newHighscore)
@@ -75,9 +73,9 @@ public class HighscoreHandler : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void SetHighscoreText(string prefix, int currentDepth)
+    private void SetHighscoreText(int currentDepth)
     {
-        highscoreText.text = prefix + currentDepth;
+        highscoreText.text = currentDepth + DepthText;
     }
     
     private int GetHighscore() => PlayerPrefs.GetInt(HighscoreKey);

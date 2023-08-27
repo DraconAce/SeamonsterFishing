@@ -24,14 +24,17 @@ public class MonsterSpawner : MonoBehaviour
     public List<Transform> ActiveMonsterProxyTransforms { get; } = new();
     public Transform SpawnCenter => positionGenerator.SpawnCircleCenter;
 
+    private void Awake()
+    {
+        TryGetComponent(out positionGenerator);
+    }
+
     private void Start()
     {
         gameObject.isStatic = true;
         SetupPrefabPoolsForEachMonsterPrefab();
 
         gameStateManager = GameStateManager.instance;
-
-        TryGetComponent(out positionGenerator);
     }
 
     public void StartSpawning() => spawningRoutine = StartCoroutine(MonsterSpawnRoutine());
