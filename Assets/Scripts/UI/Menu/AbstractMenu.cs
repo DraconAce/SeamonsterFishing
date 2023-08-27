@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 {
+    [SerializeField] private bool isInitiallyOpen;
     [SerializeField] protected string[] menuInputActions;
     [SerializeField] private GameObject firstSelectedOnMenuOpen;
     [SerializeField] private GameObject menuContainer;
@@ -30,7 +31,13 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         inputManager = InputManager.instance;
         
         TryGetComponent(out menuGroup);
-        CloseMenu(false);
+        
+        if(!isInitiallyOpen) CloseMenu(false);
+        else
+        {
+            menuIsOpen = false;
+            OpenMenu(false);
+        }
 
         initialCloseExecuted = true;
         
@@ -42,7 +49,7 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
 
     protected virtual void InputStartedImpl(){}
 
-    protected void OpenMenu()
+    protected void OpenMenu(bool invokeEvent = true)
     {
         if(menuIsOpen) return;
         
@@ -54,12 +61,13 @@ public abstract class AbstractMenu : MonoBehaviour, IInputEventSubscriber
         ToggleMenuCanvas(true);
         OpenMenuImpl();
         
+        if(!invokeEvent) return;
         onMenuOpened?.Invoke();
     }
 
     private void ToggleMenuCanvas(bool activate)
     {
-        menuContainer.SetActive(activate);
+        menuContainer?.SetActive(activate);
         menuGroup.alpha = activate ? 1 : 0;
     }
 

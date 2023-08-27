@@ -1,9 +1,15 @@
+using System;
 using UnityEngine;
 
-namespace Baiting.UI
+public class UIElementSelector : MonoBehaviour
 {
-    public class UIElementSelector : MonoBehaviour
+    private InputManager inputManager;
+
+    private void Start() => inputManager = InputManager.instance;
+
+    public void SelectScreenObject(GameObject obToSelect)
     {
-        
+        inputManager.EventSystem.SetSelectedGameObject(null);
+        inputManager.EventSystem.SetSelectedGameObject(obToSelect);
     }
 }
