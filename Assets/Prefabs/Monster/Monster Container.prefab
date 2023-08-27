@@ -445,11 +445,11 @@ MonoBehaviour:
   deathTriggerName: Death
   monsterDeathSound:
     Guid:
-      Data1: -948089745
-      Data2: 1254127406
-      Data3: 1870342808
-      Data4: 367378158
-    Path: event:/Monster/Hit Weakpoint
+      Data1: -2104242122
+      Data2: 1137475658
+      Data3: 1606488467
+      Data4: 668538248
+    Path: event:/Monster/Monster Death
   initialDelay: 1
   moveDownTime: 4
   rotateBackwardsTime: 2
