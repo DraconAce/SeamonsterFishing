@@ -7,6 +7,7 @@ public class MonsterSpawnBehaviour : MonoBehaviour, IPoolObject
 {
     [SerializeField] private MaterialSwitcher matSwitcher;
 
+    private BaitingMonsterState monsterState;
     private MonsterApproachManager monsterApproachManager;
     private MonsterPositionFaker monsterPositionFaker;
     
@@ -16,7 +17,11 @@ public class MonsterSpawnBehaviour : MonoBehaviour, IPoolObject
     private MonsterSpawner monsterSpawner;
     public PoolObjectContainer ContainerOfObject { get; set; }
 
-    private void Awake() => TryGetComponent(out monsterApproachManager);
+    private void Awake()
+    {
+        TryGetComponent(out monsterApproachManager);
+        TryGetComponent(out monsterState);
+    }
 
     private void Start()
     {
@@ -29,6 +34,8 @@ public class MonsterSpawnBehaviour : MonoBehaviour, IPoolObject
     {
         MonsterSpawnedEvent?.Invoke();
         matSwitcher.SwitchMaterial(0);
+
+        monsterState.CurrentState = MonsterState.Approaching;
         
         monsterApproachManager.StartApproach();
     }

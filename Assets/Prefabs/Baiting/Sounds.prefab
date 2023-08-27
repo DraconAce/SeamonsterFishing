@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 9210594731076145073}
   - component: {fileID: 2826402145889936107}
   m_Layer: 0
-  m_Name: Cage Sinking
+  m_Name: Ambience 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9210594731076145073
 Transform:
   m_ObjectHideFlags: 0
@@ -47,11 +47,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1760649077
-      Data2: 1216578377
-      Data3: 1658587535
-      Data4: 2145583037
-    Path: event:/Baiting/Underwater/CageDescending_loop
+      Data1: -1307687035
+      Data2: 1222700483
+      Data3: -827880820
+      Data4: 309528623
+    Path: event:/Baiting/Ambience/AmbienceAfterStartUntil1800fm
   Event: 
   PlayEvent: 11
   StopEvent: 12
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 5859985474526109077}
   - component: {fileID: 1733713343569135121}
   m_Layer: 0
-  m_Name: Sinking
+  m_Name: Ambience 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,11 +110,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1518335315
-      Data2: 1250252665
-      Data3: -968575332
-      Data4: -1306614582
-    Path: event:/Baiting/Underwater/Sinking_loop
+      Data1: 1173116033
+      Data2: 1242215772
+      Data3: -769622597
+      Data4: -1586557155
+    Path: event:/Baiting/Ambience/AmbienceAfter1795fm
   Event: 
   PlayEvent: 11
   StopEvent: 12
@@ -154,12 +154,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2319449504268799474}
   - {fileID: 7825304089986485302}
+  - {fileID: 2319449504268799474}
   - {fileID: 9210594731076145073}
   - {fileID: 5859985474526109077}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5121452416528512310
 GameObject:
@@ -222,7 +222,7 @@ MonoBehaviour:
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: 1
+  OverrideMinDistance: 0
   OverrideMaxDistance: 20
 --- !u!1 &9168831267353250446
 GameObject:
@@ -235,12 +235,12 @@ GameObject:
   - component: {fileID: 2319449504268799474}
   - component: {fileID: 3701525923026752638}
   m_Layer: 0
-  m_Name: Ambience
+  m_Name: Start Ambience
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2319449504268799474
 Transform:
   m_ObjectHideFlags: 0
@@ -271,11 +271,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1529617274
-      Data2: 1226157849
-      Data3: -1414832209
-      Data4: -719599921
-    Path: event:/Baiting/Ambience/Underwater_Ambience_1
+      Data1: -733259911
+      Data2: 1087719053
+      Data3: 619351715
+      Data4: -675202222
+    Path: event:/Baiting/Ambience/AmbienceStartRun
   Event: 
   PlayEvent: 11
   StopEvent: 12

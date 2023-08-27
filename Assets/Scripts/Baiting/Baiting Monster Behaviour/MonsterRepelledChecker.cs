@@ -28,9 +28,9 @@ public class MonsterRepelledChecker : MonoBehaviour
         spawnBehaviour.MonsterDespawnedEvent += UnsubscribeFromWasRepelledEvent;
     }
 
-    private void SubscribeToWasRepelledEvent() => monsterSingleton.MonsterWasRepelledEvent += OnMonsterWasRepelled;
+    private void SubscribeToWasRepelledEvent() => monsterSingleton.TryRepelMonsterEvent += OnMonsterWasRepelled;
 
-    private void UnsubscribeFromWasRepelledEvent() => monsterSingleton.MonsterWasRepelledEvent -= OnMonsterWasRepelled;
+    private void UnsubscribeFromWasRepelledEvent() => monsterSingleton.TryRepelMonsterEvent -= OnMonsterWasRepelled;
 
     private void OnMonsterWasRepelled()
     {

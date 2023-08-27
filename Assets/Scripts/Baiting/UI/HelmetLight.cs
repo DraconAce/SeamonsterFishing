@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class HelmetLight : MonoBehaviour
 {
+    [SerializeField] private bool playWarningSound;
+    [SerializeField] private SoundEventRep warningSound;
     [SerializeField] private MeshRenderer lightRenderer;
     
     [SerializeField] private Material lightOnMaterial;
@@ -24,7 +26,9 @@ public class HelmetLight : MonoBehaviour
         monsterSingleton = BaitingMonsterSingleton.instance;
         
         monsterSingleton.MonsterFinishedLurkingApproachEvent += OnMonsterStartedLurking;
-        monsterSingleton.MonsterWasRepelledEvent += OnMonsterRepelled;
+        monsterSingleton.TryRepelMonsterEvent += OnTryRepelMonsterRepelled;
+        
+        if(playWarningSound) warningSound.CreateInstanceForSound(PlayerSingleton.instance.PlayerTransform.gameObject);
         
         ToggleLight(false);
     }
@@ -51,16 +55,26 @@ public class HelmetLight : MonoBehaviour
     {
         blinkingTween = light.DOIntensity(onIntensity, blinkDuration)
             .SetEase(blinkEase)
+            .OnStart(PlayWarningSound)
+            .OnComplete(PlayWarningSound)
             .SetLoops(-1, LoopType.Yoyo);
     }
 
-    private void OnMonsterRepelled() => ToggleLight(false);
+    private void PlayWarningSound()
+    {
+        if(!playWarningSound) return;
+        warningSound.StartInstance();
+    }
+
+    private void OnTryRepelMonsterRepelled() => ToggleLight(false);
 
     private void OnDestroy()
     {
+        warningSound.StopAndReleaseInstance();
+        
         if(monsterSingleton == null) return;
         
         monsterSingleton.MonsterFinishedLurkingApproachEvent -= OnMonsterStartedLurking;
-        monsterSingleton.MonsterWasRepelledEvent -= OnMonsterRepelled;
+        monsterSingleton.TryRepelMonsterEvent -= OnTryRepelMonsterRepelled;
     }
 }

@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class RadarUI : MonoBehaviour
 {
@@ -46,6 +44,7 @@ public class RadarUI : MonoBehaviour
     [SerializeField] private float radarCheckInterval;
     [SerializeField] private RectTransform radarDotParent;
     [SerializeField] private GameObject radarDotPrefab;
+    [SerializeField] private SoundEventRep radarSound;
 
     private float farDistance;
     private float radarRadius;
@@ -61,6 +60,8 @@ public class RadarUI : MonoBehaviour
 
     private void Start()
     {
+        radarSound.CreateInstanceForSound(PlayerSingleton.instance.PlayerTransform.gameObject);
+        
         var monsterSingleton = BaitingMonsterSingleton.instance;
 
         monsterSpawner = monsterSingleton.Spawner;
@@ -104,6 +105,9 @@ public class RadarUI : MonoBehaviour
             UpdateActiveMonsterRadarInfoList();
             
             CreateRadarDots();
+            
+            if(monsterSpawner.ActiveMonsterProxyTransforms.Count > 0)
+                radarSound.StartInstance();
         }
     }
 
@@ -142,6 +146,8 @@ public class RadarUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        radarSound.StopAndReleaseInstance();
+        
         if (radarCoroutine == null) return;
         
         StopCoroutine(radarCoroutine);

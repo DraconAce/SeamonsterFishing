@@ -369,8 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitBetweenSoundsLimit:
-    MinLimit: 4
-    MaxLimit: 10
+    MinLimit: 1
+    MaxLimit: 5
   monsterSoundsList:
   - MonsterRange: 0
     monsterSoundRefList:
@@ -399,7 +399,7 @@ MonoBehaviour:
           Data3: -1024259163
           Data4: -1386984086
         Path: event:/Baiting/Monster/MonsterApproach_Far
-  maxAttenuationDistanceForApproach: 40
+  maxAttenuationDistanceForApproach: 60
   approachSoundEmitter: {fileID: 7971904250638264494}
   lurkSoundEmitter: {fileID: 4713329607241235055}
   repelledSoundEmitter: {fileID: 419608736329854840}

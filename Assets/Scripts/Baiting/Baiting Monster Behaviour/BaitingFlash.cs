@@ -22,7 +22,7 @@ public class BaitingFlash : SpotFlash
 
         if (!Physics.Raycast(ray, out var hit) || !hit.collider.gameObject.CompareTag("monster")) return;
         
-        monsterSingleton.MonsterWasRepelled();
+        monsterSingleton.FlashWasUsed();
     }
 
     public void ToggleFlashReady(bool ready)

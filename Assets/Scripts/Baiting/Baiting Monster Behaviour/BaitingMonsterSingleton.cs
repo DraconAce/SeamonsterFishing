@@ -14,7 +14,7 @@ public class BaitingMonsterSingleton : Singleton<BaitingMonsterSingleton>
     public Dictionary<MonsterRange, float> MonsterRangesDict { get; private set; } = new();
 
     public event Action MonsterFinishedLurkingApproachEvent;
-    public event Action MonsterWasRepelledEvent;
+    public event Action TryRepelMonsterEvent;
     public event Action<Transform> MonsterStartedKillEvent;
 
     public override void OnCreated()
@@ -30,11 +30,11 @@ public class BaitingMonsterSingleton : Singleton<BaitingMonsterSingleton>
             MonsterRangesDict.Add(monsterRangeDefinition.Range, monsterRangeDefinition.Distance);
     }
 
-    public void MonsterWasRepelled()
+    public void FlashWasUsed()
     {
         if (PlayerIsBeingKilled) return;
         
-        MonsterWasRepelledEvent?.Invoke();
+        TryRepelMonsterEvent?.Invoke();
     }
     
     public void InvokeMonsterStartedKill(Transform playerAttackRepTrans) 

@@ -50,13 +50,12 @@ MonoBehaviour:
   depthOffset: 0
   meterPerSecond: 3
   movementDamper: 1
-  depthText: {fileID: 0}
   waterSurface: {fileID: 0}
   depthThresholds:
-  - 109
-  - 567
-  - 2187
-  - 2188
+  - 150
+  - 1800
+  - 2500
+  - 2501
 --- !u!114 &8838369382948821384
 MonoBehaviour:
   m_ObjectHideFlags: 0

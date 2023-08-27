@@ -327,6 +327,14 @@ MonoBehaviour:
   radarCheckInterval: 30
   radarDotParent: {fileID: 2370686035938570115}
   radarDotPrefab: {fileID: 6849587620642996973, guid: 18491b424ded3074b9be27db809668fa, type: 3}
+  radarSound:
+    eventRef:
+      Guid:
+        Data1: -962418523
+        Data2: 1148344345
+        Data3: 1220771493
+        Data4: -340682018
+      Path: event:/Baiting/Diver/RadarBeep
 --- !u!222 &5808117688514295735
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -593,7 +601,6 @@ MonoBehaviour:
   numberOfCardColumns: 4
   cardSpacing: -82.5
   firstCardPosition: {x: 125, y: 0}
-  depthHandler: {fileID: 0}
   depthCardPrefab: {fileID: 8224702015647345846, guid: 1daf1a5481af96344ac7542463ece8be, type: 3}
   poolParent: {fileID: 3989996474922744299}
 --- !u!1 &8488428913691329014
@@ -1144,6 +1151,30 @@ PrefabInstance:
     - target: {fileID: 1773567286052302550, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059047731940093487, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
+      propertyPath: playWarningSound
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059047731940093487, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
+      propertyPath: warningSound.eventRef.Path
+      value: event:/Baiting/Diver/SilentAlarm
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059047731940093487, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
+      propertyPath: warningSound.eventRef.Guid.Data1
+      value: -1591274586
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059047731940093487, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
+      propertyPath: warningSound.eventRef.Guid.Data2
+      value: 1234937211
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059047731940093487, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
+      propertyPath: warningSound.eventRef.Guid.Data3
+      value: -1330363254
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059047731940093487, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
+      propertyPath: warningSound.eventRef.Guid.Data4
+      value: -1198097886
       objectReference: {fileID: 0}
     - target: {fileID: 7420545912927985543, guid: 1125de897317dc847aa883fcd435fec7, type: 3}
       propertyPath: m_Name

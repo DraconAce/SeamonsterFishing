@@ -36,7 +36,7 @@ public class MonsterAttackManager : MonoBehaviour
         
         lurkSoundLength = soundPlayer.GetLurkSoundLength();
 
-        monsterSingleton.MonsterWasRepelledEvent += OnMonsterWasRepelled;
+        monsterSingleton.TryRepelMonsterEvent += OnTryRepelMonster;
     }
 
     public void StartAttack()
@@ -143,8 +143,10 @@ public class MonsterAttackManager : MonoBehaviour
             () => killedChecker.StartKillingPlayer(), false);
     }
 
-    private void OnMonsterWasRepelled()
+    private void OnTryRepelMonster()
     {
+        if(monsterState.CurrentState != MonsterState.Attacking) return;
+        
         lurkSequence?.Kill();
         repelledTween?.Kill();
 
@@ -155,6 +157,6 @@ public class MonsterAttackManager : MonoBehaviour
     {
         lurkSequence?.Kill();
         
-        monsterSingleton.MonsterWasRepelledEvent -= OnMonsterWasRepelled;
+        monsterSingleton.TryRepelMonsterEvent -= OnTryRepelMonster;
     }
 }
