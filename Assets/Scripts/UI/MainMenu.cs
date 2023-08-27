@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : AbstractMenu
 {
     private SceneController sceneController;
 
-    private void Start() => sceneController = SceneController.instance;
-    
+    protected override bool UseInputActions => false;
 
+    protected override void Start()
+    {
+        base.Start();
+        sceneController = SceneController.instance;
+    }
+    
     public void LoadFishingScene() => SwitchToScene(Level.Fishing);
     
     public void LoadBaitingScene() => SwitchToScene(Level.Baiting);
