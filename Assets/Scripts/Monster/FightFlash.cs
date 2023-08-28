@@ -31,7 +31,7 @@ public class FightFlash : SpotFlash
         
         lampCooldown = base.GetCoolDownTimer();
         //get Lamp Material
-        lampMat = Lamp.GetComponent<Renderer>().material;
+        lampMat = Lamp.GetComponent<Renderer>().materials[1];
         lampMat.SetColor("_EmissionColor", LampOffEmissionColor*LampEmissionStrength);
     }
 
