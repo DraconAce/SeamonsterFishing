@@ -546,6 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb70d89bcdab440ca7ea43b75cfde0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInitiallyOpen: 0
   menuInputActions:
   - ToggleMenu
   firstSelectedOnMenuOpen: {fileID: 9101175844919679709}
@@ -1518,6 +1519,7 @@ GameObject:
   - component: {fileID: 270764123754874604}
   - component: {fileID: 3883095372120351084}
   - component: {fileID: 2223642298180109910}
+  - component: {fileID: 526240875266735933}
   m_Layer: 0
   m_Name: WinDeathHandler
   m_TagString: Untagged
@@ -1570,6 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f4ac6f95d8456aa225a51e320cb691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInitiallyOpen: 0
   menuInputActions: []
   firstSelectedOnMenuOpen: {fileID: 0}
   menuContainer: {fileID: 8162786655743078998}
@@ -1597,13 +1600,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 6104079180653577727}
-        m_TargetAssemblyTypeName: DeathCountSaver, Assembly-CSharp
-        m_MethodName: countDeath
-        m_Mode: 1
+      - m_Target: {fileID: 526240875266735933}
+        m_TargetAssemblyTypeName: UIElementSelector, Assembly-CSharp
+        m_MethodName: SelectScreenObject
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1552227593565485778}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1624,6 +1627,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 526240875266735933}
+        m_TargetAssemblyTypeName: UIElementSelector, Assembly-CSharp
+        m_MethodName: SelectScreenObject
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1397963885023009898}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &526240875266735933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498644466666201827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837eba8721ff5034bb9eb94aa932c8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8691802158752142646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,12 +1835,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2194823257428747315, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
   m_PrefabInstance: {fileID: 1172451462549115676}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1552227593565485778 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 418831059202288078, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
+  m_PrefabInstance: {fileID: 1172451462549115676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2804684744618566451 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3938784416768389167, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
   m_PrefabInstance: {fileID: 1172451462549115676}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1552227593565485778}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -1971,12 +2003,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2194823257428747315, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
   m_PrefabInstance: {fileID: 1632955217063982500}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1397963885023009898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 418831059202288078, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
+  m_PrefabInstance: {fileID: 1632955217063982500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2305899706127664523 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3938784416768389167, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
   m_PrefabInstance: {fileID: 1632955217063982500}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1397963885023009898}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}

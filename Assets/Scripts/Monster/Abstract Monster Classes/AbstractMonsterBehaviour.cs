@@ -18,7 +18,7 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
     private bool IsTimedOut { get; set; }
     protected abstract MonsterState BehaviourState { get; }
 
-    protected bool isNodeExecutable = true;
+    private bool isNodeExecutable = true;
     public override bool IsNodeExecutable
     {
         get => isNodeExecutable && !IsTimedOut;
@@ -47,11 +47,11 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
     private IEnumerator BehaviourRoutine()
     {
         yield return BehaviourRoutineImpl();
+
+        StartTimeoutTween();
         
         behaviourTreeManager.TryResetCurrentBehaviour(this);
         behaviourTreeManager.RequestNextBehaviour();
-        
-        StartTimeoutTween();
     }
 
     protected abstract IEnumerator BehaviourRoutineImpl();
@@ -72,6 +72,8 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
             StopCoroutine(behaviourRoutine);
         
         stopBehaviourRoutine = StartCoroutine(StopBehaviourRoutine());
+        
+        StartTimeoutTween();
     }
     
     private IEnumerator StopBehaviourRoutine()
@@ -89,6 +91,8 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
         if(stopBehaviourRoutine != null) StopCoroutine(stopBehaviourRoutine);
         
         ForceStopBehaviourImpl();
+        
+        StartTimeoutTween();
     }
     
     protected abstract void ForceStopBehaviourImpl();

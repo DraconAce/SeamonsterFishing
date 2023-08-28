@@ -38,14 +38,6 @@ public class CannonStation_Reload : AbstractStationSegment
         reloadSoundLength = reloadSound.GetSoundLength();
     }
 
-    protected override void OnGameStateDoesNotMatchCannonStation()
-    {
-        reloadingTween?.Kill();
-        autoReloadDelayTween?.Kill();
-        
-        IsReloading = false;
-    }
-
     public void AutoReload()
     {
         autoReloadDelayTween?.Kill();
