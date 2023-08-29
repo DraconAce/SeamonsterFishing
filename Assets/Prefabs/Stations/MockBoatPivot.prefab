@@ -1275,7 +1275,7 @@ MonoBehaviour:
         m_Calls: []
   Lamp: {fileID: 667650932231158887}
   LampOffEmissionColor: {r: 0.2830189, g: 0.07880134, b: 0, a: 0}
-  LampEmissionStrength: 5
+  LampEmissionStrength: 50
   CooldownEase: 18
   flashSound:
     Guid:
