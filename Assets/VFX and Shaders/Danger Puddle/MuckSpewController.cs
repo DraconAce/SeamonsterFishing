@@ -74,7 +74,7 @@ public class MuckSpewController : MonoBehaviour
     private void SetupMuckSpewVariables()
     {
         spewTransform = muckSpewOb.transform;
-        muckSpewMat = muckSpewOb.GetComponent<Renderer>().material;
+        muckSpewMat = muckSpewOb.GetComponent<Renderer>().sharedMaterial;
         muckSpewParticles = muckSpewOb.GetComponent<ParticleSystem>();
     }
 
@@ -179,6 +179,10 @@ public class MuckSpewController : MonoBehaviour
 
     public void StopMuckRoutine()
     {
+        monsterAnimationController.UnsetTrigger(buildUpTrigger);
+        monsterAnimationController.UnsetTrigger(spewTrigger);
+        monsterAnimationController.UnsetTrigger(endSpewTrigger);
+        
         if (muckRoutine == null) return;
             
         StopCoroutine(muckRoutine);

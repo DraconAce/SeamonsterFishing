@@ -106,7 +106,7 @@ public class RushAttack : AbstractAttackNode
         rushSequence = DOTween.Sequence();
 
         rushSequence.Append(CreateWindupPathTween());
-        rushSequence.Join(DOVirtual.DelayedCall(delayForRushAnimation, () => TriggerAnimation(rushStartTrigger)));
+        rushSequence.Join(DOVirtual.DelayedCall(delayForRushAnimation, () => MonsterAnimationController.SetTrigger(rushStartTrigger)));
 
         rushSequence.Append(DOVirtual.DelayedCall(0.01f, CreateRushToPlayerSequence));
         
@@ -206,6 +206,8 @@ public class RushAttack : AbstractAttackNode
     {
         rushSequence?.Kill();
         rushToPlayerSequence?.Kill();
+
+        MonsterAnimationController.UnsetTrigger(rushStartTrigger);
         
         StopSounds();
     }

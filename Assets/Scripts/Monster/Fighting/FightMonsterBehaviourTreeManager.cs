@@ -54,8 +54,6 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         
         SetupVariables();
 
-        monsterKI.RequestSpecificBehaviourEvent += RequestSpecificBehaviour;
-
         CreateNodeImplDict();
         
         CreateNodeDataMap();
@@ -81,7 +79,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         backupBehaviourCheckIntervalWait = new WaitForSeconds(backupBehaviourCheckInterval);
     }
 
-    private void RequestSpecificBehaviour(int nextBehaviourIndex)
+    public void RequestSpecificBehaviour(int nextBehaviourIndex, bool useForceStop = false)
     {
         if(blockBehaviourExecution) return;
         
@@ -107,6 +105,13 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
             RequestNextBehaviour();
         }
 
+        if (useForceStop)
+        {
+            TryForceStopCurrentBehaviour();
+            AfterBehaviourStopAction();
+            return;
+        }
+        
         StopCurrentBehaviourAndStartNextBehaviour(AfterBehaviourStopAction);
     }
     
@@ -311,12 +316,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
 
     public void ToggleBlockBehaviour(bool blockBehaviour) => blockBehaviourExecution = blockBehaviour;
 
-    private void OnDestroy()
-    {
-        monsterKI.RequestSpecificBehaviourEvent -= RequestSpecificBehaviour;
-
-        DisposeOfJobData();
-    }
+    private void OnDestroy() => DisposeOfJobData();
 
     private void DisposeOfJobData()
     {

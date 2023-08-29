@@ -9,9 +9,8 @@ public class MonsterKI : MonoBehaviour
     private void Awake() => BehaviourTreeManager = GetComponent<FightMonsterBehaviourTreeManager>();
 
     public event Action<int> StartBehaviourEvent;
-    public event Action<int> RequestSpecificBehaviourEvent;
 
     public void ForwardActionRequest(int indexOfRequestedBehaviour) => StartBehaviourEvent?.Invoke(indexOfRequestedBehaviour);
 
-    public void RequestDirectStartOfBehaviour(int behaviourIndex) => RequestSpecificBehaviourEvent?.Invoke(behaviourIndex);
+    public void RequestDirectStartOfBehaviour(int behaviourIndex, bool useForceStop = false) => BehaviourTreeManager.RequestSpecificBehaviour(behaviourIndex, useForceStop);
 }

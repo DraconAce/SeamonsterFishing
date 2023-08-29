@@ -68,6 +68,22 @@ public class MonsterAnimationController : MonoBehaviour
         
         MonsterAnimator.SetTrigger(triggerID);
     }
+    
+    public void UnsetTrigger(int triggerID) => MonsterAnimator.ResetTrigger(triggerID);
+    public void UnsetTrigger(string triggerName)
+    {
+        if (!animationTriggerIDLookup.TryGetValue(triggerName, out var triggerID))
+        {
+            var newTriggerID = Animator.StringToHash(triggerName);
+            animationTriggerIDLookup.Add(triggerName, newTriggerID);
+            
+            MonsterAnimator.ResetTrigger(newTriggerID);
+            
+            return;
+        }
+        
+        MonsterAnimator.ResetTrigger(triggerID);
+    }
 
     public void OnAnimationFinished(string animationName) => AnimationFinishedEvent?.Invoke(animationName);
 }

@@ -21,6 +21,7 @@ public class BigSwipeAttack : AbstractAttackNode
     [SerializeField] private Transform moveTarget;
     
     private bool bigSwipeAttackEnded;
+    private string usedSwipeTrigger;
     
     private Vector3 originalPosition;
     private Vector3 targetPosition;
@@ -66,9 +67,9 @@ public class BigSwipeAttack : AbstractAttackNode
 
     private void TriggerLeftOrRightSwipe()
     {
-        var bigSwipeTrigger = Random.Range(0, 2) == 0 ? bigSwipeTriggerL : bigSwipeTriggerR;
+        usedSwipeTrigger = Random.Range(0, 2) == 0 ? bigSwipeTriggerL : bigSwipeTriggerR;
         
-        MonsterAnimationController.SetTrigger(bigSwipeTrigger);
+        MonsterAnimationController.SetTrigger(usedSwipeTrigger);
     }
 
     private void CacheCurrentPositionAndStartMovement()
@@ -105,6 +106,7 @@ public class BigSwipeAttack : AbstractAttackNode
     {
         movementTween?.Kill();
         movementDelayTween?.Kill();
+        MonsterAnimationController.UnsetTrigger(usedSwipeTrigger);
         
         StopSound();
     }

@@ -27,6 +27,13 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
             return _instance;
         }
     }
+    
+    protected virtual void Awake()
+    {
+        if (_instance == this || _instance == null) return;
+        
+        Destroy(gameObject);
+    }
 
     //tries to find the instance of this singleton
     //if it can't find one it will create one

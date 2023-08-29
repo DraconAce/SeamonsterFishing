@@ -85,8 +85,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfRotationsNeeded: 40
   progressDecreasePercentagePerSecond: 0.005
-  inputBuffer: 0.73
   controllerBooster: 2
+  mouseBooster: 1
+  minDistanceToCenter: 75
 --- !u!114 &9001025296299548414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,17 +495,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3232181214998062930, guid: aa96e1e513c477b4da068c757d069584, type: 3}
   m_PrefabInstance: {fileID: 7852080115157417553}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5187348253809250021 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3099910873483227316, guid: aa96e1e513c477b4da068c757d069584, type: 3}
-  m_PrefabInstance: {fileID: 7852080115157417553}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f074d5b9c294a6e9084b54876162cec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5356138254203517219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2786850887953532786, guid: aa96e1e513c477b4da068c757d069584, type: 3}
@@ -580,11 +570,11 @@ PrefabInstance:
     - target: {fileID: 1140069061896769200, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: onEnterStation.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5187348253809250021}
+      objectReference: {fileID: 0}
     - target: {fileID: 1140069061896769200, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: onLeaveStation.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5187348253809250021}
+      objectReference: {fileID: 0}
     - target: {fileID: 1140069061896769200, guid: 8fe0957d86b7891478a94942fcb9b916, type: 3}
       propertyPath: onEnterStation.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 

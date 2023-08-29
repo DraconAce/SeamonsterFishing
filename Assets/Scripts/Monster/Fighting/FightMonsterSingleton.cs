@@ -65,8 +65,7 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
 
     private void TriggerMonsterStunnedBehaviour()
     {
-        behaviourTreeManager.TryForceStopCurrentBehaviour();
-        fightMonsterStunned.TriggerBehaviourDirectly();
+        fightMonsterStunned.TriggerBehaviourDirectly(true);
     }
 
     public void FlashWasUsed()
