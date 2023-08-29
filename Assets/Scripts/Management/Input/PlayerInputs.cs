@@ -71,7 +71,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": """",
                     ""action"": ""Drive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -488,9 +488,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Reel"",
+                    ""name"": ""Reel_Mouse"",
                     ""type"": ""Value"",
                     ""id"": ""7e32705b-3d53-4403-b47f-1320ce60e800"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reel_Gamepad"",
+                    ""type"": ""Value"",
+                    ""id"": ""ff4255a4-e20e-4b08-b1cc-7043d6ffe032"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -619,23 +628,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a5bcbc8d-7a23-4cf9-ae70-f96a8be26ceb"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Reel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4d90dca2-c80b-47a1-a60c-8591ba8ec4be"",
-                    ""path"": ""<Pointer>/delta"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
-                    ""action"": ""Reel"",
+                    ""groups"": ""Keyboard&Mouse;Touch"",
+                    ""action"": ""Reel_Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -669,6 +667,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ToggleMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd740679-0bbb-46f8-95c4-4787ded60556"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Reel_Gamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1554,7 +1563,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         // Fight_Reeling
         m_Fight_Reeling = asset.FindActionMap("Fight_Reeling", throwIfNotFound: true);
         m_Fight_Reeling_Pull = m_Fight_Reeling.FindAction("Pull", throwIfNotFound: true);
-        m_Fight_Reeling_Reel = m_Fight_Reeling.FindAction("Reel", throwIfNotFound: true);
+        m_Fight_Reeling_Reel_Mouse = m_Fight_Reeling.FindAction("Reel_Mouse", throwIfNotFound: true);
+        m_Fight_Reeling_Reel_Gamepad = m_Fight_Reeling.FindAction("Reel_Gamepad", throwIfNotFound: true);
         m_Fight_Reeling_ToggleMenu = m_Fight_Reeling.FindAction("ToggleMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1782,14 +1792,16 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Fight_Reeling;
     private List<IFight_ReelingActions> m_Fight_ReelingActionsCallbackInterfaces = new List<IFight_ReelingActions>();
     private readonly InputAction m_Fight_Reeling_Pull;
-    private readonly InputAction m_Fight_Reeling_Reel;
+    private readonly InputAction m_Fight_Reeling_Reel_Mouse;
+    private readonly InputAction m_Fight_Reeling_Reel_Gamepad;
     private readonly InputAction m_Fight_Reeling_ToggleMenu;
     public struct Fight_ReelingActions
     {
         private @PlayerInputs m_Wrapper;
         public Fight_ReelingActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pull => m_Wrapper.m_Fight_Reeling_Pull;
-        public InputAction @Reel => m_Wrapper.m_Fight_Reeling_Reel;
+        public InputAction @Reel_Mouse => m_Wrapper.m_Fight_Reeling_Reel_Mouse;
+        public InputAction @Reel_Gamepad => m_Wrapper.m_Fight_Reeling_Reel_Gamepad;
         public InputAction @ToggleMenu => m_Wrapper.m_Fight_Reeling_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Fight_Reeling; }
         public void Enable() { Get().Enable(); }
@@ -1803,9 +1815,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Pull.started += instance.OnPull;
             @Pull.performed += instance.OnPull;
             @Pull.canceled += instance.OnPull;
-            @Reel.started += instance.OnReel;
-            @Reel.performed += instance.OnReel;
-            @Reel.canceled += instance.OnReel;
+            @Reel_Mouse.started += instance.OnReel_Mouse;
+            @Reel_Mouse.performed += instance.OnReel_Mouse;
+            @Reel_Mouse.canceled += instance.OnReel_Mouse;
+            @Reel_Gamepad.started += instance.OnReel_Gamepad;
+            @Reel_Gamepad.performed += instance.OnReel_Gamepad;
+            @Reel_Gamepad.canceled += instance.OnReel_Gamepad;
             @ToggleMenu.started += instance.OnToggleMenu;
             @ToggleMenu.performed += instance.OnToggleMenu;
             @ToggleMenu.canceled += instance.OnToggleMenu;
@@ -1816,9 +1831,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Pull.started -= instance.OnPull;
             @Pull.performed -= instance.OnPull;
             @Pull.canceled -= instance.OnPull;
-            @Reel.started -= instance.OnReel;
-            @Reel.performed -= instance.OnReel;
-            @Reel.canceled -= instance.OnReel;
+            @Reel_Mouse.started -= instance.OnReel_Mouse;
+            @Reel_Mouse.performed -= instance.OnReel_Mouse;
+            @Reel_Mouse.canceled -= instance.OnReel_Mouse;
+            @Reel_Gamepad.started -= instance.OnReel_Gamepad;
+            @Reel_Gamepad.performed -= instance.OnReel_Gamepad;
+            @Reel_Gamepad.canceled -= instance.OnReel_Gamepad;
             @ToggleMenu.started -= instance.OnToggleMenu;
             @ToggleMenu.performed -= instance.OnToggleMenu;
             @ToggleMenu.canceled -= instance.OnToggleMenu;
@@ -2137,7 +2155,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     public interface IFight_ReelingActions
     {
         void OnPull(InputAction.CallbackContext context);
-        void OnReel(InputAction.CallbackContext context);
+        void OnReel_Mouse(InputAction.CallbackContext context);
+        void OnReel_Gamepad(InputAction.CallbackContext context);
         void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions

@@ -88,7 +88,7 @@ public abstract class AbstractMonsterNodeImpl : MonoBehaviour, INodeImpl, ICompa
     
     public abstract float GetExecutability();
 
-    public void TriggerBehaviourDirectly() => MonsterKi.RequestDirectStartOfBehaviour(NodeIndex);
+    public void TriggerBehaviourDirectly(bool useForceStop = false) => MonsterKi.RequestDirectStartOfBehaviour(NodeIndex, useForceStop);
 
 
     protected virtual void OnDestroy()

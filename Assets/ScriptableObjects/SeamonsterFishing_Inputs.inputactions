@@ -49,7 +49,7 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "",
                     "action": "Drive",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -466,9 +466,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Reel",
+                    "name": "Reel_Mouse",
                     "type": "Value",
                     "id": "7e32705b-3d53-4403-b47f-1320ce60e800",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Reel_Gamepad",
+                    "type": "Value",
+                    "id": "ff4255a4-e20e-4b08-b1cc-7043d6ffe032",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -597,23 +606,12 @@
                 },
                 {
                     "name": "",
-                    "id": "a5bcbc8d-7a23-4cf9-ae70-f96a8be26ceb",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Reel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4d90dca2-c80b-47a1-a60c-8591ba8ec4be",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse;Touch",
-                    "action": "Reel",
+                    "groups": "Keyboard&Mouse;Touch",
+                    "action": "Reel_Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -647,6 +645,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ToggleMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd740679-0bbb-46f8-95c4-4787ded60556",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Reel_Gamepad",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

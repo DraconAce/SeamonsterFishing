@@ -174,6 +174,9 @@ public class SwipeAttack : AbstractAttackNode
         
         DownSwipeSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         DownSwipeSoundInstance.release();
+        
+        foreach(var swipe in swipeTriggers) 
+            MonsterAnimationController.UnsetTrigger(swipe.SwipeTrigger);
     }
 
     #region Executability Calculations

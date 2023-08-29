@@ -71,8 +71,10 @@ public class InputGameStateChangeRequestor : Singleton<InputGameStateChangeReque
         gameStateManager.ChangeGameState(requestedState);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+        
         if (inputManager == null) return;
         
         UnsubscribeOnDestroy();

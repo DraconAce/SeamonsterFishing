@@ -12,5 +12,9 @@ public class CameraSingleton : Singleton<CameraSingleton>
     public Camera OutputCamera => cameraBrain.OutputCamera;
     public CinemachineVirtualCamera MainPlayerCamera => mainMainPlayerCamera;
 
-    private void Awake() => TryGetComponent(out cameraBrain);
+    protected override void Awake()
+    {
+        base.Awake();
+        TryGetComponent(out cameraBrain);
+    }
 }

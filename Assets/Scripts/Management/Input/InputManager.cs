@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public enum PlayerDevice
 {
@@ -60,19 +61,30 @@ public class InputManager : Singleton<InputManager>
     
     public event Action InputDeviceChangedEvent;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
+        InputUser.onChange += OnDeviceChanged;
+        
         playerInput = GetComponent<PlayerInput>();
         playerInput.onActionTriggered += OnActionTriggered;
 
         CreateInputMapsLookup();
     }
 
+    private void OnDeviceChanged(InputUser user, InputUserChange change, InputDevice device)
+    {
+        if(change != InputUserChange.ControlSchemeChanged) return;
+        
+        Debug.Log("Changed");
+    }
+
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
     {
-        if(blockPlayerInput) return;
-        
         DetermineUsedDevice(callbackContext);
+        
+        if(blockPlayerInput) return;
         
         if (!inputActionAndActionEvents.TryGetValue(callbackContext.action.name, out var actionEvent)) return;
 
@@ -183,6 +195,8 @@ public class InputManager : Singleton<InputManager>
     protected override void OnDestroy()
     {
         base.OnDestroy();
+        
+        InputUser.onChange -= OnDeviceChanged;
         
         playerInput.onActionTriggered -= OnActionTriggered;
 
