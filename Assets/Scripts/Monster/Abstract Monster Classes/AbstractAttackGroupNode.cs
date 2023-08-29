@@ -11,7 +11,7 @@ public abstract class AbstractAttackGroupNode : AbstractDecisionNodeImpl
     protected bool isExecutable;
     public override bool IsNodeExecutable
     {
-        get => isExecutable; 
+        get => isExecutable && IsOneChildExecuteable(); 
         set{}
     }
 

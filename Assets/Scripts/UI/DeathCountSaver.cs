@@ -18,5 +18,6 @@ public class DeathCountSaver : MonoBehaviour
         localDeathcounter = PlayerPrefs.GetInt("Deaths", 0);
         localDeathcounter++;
         PlayerPrefs.SetInt("Deaths", localDeathcounter);
+        PlayerPrefs.Save();
     }
 }

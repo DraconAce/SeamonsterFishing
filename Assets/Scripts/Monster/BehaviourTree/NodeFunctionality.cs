@@ -102,18 +102,17 @@ public static class NodeFunctionality
         var highestAvailableUsability = 0f;
         var indexOfHighestAvailable = -1;
         
-        var randomValue = random.NextFloat(0, highestUsability);
-
         foreach (var dataPoint in executableData)
         {
             if (!dataPoint.IsNodeExecutable) continue;
             
-            if(dataPoint.Usability > highestAvailableUsability)
+            if(dataPoint.Usability >= highestAvailableUsability)
             {
                 highestAvailableUsability = dataPoint.Usability;
                 indexOfHighestAvailable = dataPoint.NodeIndexRep;
             }
 
+            var randomValue = random.NextFloat(0.1f, highestUsability);
             if (!WasNodeRandomlyChosen(randomValue, dataPoint.Usability, priorityMode)) continue;
 
             indexOfNextNode = dataPoint.NodeIndexRep;
@@ -128,8 +127,8 @@ public static class NodeFunctionality
     private static bool WasNodeRandomlyChosen(float randomValue, float usability, NodePriorityMode priorityMode)
     {
         if(priorityMode == NodePriorityMode.Greater)
-            return randomValue < usability;
+            return randomValue <= usability;
 
-        return randomValue > usability;
+        return randomValue >= usability;
     }
 }

@@ -15,8 +15,27 @@ public abstract class AbstractDecisionNodeImpl : AbstractMonsterNodeImpl
 
     public override bool IsNodeExecutable
     {
-        get => true;
+        get => IsOneChildExecuteable();
         set { }
+    }
+
+    protected bool IsOneChildExecuteable()
+    {
+        var nextNodes = DecisionNode.PossibleNextBehaviourNodes;
+        
+        var oneChildIsExecutable = false;
+
+        foreach(var node in nextNodes)
+        {
+            var nodeImpl = behaviourTreeManager.GetNodeImplementation(node.BehaviourName) as AbstractMonsterNodeImpl;
+
+            if (nodeImpl == null || !nodeImpl.IsNodeExecutable) continue;
+            
+            oneChildIsExecutable = true;
+            break;
+        }
+        
+        return oneChildIsExecutable;
     }
     
     protected override void Start()
