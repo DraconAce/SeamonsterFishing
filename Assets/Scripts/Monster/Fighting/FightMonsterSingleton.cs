@@ -40,6 +40,7 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
     }
     
     public int NumberOfBodyHits { get; private set; }
+    private bool blockFlashEffect;
 
     public event Action MonsterWeakpointWasHitEvent;
     
@@ -68,7 +69,12 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
         fightMonsterStunned.TriggerBehaviourDirectly();
     }
 
-    public void FlashWasUsed() => TriggerMonsterStunnedBehaviour();
+    public void FlashWasUsed()
+    {
+        if(blockFlashEffect) return;
+        
+        TriggerMonsterStunnedBehaviour();
+    }
 
     public void CannonBallMissed()
     {
@@ -86,4 +92,6 @@ public class FightMonsterSingleton : Singleton<FightMonsterSingleton>
     private void TriggerMonsterReaction() => swipeAttack.TriggerBehaviourDirectly();
     
     public void IncreaseNumberOfBodyHits() => NumberOfBodyHits++;
+    
+    public void SetBlockFlash(bool block) => blockFlashEffect = block;
 }

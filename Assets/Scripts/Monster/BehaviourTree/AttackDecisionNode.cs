@@ -2,7 +2,7 @@ public class AttackDecisionNode : AbstractDecisionNodeImpl
 {
     private FightMonsterState fightMonsterState;
     
-    public override bool IsNodeExecutable => CheckIfMonsterCanAttack();
+    public override bool IsNodeExecutable => CheckIfMonsterCanAttack() && IsOneChildExecuteable();
 
     private bool CheckIfMonsterCanAttack()
     {

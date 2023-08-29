@@ -253,7 +253,7 @@ public class FightMonsterBehaviourTreeManager : MonoBehaviour, IManualUpdateSubs
         StopBackupRoutineIfActive();
         
 #if UNITY_EDITOR
-        Debug.Log(nodeImplDict[behaviourIndex].NodeToRepresent.BehaviourName);
+        Debug.Log(nodeImplDict[behaviourIndex].NodeToRepresent.BehaviourName + ", Index: " + behaviourIndex);
 #endif
 
         if (useDirectBehaviourRequestAfterJobFlag)
@@ -375,6 +375,9 @@ public struct ChooseBehaviourJob : IJob
                 break;
             }
             
+            var nextNodeIndex = currentNode.NextNodeIndex;
+            
+            if(nextNodeIndex == -1) break;
             currentNode = NodeDataMap[currentNode.NextNodeIndex];
         }
     }

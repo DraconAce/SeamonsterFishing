@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 7
   nodeToRepresent: {fileID: 11400000, guid: e31aa63e134e78c4b9f17284fcd649ee, type: 2}
-  useRandomPriorityMode: 1
+  useRandomPriorityMode: 0
   preferredPriorityMode: 0
 --- !u!114 &9032795774683015360
 MonoBehaviour:
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 3
   nodeToRepresent: {fileID: 11400000, guid: 6f28637d6c0b75a46b55da16f33ee0a7, type: 2}
-  useRandomPriorityMode: 1
+  useRandomPriorityMode: 0
   preferredPriorityMode: 0
   executability: 40
 --- !u!114 &400674877130807344
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 6
   nodeToRepresent: {fileID: 11400000, guid: 285d59811ea3cd947be9dd6eb38efd4d, type: 2}
-  useRandomPriorityMode: 1
+  useRandomPriorityMode: 0
   preferredPriorityMode: 0
   executability: 75
 --- !u!114 &2540579052811155696
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 1
   nodeToRepresent: {fileID: 11400000, guid: 35c6f6db215af6a4c92d25913656996f, type: 2}
-  useRandomPriorityMode: 1
+  useRandomPriorityMode: 0
   preferredPriorityMode: 0
   executability: 20
 --- !u!1 &133084155130180154
@@ -317,8 +317,8 @@ MonoBehaviour:
   nodeToRepresent: {fileID: 11400000, guid: 60d64c66cb01b814eab776e913c58bf9, type: 2}
   timeout: 5
   executability:
-    MinLimit: 10
-    MaxLimit: 40
+    MinLimit: 40
+    MaxLimit: 75
   idleAnimationTrigger: Idle
   animationClipsToListenForEnd:
   - {fileID: 7400000, guid: 5f3073bf8d1ed3140b969d0898b45195, type: 2}
@@ -1198,8 +1198,8 @@ MonoBehaviour:
   nodeToRepresent: {fileID: 11400000, guid: 099613440867bd9488c2997c52936cea, type: 2}
   timeout: 25
   executability:
-    MinLimit: 4
-    MaxLimit: 40
+    MinLimit: 45
+    MaxLimit: 65
   idleAnimationTrigger: Idle
   animationClipsToListenForEnd: []
   muckSpewController: {fileID: 8182205290990519902}
@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e0632f73af43a89ce877f04e56d48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 2
+  priority: 3
   nodeToRepresent: {fileID: 11400000, guid: 82f45f08d7f1e8e4a84dacbe5c3942d4, type: 2}
   timeout: 20
   executability:

@@ -48,6 +48,8 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
     private Tween reelingStartTween;
     private Sequence reelingEndedSequence;
 
+    private FightMonsterSingleton monsterSingleton;
+
     private const string IdleTrigger = "Idle";
 
     protected override MonsterState BehaviourState => MonsterState.Reeling;
@@ -55,6 +57,8 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
     protected override void Start()
     {
         base.Start();
+        
+        monsterSingleton = FightMonsterSingleton.instance;
         
         gameStateManager = GameStateManager.instance;
         monsterTransform = FightMonsterSingleton.instance.MonsterTransform;
@@ -98,6 +102,7 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         delayedAnimationChangeTween?.Kill();
         
         behaviourTreeManager.ToggleBlockBehaviour(true);
+        monsterSingleton.SetBlockFlash(true);
         
         arrivedAtInitialPosition = false;
         positionBeforeReeling = monsterTransform.position;
@@ -120,8 +125,12 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
             });
 
         yield return delayedGameStateChangeTween.WaitForCompletion();
+        
+        if(delayedAnimationChangeTween.IsActive())
+            yield return delayedAnimationChangeTween.WaitForCompletion();
+        
         yield return waitForReelingStarted;
-
+        
         yield return null;
         yield return waitForReelingStopped;
         
@@ -132,7 +141,13 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
 
         yield return waitForReachedInitialPosition;
         
+        OnReelingFinished();
+    }
+
+    private void OnReelingFinished()
+    {
         behaviourTreeManager.ToggleBlockBehaviour(false);
+        monsterSingleton.SetBlockFlash(false);
     }
 
     private void StartReelingEntrySequence()
@@ -200,7 +215,8 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         StartEndReelingAnimation();
         
         yield return waitForReachedInitialPosition;
-        behaviourTreeManager.ToggleBlockBehaviour(false);
+        
+        OnReelingFinished();
     }
 
     protected override void ForceStopBehaviourImpl()
@@ -212,5 +228,7 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         reelingStartTween?.Kill();
         delayedGameStateChangeTween?.Kill();
         delayedAnimationChangeTween?.Kill();
+        
+        monsterSingleton.SetBlockFlash(false);
     }
 }
