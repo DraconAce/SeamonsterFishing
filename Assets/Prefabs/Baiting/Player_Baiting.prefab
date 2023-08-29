@@ -484,7 +484,7 @@ MonoBehaviour:
       Data4: 184931629
     Path: event:/Baiting/Diver/FlashlightEmpty
   maxTimeBetweenChargeInput: 0.5
-  chargePerInput: 0.015
+  chargePerInput: 0.025
   chargeSound:
     Guid:
       Data1: 1595060766
