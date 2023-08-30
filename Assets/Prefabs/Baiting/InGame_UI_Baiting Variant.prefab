@@ -2232,7 +2232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4463571361301974826, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
       propertyPath: m_fontSize
-      value: 60.2
+      value: 114.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5891045229040530491, guid: 4978a65212d82d14b8183a80c27f9449, type: 3}
+      propertyPath: m_PreferredHeight
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2327,7 +2331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1090988152143158076, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_fontSize
-      value: 86.75
+      value: 82.35
       objectReference: {fileID: 0}
     - target: {fileID: 1642955610857214627, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_TargetGraphic
@@ -2573,7 +2577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463906984477714974, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_fontSize
-      value: 129.25
+      value: 157.25
       objectReference: {fileID: 0}
     - target: {fileID: 3524360640388122705, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2665,7 +2669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5076657485380090937, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_fontSize
-      value: 86.75
+      value: 114.75
       objectReference: {fileID: 0}
     - target: {fileID: 5254807274534889912, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_Sprite
@@ -2817,11 +2821,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7916499047423680070, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_fontSize
-      value: 86.75
+      value: 114.75
       objectReference: {fileID: 0}
     - target: {fileID: 8051300067211997464, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_fontSize
-      value: 86.75
+      value: 114.75
       objectReference: {fileID: 0}
     - target: {fileID: 8299411424233371113, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2859,6 +2863,7 @@ PrefabInstance:
     - {fileID: 3005001764320937922, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
     - {fileID: 3001331685863721768, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
     - {fileID: 8590065256638833066, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
+    - {fileID: 3971543552923729368, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4047171266641164228, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       insertIndex: 1
@@ -2870,7 +2875,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1580075900941607395}
     - targetCorrespondingSourceObject: {fileID: 2591161768721157244, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
-      insertIndex: 3
+      insertIndex: 2
       addedObject: {fileID: 8983750547422783489}
     - targetCorrespondingSourceObject: {fileID: 6496569990274461114, guid: 6065a8c611f123448a9f6769e2bba6ef, type: 3}
       insertIndex: 2

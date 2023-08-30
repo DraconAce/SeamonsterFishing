@@ -42,7 +42,7 @@ public class MonsterRepelledChecker : MonoBehaviour
         soundPlayer.PlayRepelledSound();
         
         despawnDelayTween?.Kill();
-        despawnDelayTween = DOVirtual.DelayedCall(delayBeforeDespawn, () => spawnBehaviour.DespawnMonster());
+        despawnDelayTween = DOVirtual.DelayedCall(delayBeforeDespawn, () => spawnBehaviour.DespawnMonster(), false);
     }
 
     private void OnDestroy() => UnsubscribeFromWasRepelledEvent();

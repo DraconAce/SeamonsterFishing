@@ -110,7 +110,7 @@ public class ViewDirectionMouseControls : AbstractViewDirectionControls, IManual
         
         mousePositionOnTimerStart = mousePos;
         
-        timerTween = DOVirtual.DelayedCall(timePlayerNeedsToBeStationary, () => viewCanBeChanged = true);
+        timerTween = DOVirtual.DelayedCall(timePlayerNeedsToBeStationary, () => viewCanBeChanged = true, false);
     }
 
     private void RequestViewChangeBasedOnInput(float mouseXPosition)

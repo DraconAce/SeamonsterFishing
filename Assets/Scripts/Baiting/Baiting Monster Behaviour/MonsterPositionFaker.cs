@@ -138,7 +138,7 @@ public class MonsterPositionFaker : MonoBehaviour
                     && Random.Range(0f, 1f) > waitAtWaypointChance) return;
 
                 var waitDuration = waitLimits.GetRandomBetweenLimits(1f, difficultyManager.DifficultyFraction);
-                DOVirtual.DelayedCall(waitDuration, () => movementTween.TogglePause());
+                DOVirtual.DelayedCall(waitDuration, () => movementTween.TogglePause(), false);
 
                 movementTween.TogglePause();
             })

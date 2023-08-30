@@ -26,7 +26,7 @@ public class DelayedFlashlightMovement : MonoBehaviour
     {
         movementTween?.Kill();
         
-        DOVirtual.DelayedCall(movementDelay, () => StartTweenToTargetRotation(viewRotationSettings));
+        DOVirtual.DelayedCall(movementDelay, () => StartTweenToTargetRotation(viewRotationSettings), false);
     }
 
     private void StartTweenToTargetRotation(ViewDirectionHandler.ViewRotationSettings viewRotationSettings)
