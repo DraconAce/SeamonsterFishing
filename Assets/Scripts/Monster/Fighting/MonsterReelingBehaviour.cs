@@ -68,7 +68,7 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
             => gameStateManager.CurrentGameState == GameState.FightReelingStation);
         
         waitForReelingStopped = new(() 
-            => gameStateManager.CurrentGameState != GameState.FightReelingStation);
+            => gameStateManager.CurrentGameState != GameState.FightReelingStation && gameStateManager.CurrentGameState != GameState.Pause);
         
         waitForReachedInitialPosition = new(() => arrivedAtInitialPosition);
         
@@ -115,14 +115,14 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
         StartReelingEntrySequence();
         
         delayedAnimationChangeTween = DOVirtual.DelayedCall(triggerReelingStartAnimationDelay,
-            () => TriggerReelingAnimation(reelingStartedTrigger));
+            () => TriggerReelingAnimation(reelingStartedTrigger), false);
         
         delayedGameStateChangeTween = DOVirtual.DelayedCall(triggerReelingGameStateChangeDelay,
             () =>
             {
                 gameStateManager.BlockGameStateChangeWithExceptions = false;
                 gameStateManager.ChangeGameState(GameState.FightReelingStation);
-            });
+            }, false);
 
         yield return delayedGameStateChangeTween.WaitForCompletion();
         
@@ -185,7 +185,7 @@ public class MonsterReelingBehaviour : AbstractMonsterBehaviour
                 .SetRelative(true));
         
         reelingEndedSequence.Append(DOVirtual.DelayedCall(0.01f, 
-            SetMonsterPositionToUnderwaterPosition));
+            SetMonsterPositionToUnderwaterPosition, false));
         
         reelingEndedSequence.AppendInterval(stayUnderWaterDuration);
         

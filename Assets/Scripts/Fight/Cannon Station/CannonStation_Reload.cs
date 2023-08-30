@@ -41,7 +41,7 @@ public class CannonStation_Reload : AbstractStationSegment
     public void AutoReload()
     {
         autoReloadDelayTween?.Kill();
-        autoReloadDelayTween = DOVirtual.DelayedCall(autoReloadDelay, TryToReload);
+        autoReloadDelayTween = DOVirtual.DelayedCall(autoReloadDelay, TryToReload, false);
     }
     
     private void TryToReload()

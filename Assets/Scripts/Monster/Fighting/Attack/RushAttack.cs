@@ -106,9 +106,9 @@ public class RushAttack : AbstractAttackNode
         rushSequence = DOTween.Sequence();
 
         rushSequence.Append(CreateWindupPathTween());
-        rushSequence.Join(DOVirtual.DelayedCall(delayForRushAnimation, () => MonsterAnimationController.SetTrigger(rushStartTrigger)));
+        rushSequence.Join(DOVirtual.DelayedCall(delayForRushAnimation, () => MonsterAnimationController.SetTrigger(rushStartTrigger), false));
 
-        rushSequence.Append(DOVirtual.DelayedCall(0.01f, CreateRushToPlayerSequence));
+        rushSequence.Append(DOVirtual.DelayedCall(0.01f, CreateRushToPlayerSequence, false));
         
         //start sound before actual rush
         rushSequence.AppendCallback(() => { BiteRushSoundInstance.start(); });
@@ -121,7 +121,7 @@ public class RushAttack : AbstractAttackNode
         rushSequence.AppendInterval(underWaterTime);
         
         rushSequence.Append(CreateSurfaceToOriginalPositionTween());
-        rushSequence.Join(DOVirtual.DelayedCall(delayForRushEndAnimation, StartIdleAnimation));
+        rushSequence.Join(DOVirtual.DelayedCall(delayForRushEndAnimation, StartIdleAnimation, false));
 
         rushSequence.AppendInterval(1.5f);
 
@@ -185,7 +185,7 @@ public class RushAttack : AbstractAttackNode
             .OnComplete(SetMonsterToUnderwaterPosition));
 
         rushSequence.Append(CreateSurfaceToOriginalPositionTween());
-        rushSequence.Join(DOVirtual.DelayedCall(delayForRushEndAnimation, StartIdleAnimation));
+        rushSequence.Join(DOVirtual.DelayedCall(delayForRushEndAnimation, StartIdleAnimation, false));
 
         yield return rushSequence.WaitForCompletion();
     }

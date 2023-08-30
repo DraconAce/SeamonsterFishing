@@ -43,11 +43,11 @@ public class MuckGoo : MonoBehaviour, IPoolObject
     {
         muckCollider.enabled = true;
         
-        DOVirtual.DelayedCall(0.5f, PlayMuckExplosion);
+        DOVirtual.DelayedCall(0.5f, PlayMuckExplosion, false);
         
-        DOVirtual.DelayedCall(StartEmitterDelay, PlayGooParticles);
+        DOVirtual.DelayedCall(StartEmitterDelay, PlayGooParticles, false);
 
-        backupMuckDisappearTween = DOVirtual.DelayedCall(backupMuckDisappearTime, () => ContainerOfObject.ReturnToPool());
+        backupMuckDisappearTween = DOVirtual.DelayedCall(backupMuckDisappearTime, () => ContainerOfObject.ReturnToPool(), false);
     }
 
     private void PlayGooParticles()
@@ -77,7 +77,7 @@ public class MuckGoo : MonoBehaviour, IPoolObject
 
             StartGooFireParticles();
             ToggleMuckCollider();
-        });
+        }, false);
 
         StartFireEndSequence();
     }
@@ -100,7 +100,7 @@ public class MuckGoo : MonoBehaviour, IPoolObject
     {
         muckCollider.enabled = false;
 
-        DOVirtual.DelayedCall(0.1f, () => muckCollider.enabled = true);
+        DOVirtual.DelayedCall(0.1f, () => muckCollider.enabled = true, false);
     }
 
     private void StartFireEndSequence()

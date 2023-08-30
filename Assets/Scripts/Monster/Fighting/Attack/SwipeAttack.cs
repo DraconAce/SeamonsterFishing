@@ -123,7 +123,7 @@ public class SwipeAttack : AbstractAttackNode
         StartMonsterRotationTween(new Vector3(0, swipeSetting.SwipeYRotation, 0));
 
         tailDelayTween = DOVirtual.DelayedCall(delayForTailAnimation, 
-            () => MonsterAnimationController.SetTrigger(swipeSetting.SwipeTrigger));
+            () => MonsterAnimationController.SetTrigger(swipeSetting.SwipeTrigger), false);
         
         if(lastIndex >= 0) swipeIndices.Add(lastIndex);
         lastIndex = chosenSwipeIndex;
