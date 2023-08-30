@@ -15,7 +15,6 @@ public class GameStateManager : Singleton<GameStateManager>
     public bool BlockGameStateChangeWithExceptions { get; set; }
     public bool BlockGameStateChangeWithoutExceptions { get; set; }
     
-    public bool GameIsPaused => CurrentGameState == GameState.Pause;
     public GameState PreviousGameState { get; private set; }
 
     public GameState CurrentGameState

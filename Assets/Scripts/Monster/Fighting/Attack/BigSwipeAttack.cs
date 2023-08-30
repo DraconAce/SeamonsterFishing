@@ -55,7 +55,7 @@ public class BigSwipeAttack : AbstractAttackNode
         
         TriggerLeftOrRightSwipe();
         
-        movementDelayTween = DOVirtual.DelayedCall(movementDelay, CacheCurrentPositionAndStartMovement);
+        movementDelayTween = DOVirtual.DelayedCall(movementDelay, CacheCurrentPositionAndStartMovement, false);
 
         yield return bigSwipeAttackEndedWait;
         

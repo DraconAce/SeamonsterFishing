@@ -15,6 +15,6 @@ public class InvokeWithDelay : MonoBehaviour
             return;
         }
         
-        DOVirtual.DelayedCall(delay, () => invokeEvent?.Invoke());
+        DOVirtual.DelayedCall(delay, () => invokeEvent?.Invoke(), false);
     }
 }

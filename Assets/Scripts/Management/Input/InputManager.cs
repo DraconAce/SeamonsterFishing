@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
 
 public enum PlayerDevice
 {
@@ -64,8 +63,6 @@ public class InputManager : Singleton<InputManager>
     protected override void Awake()
     {
         base.Awake();
-
-        InputUser.onChange += OnDeviceChanged;
         
         playerInput = GetComponent<PlayerInput>();
         playerInput.onActionTriggered += OnActionTriggered;
@@ -73,16 +70,9 @@ public class InputManager : Singleton<InputManager>
         CreateInputMapsLookup();
     }
 
-    private void OnDeviceChanged(InputUser user, InputUserChange change, InputDevice device)
-    {
-        if(change != InputUserChange.ControlSchemeChanged) return;
-        
-        Debug.Log("Changed");
-    }
-
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
     {
-        DetermineUsedDevice(callbackContext);
+        DetermineUsedDevice(callbackContext.control.device);
         
         if(blockPlayerInput) return;
         
@@ -91,13 +81,11 @@ public class InputManager : Singleton<InputManager>
         NotifySubscribers(callbackContext, actionEvent);
     }
 
-    private void DetermineUsedDevice(InputAction.CallbackContext callbackContext)
+    private void DetermineUsedDevice(InputDevice device)
     {
-        var usedDevice = callbackContext.control.device;
-        
         var formerDevice = LatestDevice;
 
-        LatestDevice = usedDevice switch
+        LatestDevice = device switch
         {
             Gamepad => PlayerDevice.Gamepad,
             Keyboard => PlayerDevice.KeyboardMouse,
@@ -107,6 +95,7 @@ public class InputManager : Singleton<InputManager>
         
         if (formerDevice == LatestDevice) return;
         
+        Debug.Log(LatestDevice);
         InputDeviceChangedEvent?.Invoke();
     }
 
@@ -195,8 +184,6 @@ public class InputManager : Singleton<InputManager>
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        
-        InputUser.onChange -= OnDeviceChanged;
         
         playerInput.onActionTriggered -= OnActionTriggered;
 

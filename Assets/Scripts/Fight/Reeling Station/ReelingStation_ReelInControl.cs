@@ -49,7 +49,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         ControllerStation.UpdateManager.UnsubscribeFromManualUpdate(this);
 
-        DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, ResetReeling);
+        DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, ResetReeling, false);
         
         reelActionMouse.Disable();
         reelActionGamepad.Disable();
@@ -178,7 +178,6 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         var screenCenter = new Vector2(halfScreenWidth, halfScreenHeight);
 
         var gamepadCursorPos = screenCenter + gamepadInputValue * new Vector2(halfScreenWidth, halfScreenHeight);
-        Debug.LogFormat("Converted position: {0}", gamepadCursorPos);
         return gamepadCursorPos;
     }
 

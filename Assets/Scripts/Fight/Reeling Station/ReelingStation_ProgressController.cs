@@ -30,7 +30,7 @@ public class ReelingStation_ProgressController : AbstractStationSegment
     {
         reelingSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, 
-            () => reelingUI.SetActive(false));
+            () => reelingUI.SetActive(false), false);
     }
 
     protected override void OnDestroy()

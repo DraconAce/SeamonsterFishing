@@ -63,7 +63,7 @@ public abstract class AbstractMonsterBehaviour : AbstractMonsterNodeImpl
         timeoutTween?.Kill();
         IsTimedOut = true;
         
-        timeoutTween = DOVirtual.DelayedCall(timeout, () => IsTimedOut = false);
+        timeoutTween = DOVirtual.DelayedCall(timeout, () => IsTimedOut = false, false);
     }
 
     protected override void StopBehaviour()
