@@ -4,15 +4,21 @@ public class DriveStation_Moving : AbstractStationSegment
 {
     [SerializeField] private float maxDriveSpeed = 5.0f;
     [SerializeField] private float driveSpeedincrease = 0.025f;
-    public float currentSpeed = 0f;
+    public float CurrentSpeed { get; set; }
+    private float muckSpeedMultiplier = 1f;
 
     [SerializeField] private MinMaxLimit moveLimit;
-
+    
+    private float hasNotMovedTime;
     private Vector3 boatForwardDirection;
     private Transform boatParent;
     private Transform boatTransform;
 
     private DriveStation driveStation => (DriveStation) ControllerStation;
+
+    private const float StationaryTimeLimit = 10f;
+    
+    public bool PlayerIsStationary => hasNotMovedTime >= StationaryTimeLimit;
     
     protected override void OnControllerSetup()
     {
@@ -37,7 +43,7 @@ public class DriveStation_Moving : AbstractStationSegment
     }
     
     private Vector3 CalculateMoveAmount(float driveDirection) 
-        => boatForwardDirection * (currentSpeed * driveDirection * Time.deltaTime);
+        => boatForwardDirection * (CurrentSpeed * driveDirection * muckSpeedMultiplier * Time.deltaTime);
     
     private Vector3 ClampToMovementLimits(Vector3 newBoatPosWorld)
     {
@@ -56,14 +62,39 @@ public class DriveStation_Moving : AbstractStationSegment
     public void IncreaseCurrentBoatSpeed() 
     {
         //increase current speed
-        if (currentSpeed < maxDriveSpeed) {
-            currentSpeed += driveSpeedincrease;
+        if (CurrentSpeed < maxDriveSpeed) 
+        {
+            CurrentSpeed += driveSpeedincrease;
         }
         else 
         {
-            currentSpeed = maxDriveSpeed;
+            CurrentSpeed = maxDriveSpeed;
+        }
+    }
+    
+    public void SetBoatInMuck(bool boatIsInMuck)
+    {
+        if (boatIsInMuck)
+        {
+            //is in Muck
+            muckSpeedMultiplier = 0.5f;
+        }
+        else
+        {
+            //left Muck
+            muckSpeedMultiplier = 1f;
         }
     }
 
-    public bool BoatIsNotMoving (float newDirection) => Mathf.Approximately(0, newDirection);
+    public bool BoatIsStanding (float newDirection)
+    {
+        var isBoatStanding = Mathf.Approximately(0, newDirection);
+        
+        if(isBoatStanding)
+            hasNotMovedTime += Time.deltaTime;
+        else
+            hasNotMovedTime = 0f;
+
+        return isBoatStanding;
+    }
 }

@@ -7,14 +7,19 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     [SerializeField] private int numberOfRotationsNeeded = 20;
     [SerializeField] private float progressDecreasePercentagePerSecond = 0.01f;
 
-    private InputAction reelAction;
-
+    private InputAction reelActionMouse;
+    private InputAction reelActionGamepad;
+    private InputManager inputManager;
     private ReelingStation reelingStation => (ReelingStation) ControllerStation;
     public bool PlayerInputEnabled { get; set; }
 
-    private void Start()
+    protected override void OnControllerSetup()
     {
+        base.OnControllerSetup();
+        
         GetAndEnableReelAction();
+        
+        inputManager = InputManager.instance;
 
         reelingStation.OnReelingStartedEvent += OnReelingStarted;
         reelingStation.OnReelingCompletedEvent += OnReelingCompleted;
@@ -22,26 +27,32 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     private void GetAndEnableReelAction()
     {
-        reelAction = reelingStation.CustomPlayerInputs.Fight_Reeling.Reel;
-        reelAction.Enable();
+        var customPlayerInput = reelingStation.GetPlayerInputs();
+        
+        reelActionMouse = customPlayerInput.Fight_Reeling.Reel_Mouse;
+        reelActionGamepad = customPlayerInput.Fight_Reeling.Reel_Gamepad;
     }
 
     private void OnReelingStarted()
     {
-        reelingStation.GameStateManager.BlockGameStateChange = true;
+        reelingStation.GameStateManager.BlockGameStateChangeWithExceptions = true;
         
         ControllerStation.UpdateManager.SubscribeToManualUpdate(this);
         
+        reelActionMouse.Enable();
+        reelActionGamepad.Enable();
+
         PlayerInputEnabled = true;
     }
 
     private void OnReelingCompleted()
     {
         ControllerStation.UpdateManager.UnsubscribeFromManualUpdate(this);
-        
-        //Debug.LogFormat("Timer: {0}", reelingStation.ReelingTimer);
 
-        DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, ResetReeling);
+        DOVirtual.DelayedCall(reelingStation.DelayForSubStationsOnReelingCompleted, ResetReeling, false);
+        
+        reelActionMouse.Disable();
+        reelActionGamepad.Disable();
     }
 
     private void ResetReeling()
@@ -53,6 +64,8 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         
         reelingStation.Progress = 0;
         neutralInputTimer = 0;
+        lastAngleToOrigin = -1;
+        lastCursorPos = Vector2.negativeInfinity;
 
         ResetCachedAngles();
     }
@@ -78,56 +91,58 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
 
     #region Reeling Input
 
-    [Header("Reeling Input")] 
-    [SerializeField] private float inputBuffer = 0.2f;
-
-
+    [Header("Reeling Input")]
+    [SerializeField] private float minDistanceToCenter = 150f;
+    
     private float currentNumberOfRotations;
     private float lastAngleToOrigin = -1;
     private bool passedRotationFinishedDeg;
     private bool passedRotationStartedDeg;
 
-    private Vector2 startReelDirection;
+    private Vector2 startCursorDirection;
+    private Vector2 lastCursorPos = Vector2.negativeInfinity;
 
     private bool doneOnce;
     private float neutralInputTimer;
-    private readonly float neutralInputTimerMax = 0.5f;
+    private readonly float neutralInputTimerMax = 1f;
 
     private void DoReeling()
     {
-        var reelInput = reelAction.ReadValue<Vector2>();
+        var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        var cursorPosition = GetInputBasedOnInputDevice();
+        
+        var cursorDirection = cursorPosition - screenCenter;
+        
+        SetLastCursorToCurrentIfUninitialized(cursorPosition);
 
-        if (!IsOneInputAxisInBuffer(reelInput))
+        if (!IsCursorFarEnoughFromCenter(cursorPosition, screenCenter))
         {
-            if(reelInput == Vector2.zero)
-            {
-                neutralInputTimer += Time.deltaTime;
-                
-                if(neutralInputTimer >= neutralInputTimerMax) ResetCachedAngles();
-            }
-            else
-                ResetCachedAngles();
-
+            ResetCachedAngles();
+            return;
+        }
+        
+        if(!DidPlayerMoveCursor(cursorDirection))
+        {
+            IncreaseAndCheckInactiveTimer();
             return;
         }
         
         neutralInputTimer = 0;
+        lastCursorPos = cursorPosition;
+        
+        var cursorDirectionNormalized = cursorDirection.normalized;
 
         if (AngleWasReset())
         {
-            startReelDirection = reelInput;
-            lastAngleToOrigin = 0;
-            
+            SetReelingVariablesToNeutral(cursorDirectionNormalized);
             return;
         }
-        
-        var currentInputAngle = CalculateAngleOfInput(reelInput);
+
+        var currentInputAngle = CalculateAngleOfInput(cursorDirectionNormalized);
 
         if (!PlayerIsRotatingCounterClockwise(currentInputAngle))
         {
-            passedRotationFinishedDeg = false;
-            passedRotationStartedDeg = false;
-            
+            (passedRotationFinishedDeg, passedRotationStartedDeg) = (false, false);
             return;
         }
 
@@ -142,15 +157,36 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         currentNumberOfRotations++;
     }
 
-    private void DetermineWhetherInputAngleMarksWerePassed(float currentInputAngle)
+    private Vector2 GetInputBasedOnInputDevice()
     {
-        if (currentInputAngle is > 0 and <= 15)
-            passedRotationFinishedDeg = true;
-        else if (currentInputAngle is >= 345 and < 360)
-            passedRotationStartedDeg = true;
+        var currentInputDevice = inputManager.LatestDevice;
+
+        if (currentInputDevice == PlayerDevice.KeyboardMouse)
+            return reelActionMouse.ReadValue<Vector2>();
+
+        var gamepadInputValue = reelActionGamepad.ReadValue<Vector2>();
+        
+        var gamepadCursorPos = ConvertGamepadInputToScreenPosition(gamepadInputValue);
+
+        return gamepadCursorPos;
     }
 
-    private bool IsOneInputAxisInBuffer(Vector2 input) => Mathf.Abs(input.x) >= 1 - inputBuffer || Mathf.Abs(input.y) >= 1 - inputBuffer;
+    private static Vector2 ConvertGamepadInputToScreenPosition(Vector2 gamepadInputValue)
+    {
+        var halfScreenWidth = Screen.width / 2f;
+        var halfScreenHeight = Screen.height / 2f;
+        var screenCenter = new Vector2(halfScreenWidth, halfScreenHeight);
+
+        var gamepadCursorPos = screenCenter + gamepadInputValue * new Vector2(halfScreenWidth, halfScreenHeight);
+        return gamepadCursorPos;
+    }
+
+    private void SetLastCursorToCurrentIfUninitialized(Vector2 cursorPosition)
+    {
+        if (lastCursorPos == Vector2.negativeInfinity) lastCursorPos = cursorPosition;
+    }
+
+    private bool IsCursorFarEnoughFromCenter(Vector2 cursorPos, Vector2 screenCenter) => (cursorPos - screenCenter).magnitude > minDistanceToCenter;
 
     private void ResetCachedAngles()
     {
@@ -159,11 +195,29 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
         (passedRotationFinishedDeg, passedRotationStartedDeg) = (false, false);
     }
 
+    private bool DidPlayerMoveCursor(Vector2 cursorDirection)
+    {
+        return !Mathf.Approximately((cursorDirection - lastCursorPos).magnitude, 0);
+    }
+
+    private void IncreaseAndCheckInactiveTimer()
+    {
+        neutralInputTimer += Time.deltaTime;
+
+        if (neutralInputTimer >= neutralInputTimerMax) ResetCachedAngles();
+    }
+
     private bool AngleWasReset() => lastAngleToOrigin < 0;
 
-    private float CalculateAngleOfInput(Vector2 input)
+    private void SetReelingVariablesToNeutral(Vector2 cursorDirectionNormalized)
     {
-        var signedAngle = Vector2.SignedAngle(input, startReelDirection);
+        startCursorDirection = cursorDirectionNormalized;
+        lastAngleToOrigin = 0;
+    }
+
+    private float CalculateAngleOfInput(Vector2 cursorDirection)
+    {
+        var signedAngle = Vector2.SignedAngle(cursorDirection, startCursorDirection);
 
         return Converter.GetAngleFrom0To360(signedAngle);
     }
@@ -181,6 +235,14 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     private bool AngleJumpOccured(float currentInputAngle)
     {
         return Mathf.Abs(currentInputAngle - lastAngleToOrigin) > 90f;
+    }
+
+    private void DetermineWhetherInputAngleMarksWerePassed(float currentInputAngle)
+    {
+        if (currentInputAngle is > 0 and <= 45)
+            passedRotationFinishedDeg = true;
+        else if (currentInputAngle is >= 315 and < 360)
+            passedRotationStartedDeg = true;
     }
 
     private bool FullRotationWasCompleted(float currentInputAngle)
@@ -207,7 +269,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         if (currentNumberOfRotations < numberOfRotationsNeeded) return;
         
-        reelingStation.GameStateManager.BlockGameStateChange = false;
+        reelingStation.GameStateManager.BlockGameStateChangeWithExceptions = false;
 
         reelingStation.TriggerReelingCompletedEvent();
 
@@ -218,7 +280,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         if (!reelingStation.IsReelingTimeUp) return;
         
-        reelingStation.GameStateManager.BlockGameStateChange = false;
+        reelingStation.GameStateManager.BlockGameStateChangeWithExceptions = false;
 
         PlayerInputEnabled = false;
         
@@ -229,6 +291,7 @@ public class ReelingStation_ReelInControl : AbstractStationSegment, IManualUpdat
     {
         base.OnDestroy();
         
-        reelAction.Disable();
+        reelActionMouse.Disable();
+        reelActionGamepad.Disable();
     }
 }

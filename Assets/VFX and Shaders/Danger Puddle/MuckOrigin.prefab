@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8891533181668332941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5184000598860777460}
+  - component: {fileID: 291308831107090803}
+  m_Layer: 0
+  m_Name: MuckOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5184000598860777460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891533181668332941}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.740687, y: 23.251507, z: 3.600079}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7530260050152961860}
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &291308831107090803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891533181668332941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1103a7708f0cf4989271d6986b7dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muckAttack: {fileID: 0}
+  delayForMuckBuildUp: 2.5
+  delayForSpewReady: 1.85
+  delayForSpewEnd: 1.65
+  delayForFireSpew: 3
+  delayForMuckFire: 0.2
+  delayForMuckEnd: 1.5
+  Muck_Spew_Gameobject: {fileID: 4170094117853455112}
+  muckExplosionPrefab: {fileID: 1788190137533189147, guid: b26ab5ae9bff4874d823341306db6c80, type: 3}
+  MuckFireBreathSound:
+    Guid:
+      Data1: 104112567
+      Data2: 1170109557
+      Data3: 694932372
+      Data4: -1077017170
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Fire Breath
+  MuckSpewSound:
+    Guid:
+      Data1: 22367414
+      Data2: 1079599943
+      Data3: -835441001
+      Data4: 403578341
+    Path: event:/Monster/Muck (Danger Puddle)/Muck Spew
+  buildUpTrigger: MuckBuildUp
+  spewTrigger: Spew
+  endSpewTrigger: EndSpewMuck
+--- !u!1001 &6096274904611293197
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5184000598860777460}
+    m_Modifications:
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305917735355246084, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873830607554734853, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_Name
+      value: Muck_Spew
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873830607554734853, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5519893847038832898, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+--- !u!1 &4170094117853455112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7873830607554734853, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+  m_PrefabInstance: {fileID: 6096274904611293197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7530260050152961860 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4330925894828998473, guid: c69d8815fb89b4244837390dc44f69e7, type: 3}
+  m_PrefabInstance: {fileID: 6096274904611293197}
+  m_PrefabAsset: {fileID: 0}

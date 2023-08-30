@@ -13,15 +13,13 @@ public abstract class AbstractStation : MonoBehaviour
     public GameState StationGameState => stationGameState;
     
     [SerializeField] private UnityEvent onEnterStation;
-    public UnityEvent OnEnterStation => onEnterStation;
 
     [SerializeField] private UnityEvent onLeaveStation;
-    public UnityEvent OnLeaveStation => onLeaveStation;
 
     public bool IsInStation { get; private set; }
     public GameStateManager GameStateManager { get; private set; }
     public UpdateManager UpdateManager { get; private set; }
-    public PlayerInputs CustomPlayerInputs { get; private set; }
+    private PlayerInputs customPlayerInputs;
     
     public StationManager StationManager { get; private set; }
 
@@ -38,7 +36,7 @@ public abstract class AbstractStation : MonoBehaviour
         StationManager = StationManager.instance;
         StationManager.RegisterStation(this);
         
-        CustomPlayerInputs = new();
+        customPlayerInputs ??= new();
         
         SetupSegments();
     }
@@ -109,6 +107,11 @@ public abstract class AbstractStation : MonoBehaviour
     }
 
     public bool GameStateMatchesStationGameState() => GameStateManager.CurrentGameState == StationGameState;
+    
+    public PlayerInputs GetPlayerInputs()
+    {
+        return customPlayerInputs ??= new();
+    }
 
     protected virtual void OnDestroy()
     {

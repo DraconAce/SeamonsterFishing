@@ -7,9 +7,9 @@ public class UpdateManager : Singleton<UpdateManager>
     private readonly List<IManualUpdateSubscriber> manualFixedUpdateSubscribers = new();
     private readonly List<IManualUpdateSubscriber> manualLateUpdateSubscribers = new();
     
-    private GameStateManager gameStateManager;
+    private PauseManager pauseManager;
 
-    private void Start() => gameStateManager = GameStateManager.instance;
+    private void Start() => pauseManager = PauseManager.instance;
 
     private void Update()
     {
@@ -60,7 +60,7 @@ public class UpdateManager : Singleton<UpdateManager>
     }
 
     private bool UpdateCanBeExecuted(List<IManualUpdateSubscriber> subcriberList) 
-        => !gameStateManager.GameIsPaused && ListHasElements(subcriberList);
+        => !pauseManager.GameIsPaused && ListHasElements(subcriberList);
 
     private bool ListHasElements(List<IManualUpdateSubscriber> manualUpdateSubscriberList) 
         => manualUpdateSubscriberList.Count > 0;

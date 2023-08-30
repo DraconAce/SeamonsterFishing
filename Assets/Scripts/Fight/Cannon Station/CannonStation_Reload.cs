@@ -1,75 +1,47 @@
 using DG.Tweening;
-using FMOD.Studio;
-using FMODUnity;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections;
 
-public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscriber
+public class CannonStation_Reload : AbstractStationSegment
 {
+    [SerializeField] private float autoReloadDelay = 2f;
     [SerializeField] private GameObject fuse;
     private Material fuseMat;
     private IEnumerator burnFuseCoroutine;
-    private float shootDelayforFuse;
-    
-    [SerializeField] private float reloadTime = 3f;
+    private float shootDelayForFuse;
     
     public bool IsLoaded { get; set; } = true;
     public bool IsReloading { get; private set; }
     public bool CannonIsPrepared => !IsReloading && IsLoaded;
     
     private Tween reloadingTween;
+    private Tween autoReloadDelayTween;
 
-    private InputManager inputManager;
-    
-    private const string reloadActionName = "Reload";
+    [SerializeField] private SoundEventRep reloadSound;
 
-    public bool SubscribedToStarted => false;
-    public bool SubscribedToPerformed => true;
-    public bool SubscribedToCanceled => false;
-
-    public string[] ActionsToSubscribeTo { get; } = { reloadActionName };
-    
-    public EventReference reloadCannonSound;
-    private EventInstance reloadCannonSoundInstance;
+    private float reloadSoundLength;
 
     private CannonStation cannonStation => (CannonStation)ControllerStation;
 
     private void Start() 
     {
-        SubscribeToInputManager();
         //Fetch the Material from the Renderer of the fuse-GameObject
         fuseMat = fuse.GetComponent<Renderer>().sharedMaterial;
-        shootDelayforFuse = shootDelayforFuse/100; // set fuse burntime
+        shootDelayForFuse /= 100; // set fuse burntime
     } 
 
     protected override void OnControllerSetup()
     {
         base.OnControllerSetup();
         
-        reloadCannonSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(reloadCannonSound, cannonStation.CannonPivot.gameObject);
+        reloadSound.CreateInstanceForSound(cannonStation.CannonPivot.gameObject);
+        reloadSoundLength = reloadSound.GetSoundLength();
     }
 
-    protected override void OnGameStateDoesNotMatchCannonStation()
+    public void AutoReload()
     {
-        reloadingTween?.Kill();
-        IsReloading = false;
-    }
-
-    private void SubscribeToInputManager()
-    {
-        inputManager = InputManager.instance;
-        
-        inputManager.SubscribeToActions(this);
-    }
-    
-    public void InputPerformed(InputAction.CallbackContext callContext)
-    {
-        var performedActionName = callContext.action.name;
-
-        if (performedActionName != reloadActionName) return;
-
-        TryToReload();
+        autoReloadDelayTween?.Kill();
+        autoReloadDelayTween = DOVirtual.DelayedCall(autoReloadDelay, TryToReload, false);
     }
     
     private void TryToReload()
@@ -79,9 +51,9 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         IsReloading = true;
         
         //play sound
-        reloadCannonSoundInstance.start();
+        reloadSound.StartInstance();
 
-        reloadingTween = DOVirtual.DelayedCall(reloadTime, Reload, false);
+        reloadingTween = DOVirtual.DelayedCall(reloadSoundLength, Reload, false);
         
         InvokeSegmentStateChangedEvent();
     }
@@ -92,7 +64,7 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         IsReloading = false;
         
         //stop sound
-        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        reloadSound.StopInstance();
 
         //turn fuse back on
         resetFuse();
@@ -114,18 +86,18 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
     
     public void SetShootDelayforFuse(float delay)
     {
-        shootDelayforFuse = delay/100;
+        shootDelayForFuse = delay/100;
     }
     
     private IEnumerator DoFuseBurn()
     {
         fuseMat.SetFloat("_isFuseActive", 1f);
-        shootDelayforFuse -= 0.003f; //slightly reduce the delay (Coroutine and Tween seem to run on different times)
+        shootDelayForFuse -= 0.003f; //slightly reduce the delay (Coroutine and Tween seem to run on different times)
         //fuseTime in %
         for (float fuseTime = 100f; fuseTime >= 0f; fuseTime--)
         {
             fuseMat.SetFloat("_Transparancy", fuseTime/100f);
-            yield return new WaitForSeconds(shootDelayforFuse); //100*0.03f = 3 seconds of shoot delay
+            yield return new WaitForSeconds(shootDelayForFuse); //100*0.03f = 3 seconds of shoot delay
         }
         fuseMat.SetFloat("_isFuseActive", 0f);
         yield return null;
@@ -140,13 +112,8 @@ public class CannonStation_Reload : AbstractStationSegment, IInputEventSubscribe
         resetFuse();
         
         reloadingTween?.Kill();
+        autoReloadDelayTween?.Kill();
         
-        reloadCannonSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        reloadCannonSoundInstance.release();
-
-        if (inputManager == null) return;
-        UnsubscribeOnDestroy();
+        reloadSound.StopAndReleaseInstance();
     }
-
-    public void UnsubscribeOnDestroy() => inputManager.UnsubscribeFromActions(this);
 }

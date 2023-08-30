@@ -109,9 +109,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{2e0901fa-9703-43b4-ba4d-b72e1da92c8e}">
-		<property name="volume">
-			<value>-3</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{e8a53275-2e1f-4c0d-bf68-25e7a46363de}</destination>
 		</relationship>
@@ -141,7 +138,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{1dad8d81-90be-4551-a255-fede9b58aa9a}">
 		<property name="volume">
-			<value>-6</value>
+			<value>-4</value>
 		</property>
 		<property name="name">
 			<value>Waves</value>
@@ -172,7 +169,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{5dd53e78-1760-4131-85b3-d107162a3fc6}">
 		<property name="volume">
-			<value>-3</value>
+			<value>-1</value>
 		</property>
 		<property name="name">
 			<value>Wind</value>

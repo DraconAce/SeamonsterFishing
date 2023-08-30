@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public static class SoundHelper
 {
@@ -23,5 +24,16 @@ public static class SoundHelper
         eventDescription.getLength(out var timeInMillis);
 
         return timeInMillis / 1000f;
+    }
+    
+    public static void StopAndReleaseInstance(EventInstance instance, STOP_MODE stopMode = STOP_MODE.ALLOWFADEOUT)
+    {
+        instance.stop(stopMode);
+        instance.release();
+    }
+    
+    public static void SetEventVolume(EventInstance instance, float volume)
+    {
+        instance.setVolume(volume);
     }
 }

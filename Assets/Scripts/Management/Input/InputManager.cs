@@ -56,11 +56,14 @@ public class InputManager : Singleton<InputManager>
     private readonly Dictionary<string, ActionEvent> inputActionAndActionEvents = new();
 
     public PlayerDevice LatestDevice { get; private set; } = PlayerDevice.KeyboardMouse;
+    private bool blockPlayerInput;
     
     public event Action InputDeviceChangedEvent;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         playerInput = GetComponent<PlayerInput>();
         playerInput.onActionTriggered += OnActionTriggered;
 
@@ -69,20 +72,20 @@ public class InputManager : Singleton<InputManager>
 
     private void OnActionTriggered(InputAction.CallbackContext callbackContext)
     {
-        DetermineUsedDevice(callbackContext);
+        DetermineUsedDevice(callbackContext.control.device);
+        
+        if(blockPlayerInput) return;
         
         if (!inputActionAndActionEvents.TryGetValue(callbackContext.action.name, out var actionEvent)) return;
 
         NotifySubscribers(callbackContext, actionEvent);
     }
 
-    private void DetermineUsedDevice(InputAction.CallbackContext callbackContext)
+    private void DetermineUsedDevice(InputDevice device)
     {
-        var usedDevice = callbackContext.control.device;
-        
         var formerDevice = LatestDevice;
 
-        LatestDevice = usedDevice switch
+        LatestDevice = device switch
         {
             Gamepad => PlayerDevice.Gamepad,
             Keyboard => PlayerDevice.KeyboardMouse,
@@ -92,6 +95,7 @@ public class InputManager : Singleton<InputManager>
         
         if (formerDevice == LatestDevice) return;
         
+        Debug.Log(LatestDevice);
         InputDeviceChangedEvent?.Invoke();
     }
 
@@ -172,6 +176,10 @@ public class InputManager : Singleton<InputManager>
         if (subscriber.SubscribedToStarted)
             actionEvent.CanceledAction -= subscriber.InputCanceled;
     }
+    
+    public void SetInputBlocked(bool isBlocked) => blockPlayerInput = isBlocked;
+    
+    public bool IsPlayerUsingController => LatestDevice == PlayerDevice.Gamepad;
 
     protected override void OnDestroy()
     {

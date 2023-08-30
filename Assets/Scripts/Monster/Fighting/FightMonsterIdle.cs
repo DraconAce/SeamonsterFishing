@@ -1,85 +1,35 @@
-using System;
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class FightMonsterIdle : AbstractMonsterBehaviour
 {
-    [SerializeField] private Transform monster;
-    [SerializeField] private Vector3 upMovement = new(0,1,0);
-    [SerializeField] private MinMaxLimit loopLimits = new MinMaxLimit { MinLimit = 10, MaxLimit = 25 };
+    private MonsterAnimationController monsterAnimationController;
     
-    [Header("Animation")]
-    [SerializeField] private float idleAnimationDuration = 1;
-    [SerializeField] private Ease idleEase = Ease.InOutSine;
-
-    private Vector3 originalPosition;
-    private Sequence idleSequence;
+    private readonly WaitForSeconds idleEndBuffer = new(2f);
+    private const string IdleTrigger = "Idle";
     
-    public override bool ChangeMonsterStateOnStartBehaviour => true;
-    public override MonsterState MonsterStateOnBehaviourStart => MonsterState.Idle;
-
-    public bool IsInNeutralPosition { get; private set; } = true;
+    protected override MonsterState BehaviourState => MonsterState.Idle;
 
     protected override void Start()
     {
         base.Start();
 
-        originalPosition = monster.position;
+        monsterAnimationController = FightMonsterSingleton.instance.MonsterAnimationController;
     }
 
-    protected override IEnumerator StartBehaviourImpl()
+    protected override IEnumerator BehaviourRoutineImpl()
     {
-        yield return StartCoroutine(StartIdle());
+        monsterAnimationController.SetTrigger(IdleTrigger);
         
-        yield return base.StartBehaviourImpl();
+        yield return idleEndBuffer;
     }
 
-    private IEnumerator StartIdle()
+    protected override IEnumerator StopBehaviourRoutineImpl()
     {
-        idleSequence = DOTween.Sequence();
-
-        IsInNeutralPosition = false;
-
-        var numberOfLoops = GenerateEvenNumberOfLoops();
-
-        idleSequence.Append(
-            monster.DOMove(upMovement, idleAnimationDuration)
-                .SetRelative(true)
-                .SetEase(idleEase)
-            );
-
-        idleSequence.SetLoops(numberOfLoops, LoopType.Yoyo);
-
-        idleSequence.OnStepComplete(() => { IsInNeutralPosition = idleSequence.CompletedLoops() % 2 == 0; });
-
-        yield return idleSequence.WaitForCompletion();
+        yield break;
     }
 
-    private int GenerateEvenNumberOfLoops()
-    {
-        var generatedNumber = (int) Random.Range(loopLimits.MinLimit, loopLimits.MaxLimit);
+    public override float GetExecutability() => executability.GetRandomBetweenLimits();
 
-        if (generatedNumber % 2 != 0)
-            generatedNumber++;
-
-        return generatedNumber;
-    }
-
-    protected override IEnumerator StartInterruptedRoutineImpl()
-    {
-        idleSequence?.Kill();
-
-        if (Vector3.SqrMagnitude(monster.position - originalPosition) < 0.00001f) yield break;
-        
-        var returnToOriginalPosTween = monster.DOMove(originalPosition, idleAnimationDuration)
-            .SetEase(idleEase);
-
-        yield return returnToOriginalPosTween.WaitForCompletion();
-
-        yield return base.StartInterruptedRoutineImpl();
-    }
-
-    protected override void OnDestroy() => idleSequence?.Kill();
+    protected override void ForceStopBehaviourImpl(){}
 }

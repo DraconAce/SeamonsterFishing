@@ -33,6 +33,7 @@ Transform:
   - {fileID: 7810283510172397612}
   - {fileID: 5458768519335323582}
   - {fileID: 5915256923559766987}
+  - {fileID: 8603725843351852604}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,6 +47,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5458768519335323582}
   - component: {fileID: 7626252162711910279}
+  - component: {fileID: 5095283545887462500}
   m_Layer: 0
   m_Name: Ambience_Sound
   m_TagString: Untagged
@@ -99,6 +101,97 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &5095283545887462500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645873544624235474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebab78fafe393114ba0031131c2b5752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainThemeParts:
+  - eventRef:
+      Guid:
+        Data1: 274005976
+        Data2: 1077470545
+        Data3: -848102990
+        Data4: 873633946
+      Path: event:/Music/Battle Theme 1
+  - eventRef:
+      Guid:
+        Data1: 1899338423
+        Data2: 1205687073
+        Data3: 1208052407
+        Data4: -1555202207
+      Path: event:/Music/Battle Theme 2
+  - eventRef:
+      Guid:
+        Data1: -1894129635
+        Data2: 1152390622
+        Data3: 539960763
+        Data4: 1869487147
+      Path: event:/Music/Battle Theme 3
+  fadeInTime: 1
+  fadeInEase: 2
+  fadeOutTime: 0.5
+  fadeOutEase: 3
+--- !u!1 &6480513322266622276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8603725843351852604}
+  - component: {fileID: 4045321529566733956}
+  m_Layer: 4
+  m_Name: ProxyWaterSurface
+  m_TagString: water
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8603725843351852604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480513322266622276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -10.4, z: 0}
+  m_LocalScale: {x: 2753.0261, y: 0.05, z: 2753.0261}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3794291101080560348}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4045321529566733956
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480513322266622276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1745741877090407386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,6 +332,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3794291101080560348}
     m_Modifications:
+    - target: {fileID: 6873994170279649175, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6873994170741836959, guid: 21a7480d4bcd0e1409573800c26826aa, type: 3}
       propertyPath: blurAmt
       value: 0

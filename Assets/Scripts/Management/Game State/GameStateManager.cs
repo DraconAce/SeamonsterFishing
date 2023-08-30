@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using DG.Tweening;
 using UnityEngine;
@@ -9,8 +10,11 @@ public class GameStateManager : Singleton<GameStateManager>
     
     private SceneController sceneController;
     
-    public bool BlockGameStateChange { get; set; }
-    public bool GameIsPaused => CurrentGameState == GameState.Pause;
+    private readonly List<GameState> blockChangeExceptionList = new(){GameState.Pause, GameState.Dead, GameState.Won, GameState.MainMenu};
+    
+    public bool BlockGameStateChangeWithExceptions { get; set; }
+    public bool BlockGameStateChangeWithoutExceptions { get; set; }
+    
     public GameState PreviousGameState { get; private set; }
 
     public GameState CurrentGameState
@@ -33,22 +37,22 @@ public class GameStateManager : Singleton<GameStateManager>
         sceneController = SceneController.instance;
         
         sceneController.SceneStarted(currentGameState);
-        
-        //Todo: Remove this
-        DOVirtual.DelayedCall(1f, () => GameStateChangedEvent?.Invoke(currentGameState));
     }
 
     public event Action<GameState> GameStateChangedEvent;
 
     public void ChangeGameState(GameState newGameState)
     {
-        if (newGameState == CurrentGameState || BlockGameStateChange) return;
+        if (newGameState == CurrentGameState || BlockGameStateChangeWithExceptions && !IsNewStateInExceptionList(newGameState) 
+                                             || BlockGameStateChangeWithoutExceptions) return;
 
         PreviousGameState = CurrentGameState;
         CurrentGameState = newGameState;
         
         GameStateChangedEvent?.Invoke(newGameState);
     }
+    
+    private bool IsNewStateInExceptionList(GameState newGameState) => blockChangeExceptionList.Contains(newGameState);
 
     public void ChangeToPreviousGameState() => ChangeGameState(PreviousGameState);
 }

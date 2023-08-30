@@ -27,6 +27,13 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
             return _instance;
         }
     }
+    
+    protected virtual void Awake()
+    {
+        if (_instance == this || _instance == null) return;
+        
+        Destroy(gameObject);
+    }
 
     //tries to find the instance of this singleton
     //if it can't find one it will create one
@@ -35,7 +42,7 @@ public abstract class Singleton<T> : SingletonMonoBehaviour where T : SingletonM
         var callCreated = _instance == null;
 
         //attempt to find the instance of this singleton
-        var instance = FindObjectOfType<T>();
+        var instance = FindObjectOfType<T>(true);
 
         //if the instance is found return it
         if(instance != null)

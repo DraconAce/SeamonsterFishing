@@ -17,8 +17,8 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
     private InputAction driveAction;
 
-    private DriveStation_Moving movingController;
-    private DriveStation_Rotating rotatingController;
+    public DriveStation_Moving MovingController { get; private set; }
+    public DriveStation_Rotating RotatingController { get; private set; }
 
     public float LastDriveDirection { get; set; }
     public float InfluencedDrivingDirection => LastDriveDirection * initialDrivingDirection;
@@ -33,18 +33,27 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     
     public EventReference TurnBoatSound;
     private EventInstance TurnBoatSoundInstance;
+    
+    [SerializeField] private GameObject VfxDrivingWaterInteractionObject;
+    private ParticleSystem BoatTrailMist;
+    private ParticleSystem BoatTrailWake;
 
     private void Awake()
     {
         LastDriveDirection = initialDrivingDirection;
-        
-        PlayerTransform = PlayerSingleton.instance.PlayerTransform;
 
-        TryGetComponent(out movingController);
-        TryGetComponent(out rotatingController);
+        var playerSingleton = PlayerSingleton.instance;
+        PlayerTransform = playerSingleton.PlayerTransform;
+        playerSingleton.DriveStation = this;
+
+        MovingController = GetComponent<DriveStation_Moving>();
+        RotatingController = GetComponent<DriveStation_Rotating>();
 
         MoveBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(MoveBoatSound, PlayerTransform.gameObject);
         TurnBoatSoundInstance = SoundHelper.CreateSoundInstanceAndAttachToTransform(TurnBoatSound, PlayerTransform.gameObject);
+        
+        BoatTrailMist = VfxDrivingWaterInteractionObject.GetComponent<ParticleSystem>();
+        BoatTrailWake = VfxDrivingWaterInteractionObject.transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     protected override void GameStateMatches()
@@ -56,7 +65,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
     protected override void GameStateDoesNotMatch()
     {
         base.GameStateDoesNotMatch();
+        
         UpdateManager.UnsubscribeFromManualUpdate(this);
+        RotatingController.StopRotationSequence();
     }
 
     protected override void Start()
@@ -67,12 +78,14 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
 
         UpdateManager.SubscribeToManualUpdate(this);
 
-        rotatingController.CalculateLeftRotation();
+        RotatingController.CalculateLeftRotation();
     }
 
     private void GetAndEnableDriveAction()
     {
-        driveAction = CustomPlayerInputs.Fight_Overview.Drive;
+        var customPlayerInput = GetPlayerInputs();
+        
+        driveAction = customPlayerInput.Fight_Overview.Drive;
         driveAction.Enable();
     }
 
@@ -88,10 +101,10 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         
         //Debug.Log("currentBoatSpeed: "+ movingController.currentSpeed);
         
-        if(movingController.BoatIsNotMoving(moveDirection)) 
+        if(MovingController.BoatIsStanding(moveDirection)) 
         {
             //movingController.currentSpeed = 0;
-            if (lastMoveDirection != 0f && !rotatingController.MovingLocked)
+            if (lastMoveDirection != 0f && !RotatingController.MovingLocked)
             {
                 float rememberlastMoveDirection = lastMoveDirection;
                 lastMoveDirection = 0f;
@@ -101,9 +114,9 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
             return;
         }
 
-        var hasDirectionChanged = rotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
+        var hasDirectionChanged = RotatingController.StartRotatingIfDirectionHasChanged(moveDirection);
 
-        if (hasDirectionChanged || rotatingController.MovingLocked) 
+        if (hasDirectionChanged || RotatingController.MovingLocked) 
         {
             //Turn Boat Sound should play
             TurnBoatSoundInstance.getPlaybackState(out var turnPlaybackState);
@@ -115,14 +128,17 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         MoveBoatSoundInstance.getPlaybackState(out var playbackState);
         if (playbackState == PLAYBACK_STATE.STOPPED) MoveBoatSoundInstance.start();
         
+        //activate Water displacement VFX behind boat
+        SetWaterDisplacementVfxWhileDriving(true);
+        
         if (stoppingBoatMoveCoroutingIsRunning)
         {
             //stop move-fadeout coroutine while driving 
             StopCoroutineIfItExists();
         }
         
-        movingController.IncreaseCurrentBoatSpeed();
-        movingController.MoveBoat(moveDirection);
+        MovingController.IncreaseCurrentBoatSpeed();
+        MovingController.MoveBoat(moveDirection);
         
         //save moveDirection to determine if the BoatStopper should play
         lastMoveDirection = moveDirection; 
@@ -155,10 +171,15 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         stoppingBoatMoveCoroutingIsRunning = true;
         stoppingBoatMoveCoroutine = DoBoatStop(directionToStopIn);
         StartCoroutine(stoppingBoatMoveCoroutine);
+        //deactivate Emission of Water displacement VFX behind boat when driving-fadeout starts, so the particles naturally fade out
+        SetWaterDisplacementVfxWhileDriving(false);
     }
     
     private void StopCoroutineIfItExists()
     {
+        //deactivate Water displacement VFX behind boat after driving-fadeout stopped
+        SetWaterDisplacementVfxWhileDriving(false);
+        
         if (stoppingBoatMoveCoroutine != null) 
         {
             StopCoroutine(stoppingBoatMoveCoroutine);
@@ -171,17 +192,38 @@ public class DriveStation : AbstractStation, IManualUpdateSubscriber
         //Debug.Log("Coroutine started");
         while (stoppingBoatMoveCoroutingIsRunning) 
         {
-            movingController.currentSpeed -= stoppingBoatSpeedReduction;
-            if (movingController.currentSpeed <= stoppingBoatSpeedReduction) 
+            MovingController.CurrentSpeed -= stoppingBoatSpeedReduction;
+            if (MovingController.CurrentSpeed <= stoppingBoatSpeedReduction) 
             {
-                movingController.currentSpeed = 0f;
+                MovingController.CurrentSpeed = 0f;
                 stoppingBoatMoveCoroutingIsRunning = false;
+                //deactivate Water displacement VFX behind boat after driving-fadeout stopped
+                //SetWaterDisplacementVfxWhileDriving(false);
                 yield return null;
             }
-            movingController.MoveBoat(moveDirection);
+            MovingController.MoveBoat(moveDirection);
             yield return new WaitForFixedUpdate();
         } 
         //Debug.Log("Coroutine stop over time");
+    }
+    
+    private void SetWaterDisplacementVfxWhileDriving(bool newState)
+    {
+        //if the effect is already emitting and gets activated again, do nothing
+        if (newState && BoatTrailMist.isEmitting) return;
+        
+        if (newState) {
+            //activate Emission of particles
+            BoatTrailMist.Play(true);
+            BoatTrailWake.Play(true);
+        }
+        else 
+        {
+            //deactivate Emission of Water displacement VFX behind boat
+            BoatTrailMist.Stop();
+            BoatTrailWake.Stop();
+        }
+        
     }
     
 }

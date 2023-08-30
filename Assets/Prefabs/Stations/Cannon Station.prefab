@@ -90,7 +90,7 @@ Transform:
   - {fileID: 5048971351588916184}
   - {fileID: 423409634534850192}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1140069061896769200
 MonoBehaviour:
@@ -108,34 +108,11 @@ MonoBehaviour:
   stationGameState: 1
   onEnterStation:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerRepMovement, Assembly-CSharp
-        m_MethodName: MovePlayerToTargetLocalPos
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onLeaveStation:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerRepMovement, Assembly-CSharp
-        m_MethodName: MovePlayerToTargetLocalPos
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  cannonPivot: {fileID: 0}
 --- !u!114 &4080558271220990675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,10 +126,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonBarrelMovementPivot: {fileID: 0}
+  driveStation: {fileID: 0}
   aimLimit:
-    MinLimit: {x: -45, y: -20, z: 0}
-    MaxLimit: {x: 0, y: 20, z: 0}
+    MinLimit: {x: -55, y: -30, z: 0}
+    MaxLimit: {x: 10, y: 30, z: 0}
   aimSpeed: 10
+  playerAimInfluence: 0.4
+  controllerBoost: 25
 --- !u!114 &6935723897159092324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootDelay: 3
-  fireForce: 150
+  fireForce: 300
   barrelOpening: {fileID: 0}
   reloadSegment: {fileID: 6565113176275434114}
   cannonBallParent: {fileID: 3945572250696685381}
@@ -177,6 +157,18 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6565113176275434114}
+        m_TargetAssemblyTypeName: CannonStation_Reload, Assembly-CSharp
+        m_MethodName: AutoReload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -212,14 +204,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c7a06facc546f69dcea4a73a2b93db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reloadTime: 3
-  reloadCannonSound:
-    Guid:
-      Data1: -1749684422
-      Data2: 1251605997
-      Data3: -2076297561
-      Data4: -354503960
-    Path: event:/Boat/Boat Attack/Cannon Reload
+  autoReloadDelay: 2
+  fuse: {fileID: 0}
+  reloadSound:
+    eventRef:
+      Guid:
+        Data1: 2039942316
+        Data2: 1204514834
+        Data3: -1342893656
+        Data4: -848009069
+      Path: event:/Boat/Boat Attack/Cannon Reload Temp
 --- !u!114 &1746360987460174724
 MonoBehaviour:
   m_ObjectHideFlags: 0
