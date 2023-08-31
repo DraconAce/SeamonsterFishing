@@ -44,7 +44,7 @@ public abstract class AbstractStation : MonoBehaviour
     private void OnGameStateChanged(GameState newGameState)
     {
         if(newGameState is GameState.Pause 
-           || GameStateManager.PreviousGameState is GameState.Pause) return;
+           || GameStateManager.PreviousGameState is GameState.Pause && GameStateManager.CurrentGameState == StationGameState) return;
         
         if (newGameState != StationGameState)
         {

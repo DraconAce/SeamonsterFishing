@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 8725586457135255717}
   - component: {fileID: 4019064568829921026}
   - component: {fileID: 711924230059703330}
-  - component: {fileID: 3020603836329242685}
   - component: {fileID: 3535126174724954420}
+  - component: {fileID: 5215089529970293558}
   m_Layer: 14
   m_Name: WeakpointScaleMid
   m_TagString: weakPoint
@@ -117,8 +117,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3020603836329242685
-MeshCollider:
+--- !u!114 &3535126174724954420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437662534655104106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2052d2af12f34c818254c27f1dfe1c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMat: {fileID: 2100000, guid: 91bbb64cc780a2741814af7921ab781e, type: 2}
+--- !u!135 &5215089529970293558
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -135,21 +148,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1550514412580984892, guid: 5762ed86652c2db4b8a64b43d7092f50, type: 3}
---- !u!114 &3535126174724954420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7437662534655104106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2052d2af12f34c818254c27f1dfe1c66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitMat: {fileID: 2100000, guid: 91bbb64cc780a2741814af7921ab781e, type: 2}
-  hitWeakpoint: 0
+  serializedVersion: 3
+  m_Radius: 0.025
+  m_Center: {x: 0, y: 0.0018939085, z: 0.00024320051}
