@@ -23,7 +23,7 @@ public class MainSoundThemeManager : MonoBehaviour
 
     private void Start()
     {
-        CreateInstanceForThemePartsAndSetVolume0();
+        CreateInstanceForThemePartsStartAllAndSetVolume0();
         
         monsterSingleton = FightMonsterSingleton.instance;
         fightMonsterState = monsterSingleton.FightState;
@@ -34,11 +34,12 @@ public class MainSoundThemeManager : MonoBehaviour
         StartNextThemePart();
     }
     
-    private void CreateInstanceForThemePartsAndSetVolume0()
+    private void CreateInstanceForThemePartsStartAllAndSetVolume0()
     {
         foreach (var themePart in mainThemeParts)
         {
             themePart.CreateInstanceForSound(gameObject);
+            themePart.StartInstance();
             themePart.SetVolume(0f);
         }
     }
@@ -55,8 +56,6 @@ public class MainSoundThemeManager : MonoBehaviour
     private void StartThemeFadeInTween(int themeIndex)
     {
         var themeToStart = mainThemeParts[themeIndex];
-        
-        themeToStart.StartInstance();
         
         var fadeTween = DOVirtual.Float(0f, 1f, fadeInTime, themeToStart.SetVolume)
             .SetEase(fadeInEase);
